@@ -2,10 +2,10 @@
 
 class Status {
 
-    var $intProjectID, $intMemberID, $intProjectMemberID;
-    var $strStatusCondition;
-    var $dmtStatusDate, $dmtStatusCurrentDate, $dmtStatusActualDate;
-    var $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment;
+    public $intStatusID, $intProjectID, $intMemberID, $intProjectMemberID;
+    public $strStatusCondition;
+    public $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate;
+    public $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment;
 
     function __construct($intMemberID, $intProjectID) {
         $this->intMemberID = $intMemberID;
@@ -14,28 +14,31 @@ class Status {
     }
 
     function getDetails() {
-        $query = "SELECT dmtStatusDate,dmtStatusCurrentDate,dmtStatusActualDate," . 
+        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," . 
                 "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
                 " WHERE intProjectID = " . $this->intProjectID .
                 " AND intProjectMemberID = " . $this->intProjectMemberID .
-                " AND dmtStatusDate = '2011-09-12';";
+                " ORDER BY intStatusID DESC LIMIT 1;";
 
         $sqlArr = getArr($query);
-
-        $this->dmtStatusDate = $sqlArr[0]['dmtStatusDate'];
-        $this->dmtStatusCurrentDate = $sqlArr[0]['dmtStatusCurrentDate'];
-        $this->dmtStatusActualDate = $sqlArr[0]['dmtStatusActualDate'];
-        $this->strStatusDifference = $sqlArr[0]['strStatusDifference'];
-        $this->strStatusWhy = $sqlArr[0]['strStatusWhy'];
-        $this->strStatusGanttLink = $sqlArr[0]['strStatusGanttLink'];
-        $this->strStatusGanttLinkComment = $sqlArr[0]['strStatusGanttLinkComment'];
-        $diff = dateDayDiff($this->dmtStatusDate, $this->dmtStatusActualDate);
-        if($diff >= 7) { // <- check & fix it later
-            $this->strStatusCondition = "Ahead";
-        } elseif ($diff <= -7) { // <- check & fix it later
-            $this->strStatusCondition = "Behind";
-        } else {
-            $this->strStatusCondition = "Up to date";
+       
+        if(isset($sqlArr[0])) {
+            $this->intStatusID = $sqlArr[0]['intStatusID'];
+            $this->dmtStatusCurrentDate = $sqlArr[0]['dmtStatusCurrentDate'];
+            $this->strStatusDate = $sqlArr[0]['strStatusDate'];
+            $this->strStatusActualDate = $sqlArr[0]['strStatusActualDate'];
+            $this->strStatusDifference = $sqlArr[0]['strStatusDifference'];
+            $this->strStatusWhy = $sqlArr[0]['strStatusWhy'];
+            $this->strStatusGanttLink = $sqlArr[0]['strStatusGanttLink'];
+            $this->strStatusGanttLinkComment = $sqlArr[0]['strStatusGanttLinkComment'];
+            $diff = dateDayDiff($this->strStatusDate, $this->strStatusActualDate);
+            if ($diff >= 7) { // <- check & fix it later
+                $this->strStatusCondition = "Ahead";
+            } elseif ($diff <= -7) { // <- check & fix it later
+                $this->strStatusCondition = "Behind";
+            } else {
+                $this->strStatusCondition = "Up to date";
+            }
         }
     }
     
@@ -43,29 +46,21 @@ class Status {
         
     }
 
-    function addDetails($dmtStatusDate, $dmtStatusCurrentDate, $dmtStatusActualDate, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) {
-        $blnMessage = 0; // no error
-        $query = "SELECT dmtStatusDate FROM tblStatus WHERE " .
-                "intProjectID='$this->intProjectID' AND intProjectMemberID='$this->intProjectMemberID' AND dmtStatusDate='$dmtStatusDate'";
-        
-        $sqlArr = getArr($query);
-        if(count($sqlArr) == 0) {
-            $query = "INSERT INTO tblStatus(intProjectID,intProjectMemberID,dmtStatusDate,dmtStatusCurrentDate,dmtStatusActualDate," .
-                    "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment)" .
-                    " values ('$this->intProjectID', '$this->intProjectMemberID', '$dmtStatusDate', '$dmtStatusCurrentDate', '$dmtStatusActualDate', " .
-                    "'$strStatusDifference', '$strStatusWhy', '$strStatusGanttLink', '$strStatusGanttLinkComment');";
-            $sql = mysql_query($query);
-            if (!$sql)
-                die('Invalid query: ' . mysql_error());
-        } else {
-            $blnMessage = 1; // error
-        }
-        
-        return $blnMessage;
+    function addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, 
+            $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) {
+            
+        $query = "INSERT INTO tblStatus(intStatusID,intProjectID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," .
+                "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment)" .
+                " values (NULL, '$this->intProjectID', '$this->intProjectMemberID', '$dmtStatusCurrentDate', '$strStatusDate', '$strStatusActualDate', " .
+                "'$strStatusDifference', '$strStatusWhy', '$strStatusGanttLink', '$strStatusGanttLinkComment');";
+        $sql = mysql_query($query);
+
+        if (!$sql)
+            die('Invalid query: ' . mysql_error());
     }
 
-    function delDetails($dmtStatusDate) {
-        $query = "DELETE FROM tblStatus where intProjectID='$this->intProjectID' and intProjectMemberID='$this->intProjectMemberID' and dmtStatusDate='$dmtStatusDate'; ";
+    function delDetails($intStatusID) {
+        $query = "DELETE FROM tblStatus where intStatusID='$intStatusID';";
         $sql = mysql_query($query);
         if (!$sql)
             die('Invalid query: ' . mysql_error());
@@ -73,10 +68,10 @@ class Status {
 
     function displayStatus() {
         echo "<p>Today is <b>" . $_ENV['currentDate'] . "</b><br />";
-        echo "Status report as of: <b>" .$this->dmtStatusCurrentDate. "</b><br />\n";
+        echo "Status report as of: <b>" . $this->dmtStatusCurrentDate . "</b><br />\n";
         echo "Current status is <b>" . $this->strStatusCondition . "</b><br />\n";
-        echo "Where we are: <b>" . $this->dmtStatusDate. "</b><br />\n";
-        echo "Where we should be: <b>" . $this->dmtStatusActualDate. "</b><br /><br />\n";
+        echo "Where we are: <b>" . $this->strStatusDate . "</b><br />\n";
+        echo "Where we should be: <b>" . $this->strStatusActualDate . "</b><br /><br />\n";
         echo "<b>Differences?</b><br />\n";
         echo $this->strStatusDifference . "<br /><br />\n";
         echo "<b>Why?</b><br />\n";
@@ -87,7 +82,7 @@ class Status {
     }
 
     function displayStatusTable() {
-        $query = "SELECT dmtStatusDate,dmtStatusCurrentDate,dmtStatusActualDate,strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment".
+        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment".
                 " FROM tblStatus WHERE intProjectID = '$this->intProjectID' AND intProjectMemberID = '$this->intProjectMemberID';";
         $sqlArr = getArr($query);
         $caption = "Statuses";
@@ -125,7 +120,7 @@ class Status {
                 echo '<input type="hidden" name="todo" value="deletestatus" />' . "\n";
                 echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
                 echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
-                echo '<input type="hidden" name="dmtStatusDate" value="' . $arr2["dmtStatusDate"] . '" />' . "\n";
+                echo '<input type="hidden" name="intStatusID" value="' . $arr2["intStatusID"] . '" />' . "\n";
                 echo '<input type="submit" value="Delete" />' . "\n";
                 echo "</form>\n";
                 echo "</td>\n";
@@ -154,9 +149,9 @@ class Status {
             Status Creation Date:<br />
             <input type="text" name="dmtStatusCurrentDate" value="<?php echo $_ENV['currentDate']; ?>"/><br />
             Where we are:<br />
-            <input type="text" name="dmtStatusDate" /><br />
+            <input type="text" name="strStatusDate" /><br />
             Where we should be:<br />
-            <input type="text" name="dmtStatusActualDate" /><br />
+            <input type="text" name="strStatusActualDate" /><br />
             Difference:<br />
             <textarea name="strStatusDifference"></textarea><br />
             Why:<br />

@@ -10,7 +10,7 @@ $projectObj->getDetails();
 // find intProjectMemberID
 $currentProjectMemberID = getProjectMember($memberObj->intMemberID, $projectObj->intProjectID);
 
-// get status information
+// get last status details
 $statusObj = new Status($projectObj->intProjectID, $currentProjectMemberID);
 $statusObj->getDetails();
 
@@ -19,7 +19,9 @@ echo 'You are loginned as <b>' . $memberObj->strMemberName . "</b><br />";
 echo "Your Team is <b>" . $projectObj->strProjectTeamName . "</b><br />";
 echo "Your Project is <b>" . $projectObj->strProjectName . "</b></p>";
 
-$statusObj->displayStatus();
+if (isset($statusObj->intStatusID)) {
+    $statusObj->displayStatus();
+}
 
 //echo '<a href="add/risk.php">Add a new Risk</a><br /><a href="add/issue.php">Add a new Issue</a><br />';
 //echo '<a href="?page=addstatus&p='.$projectObj->intProjectID.'&m='.$memberObj->intMemberID.'">Update Status for this date</a><br /><br />';

@@ -15,31 +15,29 @@ if (isset($_POST["page"])) {
         if (isset($_POST["todo"])) {
             $todo = $_POST["todo"];
             if ($todo == "addstatus") {
-                $dmtStatusDate = $_POST["dmtStatusDate"];
                 $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
-                $dmtStatusActualDate = $_POST["dmtStatusActualDate"];
+                $strStatusDate = $_POST["strStatusDate"];
+                $strStatusActualDate = $_POST["strStatusActualDate"];
                 $strStatusDifference = $_POST["strStatusDifference"];
                 $strStatusWhy = $_POST["strStatusWhy"];
                 $strStatusGanttLink = $_POST["strStatusGanttLink"];
                 $strStatusGanttLinkComment = $_POST["strStatusGanttLinkComment"];
 
                 $statusObj = new Status($currentProjectID, $currentProjectMemberID);
-                if($statusObj->addDetails($dmtStatusDate, $dmtStatusCurrentDate, $dmtStatusActualDate, 
-                        $strStatusDifference,$strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) == 1) {
-                    echo '<b><font size="3" color="red">Status not added, because status with this date already exists</font></b><br>'; // <- fix it later
-                }
+                $statusObj->addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, 
+                        $strStatusDifference,$strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
                 unset($statusObj);
             }
             if ($todo == "deletestatus") {
-                $dmtStatusDate = $_POST["dmtStatusDate"];
+                $intStatusID = $_POST["intStatusID"];
                 $statusObj = new Status($currentProjectID, $currentProjectMemberID);
-                $statusObj->delDetails($dmtStatusDate);
+                $statusObj->delDetails($intStatusID);
                 unset($statusObj);
             }
             if ($todo == "editstatus") {
-                $dmtStatusDate = $_POST["dmtStatusDate"];
+                $intStatusID = $_POST["intStatusID"];
                 $statusObj = new Status($currentProjectID, $currentProjectMemberID);
-                $statusObj->setDetails($dmtStatusDate);
+                $statusObj->setDetails($intStatusID);
                 unset($statusObj);
             }
         }
