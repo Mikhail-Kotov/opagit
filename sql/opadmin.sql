@@ -1,6 +1,22 @@
-# DROP DATABASE IF EXISTS opadmin;
-# CREATE DATABASE opadmin;
+#DROP DATABASE IF EXISTS opadmin;
+#CREATE DATABASE opadmin;
+
 USE opadmin;
+
+DROP TABLE IF EXISTS tblIssue;
+DROP TABLE IF EXISTS tblIssueType;
+DROP TABLE IF EXISTS tblRisk;
+DROP TABLE IF EXISTS tblRiskType;
+DROP TABLE IF EXISTS tblMemberCourse;
+DROP TABLE IF EXISTS tblStatus;
+DROP TABLE IF EXISTS tblProjectMember;
+DROP TABLE IF EXISTS tblCourse;
+DROP TABLE IF EXISTS tblProject;
+DROP TABLE IF EXISTS tblPermission;
+DROP TABLE IF EXISTS tblClient;
+DROP TABLE IF EXISTS tblTeacher;
+DROP TABLE IF EXISTS tblStudent;
+DROP TABLE IF EXISTS tblMember;
 
 CREATE TABLE `tblMember` (
   intMemberID INT(11) NOT NULL AUTO_INCREMENT,
@@ -88,16 +104,17 @@ CREATE TABLE `tblProjectMember` (
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tblStatus` (
+  intStatusID INT(11) NOT NULL AUTO_INCREMENT,  
   intProjectID INT(11) NOT NULL,
   intProjectMemberID INT(11) NOT NULL, # author
-  dmtStatusDate DATE NOT NULL,
   dmtStatusCurrentDate DATE NOT NULL,
-  dmtStatusActualDate DATE NOT NULL,
+  strStatusDate VARCHAR(1000) NULL,
+  strStatusActualDate VARCHAR(1000) NULL,
   strStatusDifference VARCHAR(5000) NULL,
   strStatusWhy VARCHAR(5000) NULL,
   strStatusGanttLink VARCHAR(1000) NULL,
   strStatusGanttLinkComment VARCHAR(1000) NULL,
-  PRIMARY KEY (intProjectID, intProjectMemberID, dmtStatusDate),
+  PRIMARY KEY (intStatusID),
   KEY `FK_tblStatus_tblProject` (intProjectID),
   KEY `FK_tblStatus_tblProjectMember` (intProjectMemberID),
   CONSTRAINT `FK_tblStatus_tblProject` FOREIGN KEY (intProjectID) REFERENCES tblProject (intProjectID) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -178,7 +195,7 @@ INSERT INTO `tblMember`(`intMemberID`,`strMemberName`,`strMemberPassword`,`strMe
 INSERT INTO `tblStudent`(`intMemberID`) VALUES (1);
 INSERT INTO `tblTeacher`(`intMemberID`,`strTeacherJobTitle`,`strTeacherPhone`,`strTeacherMobile`) VALUES (2,'Coordinator','+61397009876',NULL),(3,'JobTitle','+61397001234','+61412345678');
 INSERT INTO `tblProjectMember`(`intProjectMemberID`,`intMemberID`,`intProjectID`,`intPermissionID`) VALUES (1,1,1,NULL),(4,2,1,NULL);
-INSERT INTO `tblStatus`(`intProjectID`,`intProjectMemberID`,`dmtStatusDate`,`dmtStatusCurrentDate`,`dmtStatusActualDate`,`strStatusDifference`,`strStatusWhy`,`strStatusGanttLink`,`strStatusGanttLinkComment`) VALUES (1,1,'2011-09-12','2011-09-15','2011-09-19','Everything is ok','All team works very quickly','http://gantt','gantt comment');
+INSERT INTO `tblStatus`(`intStatusID`,`intProjectID`,`intProjectMemberID`,`dmtStatusCurrentDate`,`strStatusDate`,`strStatusActualDate`,`strStatusDifference`,`strStatusWhy`,`strStatusGanttLink`,`strStatusGanttLinkComment`) VALUES (NULL,1,1,'2011-09-12','2011-09-15','2011-09-19','Everything is ok','All team works very quickly','http://gantt','gantt comment');
 INSERT INTO `tblIssueType`(`strIssueTypeID`) VALUES ('Bug'),('Environment'),('Financial'),('Management'),('Quality'),('Schedule'),('Technical');
 INSERT INTO `tblRiskType`(`strRiskTypeID`) VALUES ('Financial'),('Management'),('Quality'),('Schedule'),('Technical');
 INSERT INTO `tblRisk`(`intRiskID`,`intProjectMemberID`,`intProjectID`,`strRiskTypeID`,`strRiskDescription`,`strRiskImpactDescription`,`strRiskStatus`,`strRiskLevelOfImpact`,`strLikelihoodOfImpact`,`strRiskConsequenceOfImpact`,`strRiskMitigationStrategy`,`strRiskContingencyStrategy`,`dmtRiskDateRaised`,`dmtRiskDateClosed`) VALUES (1,1,1,'Financial','desc',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
