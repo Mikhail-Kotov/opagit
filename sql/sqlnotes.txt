@@ -1,0 +1,2 @@
+log = "C:/UniServer/usr/local/mysql/log/QueryLog.sql"
+log-error = "C:/UniServer/usr/local/mysql/log/ErrorLog.txt"

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_general_ci">opadmin</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="tblClient" view="colnames">
+<left>13</left>
+<top>581</top>
+<width>242</width>
+<height>206</height>
+<sql_create_table>CREATE TABLE `tblClient` (
+  `intMemberID` int(11) NOT NULL,
+  `strClientCompanyName` varchar(30) DEFAULT NULL,
+  `strClientCompanyDepartmentName` varchar(50) DEFAULT NULL,
+  `strClientCompanyAddress` varchar(50) DEFAULT NULL,
+  `strClientCompanySuburb` varchar(30) DEFAULT NULL,
+  `strClientCompanyState` varchar(4) DEFAULT NULL,
+  `intClientCompanyPostcode` int(10) DEFAULT NULL,
+  `strClientPhone` varchar(32) DEFAULT NULL,
+  `strClientMobile` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`intMemberID`),
+  KEY `FK_tblClient_tblMember` (`intMemberID`),
+  CONSTRAINT `FK_tblClient_tblMember` FOREIGN KEY (`intMemberID`) REFERENCES `tblMember` (`intMemberID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblCourse" view="colnames">
+<left>243</left>
+<top>3</top>
+<width>132</width>
+<height>141</height>
+<sql_create_table>CREATE TABLE `tblCourse` (
+  `intCourseID` int(11) NOT NULL AUTO_INCREMENT,
+  `intProjectID` int(11) DEFAULT NULL,
+  `strCourseCode` varchar(32) DEFAULT NULL,
+  `strDescription` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`intCourseID`),
+  KEY `FK_tblCourse_tblProject` (`intProjectID`),
+  CONSTRAINT `FK_tblCourse_tblProject` FOREIGN KEY (`intProjectID`) REFERENCES `tblProject` (`intProjectID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblIssue" view="colnames">
+<left>969</left>
+<top>562</top>
+<width>231</width>
+<height>277</height>
+<sql_create_table>CREATE TABLE `tblIssue` (
+  `intIssueID` int(11) NOT NULL AUTO_INCREMENT,
+  `intProjectMemberID` int(11) NOT NULL,
+  `intProjectID` int(11) NOT NULL,
+  `intRiskID` int(11) DEFAULT NULL,
+  `strIssueTypeID` varchar(255) DEFAULT NULL,
+  `strIssueDescription` varchar(1000) DEFAULT NULL,
+  `dmtIssueDateRaised` date DEFAULT NULL,
+  `dmtIssueRequirementFinishDate` date DEFAULT NULL,
+  `strIssueStatus` varchar(255) DEFAULT NULL,
+  `dmtIssueDateClosed` date DEFAULT NULL,
+  `strIssueOutcome` varchar(5000) DEFAULT NULL,
+  `intIssueRating` int(11) DEFAULT NULL,
+  PRIMARY KEY (`intIssueID`,`intProjectMemberID`,`intProjectID`),
+  KEY `FK_tblIssue_tblProjectMember` (`intProjectMemberID`),
+  KEY `FK_tblIssue_tblProject` (`intProjectID`),
+  KEY `FK_tblIssue_tblRisk` (`intRiskID`),
+  KEY `FK_tblIssue_tblIssueType` (`strIssueTypeID`),
+  CONSTRAINT `FK_tblIssue_tblProjectMember` FOREIGN KEY (`intProjectMemberID`) REFERENCES `tblProjectMember` (`intProjectMemberID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblIssueItem_tblProject` FOREIGN KEY (`intProjectID`) REFERENCES `tblProject` (`intProjectID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblIssueItem_tblRisk` FOREIGN KEY (`intRiskID`) REFERENCES `tblRisk` (`intRiskID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblIssue_tblIssueType` FOREIGN KEY (`strIssueTypeID`) REFERENCES `tblIssueType` (`strIssueTypeID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblIssueType" view="colnames">
+<left>1306</left>
+<top>688</top>
+<width>134</width>
+<height>90</height>
+<sql_create_table>CREATE TABLE `tblIssueType` (
+  `strIssueTypeID` varchar(255) NOT NULL,
+  PRIMARY KEY (`strIssueTypeID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblMember" view="colnames">
+<left>245</left>
+<top>314</top>
+<width>164</width>
+<height>175</height>
+<sql_create_table>CREATE TABLE `tblMember` (
+  `intMemberID` int(11) NOT NULL AUTO_INCREMENT,
+  `strMemberName` varchar(32) DEFAULT NULL,
+  `strMemberPassword` varchar(32) DEFAULT NULL,
+  `strMemberFirstName` varchar(32) DEFAULT NULL,
+  `strMemberLastName` varchar(32) DEFAULT NULL,
+  `strMemberEmail` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`intMemberID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblMemberCourse" view="colnames">
+<left>21</left>
+<top>168</top>
+<width>161</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `tblMemberCourse` (
+  `intMemberCourseID` int(11) NOT NULL AUTO_INCREMENT,
+  `intCourseID` int(11) DEFAULT NULL,
+  `intMemberID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`intMemberCourseID`),
+  KEY `FK_tblMemberCourse_tblCourse` (`intCourseID`),
+  KEY `FK_tblMemberCourse_tblMember` (`intMemberID`),
+  CONSTRAINT `FK_tblMemberCourse_tblCourse` FOREIGN KEY (`intCourseID`) REFERENCES `tblCourse` (`intCourseID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblMemberCourse_tblMember` FOREIGN KEY (`intMemberID`) REFERENCES `tblMember` (`intMemberID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblPermission" view="colnames">
+<left>630</left>
+<top>661</top>
+<width>187</width>
+<height>107</height>
+<sql_create_table>CREATE TABLE `tblPermission` (
+  `intPermissionID` int(11) NOT NULL AUTO_INCREMENT,
+  `strPermissionDescription` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`intPermissionID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblProject" view="colnames">
+<left>1507</left>
+<top>0</top>
+<width>172</width>
+<height>226</height>
+<sql_create_table>CREATE TABLE `tblProject` (
+  `intProjectID` int(11) NOT NULL AUTO_INCREMENT,
+  `strProjectName` varchar(64) DEFAULT NULL,
+  `strProjectSponsor` varchar(64) DEFAULT NULL,
+  `strProjectDescription` varchar(100) DEFAULT NULL,
+  `dmtProjectStartDate` date DEFAULT NULL,
+  `dmtProjectEndDate` date DEFAULT NULL,
+  `strProjectTeamName` varchar(64) DEFAULT NULL,
+  `strProjectTeamLeader` varchar(64) DEFAULT NULL,
+  `strProjectSiteURL` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`intProjectID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblRisk" view="colnames">
+<left>1194</left>
+<top>234</top>
+<width>215</width>
+<height>306</height>
+<sql_create_table>CREATE TABLE `tblRisk` (
+  `intRiskID` int(11) NOT NULL AUTO_INCREMENT,
+  `intProjectMemberID` int(11) NOT NULL,
+  `intProjectID` int(11) NOT NULL,
+  `strRiskTypeID` varchar(255) DEFAULT NULL,
+  `strRiskDescription` varchar(1000) DEFAULT NULL,
+  `strRiskImpactDescription` varchar(5000) DEFAULT NULL,
+  `strRiskStatus` varchar(255) DEFAULT NULL,
+  `strRiskLevelOfImpact` varchar(255) DEFAULT NULL,
+  `strLikelihoodOfImpact` varchar(255) DEFAULT NULL,
+  `strRiskConsequenceOfImpact` varchar(255) DEFAULT NULL,
+  `strRiskMitigationStrategy` varchar(5000) DEFAULT NULL,
+  `strRiskContingencyStrategy` varchar(5000) DEFAULT NULL,
+  `dmtRiskDateRaised` date DEFAULT NULL,
+  `dmtRiskDateClosed` date DEFAULT NULL,
+  PRIMARY KEY (`intRiskID`,`intProjectMemberID`,`intProjectID`),
+  KEY `FK_tblRisk_tblProjectMember` (`intProjectMemberID`),
+  KEY `FK_tblRisk_tblProject` (`intProjectID`),
+  KEY `FK_tblRisk_tblRiskType` (`strRiskTypeID`),
+  CONSTRAINT `FK_tblRisk_tblProjectMember` FOREIGN KEY (`intProjectMemberID`) REFERENCES `tblProjectMember` (`intProjectMemberID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblRiskItem_tblProject` FOREIGN KEY (`intProjectID`) REFERENCES `tblProject` (`intProjectID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblRisk_tblRiskType` FOREIGN KEY (`strRiskTypeID`) REFERENCES `tblRiskType` (`strRiskTypeID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblRiskType" view="colnames">
+<left>1523</left>
+<top>389</top>
+<width>127</width>
+<height>90</height>
+<sql_create_table>CREATE TABLE `tblRiskType` (
+  `strRiskTypeID` varchar(255) NOT NULL,
+  PRIMARY KEY (`strRiskTypeID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblStudent" view="colnames">
+<left>19</left>
+<top>418</top>
+<width>120</width>
+<height>90</height>
+<sql_create_table>CREATE TABLE `tblStudent` (
+  `intMemberID` int(11) NOT NULL,
+  PRIMARY KEY (`intMemberID`),
+  KEY `FK_tblStudent_tblMember` (`intMemberID`),
+  CONSTRAINT `FK_tblStudent_tblMember` FOREIGN KEY (`intMemberID`) REFERENCES `tblMember` (`intMemberID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblTeacher" view="colnames">
+<left>344</left>
+<top>634</top>
+<width>150</width>
+<height>141</height>
+<sql_create_table>CREATE TABLE `tblTeacher` (
+  `intMemberID` int(11) NOT NULL,
+  `strTeacherJobTitle` varchar(30) DEFAULT NULL,
+  `strTeacherPhone` varchar(32) DEFAULT NULL,
+  `strTeacherMobile` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`intMemberID`),
+  KEY `FK_tblTeacher_tblMember` (`intMemberID`),
+  CONSTRAINT `FK_tblTeacher_tblMember` FOREIGN KEY (`intMemberID`) REFERENCES `tblMember` (`intMemberID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblProjectMember" view="colnames">
+<left>485</left>
+<top>369</top>
+<width>160</width>
+<height>141</height>
+<sql_create_table>CREATE TABLE `tblProjectMember` (
+  `intProjectMemberID` int(11) NOT NULL AUTO_INCREMENT,
+  `intMemberID` int(11) DEFAULT NULL,
+  `intProjectID` int(11) DEFAULT NULL,
+  `intPermissionID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`intProjectMemberID`),
+  KEY `FK_tblProjectMember_tblMember` (`intMemberID`),
+  KEY `FK_tblProjectMember_tblProject` (`intProjectID`),
+  KEY `FK_tblProjectMember_tblPermission` (`intPermissionID`),
+  CONSTRAINT `FK_tblProjectMember_tblMember` FOREIGN KEY (`intMemberID`) REFERENCES `tblMember` (`intMemberID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblProjectMember_tblProject` FOREIGN KEY (`intProjectID`) REFERENCES `tblProject` (`intProjectID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblProjectMember_tblPermission` FOREIGN KEY (`intPermissionID`) REFERENCES `tblPermission` (`intPermissionID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tblStatus" view="colnames">
+<left>695</left>
+<top>94</top>
+<width>207</width>
+<height>226</height>
+<sql_create_table>CREATE TABLE `tblStatus` (
+  `intProjectID` int(11) NOT NULL,
+  `intProjectMemberID` int(11) NOT NULL,
+  `dmtStatusDate` date NOT NULL,
+  `dmtStatusCurrentDate` date NOT NULL,
+  `dmtStatusActualDate` date NOT NULL,
+  `strStatusDifference` varchar(5000) DEFAULT NULL,
+  `strStatusWhy` varchar(5000) DEFAULT NULL,
+  `strStatusGanttLink` varchar(1000) DEFAULT NULL,
+  `strStatusGanttLinkComment` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`intProjectID`,`intProjectMemberID`,`dmtStatusDate`),
+  KEY `FK_tblStatus_tblProject` (`intProjectID`),
+  KEY `FK_tblStatus_tblProjectMember` (`intProjectMemberID`),
+  CONSTRAINT `FK_tblStatus_tblProject` FOREIGN KEY (`intProjectID`) REFERENCES `tblProject` (`intProjectID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblStatus_tblProjectMember` FOREIGN KEY (`intProjectMemberID`) REFERENCES `tblProjectMember` (`intProjectMemberID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
