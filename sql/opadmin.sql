@@ -1,5 +1,5 @@
 #DROP DATABASE IF EXISTS opadmin;
-#CREATE DATABASE opadmin;
+#CREATE DATABASE opadmin character set utf8;
 
 USE opadmin;
 
