@@ -67,21 +67,10 @@ class Status {
     }
 
     function displayStatus() {
-        echo "<p>Today is <b>" . $_ENV['currentDate'] . "</b><br />";
-        echo "Status report as of: <b>" . $this->dmtStatusCurrentDate . "</b><br />\n";
-        echo "Current status is <b>" . $this->strStatusCondition . "</b><br />\n";
-        echo "Where we are: <b>" . $this->strStatusDate . "</b><br />\n";
-        echo "Where we should be: <b>" . $this->strStatusActualDate . "</b><br /><br />\n";
-        echo "<b>Differences?</b><br />\n";
-        echo $this->strStatusDifference . "<br /><br />\n";
-        echo "<b>Why?</b><br />\n";
-        echo $this->strStatusWhy . "<br /><br />\n";
-        echo "Gantt Link: <a href=>" . $this->strStatusGanttLink . "</a><br />\n";
-        echo "Gantt Comment: <b>" . $this->strStatusGanttLinkComment . "</b>\n";
-        echo "</p><br />\n";
+        include_once("view/status/statusDisplay.php");
     }
 
-    function displayStatusTable() {
+    function displayStatusHistory() {
         $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment".
                 " FROM tblStatus WHERE intProjectID = '$this->intProjectID' AND intProjectMemberID = '$this->intProjectMemberID';";
         $sqlArr = getArr($query);
@@ -116,7 +105,7 @@ class Status {
                 echo "</td>\n<td>\n";
                 
                 echo '<form method="post">';
-                echo '<input type="hidden" name="page" value="mainscreen" />' . "\n";
+                echo '<input type="hidden" name="page" value="status" />' . "\n";
                 echo '<input type="hidden" name="todo" value="deletestatus" />' . "\n";
                 echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
                 echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
@@ -139,31 +128,7 @@ class Status {
     }
 
     function displayAddForm() {
-        ?><td>
-        <h3>Add Status for selected date:</h3>
-        <form method="post">
-            <input type="hidden" name="page" value="mainscreen" />
-            <input type="hidden" name="todo" value="addstatus" />
-            <input type="hidden" name="m" value="<?php echo $this->intMemberID; ?>" />
-            <input type="hidden" name="p" value="<?php echo $this->intProjectID; ?>" />
-            Status Creation Date:<br />
-            <input type="text" name="dmtStatusCurrentDate" value="<?php echo $_ENV['currentDate']; ?>"/><br />
-            Where we are:<br />
-            <input type="text" name="strStatusDate" /><br />
-            Where we should be:<br />
-            <input type="text" name="strStatusActualDate" /><br />
-            Difference:<br />
-            <textarea name="strStatusDifference"></textarea><br />
-            Why:<br />
-            <textarea name="strStatusWhy"></textarea><br />
-            Gantt Link:<br />
-            <input type="text" name="strStatusGanttLink" value="http://"/><br />
-            Gantt Link Comment:<br />
-            <input type="text" name="strStatusGanttLinkComment" /><br />
-            <br />
-            <input type="submit" value="Submit New Status" />
-        </form></td>
-        <?php
+        include_once("view/status/statusAddForm.php");
     }
 
 }

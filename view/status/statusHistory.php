@@ -32,7 +32,7 @@ echo '<input type="hidden" name="m" value="' . $memberObj->intMemberID . '" />' 
 echo '<input type="hidden" name="p" value="' . $projectObj->intProjectID . '" />' . "\n";
 echo '<input type="submit" value="Add New Status" />' . "\n";
 echo '</form>';
-$statusObj->displayStatusTable();
+$statusObj->displayStatusHistory();
 
 echo "<br /><br />\n";
 
@@ -44,3 +44,4 @@ $issueObj = new Issue();
 $issueObj->echoIssueTable($memberObj->intMemberID, $projectObj->intProjectID);
 
 ?>
+</td>

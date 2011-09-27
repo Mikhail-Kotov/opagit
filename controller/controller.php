@@ -6,29 +6,35 @@ if (isset($_POST["page"])) {
     $page = "chooseproject";
 }
 
-include_once("inc/header.php");
+include_once("view/header.php");
 
 if ($page == "chooseproject" || $page == "choosemember") {
     // don't show menu
     echo '<td width="200">&nbsp;</td>'."\n";
+} else {
+    $currentMemberID = $_POST["m"];
+    $currentProjectID = $_POST["p"];
+    $currentProjectMemberID = getProjectMember($currentMemberID, $currentProjectID);    
+    include_once("view/menu.php");
 }
 
 if ($page == "chooseproject") {
-    include_once("choose/project.php");
+    include_once("view/project/projectChoose.php");
 }
 
 if ($page == "choosemember") {
     $currentProjectID = $_POST["p"];
-    include_once("choose/member.php");
+    include_once("view/member/memberChoose.php");
 }
 
-if ($page == "mainscreen") {
-    include_once("inc/menu.php");
-    $currentMemberID = $_POST["m"];
-    $currentProjectID = $_POST["p"];
-    $currentProjectMemberID = getProjectMember($currentMemberID, $currentProjectID);
+if ($page == "main") {
+    include_once("view/main.php");
+}
+
+if ($page == "status") {
     if (isset($_POST["todo"])) {
         $todo = $_POST["todo"];
+        
         if ($todo == "addstatus") {
             $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
             $strStatusDate = $_POST["strStatusDate"];
@@ -42,12 +48,14 @@ if ($page == "mainscreen") {
             $statusObj->addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
             unset($statusObj);
         }
+        
         if ($todo == "deletestatus") {
             $intStatusID = $_POST["intStatusID"];
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
             $statusObj->delDetails($intStatusID);
             unset($statusObj);
         }
+        
         if ($todo == "editstatus") {
             $intStatusID = $_POST["intStatusID"];
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
@@ -55,16 +63,15 @@ if ($page == "mainscreen") {
             unset($statusObj);
         }
     }
-    include_once("view/content.php");
+    
+    include_once("view/status/statusHistory.php");
 }
 
+
 if ($page == "addstatus") {
-    include_once("inc/menu.php");
-    $currentMemberID = $_POST["m"];
-    $currentProjectID = $_POST["p"];
-    $currentProjectMemberID = getProjectMember($currentMemberID, $currentProjectID);
     $statusObj = new Status($currentProjectID, $currentProjectMemberID);
     $statusObj->displayAddForm();
 }
-include_once("inc/footer.php");
+
+include_once("view/footer.php");
 ?>
