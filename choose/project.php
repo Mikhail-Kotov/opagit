@@ -1,3 +1,4 @@
+<td>
 <?php
 
 echo "<p>Choose a Project:</p>\n";
@@ -21,3 +22,4 @@ echo '<input type="hidden" name="page" value="choosemember" />' . "\n";
 echo '<input type="submit" value="Submit" />' . "\n";
 echo "</p>\n</form>\n";
 ?>
+</td>

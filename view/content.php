@@ -1,3 +1,4 @@
+<td>
 <?php
 // get strMemberName, strMemberFirstName, strMemberLastName
 $memberObj = new Member($currentMemberID);

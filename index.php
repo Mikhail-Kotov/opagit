@@ -19,8 +19,8 @@ $_ENV['currentDate'] = date("Y-m-d");
 
 ob_start();
 $_ENV['firephp']->log($_POST, '_POST');
-include_once("inc/header.php");
-include_once("inc/body.php");
-include_once("inc/footer.php");
+
+include_once("controller/controller.php");
+
 closeDB($link);
 ?>

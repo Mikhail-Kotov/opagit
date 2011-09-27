@@ -1,7 +1,7 @@
 <?php
 
 function connectDB() {
-    $link = mysql_connect('localhost', 'root', 'root');
+    $link = mysql_connect('localhost', 'opadmin', 'Hu3bi9');
     if (!$link) {
         die('Could not connect: ' . mysql_error());
     }

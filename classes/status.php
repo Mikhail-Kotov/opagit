@@ -139,7 +139,7 @@ class Status {
     }
 
     function displayAddForm() {
-        ?>
+        ?><td>
         <h3>Add Status for selected date:</h3>
         <form method="post">
             <input type="hidden" name="page" value="mainscreen" />
@@ -162,7 +162,7 @@ class Status {
             <input type="text" name="strStatusGanttLinkComment" /><br />
             <br />
             <input type="submit" value="Submit New Status" />
-        </form>
+        </form></td>
         <?php
     }
 

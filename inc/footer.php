@@ -1,7 +1,9 @@
 
-
 <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer -->
-<p><a href="javascript:history.go(-1)">Back</a></p>
-<p><a href="">Logout</a></p>
-    </body>
+  </tr>
+  <tr>
+    <td colspan="2">(c) OPA Team 2011</td>
+  </tr>
+</table>
+</body>
 </html>
