@@ -24,8 +24,6 @@ if (isset($statusObj->intStatusID)) {
     $statusObj->displayStatus();
 }
 
-//echo '<a href="add/risk.php">Add a new Risk</a><br /><a href="add/issue.php">Add a new Issue</a><br />';
-//echo '<a href="?page=addstatus&p='.$projectObj->intProjectID.'&m='.$memberObj->intMemberID.'">Update Status for this date</a><br /><br />';
 echo '<form method="post">';
 echo '<input type="hidden" name="page" value="addstatus" />' . "\n";
 echo '<input type="hidden" name="m" value="' . $memberObj->intMemberID . '" />' . "\n";
