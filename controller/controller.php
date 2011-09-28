@@ -68,10 +68,12 @@ if ($page == "status") {
 }
 
 if ($page == "statushistory") {
+    include_once("model/status/init.php");
     include_once("model/status/history.php");
 }
 
 if ($page == "statusview") {
+    include_once("model/status/init.php");
     include_once("model/status/view.php");
 }
 

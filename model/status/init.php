@@ -1,7 +1,17 @@
 <?php
+// get strMemberName, strMemberFirstName, strMemberLastName
+$memberObj = new Member($currentMemberID);
+$memberObj->getDetails();
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+// get strProjectName
+$projectObj = new Project($currentProjectID);
+$projectObj->getDetails();
+
+// find intProjectMemberID
+$currentProjectMemberID = getProjectMember($memberObj->intMemberID, $projectObj->intProjectID);
+
+// get last status details
+$statusObj = new Status($projectObj->intProjectID, $currentProjectMemberID);
+$statusObj->getDetails();
+
 ?>
