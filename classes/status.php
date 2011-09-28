@@ -42,8 +42,13 @@ class Status {
         }
     }
     
-    function setDetails() {
-        
+    function setDetails($intStatusID,$dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) {
+        $query = "UPDATE tblStatus SET intProjectID='$this->intProjectID',intProjectMemberID='$this->intProjectMemberID',dmtStatusCurrentDate='$dmtStatusCurrentDate',strStatusDate='$strStatusDate',strStatusActualDate='$strStatusActualDate'," .
+                "strStatusDifference='$strStatusDifference',strStatusWhy='$strStatusWhy',strStatusGanttLink='$strStatusGanttLink',strStatusGanttLinkComment='$strStatusGanttLinkComment' WHERE intStatusID = '$intStatusID';";
+        $sql = mysql_query($query);
+
+        if (!$sql)
+            die('Invalid query: ' . mysql_error());
     }
 
     function addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, 
@@ -111,7 +116,7 @@ class Status {
                 echo '<input type="hidden" name="todo" value="delete" />' . "\n";
                 echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
                 echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
-                echo '<input type="hidden" name="intStatusID" value="' . $arr2["intStatusID"] . '" />' . "\n";
+                echo '<input type="hidden" name="s" value="' . $arr2["intStatusID"] . '" />' . "\n";
                 echo '<input type="submit" value="Delete" />' . "\n";
                 echo "</form>\n";
                 echo "</td>\n";

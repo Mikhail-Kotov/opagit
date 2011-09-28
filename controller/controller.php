@@ -50,16 +50,24 @@ if ($page == "status") {
         }
         
         if ($todo == "delete") {
-            $intStatusID = $_POST["intStatusID"];
+            $intStatusID = $_POST["s"];
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
             $statusObj->delDetails($intStatusID);
             unset($statusObj);
         }
         
         if ($todo == "edit") {
-            $intStatusID = $_POST["intStatusID"];
+            $intStatusID = $_POST["s"];
+            $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
+            $strStatusDate = $_POST['strStatusDate'];
+            $strStatusActualDate = $_POST['strStatusActualDate'];
+            $strStatusDifference = $_POST['strStatusDifference'];
+            $strStatusWhy = $_POST['strStatusWhy'];
+            $strStatusGanttLink = $_POST['strStatusGanttLink'];
+            $strStatusGanttLinkComment = $_POST['strStatusGanttLinkComment'];
+
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
-            $statusObj->setDetails($intStatusID);
+            $statusObj->setDetails($intStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
             unset($statusObj);
         }
     }
@@ -84,6 +92,7 @@ if ($page == "statusadd") {
 
 if ($page == "statusedit") {
     $statusObj = new Status($currentProjectID, $currentProjectMemberID);
+    $statusObj->getDetails();
     $statusObj->displayEditForm();
 }
 

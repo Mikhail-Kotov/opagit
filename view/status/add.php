@@ -19,5 +19,5 @@
     Gantt Link Comment:<br />
     <input type="text" name="strStatusGanttLinkComment" /><br />
     <br />
-    <input type="submit" value="Submit New Status" />
+    <input type="submit" value="Submit" />
 </form>
