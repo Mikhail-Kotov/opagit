@@ -67,6 +67,10 @@ if ($page == "status") {
     include_once("view/status/statusHistory.php");
 }
 
+if ($page == "statushistory") {
+    include_once("view/status/statusHistory.php");
+}
+
 
 if ($page == "addstatus") {
     $statusObj = new Status($currentProjectID, $currentProjectMemberID);

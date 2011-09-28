@@ -1,16 +1,11 @@
 <td width="150">
 <?php
-echo '<form method="post">';
-echo '<input type="hidden" name="page" value="status" />' . "\n";
-echo '<input type="hidden" name="m" value="' . $currentMemberID . '" />' . "\n";
-echo '<input type="hidden" name="p" value="' . $currentProjectID . '" />' . "\n";
-echo '<input type="submit" value="Status" />' . "\n";
-echo '</form>';
+displayButton("status", "Status", $currentMemberID, $currentProjectID);
 ?><br />
-&nbsp;- <a href="#">History</a><br />
-&nbsp;- <a href="#">View</a><br />
-&nbsp;- <a href="#">Add</a><br />
-&nbsp;- <a href="#">Edit</a><br />
+<?php displayButton("statushistory", "Status History", $currentMemberID, $currentProjectID); ?><br />
+<?php displayButton("statusview", "View", $currentMemberID, $currentProjectID); ?><br />
+<?php displayButton("statusadd", "Add", $currentMemberID, $currentProjectID); ?><br />
+<?php displayButton("statusedit", "Edit", $currentMemberID, $currentProjectID); ?><br />
 <br />
 <a href="#">Issue</a><br />
 <a href="#">Risk</a>

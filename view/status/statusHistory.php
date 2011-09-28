@@ -15,17 +15,12 @@ $currentProjectMemberID = getProjectMember($memberObj->intMemberID, $projectObj-
 $statusObj = new Status($projectObj->intProjectID, $currentProjectMemberID);
 $statusObj->getDetails();
 
-echo "<p>Hello <b>" . $memberObj->strMemberFirstName . " " . $memberObj->strMemberLastName . "</b><br />";
-echo 'You are loginned as <b>' . $memberObj->strMemberName . "</b><br />";
-echo "Your Team is <b>" . $projectObj->strProjectTeamName . "</b><br />";
-echo "Your Project is <b>" . $projectObj->strProjectName . "</b></p>";
-
 if (isset($statusObj->intStatusID)) {
     $statusObj->displayStatus();
 }
 
 echo '<form method="post">';
-echo '<input type="hidden" name="page" value="addstatus" />' . "\n";
+echo '<input type="hidden" name="page" value="status" />' . "\n";
 echo '<input type="hidden" name="m" value="' . $memberObj->intMemberID . '" />' . "\n";
 echo '<input type="hidden" name="p" value="' . $projectObj->intProjectID . '" />' . "\n";
 echo '<input type="submit" value="Add New Status" />' . "\n";
