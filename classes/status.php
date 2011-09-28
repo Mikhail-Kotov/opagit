@@ -82,7 +82,8 @@ class Status {
             foreach ($sqlArr[0] as $row => $value) {
                 echo "<th>" . $row . "</th>\n";
             }
-            echo "<th>&nbsp;</th>\n<th>&nbsp;</th>\n";
+            //echo "<th>&nbsp;</th>\n";
+            echo "<th>&nbsp;</th>\n";
             echo "</tr>\n";
 
             foreach ($sqlArr as $arr2) {
@@ -94,7 +95,7 @@ class Status {
                         echo "&nbsp;";
                     echo "</td>\n";
                 }
-                echo "<td>&nbsp;";
+//                echo "<td>&nbsp;";
 //                echo '<form method="post">';
 //                echo '<input type="hidden" name="page" value="editstatus" />' . "\n";
 //                echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
@@ -102,11 +103,12 @@ class Status {
 //                echo '<input type="hidden" name="dmtStatusDate" value="' . $arr2["dmtStatusDate"] . '" />' . "\n";
 //                echo '<input type="submit" value="Edit" />' . "\n";
 //                echo "</form>\n";
-                echo "</td>\n<td>\n";
-                
+//                echo "</td>\n
+
+                echo "<td>\n";
                 echo '<form method="post">';
                 echo '<input type="hidden" name="page" value="status" />' . "\n";
-                echo '<input type="hidden" name="todo" value="deletestatus" />' . "\n";
+                echo '<input type="hidden" name="todo" value="delete" />' . "\n";
                 echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
                 echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
                 echo '<input type="hidden" name="intStatusID" value="' . $arr2["intStatusID"] . '" />' . "\n";

@@ -7,11 +7,12 @@ displayButton("status", "Status", $currentMemberID, $currentProjectID);
 <?php displayButton("statusadd", "Add", $currentMemberID, $currentProjectID); ?><br />
 <?php displayButton("statusedit", "Edit", $currentMemberID, $currentProjectID); ?><br />
 <br />
-<a href="#">Issue</a><br />
-<a href="#">Risk</a>
+<?php displayButton("issuehistory", "Issue", $currentMemberID, $currentProjectID); ?><br />
+<?php displayButton("riskhistory", "Risk", $currentMemberID, $currentProjectID); ?><br />
 <br />
 <a href="#">Timesheets</a><br />
 <br />
 <a href="javascript:history.go(-1)">Back</a><br />
 <a href="">Logout</a>
 </td>
+<td>

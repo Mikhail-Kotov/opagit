@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<table width="1300" border="0">
+<table width="1300" border="1">
   <tr>
     <td colspan="2"><?php echo "<h1>[$page]</h1>\n"; ?></td>
   </tr>

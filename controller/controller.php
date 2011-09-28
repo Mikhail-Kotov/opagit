@@ -35,7 +35,7 @@ if ($page == "status") {
     if (isset($_POST["todo"])) {
         $todo = $_POST["todo"];
         
-        if ($todo == "addstatus") {
+        if ($todo == "add") {
             $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
             $strStatusDate = $_POST["strStatusDate"];
             $strStatusActualDate = $_POST["strStatusActualDate"];
@@ -49,14 +49,14 @@ if ($page == "status") {
             unset($statusObj);
         }
         
-        if ($todo == "deletestatus") {
+        if ($todo == "delete") {
             $intStatusID = $_POST["intStatusID"];
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
             $statusObj->delDetails($intStatusID);
             unset($statusObj);
         }
         
-        if ($todo == "editstatus") {
+        if ($todo == "edit") {
             $intStatusID = $_POST["intStatusID"];
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
             $statusObj->setDetails($intStatusID);
@@ -71,10 +71,22 @@ if ($page == "statushistory") {
     include_once("view/status/statusHistory.php");
 }
 
+if ($page == "statusview") {
+    include_once("view/status/statusView.php");
+}
 
-if ($page == "addstatus") {
+
+if ($page == "statusadd") {
     $statusObj = new Status($currentProjectID, $currentProjectMemberID);
     $statusObj->displayAddForm();
+}
+
+if ($page == "issuehistory") {
+    include_once("view/issue/issueHistory.php");
+}
+
+if ($page == "riskhistory") {
+    include_once("view/risk/riskHistory.php");
 }
 
 include_once("view/footer.php");
