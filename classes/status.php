@@ -67,7 +67,7 @@ class Status {
     }
 
     function displayStatus() {
-        include_once("view/status/statusDisplay.php");
+        include_once("view/status/view.php");
     }
 
     function displayStatusHistory() {
@@ -130,7 +130,11 @@ class Status {
     }
 
     function displayAddForm() {
-        include_once("view/status/statusAddForm.php");
+        include_once("view/status/add.php");
+    }
+    
+    function displayEditForm() {
+        include_once("view/status/edit.php");
     }
 
 }

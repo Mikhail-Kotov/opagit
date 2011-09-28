@@ -1,4 +1,4 @@
-<h3>Add Status for selected date:</h3>
+<h3>Add Status</h3>
 <form method="post">
     <input type="hidden" name="page" value="status" />
     <input type="hidden" name="todo" value="add" />

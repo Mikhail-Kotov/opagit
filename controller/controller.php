@@ -19,12 +19,12 @@ if ($page == "chooseproject" || $page == "choosemember") {
 }
 
 if ($page == "chooseproject") {
-    include_once("view/project/projectChoose.php");
+    include_once("view/project/choose.php");
 }
 
 if ($page == "choosemember") {
     $currentProjectID = $_POST["p"];
-    include_once("view/member/memberChoose.php");
+    include_once("view/member/choose.php");
 }
 
 if ($page == "main") {
@@ -64,29 +64,33 @@ if ($page == "status") {
         }
     }
     
-    include_once("view/status/statusHistory.php");
+    $page = "statushistory";
 }
 
 if ($page == "statushistory") {
-    include_once("view/status/statusHistory.php");
+    include_once("model/status/history.php");
 }
 
 if ($page == "statusview") {
-    include_once("view/status/statusView.php");
+    include_once("model/status/view.php");
 }
-
 
 if ($page == "statusadd") {
     $statusObj = new Status($currentProjectID, $currentProjectMemberID);
     $statusObj->displayAddForm();
 }
 
+if ($page == "statusedit") {
+    $statusObj = new Status($currentProjectID, $currentProjectMemberID);
+    $statusObj->displayEditForm();
+}
+
 if ($page == "issuehistory") {
-    include_once("view/issue/issueHistory.php");
+    include_once("view/issue/history.php");
 }
 
 if ($page == "riskhistory") {
-    include_once("view/risk/riskHistory.php");
+    include_once("view/risk/history.php");
 }
 
 include_once("view/footer.php");

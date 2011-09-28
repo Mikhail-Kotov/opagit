@@ -1,4 +1,3 @@
-<td>
 <?php
 // get strMemberName, strMemberFirstName, strMemberLastName
 $memberObj = new Member($currentMemberID);
@@ -17,4 +16,3 @@ echo "Your Team is <b>" . $projectObj->strProjectTeamName . "</b><br />";
 echo "Your Project is <b>" . $projectObj->strProjectName . "</b></p>";
 ?>
 Please choose something from menu
-</td>
