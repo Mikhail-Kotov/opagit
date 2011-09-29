@@ -6,26 +6,83 @@
 </head>
 
 <body>
-<table width="800" border="1">
+<table width="1300" border="1">
   <tr>
-    <td colspan="2">[header]</td>
+    <td colspan="2"><h1>[status]</h1></td>
+  </tr>
+  <tr> 
+    <!-- header  header  header  header  header  header  header  header  header  header -->
+    
+    <td width="150" valign="top"><table width="100%" border="0">
+        <tr>
+          <td colspan="2"><form method="post">
+              <input type="hidden" name="page" value="status" />
+              <input type="hidden" name="m" value="1" />
+              <input type="hidden" name="p" value="1" />
+              <input type="submit" value="Status" />
+            </form></td>
+        <tr>
+          <td align="right">&nbsp;</td>
+          <td><form method="post">
+              <input type="hidden" name="page" value="statushistory" />
+              <input type="hidden" name="m" value="1" />
+              <input type="hidden" name="p" value="1" />
+              <input type="submit" value="History" />
+            </form></td>
+        <tr>
+          <td align="right">&nbsp;</td>
+          <td><form method="post">
+              <input type="hidden" name="page" value="statusview" />
+              <input type="hidden" name="m" value="1" />
+              <input type="hidden" name="p" value="1" />
+              <input type="submit" value="View" />
+            </form></td>
+        <tr>
+          <td colspan="2"><form method="post">
+              <input type="hidden" name="page" value="statusadd" />
+              <input type="hidden" name="m" value="1" />
+              <input type="hidden" name="p" value="1" />
+              <input type="submit" value="Add" />
+            </form></td>
+        <tr>
+          <td colspan="2"><form method="post">
+              <input type="hidden" name="page" value="statusedit" />
+              <input type="hidden" name="m" value="1" />
+              <input type="hidden" name="p" value="1" />
+              <input type="submit" value="Edit" />
+            </form></td>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        <tr>
+          <td colspan="2"><form method="post">
+              <input type="hidden" name="page" value="issuehistory" />
+              <input type="hidden" name="m" value="1" />
+              <input type="hidden" name="p" value="1" />
+              <input type="submit" value="Issue" />
+            </form></td>
+        <tr>
+          <td colspan="2"><form method="post">
+              <input type="hidden" name="page" value="riskhistory" />
+              <input type="hidden" name="m" value="1" />
+              <input type="hidden" name="p" value="1" />
+              <input type="submit" value="Risk" />
+            </form></td>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        <tr>
+          <td colspan="2"><a href="#">Timesheets</a></td>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        <tr>
+          <td colspan="2"><a href="javascript:history.go(-1)">Back</a><br />
+            <a href="">Logout</a></td>
+    </table></td>
+    <td valign="top">&nbsp;
+      
+    <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer --></td>
   </tr>
   <tr>
-    <td width="200"><a href="#">Status</a><br />
-      &nbsp;- <a href="#">History</a><br />
-      &nbsp;- <a href="#">View</a><br />
-      &nbsp;- <a href="#">Add</a><br />
-      &nbsp;- <a href="#">Edit</a><br />
-      <br />
-      <a href="#">Issue</a><br />
-      <a href="#">Risk</a><br />
-      <a href="#">Timesheets</a><br />
-      <br />
-      <a href="#">Logout</a></td>
-    <td>[content]</td>
-  </tr>
-  <tr>
-    <td colspan="2">[footer]</td>
+    <td colspan="2">(c) OPA Team 2011</td>
   </tr>
 </table>
 </body>

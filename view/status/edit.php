@@ -1,4 +1,4 @@
-<h3>Edit Status</h3>
+<b>Edit Status</b><br /><br />
 <form method="post">
     <input type="hidden" name="page" value="status" />
     <input type="hidden" name="todo" value="edit" />
@@ -20,5 +20,5 @@
     Gantt Link Comment:<br />
     <input type="text" name="strStatusGanttLinkComment" value="<?php echo $this->strStatusGanttLinkComment; ?>" /><br />
     <br />
-    <input type="submit" value="Edit" />
+    <input type="submit" value="Submit" />
 </form>
