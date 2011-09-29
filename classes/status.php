@@ -13,12 +13,12 @@ class Status {
         $this->intProjectMemberID = getProjectMember($this->intMemberID, $this->intProjectID);
     }
 
-    function getDetails() {
+    function getDetails($intStatusID) {
         $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," . 
                 "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
                 " WHERE intProjectID = " . $this->intProjectID .
                 " AND intProjectMemberID = " . $this->intProjectMemberID .
-                " ORDER BY intStatusID DESC LIMIT 1;";
+                " AND intStatusID = " . $intStatusID;
 
         $sqlArr = getArr($query);
        
@@ -31,14 +31,14 @@ class Status {
             $this->strStatusWhy = $sqlArr[0]['strStatusWhy'];
             $this->strStatusGanttLink = $sqlArr[0]['strStatusGanttLink'];
             $this->strStatusGanttLinkComment = $sqlArr[0]['strStatusGanttLinkComment'];
-            $diff = dateDayDiff($this->strStatusDate, $this->strStatusActualDate);
-            if ($diff >= 7) { // <- check & fix it later
-                $this->strStatusCondition = "Ahead";
-            } elseif ($diff <= -7) { // <- check & fix it later
-                $this->strStatusCondition = "Behind";
-            } else {
-                $this->strStatusCondition = "Up to date";
-            }
+//            $diff = dateDayDiff($this->strStatusDate, $this->strStatusActualDate);
+//            if ($diff >= 7) { // <- check & fix it later
+//                $this->strStatusCondition = "Ahead";
+//            } elseif ($diff <= -7) { // <- check & fix it later
+//                $this->strStatusCondition = "Behind";
+//            } else {
+//                $this->strStatusCondition = "Up to date";
+//            }
         }
     }
     

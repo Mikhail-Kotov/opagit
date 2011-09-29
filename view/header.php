@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>OPA</title>
+<title><?php echo $version ?></title>
 </head>
 
 <body>
-<table width="1450" border="1">
+<table width="1450" height="800" border="0">
   <tr>
-    <td colspan="2"><?php echo "<h1>[$page]</h1>\n"; ?></td>
+    <td colspan="2" height="30"><?php echo "<h2>[$page]</h2>\n"; ?><hr /><br /></td>
   </tr>
   <tr>
 <!-- header  header  header  header  header  header  header  header  header  header -->

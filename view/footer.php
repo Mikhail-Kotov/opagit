@@ -3,7 +3,7 @@
     </td>
   </tr>
   <tr>
-    <td colspan="2">(c) OPA Team 2011</td>
+    <td colspan="2" height="30"><hr /><?php echo $version ?></td>
   </tr>
 </table>
 </body>

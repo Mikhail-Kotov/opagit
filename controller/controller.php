@@ -50,14 +50,14 @@ if ($page == "status") {
         }
         
         if ($todo == "delete") {
-            $intStatusID = $_POST["s"];
+            $currentStatusID = $_POST["s"];
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
-            $statusObj->delDetails($intStatusID);
+            $statusObj->delDetails($currentStatusID);
             unset($statusObj);
         }
         
         if ($todo == "edit") {
-            $intStatusID = $_POST["s"];
+            $currentStatusID = $_POST["s"];
             $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
             $strStatusDate = $_POST['strStatusDate'];
             $strStatusActualDate = $_POST['strStatusActualDate'];
@@ -67,7 +67,7 @@ if ($page == "status") {
             $strStatusGanttLinkComment = $_POST['strStatusGanttLinkComment'];
 
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
-            $statusObj->setDetails($intStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
+            $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
             unset($statusObj);
         }
     }
@@ -77,11 +77,18 @@ if ($page == "status") {
 
 if ($page == "statushistory") {
     include_once("model/status/init.php");
+    $statusObj->getDetails(17);
     include_once("model/status/history.php");
 }
 
 if ($page == "statusview") {
     include_once("model/status/init.php");
+    if (isset($_POST["s"])) {
+        $statusObj->intStatusID = $_POST["s"];
+    } else {
+        $statusObj->intStatusID = 17; // TODO get last status
+    }
+    $statusObj->getDetails($statusObj->intStatusID);
     include_once("model/status/view.php");
 }
 
@@ -91,9 +98,14 @@ if ($page == "statusadd") {
 }
 
 if ($page == "statusedit") {
-    $statusObj = new Status($currentProjectID, $currentProjectMemberID);
-    $statusObj->getDetails();
-    $statusObj->displayEditForm();
+    if (isset($_POST["s"])) {
+        $currentStatusID = $_POST["s"];
+        $statusObj = new Status($currentProjectID, $currentProjectMemberID);
+        $statusObj->getDetails($currentStatusID);
+        $statusObj->displayEditForm();
+    } else {
+        die("wrong data in edit form");
+    }
 }
 
 if ($page == "issuehistory") {

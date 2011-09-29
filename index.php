@@ -1,5 +1,5 @@
 <?php
-// 19 Sept 3am: github commit issue test
+$version = "OPA Team Prototype, version updated 29 September 2011, 10.00 pm";
 
 error_reporting(E_ALL);
 ini_set('display_errors','On');
