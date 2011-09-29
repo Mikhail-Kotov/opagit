@@ -14,7 +14,7 @@
         <tr>
             <td align="right">&nbsp;</td>
             <td>
-                <?php displayButton("statusview", "View", $currentMemberID, $currentProjectID); ?>
+                <?php displayButton("statusview", "View Last", $currentMemberID, $currentProjectID); ?>
             </td>
         </tr>
         <tr>

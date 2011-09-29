@@ -6,6 +6,7 @@
 </head>
 
 <body>
+<a name="top"></a>    
 <table width="1450" height="800" border="0">
   <tr>
     <td colspan="2" height="30"><?php echo "<h2>[$page]</h2>\n"; ?><hr /><br /></td>

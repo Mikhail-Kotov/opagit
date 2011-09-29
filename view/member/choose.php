@@ -1,4 +1,4 @@
-<td>
+<td valign="top">
 <?php
 
 echo "<p>Choose a Member:</p>\n";
@@ -42,4 +42,3 @@ echo "</p>\n</form>\n";
 //echo '<a href="../edit/member.php">Edit a Member</a><br />' . "\n";
 //echo '<a href="../delete/member.php">Delete a Member</a><br />' . "\n";
 ?>
-</td>

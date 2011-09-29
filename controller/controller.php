@@ -77,8 +77,13 @@ if ($page == "status") {
 
 if ($page == "statushistory") {
     include_once("model/status/init.php");
-    $statusObj->getDetails(17);
-    include_once("model/status/history.php");
+    $statusObj->getLastStatusID();
+    if(isset($statusObj->intStatusID)) {
+        $statusObj->getDetails($statusObj->intStatusID);
+        include_once("model/status/history.php");
+    } else {
+        $page = "statusadd";
+    }
 }
 
 if ($page == "statusview") {
@@ -86,10 +91,14 @@ if ($page == "statusview") {
     if (isset($_POST["s"])) {
         $statusObj->intStatusID = $_POST["s"];
     } else {
-        $statusObj->intStatusID = 17; // TODO get last status
+        $statusObj->getLastStatusID();
     }
-    $statusObj->getDetails($statusObj->intStatusID);
-    include_once("model/status/view.php");
+    if(isset($statusObj->intStatusID)) {
+        $statusObj->getDetails($statusObj->intStatusID);
+        include_once("model/status/view.php");
+    } else {
+        $page = "statusadd";
+    }
 }
 
 if ($page == "statusadd") {

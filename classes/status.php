@@ -42,6 +42,20 @@ class Status {
         }
     }
     
+    function getLastStatusID() {
+        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," .
+                "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
+                " WHERE intProjectID = " . $this->intProjectID .
+                " AND intProjectMemberID = " . $this->intProjectMemberID .
+                " ORDER BY intStatusID DESC LIMIT 1;";
+
+        $sqlArr = getArr($query);
+       
+        if(isset($sqlArr[0])) {
+            $this->intStatusID = $sqlArr[0]['intStatusID'];
+        }
+    }
+    
     function setDetails($intStatusID,$dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) {
         $query = "UPDATE tblStatus SET intProjectID='$this->intProjectID',intProjectMemberID='$this->intProjectMemberID',dmtStatusCurrentDate='$dmtStatusCurrentDate',strStatusDate='$strStatusDate',strStatusActualDate='$strStatusActualDate'," .
                 "strStatusDifference='$strStatusDifference',strStatusWhy='$strStatusWhy',strStatusGanttLink='$strStatusGanttLink',strStatusGanttLinkComment='$strStatusGanttLinkComment' WHERE intStatusID = '$intStatusID';";

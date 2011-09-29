@@ -21,3 +21,5 @@
     <br />
     <input type="submit" value="Submit" />
 </form>
+
+<?php include_once("view/status/bottomMenu.php"); ?>

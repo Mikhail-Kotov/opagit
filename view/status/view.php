@@ -10,12 +10,13 @@ echo "<b>Notes/Reasons:</b><br />\n";
 echo $this->strStatusWhy . "<br /><br /><br />\n";
 echo '<b>Attachment:</b><br /><a href="' . $this->strStatusGanttLink . '">' . $this->strStatusGanttLink . "</a><br /><br />\n";
 echo "<b>Attachment Comment:</b><br />" . $this->strStatusGanttLinkComment . "<br /><br />\n";
-
 echo '<form method="post">';
 echo '<input type="hidden" name="page" value="statusedit" />' . "\n";
 echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
 echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
 echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
-echo '<input type="submit" value="Edit" />' . "\n";
+echo '<input type="submit" value="Edit Status" />' . "\n";
 echo '</form>';
+include_once("view/status/bottomMenu.php");
 ?>
+
