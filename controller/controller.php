@@ -46,7 +46,8 @@ if ($page == "status") {
             $strStatusGanttLinkComment = $_POST["strStatusGanttLinkComment"];
 
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
-            $statusObj->addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
+            $statusObj->addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, 
+                    $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
             unset($statusObj);
         }
         
@@ -69,7 +70,8 @@ if ($page == "status") {
             $strStatusGanttLinkComment = $_POST['strStatusGanttLinkComment'];
 
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
-            $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
+            $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, 
+                    $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
             unset($statusObj);
         }
     }

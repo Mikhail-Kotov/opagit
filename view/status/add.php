@@ -6,27 +6,40 @@
     <input type="hidden" name="p" value="<?php echo $this->intProjectID; ?>" />
     Status Creation Date:<br />
     <input type="text" name="dmtStatusCurrentDate" value="<?php echo $_ENV['currentDate']; ?>"/><br /><br />
-    Project Name: //TODO Add HTML Select-Option here<br /><br />
+    Project Name:<br />
+    <select name ="intProjectID">
+        <?php
+        $projectsArr = $this->getProjects();
+        foreach ($projectsArr as $row => $value) {
+            echo '<option value="' . $value['intProjectID'] . '"';
+            if ($value['intProjectID'] == $this->intProjectID) {
+                echo ' selected="selected"';
+            }
+            echo'>' . $value['strProjectName'] . "</option>\n";
+        }
+        ?>
+    </select>
+    <br /><br />
     Actual Baseline:<br />
     <textarea name="strStatusDate" /></textarea><br /><br />
-    Plan Baseline:<br />
-    <textarea name="strStatusActualDate" /></textarea><br /><br />
-    Status Condition:<br />
-    <select name ="strStatusCondition">
-        <option value="Uptodate" selected="selected">Up to date</option>
-        <option value="Ahead">Ahead</option>
-        <option value="Behind">Behind</option>    
-    </select><br />
-    Variation:<br />
-    <textarea name="strStatusDifference"></textarea><br /><br />
-    Notes/Reasons:<br />
-    <textarea name="strStatusWhy"></textarea><br /><br />
-    Attachment:<br />
-    <input type="text" name="strStatusGanttLink" value="http://"/><br /><br />
-    Attachment Comment:<br />
-    <input type="text" name="strStatusGanttLinkComment" /><br />
-    <br />
-    <input type="submit" value="Submit" />
+Plan Baseline:<br />
+<textarea name="strStatusActualDate" /></textarea><br /><br />
+Status Condition:<br />
+<select name ="strStatusCondition">
+    <option value="Up to date">Up to date</option>
+    <option value="Ahead">Ahead</option>
+    <option value="Behind">Behind</option>    
+</select><br /><br />
+Variation:<br />
+<textarea name="strStatusDifference"></textarea><br /><br />
+Notes/Reasons:<br />
+<textarea name="strStatusWhy"></textarea><br /><br />
+Attachment:<br />
+<input type="text" name="strStatusGanttLink" value="http://"/><br /><br />
+Attachment Comment:<br />
+<input type="text" name="strStatusGanttLinkComment" /><br />
+<br />
+<input type="submit" value="Submit" />
 </form>
 
 <?php include_once("view/status/bottomMenu.php"); ?>

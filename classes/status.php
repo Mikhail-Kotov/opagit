@@ -6,10 +6,10 @@ class Status {
     public $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition;
     public $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment;
 
-    function __construct($intMemberID, $intProjectID) {
-        $this->intMemberID = $intMemberID;
+    function __construct($intProjectID, $intProjectMemberID) {
         $this->intProjectID = $intProjectID;
-        $this->intProjectMemberID = getProjectMember($this->intMemberID, $this->intProjectID);
+        $this->intProjectMemberID = $intProjectMemberID;
+        $this->intMemberID = getMember_from_tblProjectMember($intProjectID, $intProjectMemberID);
     }
 
     function getDetails($intStatusID) {
@@ -31,14 +31,6 @@ class Status {
             $this->strStatusWhy = $sqlArr[0]['strStatusWhy'];
             $this->strStatusGanttLink = $sqlArr[0]['strStatusGanttLink'];
             $this->strStatusGanttLinkComment = $sqlArr[0]['strStatusGanttLinkComment'];
-//            $diff = dateDayDiff($this->strStatusDate, $this->strStatusActualDate);
-//            if ($diff >= 7) { // <- check & fix it later
-//                $this->strStatusCondition = "Ahead";
-//            } elseif ($diff <= -7) { // <- check & fix it later
-//                $this->strStatusCondition = "Behind";
-//            } else {
-//                $this->strStatusCondition = "Up to date";
-//            }
         }
     }
     
@@ -56,9 +48,19 @@ class Status {
         }
     }
     
-    function setDetails($intStatusID,$dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) {
-        $query = "UPDATE tblStatus SET intProjectID='$this->intProjectID',intProjectMemberID='$this->intProjectMemberID',dmtStatusCurrentDate='$dmtStatusCurrentDate',strStatusDate='$strStatusDate',strStatusActualDate='$strStatusActualDate',strStatusCondition='$strStatusCondition'," .
-                "strStatusDifference='$strStatusDifference',strStatusWhy='$strStatusWhy',strStatusGanttLink='$strStatusGanttLink',strStatusGanttLinkComment='$strStatusGanttLinkComment' WHERE intStatusID = '$intStatusID';";
+    function setDetails($intStatusID,
+            $dmtStatusCurrentDate,
+            $strStatusDate,
+            $strStatusActualDate,
+            $strStatusCondition,
+            $strStatusDifference,
+            $strStatusWhy,
+            $strStatusGanttLink,
+            $strStatusGanttLinkComment) {
+        $query = "UPDATE tblStatus SET intProjectID='$this->intProjectID',intProjectMemberID='$this->intProjectMemberID',dmtStatusCurrentDate='$dmtStatusCurrentDate',".
+                "strStatusDate='$strStatusDate',strStatusActualDate='$strStatusActualDate',strStatusCondition='$strStatusCondition'," .
+                "strStatusDifference='$strStatusDifference',strStatusWhy='$strStatusWhy',strStatusGanttLink='$strStatusGanttLink',".
+                "strStatusGanttLinkComment='$strStatusGanttLinkComment' WHERE intStatusID = '$intStatusID';";
         $sql = mysql_query($query);
 
         if (!$sql)
@@ -149,6 +151,14 @@ class Status {
         }
         
         return $returnValue;
+    }
+    
+    function getProjects() {
+        $query = "SELECT p.intProjectID,p.strProjectName FROM tblProject as p, tblMember AS m, tblProjectMember AS pm "."
+            WHERE p.intProjectID = pm.intProjectID AND m.intMemberID = pm.intMemberID AND m.intMemberID=". $this->intMemberID . ";";
+
+        $sqlArr = getArr($query);
+        return $sqlArr;
     }
 }
 ?>

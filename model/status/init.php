@@ -11,5 +11,5 @@ $projectObj->getDetails();
 $currentProjectMemberID = getProjectMember($memberObj->intMemberID, $projectObj->intProjectID);
 
 // get last status details
-$statusObj = new Status($projectObj->intProjectID, $currentProjectMemberID);
+$statusObj = new Status($currentProjectID, $currentProjectMemberID);
 ?>

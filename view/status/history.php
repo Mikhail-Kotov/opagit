@@ -20,7 +20,7 @@ if (isset($sqlArr[0])) {
     echo "<th>Attachment</th>\n";
     echo "<th>Attachment Comment</th>\n";
     echo "<th>&nbsp;</th>\n"; // for PDF
-    if($_ENV['enable_status_delete'] == True) {
+    if($_ENV['engineering mode'] == True) {
         echo "<th>&nbsp;</th>\n"; // for Delete
     }
     echo "</tr>\n";
@@ -59,7 +59,7 @@ if (isset($sqlArr[0])) {
         echo "</form>\n";
         echo "</td>\n";
         
-        if($_ENV['enable_status_delete'] == True) {
+        if($_ENV['engineering mode'] == True) {
             echo "<td>\n";
             echo '<form method="post">';
             echo '<input type="hidden" name="page" value="status" />' . "\n";
