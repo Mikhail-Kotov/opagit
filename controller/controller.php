@@ -39,13 +39,14 @@ if ($page == "status") {
             $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
             $strStatusDate = $_POST["strStatusDate"];
             $strStatusActualDate = $_POST["strStatusActualDate"];
+            $strStatusCondition = $_POST["strStatusCondition"];
             $strStatusDifference = $_POST["strStatusDifference"];
             $strStatusWhy = $_POST["strStatusWhy"];
             $strStatusGanttLink = $_POST["strStatusGanttLink"];
             $strStatusGanttLinkComment = $_POST["strStatusGanttLinkComment"];
 
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
-            $statusObj->addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
+            $statusObj->addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
             unset($statusObj);
         }
         
@@ -61,13 +62,14 @@ if ($page == "status") {
             $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
             $strStatusDate = $_POST['strStatusDate'];
             $strStatusActualDate = $_POST['strStatusActualDate'];
+            $strStatusCondition = $_POST['strStatusCondition'];
             $strStatusDifference = $_POST['strStatusDifference'];
             $strStatusWhy = $_POST['strStatusWhy'];
             $strStatusGanttLink = $_POST['strStatusGanttLink'];
             $strStatusGanttLinkComment = $_POST['strStatusGanttLinkComment'];
 
             $statusObj = new Status($currentProjectID, $currentProjectMemberID);
-            $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
+            $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
             unset($statusObj);
         }
     }

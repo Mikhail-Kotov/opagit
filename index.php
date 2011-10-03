@@ -1,5 +1,5 @@
 <?php
-$version = "OPA Team Prototype, version updated 30 September 2011, 12.00 am";
+$version = "OPA Team Prototype, version updated 3 October 2011, 5.00 pm";
 
 error_reporting(E_ALL);
 ini_set('display_errors','On');
@@ -16,8 +16,7 @@ include_once("classes/issue.php");
 $link = connectDB();
 $_ENV['firephp'] = FirePHP::getInstance(true);
 $_ENV['currentDate'] = date("Y-m-d");
-//$_ENV['enable_status_delete'] = False;
-$_ENV['enable_status_delete'] = True;
+$_ENV['enable_status_delete'] = False;
 
 ob_start();
 $_ENV['firephp']->log($_POST, '_POST');

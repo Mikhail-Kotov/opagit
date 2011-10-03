@@ -110,6 +110,7 @@ CREATE TABLE `tblStatus` (
   dmtStatusCurrentDate DATE NOT NULL,
   strStatusDate VARCHAR(1000) NULL,
   strStatusActualDate VARCHAR(1000) NULL,
+  strStatusCondition VARCHAR(20) NULL,
   strStatusDifference VARCHAR(5000) NULL,
   strStatusWhy VARCHAR(5000) NULL,
   strStatusGanttLink VARCHAR(1000) NULL,
@@ -190,12 +191,12 @@ CREATE TABLE `tblIssue` (
   CONSTRAINT `FK_tblIssue_tblIssueType` FOREIGN KEY (strIssueTypeID) REFERENCES `tblIssueType` (strIssueTypeID) ON DELETE CASCADE ON UPDATE CASCADE  
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-INSERT INTO `tblProject`(`intProjectID`,`strProjectName`,`strProjectSponsor`,`strProjectDescription`,`dmtProjectStartDate`,`dmtProjectEndDate`,`strProjectTeamName`,`strProjectTeamLeader`,`strProjectSiteURL`) VALUES (1,'OPA','James','OPA IRS Tracker','2009-07-13','2011-12-31','OPAdmin','Robyn','http://cit3.ldl.swin.edu.au/~opadmin/'),(2,'MITUP',NULL,NULL,'2009-07-13',NULL,NULL,NULL,NULL),(3,'New Touch Laser Software',NULL,NULL,'2009-07-13',NULL,NULL,NULL,NULL),(4,'Online Project Timesheets',NULL,NULL,'2009-08-24',NULL,NULL,NULL,NULL);
-INSERT INTO `tblMember`(`intMemberID`,`strMemberName`,`strMemberPassword`,`strMemberFirstName`,`strMemberLastName`,`strMemberEmail`) VALUES (1,'Mikhail','pass1','Mikhail','Kotov','gmail1@gmail.com'),(2,'Robyn','pass2','Robyn','Ius','gmail2@gmail.com'),(3,'Stephen','pass3','Stephen','Blatanic','gmail3@gmail.com');
+INSERT INTO `tblProject`(`intProjectID`,`strProjectName`,`strProjectSponsor`,`strProjectDescription`,`dmtProjectStartDate`,`dmtProjectEndDate`,`strProjectTeamName`,`strProjectTeamLeader`,`strProjectSiteURL`) VALUES (1,'OPA','James','OPA IRS Tracker','2009-07-13','2011-12-31','OPAdmin','Robyn','http://cit3.ldl.swin.edu.au/~opadmin/'),(2,'MITUP',NULL,NULL,'2009-07-13',NULL,NULL,NULL,NULL);
+INSERT INTO `tblMember`(`intMemberID`,`strMemberName`,`strMemberPassword`,`strMemberFirstName`,`strMemberLastName`,`strMemberEmail`) VALUES (1,'Mikhail','pass1','Mikhail','Kotov','gmail1@gmail.com');
 INSERT INTO `tblStudent`(`intMemberID`) VALUES (1);
-INSERT INTO `tblTeacher`(`intMemberID`,`strTeacherJobTitle`,`strTeacherPhone`,`strTeacherMobile`) VALUES (2,'Coordinator','+61397009876',NULL),(3,'JobTitle','+61397001234','+61412345678');
-INSERT INTO `tblProjectMember`(`intProjectMemberID`,`intMemberID`,`intProjectID`,`intPermissionID`) VALUES (1,1,1,NULL),(4,2,1,NULL);
-INSERT INTO `tblStatus`(`intStatusID`,`intProjectID`,`intProjectMemberID`,`dmtStatusCurrentDate`,`strStatusDate`,`strStatusActualDate`,`strStatusDifference`,`strStatusWhy`,`strStatusGanttLink`,`strStatusGanttLinkComment`) VALUES (NULL,1,1,'2011-09-12','2011-09-15','2011-09-19','Everything is ok','All team works very quickly','http://gantt','gantt comment');
+INSERT INTO `tblTeacher`(`intMemberID`,`strTeacherJobTitle`,`strTeacherPhone`,`strTeacherMobile`) VALUES (1,'Coordinator','+61397009876',NULL);
+INSERT INTO `tblProjectMember`(`intProjectMemberID`,`intMemberID`,`intProjectID`,`intPermissionID`) VALUES (NULL,1,1,NULL),(NULL,1,2,NULL);
+INSERT INTO `tblStatus`(`intStatusID`,`intProjectID`,`intProjectMemberID`,`dmtStatusCurrentDate`,`strStatusDate`,`strStatusActualDate`,`strStatusCondition`,`strStatusDifference`,`strStatusWhy`,`strStatusGanttLink`,`strStatusGanttLinkComment`) VALUES (NULL,1,1,'2011-09-12','2011-09-15','2011-09-19',"Up to date",'Everything is ok','All team works very quickly','http://gantt','gantt comment');
 INSERT INTO `tblIssueType`(`strIssueTypeID`) VALUES ('Bug'),('Environment'),('Financial'),('Management'),('Quality'),('Schedule'),('Technical');
 INSERT INTO `tblRiskType`(`strRiskTypeID`) VALUES ('Financial'),('Management'),('Quality'),('Schedule'),('Technical');
 INSERT INTO `tblRisk`(`intRiskID`,`intProjectMemberID`,`intProjectID`,`strRiskTypeID`,`strRiskDescription`,`strRiskImpactDescription`,`strRiskStatus`,`strRiskLevelOfImpact`,`strLikelihoodOfImpact`,`strRiskConsequenceOfImpact`,`strRiskMitigationStrategy`,`strRiskContingencyStrategy`,`dmtRiskDateRaised`,`dmtRiskDateClosed`) VALUES (1,1,1,'Financial','desc',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);

@@ -3,8 +3,7 @@
 class Status {
 
     public $intStatusID, $intProjectID, $intMemberID, $intProjectMemberID;
-    public $strStatusCondition;
-    public $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate;
+    public $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition;
     public $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment;
 
     function __construct($intMemberID, $intProjectID) {
@@ -14,7 +13,7 @@ class Status {
     }
 
     function getDetails($intStatusID) {
-        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," . 
+        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition," . 
                 "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
                 " WHERE intProjectID = " . $this->intProjectID .
                 " AND intProjectMemberID = " . $this->intProjectMemberID .
@@ -27,6 +26,7 @@ class Status {
             $this->dmtStatusCurrentDate = $sqlArr[0]['dmtStatusCurrentDate'];
             $this->strStatusDate = $sqlArr[0]['strStatusDate'];
             $this->strStatusActualDate = $sqlArr[0]['strStatusActualDate'];
+            $this->strStatusCondition = $sqlArr[0]['strStatusCondition'];
             $this->strStatusDifference = $sqlArr[0]['strStatusDifference'];
             $this->strStatusWhy = $sqlArr[0]['strStatusWhy'];
             $this->strStatusGanttLink = $sqlArr[0]['strStatusGanttLink'];
@@ -43,7 +43,7 @@ class Status {
     }
     
     function getLastStatusID() {
-        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," .
+        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition," .
                 "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
                 " WHERE intProjectID = " . $this->intProjectID .
                 " AND intProjectMemberID = " . $this->intProjectMemberID .
@@ -56,8 +56,8 @@ class Status {
         }
     }
     
-    function setDetails($intStatusID,$dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) {
-        $query = "UPDATE tblStatus SET intProjectID='$this->intProjectID',intProjectMemberID='$this->intProjectMemberID',dmtStatusCurrentDate='$dmtStatusCurrentDate',strStatusDate='$strStatusDate',strStatusActualDate='$strStatusActualDate'," .
+    function setDetails($intStatusID,$dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) {
+        $query = "UPDATE tblStatus SET intProjectID='$this->intProjectID',intProjectMemberID='$this->intProjectMemberID',dmtStatusCurrentDate='$dmtStatusCurrentDate',strStatusDate='$strStatusDate',strStatusActualDate='$strStatusActualDate',strStatusCondition='$strStatusCondition'," .
                 "strStatusDifference='$strStatusDifference',strStatusWhy='$strStatusWhy',strStatusGanttLink='$strStatusGanttLink',strStatusGanttLinkComment='$strStatusGanttLinkComment' WHERE intStatusID = '$intStatusID';";
         $sql = mysql_query($query);
 
@@ -65,12 +65,12 @@ class Status {
             die('Invalid query: ' . mysql_error());
     }
 
-    function addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, 
+    function addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition,$strStatusDifference, 
             $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) {
             
-        $query = "INSERT INTO tblStatus(intStatusID,intProjectID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," .
+        $query = "INSERT INTO tblStatus(intStatusID,intProjectID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition," .
                 "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment)" .
-                " values (NULL, '$this->intProjectID', '$this->intProjectMemberID', '$dmtStatusCurrentDate', '$strStatusDate', '$strStatusActualDate', " .
+                " values (NULL, '$this->intProjectID', '$this->intProjectMemberID', '$dmtStatusCurrentDate', '$strStatusDate', '$strStatusActualDate', '$strStatusCondition'," .
                 "'$strStatusDifference', '$strStatusWhy', '$strStatusGanttLink', '$strStatusGanttLinkComment');";
         $sql = mysql_query($query);
 
@@ -109,5 +109,46 @@ class Status {
         include_once("view/status/edit.php");
     }
 
+    function getFirstName() {
+        $query = "SELECT strMemberFirstName FROM tblMember WHERE intMemberID = " . $this->intMemberID . ";";
+
+        $sqlArr = getArr($query);
+       
+        if(isset($sqlArr[0])) {
+            $returnValue = $sqlArr[0]['strMemberFirstName'];
+        } else {
+            $returnValue = null;
+        }
+        
+        return $returnValue;
+    }
+    
+    function getLastName() {
+        $query = "SELECT strMemberLastName FROM tblMember WHERE intMemberID = " . $this->intMemberID . ";";
+
+        $sqlArr = getArr($query);
+       
+        if(isset($sqlArr[0])) {
+            $returnValue = $sqlArr[0]['strMemberLastName'];
+        } else {
+            $returnValue = null;
+        }
+        
+        return $returnValue;
+    }
+    
+    function getProjectName() {
+        $query = "SELECT strProjectName FROM tblProject WHERE intProjectID = " . $this->intProjectID . ";";
+
+        $sqlArr = getArr($query);
+       
+        if(isset($sqlArr[0])) {
+            $returnValue = $sqlArr[0]['strProjectName'];
+        } else {
+            $returnValue = null;
+        }
+        
+        return $returnValue;
+    }
 }
 ?>

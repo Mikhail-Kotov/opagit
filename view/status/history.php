@@ -1,7 +1,7 @@
 <?php
 //TODO: split this to MVC
 
-$query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment" .
+$query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition,strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment" .
         " FROM tblStatus WHERE intProjectID = '$this->intProjectID' AND intProjectMemberID = '$this->intProjectMemberID';";
 $sqlArr = getArr($query);
 $caption = "Status History";
@@ -10,9 +10,15 @@ if (isset($sqlArr[0])) {
     echo "<caption>" . $caption . "</caption>\n";
     echo "<tr>\n";
     echo "<th>&nbsp;</th>\n";
-    foreach ($sqlArr[0] as $row => $value) {
-        echo "<th>" . $row . "</th>\n";
-    }
+    echo "<th>ID</th>\n";
+    echo "<th>Creation Date</th>\n";
+    echo "<th>Actual Baseline</th>\n";
+    echo "<th>Plan Baseline</th>\n";
+    echo "<th>Condition</th>\n";
+    echo "<th>Variation</th>\n";
+    echo "<th>Notes/Reasons</th>\n";
+    echo "<th>Attachment</th>\n";
+    echo "<th>Attachment Comment</th>\n";
     echo "<th>&nbsp;</th>\n"; // for PDF
     if($_ENV['enable_status_delete'] == True) {
         echo "<th>&nbsp;</th>\n"; // for Delete
