@@ -1,0 +1,3 @@
+version number is: MM.DD-HHMM
+
+10.04-0705: Many Projects - 1 User working now
