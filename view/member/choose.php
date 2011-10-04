@@ -19,7 +19,7 @@ tblProjectMember AS pm
 WHERE
 m.intMemberID = pm.intMemberID AND
 pm.intProjectID = p.intProjectID AND
-p.intProjectID = " . $currentProjectID . ";";    
+p.intProjectID = " . $projectObj->intProjectID . ";";    
 
 $arr = getArr($query);
 
@@ -27,12 +27,12 @@ foreach ($arr[0] as $columnName => $value) {
     $columnArr[] = $columnName;
 }
 
-foreach ($arr as $arr2) {
-    echo '<option value="' . $arr2[$columnArr[0]] . '">' . $arr2[$columnArr[1]] . "</option>\n";
+foreach ($arr as $intStatusID) {
+    echo '<option value="' . $intStatusID[$columnArr[0]] . '">' . $intStatusID[$columnArr[1]] . "</option>\n";
 }
 echo "</select>\n";
 echo '<input type="hidden" name="page" value="main" />' . "\n";
-echo '<input type="hidden" name="p" value="' . $currentProjectID . '" />' . "\n";
+echo '<input type="hidden" name="p" value="' . $projectObj->intProjectID . '" />' . "\n";
 echo '<input type="submit" value="Choose" />' . "\n";
 echo "</p>\n</form>\n";
 

@@ -12,11 +12,20 @@
   <tr>
       <td colspan="2" height="30"><?php
 if ($_ENV['engineering mode'] == True) {
-    echo "[page: <b>$page</b>]&nbsp;&nbsp;&nbsp;" .
-    "[todo: <b>$todo</b>]&nbsp;&nbsp;&nbsp;" .
-    "[memberID: <b>$currentMemberID - " . getMemberName($currentMemberID) . "</b>]&nbsp;&nbsp;&nbsp;" .
-    "[projectID: <b>$currentProjectID - ". getProjectName($currentProjectID)."</b>]&nbsp;&nbsp;&nbsp;" .
-    "[PM_ID: <b>$currentProjectMemberID</b>]\n";
+    echo "[page: <b>" . $page;
+    if ($todo != "") {
+        echo ":" . $todo;
+    }
+    echo "</b>]&nbsp;&nbsp;&nbsp;";
+
+    if(isset($projectObj)) {
+        echo "[projectID: <b>$projectObj->intProjectID - ". $projectObj->getName($currentProjectID)."</b>]&nbsp;&nbsp;&nbsp;";
+    }
+    
+    if(isset($memberObj)) {
+        echo "[memberID: <b>$memberObj->intMemberID - " . $memberObj->getName() . "</b>]&nbsp;&nbsp;&nbsp;";
+    }
+    //echo "[PM_ID: <b>$currentProjectMemberID</b>]\n";
 } else {
     echo "OPA Prototype\n";
 }

@@ -180,13 +180,35 @@ function getProjectName($intProjectID) {
 }    
     
     
-    function getProjects($intMemberID) {
-        $query = "SELECT p.intProjectID,p.strProjectName FROM tblProject as p, tblMember AS m, tblProjectMember AS pm "."
-            WHERE p.intProjectID = pm.intProjectID AND m.intMemberID = pm.intMemberID AND m.intMemberID=". $intMemberID . ";";
+function getProjects($intMemberID) {
+    $query = "SELECT p.intProjectID,p.strProjectName FROM tblProject as p, tblMember AS m, tblProjectMember AS pm " . "
+            WHERE p.intProjectID = pm.intProjectID AND m.intMemberID = pm.intMemberID AND m.intMemberID=" . $intMemberID . ";";
 
-        $sqlArr = getArr($query);
-        return $sqlArr;
+    $sqlArr = getArr($query);
+    return $sqlArr;
+}
+
+function getMemberName_from_tblProjectMember($intProjectMemberID) {
+    if (isset($intProjectMemberID)) {
+        if ($intProjectMemberID != "") {
+            $query = "SELECT m.strMemberName FROM tblMember AS m, tblProjectMember AS pm WHERE m.intMemberID = pm.intMemberID AND pm.intProjectMemberID = " . $intProjectMemberID . ";";
+
+            $sqlArr = getArr($query);
+
+            if (isset($sqlArr[0])) {
+                $returnValue = $sqlArr[0]['strMemberName'];
+            } else {
+                $returnValue = null;
+            }
+        } else {
+            $returnValue = null;
+        }
+    } else {
+        $returnValue = null;
     }
+
+    return $returnValue;
+}
 
 
 ?>

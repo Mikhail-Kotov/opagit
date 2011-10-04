@@ -2,7 +2,7 @@
 echo "<b>Today is:</b> " . $_ENV['currentDate'] . "<br />";
 echo "<b>Status report as of:</b> " . $this->dmtStatusCurrentDate . "<br />\n";
 echo "<b>Status created by:</b> " . getMemberFirstName($this->intMemberID) . " " . getMemberLastName($this->intMemberID) . "<br />\n";
-echo "<b>For Project:</b> " . getProjectName($this->intProjectID) . "<br />\n";
+echo "<b>For Project:</b> " . $projectObj->getID . "<br />\n";
 echo "<b>Current status is:</b> " . $this->strStatusCondition . "<br /><br />\n";
 echo "<b>Actual Baseline:</b><br />" . $this->strStatusDate . "<br /><br />\n";
 echo "<b>Plan Baseline:</b><br />" . $this->strStatusActualDate . "<br /><br />\n";
@@ -29,7 +29,5 @@ echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\
 echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
 echo '<input type="submit" value="PDF" class="button" />' . "\n";
 echo "</form></td></tr></table>";
-
-include_once("view/status/bottomMenu.php");
 ?>
 

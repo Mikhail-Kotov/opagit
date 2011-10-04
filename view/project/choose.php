@@ -13,8 +13,8 @@ foreach ($arr[0] as $columnName => $value) {
     $columnArr[] = $columnName;
 }
 
-foreach ($arr as $arr2) {
-    echo '<option value="' . $arr2[$columnArr[0]] . '">' . $arr2[$columnArr[1]] . "</option>\n";
+foreach ($arr as $intStatusID) {
+    echo '<option value="' . $intStatusID[$columnArr[0]] . '">' . $intStatusID[$columnArr[1]] . "</option>\n";
 }
 
 echo "</select>\n";

@@ -1,17 +1,24 @@
 <?php
 
 class Status {
-
+    public $projectObj, $projectMemberObj;
     public $intStatusID, $intProjectID, $intMemberID, $intProjectMemberID;
     public $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition;
     public $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment;
 
-    function __construct($intProjectID, $intProjectMemberID) {
-        $this->intProjectID = $intProjectID;
-        $this->intProjectMemberID = $intProjectMemberID;
-        $this->intMemberID = getMember_from_tblProjectMember($intProjectID, $intProjectMemberID);
+    function __construct($projectObj, $projectMemberObj) {
+        $this->projectObj = $projectObj;
+        $this->projectMemberObj = $projectMemberObj;
+        
+        $this->intProjectID = $this->projectObj->intProjectID;
+        $this->intProjectMemberID = $this->$projectMemberObj->getID();
+        $this->intMemberID = $this->$projectMemberObj->intMemberID;
     }
 
+    function setID($intStatusID) {
+        $this->intStatusID = $intStatusID();
+    }
+    
     function getDetails($intStatusID) {
         $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition," . 
                 "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
@@ -86,10 +93,12 @@ class Status {
 
     function displayStatus() {
         include_once("view/status/view.php");
+        include_once("view/status/bottomMenu.php");
     }
 
     function displayStatusHistory() {
         include_once("view/status/history.php");
+        include_once("view/status/bottomMenu.php");
     }
 
     function printStatus() {

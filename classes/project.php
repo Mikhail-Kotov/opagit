@@ -2,7 +2,7 @@
 
 class Project {
 
-    var $intProjectID, $strProjectName, $strProjectTeamName;
+    public $intProjectID, $strProjectName, $strProjectTeamName;
 
     function __construct($intProjectID) {
         $this->intProjectID = $intProjectID;
@@ -14,7 +14,35 @@ class Project {
         $this->strProjectName = $sqlArr[0]['strProjectName'];
         $this->strProjectTeamName = $sqlArr[0]['strProjectTeamName'];
     }
+    
+    function getID() {
+        return $this->intProjectID;
+    }
+    
+    function getName($intProjectID = null) {
+        if(is_null($intProjectID)) {
+            $intProjectID = $this->intProjectID;
+        }
+        if (isset($this->intProjectID)) {
+            if ($this->intProjectID != "") {
+                $query = "SELECT strProjectName FROM tblProject WHERE intProjectID = " . $intProjectID . ";";
 
+                $sqlArr = getArr($query);
+
+                if (isset($sqlArr[0])) {
+                    $returnValue = $sqlArr[0]['strProjectName'];
+                } else {
+                    $returnValue = null;
+                }
+            } else {
+                $returnValue = null;
+            }
+        } else {
+            $returnValue = null;
+        }
+
+        return $returnValue;
+    }
 }
 
 ?>

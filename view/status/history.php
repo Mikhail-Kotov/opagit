@@ -1,17 +1,34 @@
 <?php
 //TODO: split this to MVC
 
-$query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition,strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment" .
+$query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition,".
+        "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment" .
         " FROM tblStatus WHERE intProjectID = '$this->intProjectID';";
 $sqlArr = getArr($query);
+
 $caption = "Status History for Project: " . getProjectName($this->intProjectID);
-if (isset($sqlArr[0])) {
+
+//$arr3 = array();
+foreach($sqlArr as $intStatusID => $statusArr) {
+    foreach($statusArr as $columnName => $value) {
+        if($columnName != "intProjectMemberID") {
+            $historyTableArr[$intStatusID][$columnName] = $value;
+        } else {
+            $historyTableArr[$intStatusID]["intMemberName"] = getMemberName_from_tblProjectMember($value);
+        }
+    }
+}
+
+unset($columnName);
+unset($statusArr);
+
+if (isset($historyTableArr[0])) {
     echo '<table border="1" rules="all" frame="void">';
     echo "<caption>" . $caption . "</caption>\n";
     echo "<tr>\n";
     echo "<th>&nbsp;</th>\n";
     echo "<th>ID</th>\n";
-    echo "<th>PM_ID</th>\n";
+    echo "<th>Member</th>\n";
     echo "<th>Creation Date</th>\n";
     echo "<th>Actual Baseline</th>\n";
     echo "<th>Plan Baseline</th>\n";
@@ -26,20 +43,19 @@ if (isset($sqlArr[0])) {
     }
     echo "</tr>\n";
 
-    foreach ($sqlArr as $arr2) {
+    foreach ($historyTableArr as $statusArr) {
         echo "<tr>\n";
-
         echo "<td>\n";
         echo '<form method="post">';
         echo '<input type="hidden" name="page" value="statusview" />' . "\n";
         echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
         echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
-        echo '<input type="hidden" name="s" value="' . $arr2["intStatusID"] . '" />' . "\n";
+        echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
         echo '<input type="submit" value="View" class="button" />' . "\n";
         echo "</form>\n";
         echo "</td>\n";
         
-        foreach ($arr2 as $row => $value) {
+        foreach ($statusArr as $columnName => $value) {
             echo "<td>";
             if (isset($value)) {
                 echo $value;
@@ -55,7 +71,7 @@ if (isset($sqlArr[0])) {
         echo '<input type="hidden" name="todo" value="pdf" />' . "\n";
         echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
         echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
-        echo '<input type="hidden" name="s" value="' . $arr2["intStatusID"] . '" />' . "\n";
+        echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
         echo '<input type="submit" value="PDF" class="button" />' . "\n";
         echo "</form>\n";
         echo "</td>\n";
@@ -67,7 +83,7 @@ if (isset($sqlArr[0])) {
             echo '<input type="hidden" name="todo" value="delete" />' . "\n";
             echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
             echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
-            echo '<input type="hidden" name="s" value="' . $arr2["intStatusID"] . '" />' . "\n";
+            echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
             echo '<input type="submit" value="Delete" class="button" />' . "\n";
             echo "</form>\n";
             echo "</td>\n";
@@ -77,5 +93,4 @@ if (isset($sqlArr[0])) {
     echo '</table>';
 }
 
-include_once("view/status/bottomMenu.php");
 ?>
