@@ -9,7 +9,7 @@
     Project Name:<br />
     <select name ="intProjectID">
         <?php
-        $projectsArr = $this->getProjects();
+        $projectsArr = getProjects($this->intMemberID);
         foreach ($projectsArr as $row => $value) {
             echo '<option value="' . $value['intProjectID'] . '"';
             if ($value['intProjectID'] == $this->intProjectID) {

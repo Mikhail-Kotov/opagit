@@ -107,55 +107,5 @@ class Status {
     function displayEditForm() {
         include_once("view/status/edit.php");
     }
-
-    function getFirstName() {
-        $query = "SELECT strMemberFirstName FROM tblMember WHERE intMemberID = " . $this->intMemberID . ";";
-
-        $sqlArr = getArr($query);
-       
-        if(isset($sqlArr[0])) {
-            $returnValue = $sqlArr[0]['strMemberFirstName'];
-        } else {
-            $returnValue = null;
-        }
-        
-        return $returnValue;
-    }
-    
-    function getLastName() {
-        $query = "SELECT strMemberLastName FROM tblMember WHERE intMemberID = " . $this->intMemberID . ";";
-
-        $sqlArr = getArr($query);
-       
-        if(isset($sqlArr[0])) {
-            $returnValue = $sqlArr[0]['strMemberLastName'];
-        } else {
-            $returnValue = null;
-        }
-        
-        return $returnValue;
-    }
-    
-    function getProjectName() {
-        $query = "SELECT strProjectName FROM tblProject WHERE intProjectID = " . $this->intProjectID . ";";
-
-        $sqlArr = getArr($query);
-       
-        if(isset($sqlArr[0])) {
-            $returnValue = $sqlArr[0]['strProjectName'];
-        } else {
-            $returnValue = null;
-        }
-        
-        return $returnValue;
-    }
-    
-    function getProjects() {
-        $query = "SELECT p.intProjectID,p.strProjectName FROM tblProject as p, tblMember AS m, tblProjectMember AS pm "."
-            WHERE p.intProjectID = pm.intProjectID AND m.intMemberID = pm.intMemberID AND m.intMemberID=". $this->intMemberID . ";";
-
-        $sqlArr = getArr($query);
-        return $sqlArr;
-    }
 }
 ?>

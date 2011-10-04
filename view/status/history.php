@@ -4,7 +4,7 @@
 $query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition,strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment" .
         " FROM tblStatus WHERE intProjectID = '$this->intProjectID';";
 $sqlArr = getArr($query);
-$caption = "Status History for Project: " . $this->getProjectName();
+$caption = "Status History for Project: " . getProjectName($this->intProjectID);
 if (isset($sqlArr[0])) {
     echo '<table border="1" rules="all" frame="void">';
     echo "<caption>" . $caption . "</caption>\n";

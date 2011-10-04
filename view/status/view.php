@@ -1,8 +1,8 @@
 <?php
 echo "<b>Today is:</b> " . $_ENV['currentDate'] . "<br />";
 echo "<b>Status report as of:</b> " . $this->dmtStatusCurrentDate . "<br />\n";
-echo "<b>Status created by:</b> " . $this->getFirstName() . " " . $this->getLastName() . "<br />\n";
-echo "<b>For Project:</b> " . $this->getProjectName() . "<br />\n";
+echo "<b>Status created by:</b> " . getMemberFirstName($this->intMemberID) . " " . getMemberLastName($this->intMemberID) . "<br />\n";
+echo "<b>For Project:</b> " . getProjectName($this->intProjectID) . "<br />\n";
 echo "<b>Current status is:</b> " . $this->strStatusCondition . "<br /><br />\n";
 echo "<b>Actual Baseline:</b><br />" . $this->strStatusDate . "<br /><br />\n";
 echo "<b>Plan Baseline:</b><br />" . $this->strStatusActualDate . "<br /><br />\n";

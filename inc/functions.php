@@ -90,4 +90,103 @@ function displayButton($name, $caption, $currentMemberID, $currentProjectID) {
     echo '</form>';
 }
 
+function getMemberName($intMemberID) {
+    if (isset($intMemberID)) {
+        if ($intMemberID != "") {
+            $query = "SELECT strMemberName FROM tblMember WHERE intMemberID = " . $intMemberID . ";";
+
+            $sqlArr = getArr($query);
+
+            if (isset($sqlArr[0])) {
+                $returnValue = $sqlArr[0]['strMemberName'];
+            } else {
+                $returnValue = null;
+            }
+        } else {
+            $returnValue = null;
+        }
+    } else {
+        $returnValue = null;
+    }
+
+    return $returnValue;
+}
+
+function getMemberFirstName($intMemberID) {
+    if (isset($intMemberID)) {
+        if ($intMemberID != "") {
+            $query = "SELECT strMemberFirstName FROM tblMember WHERE intMemberID = " . $intMemberID . ";";
+
+            $sqlArr = getArr($query);
+
+            if (isset($sqlArr[0])) {
+                $returnValue = $sqlArr[0]['strMemberFirstName'];
+            } else {
+                $returnValue = null;
+            }
+        } else {
+            $returnValue = null;
+        }
+    } else {
+        $returnValue = null;
+    }
+
+    return $returnValue;
+}
+
+function getMemberLastName($intMemberID) {
+    if (isset($intMemberID)) {
+        if ($intMemberID != "") {
+            $query = "SELECT strMemberLastName FROM tblMember WHERE intMemberID = " . $intMemberID . ";";
+
+            $sqlArr = getArr($query);
+
+            if (isset($sqlArr[0])) {
+                $returnValue = $sqlArr[0]['strMemberLastName'];
+            } else {
+                $returnValue = null;
+            }
+        } else {
+            $returnValue = null;
+        }
+    } else {
+        $returnValue = null;
+    }
+
+    return $returnValue;
+}
+    
+ 
+function getProjectName($intProjectID) {
+    if (isset($intProjectID)) {
+        if ($intProjectID != "") {
+            $query = "SELECT strProjectName FROM tblProject WHERE intProjectID = " . $intProjectID . ";";
+
+            $sqlArr = getArr($query);
+
+            if (isset($sqlArr[0])) {
+                $returnValue = $sqlArr[0]['strProjectName'];
+            } else {
+                $returnValue = null;
+            }
+        } else {
+            $returnValue = null;
+        }
+    } else {
+        $returnValue = null;
+    }
+
+    return $returnValue;
+}    
+    
+    
+    function getProjects($intMemberID) {
+        $query = "SELECT p.intProjectID,p.strProjectName FROM tblProject as p, tblMember AS m, tblProjectMember AS pm "."
+            WHERE p.intProjectID = pm.intProjectID AND m.intMemberID = pm.intMemberID AND m.intMemberID=". $intMemberID . ";";
+
+        $sqlArr = getArr($query);
+        return $sqlArr;
+    }
+
+
 ?>
