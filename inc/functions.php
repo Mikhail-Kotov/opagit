@@ -16,7 +16,7 @@ function echoTable($query, $caption = NULL) {
         $caption = $query;
     $sqlArr = getArr($query);
     if (isset($sqlArr[0])) {
-        echo '<table border="1">';
+        echo '<table border="1" rules="all" frame="void">';
         echo "<caption>" . $caption . "</caption>\n";
         echo "<tr>\n";
         foreach ($sqlArr[0] as $row => $value) {
@@ -86,7 +86,7 @@ function displayButton($name, $caption, $currentMemberID, $currentProjectID) {
     echo '<input type="hidden" name="page" value="'.$name.'" />' . "\n";
     echo '<input type="hidden" name="m" value="' . $currentMemberID . '" />' . "\n";
     echo '<input type="hidden" name="p" value="' . $currentProjectID . '" />' . "\n";
-    echo '<input type="submit" value="' . $caption . '" />' . "\n";
+    echo '<input type="submit" value="' . $caption . '" class="button" />' . "\n";
     echo '</form>';
 }
 

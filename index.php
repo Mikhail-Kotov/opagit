@@ -1,5 +1,5 @@
 <?php
-$version = "OPA Team Prototype, version 10.04-0705";
+$version = "<b>OPA Team Prototype</b>, version 10.05-0100";
 
 error_reporting(E_ALL);
 ini_set('display_errors','On');
@@ -14,9 +14,9 @@ include_once("classes/issue.php");
 
 // connect to db
 $link = connectDB();
-$_ENV['firephp'] = FirePHP::getInstance(true);
+$_ENV['firephp'] = FirePHP::getInstance(True);
 $_ENV['currentDate'] = date("Y-m-d");
-$_ENV['engineering mode'] = True;
+$_ENV['engineering mode'] = 1;
 
 ob_start();
 $_ENV['firephp']->log($_POST, '_POST');

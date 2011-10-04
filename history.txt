@@ -1,3 +1,5 @@
 version number is: MM.DD-HHMM
 
+10.05-0100: CSS added
+10.04-0810: Many Projects - Many Users working now
 10.04-0705: Many Projects - 1 User working now

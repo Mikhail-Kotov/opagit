@@ -19,7 +19,7 @@ echo '<input type="hidden" name="page" value="statusedit" />' . "\n";
 echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
 echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
 echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
-echo '<input type="submit" value="Edit Status" />' . "\n";
+echo '<input type="submit" value="Edit Status" class="button" />' . "\n";
 echo '</form></td>';
 echo '<td><form method="post">';
 echo '<input type="hidden" name="page" value="status" />' . "\n";
@@ -27,7 +27,7 @@ echo '<input type="hidden" name="todo" value="pdf" />' . "\n";
 echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
 echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
 echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
-echo '<input type="submit" value="PDF" />' . "\n";
+echo '<input type="submit" value="PDF" class="button" />' . "\n";
 echo "</form></td></tr></table>";
 
 include_once("view/status/bottomMenu.php");

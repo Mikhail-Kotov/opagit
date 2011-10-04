@@ -15,9 +15,7 @@ class Status {
     function getDetails($intStatusID) {
         $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition," . 
                 "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
-                " WHERE intProjectID = " . $this->intProjectID .
-                " AND intProjectMemberID = " . $this->intProjectMemberID .
-                " AND intStatusID = " . $intStatusID;
+                " WHERE intStatusID = " . $intStatusID;
 
         $sqlArr = getArr($query);
        
@@ -38,7 +36,6 @@ class Status {
         $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition," .
                 "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
                 " WHERE intProjectID = " . $this->intProjectID .
-                " AND intProjectMemberID = " . $this->intProjectMemberID .
                 " ORDER BY intStatusID DESC LIMIT 1;";
 
         $sqlArr = getArr($query);

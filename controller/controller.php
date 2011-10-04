@@ -1,4 +1,20 @@
 <?php
+$todo = "";
+$currentProjectID = "";
+$currentMemberID = "";
+$currentProjectMemberID = "";
+
+if (isset($_POST["todo"])) {
+    $todo = $_POST["todo"];
+}
+
+if(isset($_POST["m"])) {
+    $currentMemberID = $_POST["m"];
+}
+
+if(isset($_POST["p"])) {
+    $currentProjectID = $_POST["p"];
+}
 
 if (isset($_POST["page"])) {
     $page = $_POST["page"];
@@ -6,17 +22,20 @@ if (isset($_POST["page"])) {
     $page = "chooseproject";
 }
 
+if (!($page == "chooseproject" || $page == "choosemember")) {
+    $currentProjectMemberID = getProjectMember($currentMemberID, $currentProjectID);
+}
+
 include_once("view/header.php");
 
-if ($page == "chooseproject" || $page == "choosemember") {
+if (!($page == "chooseproject" || $page == "choosemember")) {
+    include_once("view/menu.php");
+} else {
     // don't show menu
     echo '<td width="200">&nbsp;</td>'."\n";
-} else {
-    $currentMemberID = $_POST["m"];
-    $currentProjectID = $_POST["p"];
-    $currentProjectMemberID = getProjectMember($currentMemberID, $currentProjectID);    
-    include_once("view/menu.php");
 }
+
+
 
 if ($page == "chooseproject") {
     include_once("view/project/choose.php");
@@ -32,9 +51,7 @@ if ($page == "main") {
 }
 
 if ($page == "status") {
-    if (isset($_POST["todo"])) {
-        $todo = $_POST["todo"];
-        
+    if ($todo != "") {
         if ($todo == "add") {
             $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
             $strStatusDate = $_POST["strStatusDate"];
