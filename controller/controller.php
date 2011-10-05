@@ -12,11 +12,13 @@ if (isset($_POST["todo"])) {
 if(isset($_POST["p"])) {
     $currentProjectID = $_POST["p"];
     $projectObj = new Project($currentProjectID);
+    $projectObj->getDetails();
 }
 
 if(isset($_POST["m"])) {
     $currentMemberID = $_POST["m"];
     $memberObj = new Member($currentMemberID);
+    $memberObj->getDetails();
 }
 
 if (isset($_POST["s"])) {
@@ -32,7 +34,9 @@ if (isset($_POST["page"])) {
 if (!($page == "chooseproject" || $page == "choosemember")) {
     //$currentProjectMemberID = getProjectMember($memberObj->intMemberID, $projectObj->intProjectID);
     $projectMemberObj = new ProjectMember($projectObj, $memberObj);
+    $projectMemberObj->getDetails();
     $statusObj = new Status($projectObj, $projectMemberObj);
+    $statusObj->getDetails($intStatusID);
 }
 
 include_once("view/header.php");

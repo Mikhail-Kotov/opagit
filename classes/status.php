@@ -11,8 +11,8 @@ class Status {
         $this->projectMemberObj = $projectMemberObj;
         
         $this->intProjectID = $this->projectObj->intProjectID;
-        $this->intProjectMemberID = $this->$projectMemberObj->getID();
-        $this->intMemberID = $this->$projectMemberObj->intMemberID;
+        $this->intProjectMemberID = $this->projectMemberObj->getID();
+        $this->intMemberID = $this->projectMemberObj->intMemberID;
     }
 
     function setID($intStatusID) {
