@@ -26,29 +26,6 @@ class ProjectMember {
         $this->intProjectID = $sqlArr[0]['intProjectID'];
         $this->intMemberID = $sqlArr[0]['intMemberID'];
     }
-    
-    function getMemberName($intProjectMemberID) {
-        if (isset($intProjectMemberID)) {
-            if ($intProjectMemberID != "") {
-                $query = "SELECT m.strMemberName FROM tblMember AS m, tblProjectMember AS pm ".
-                        "WHERE m.intMemberID = pm.intMemberID AND pm.intProjectMemberID = " . $intProjectMemberID . ";";
-
-                $sqlArr = getArr($query);
-
-                if (isset($sqlArr[0])) {
-                    $returnValue = $sqlArr[0]['strMemberName'];
-                } else {
-                    $returnValue = null;
-                }
-            } else {
-                $returnValue = null;
-            }
-        } else {
-            $returnValue = null;
-        }
-
-        return $returnValue;
-    }
 }
 
 ?>

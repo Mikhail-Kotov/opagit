@@ -1,17 +1,16 @@
 <?php
 
 class Status {
-    public $projectObj, $memberObj, $projectMemberObj;
+    public $projectObj, $memberObj;
     public $intStatusID;
+    public $intProjectMemberID;
     public $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition;
     public $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment;
 
-    function __construct($projectObj, $projectMemberObj) {
+    function __construct($projectObj, $memberObj) {
         $this->projectObj = $projectObj;
-        $this->projectMemberObj = $projectMemberObj;
-        
-        $this->memberObj = new Member($this->projectMemberObj->intMemberID);
-        $this->memberObj->getDetails();
+        $this->memberObj = $memberObj;
+        $this->intProjectMemberID = getProjectMember($this->projectObj->getID(), $this->memberObj->getID());
     }
 
     function setID($intStatusID) {
@@ -61,7 +60,7 @@ class Status {
             $strStatusGanttLink,
             $strStatusGanttLinkComment) {
         $query = "UPDATE tblStatus SET intProjectID='" . $this->projectObj->getID() . 
-                "',intProjectMemberID='" . $this->projectMemberObj->getID() .
+                "',intProjectMemberID='" . $this->intProjectMemberID .
                 "',dmtStatusCurrentDate='" . $dmtStatusCurrentDate .
                 "',strStatusDate='" . $strStatusDate . 
                 "',strStatusActualDate='" . $strStatusActualDate .
@@ -82,7 +81,7 @@ class Status {
             
         $query = "INSERT INTO tblStatus(intStatusID,intProjectID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," .
                 "strStatusCondition,strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment) " .
-                "values (NULL, '" . $this->projectObj->getID() . "', '" . $this->projectMemberObj->getID() .
+                "values (NULL, '" . $this->projectObj->getID() . "', '" . $this->intProjectMemberID .
                 "', '" . $dmtStatusCurrentDate . "', '" . $strStatusDate . "', '" . $strStatusActualDate . "', '" . $strStatusCondition . "'," .
                 "'" . $strStatusDifference . "', '" . $strStatusWhy . "', '" . $strStatusGanttLink . "', '" . $strStatusGanttLinkComment . "');";
         $sql = mysql_query($query);

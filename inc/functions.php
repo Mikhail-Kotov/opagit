@@ -39,24 +39,15 @@ function echoTable($query, $caption = NULL) {
     }
 }
 
-function getProjectMember($intMemberID, $intProjectID) {
-    $query = "SELECT intProjectMemberID FROM tblProjectMember WHERE " .
-            "intMemberID = " . $intMemberID .
-            " AND intProjectID = " . $intProjectID . ";";
+function getProjectMember($intProjectID, $intMemberID) {
+    $query = "SELECT intProjectMemberID FROM tblProjectMember WHERE" .
+            " intProjectID = " . $intProjectID . 
+            " AND intMemberID = " . $intMemberID . ";";
+
     $sqlArr = getArr($query);
 
     $intProjectMemberID = $sqlArr[0]['intProjectMemberID'];
     return $intProjectMemberID;
-}
-
-function getMember_from_tblProjectMember($intProjectID, $intProjectMemberID) {
-    $query = "SELECT intMemberID FROM tblProjectMember WHERE " .
-            "intProjectMemberID = " . $intProjectMemberID .
-            " AND intProjectID = " . $intProjectID . ";";
-    $sqlArr = getArr($query);
-
-    $intMemberID = $sqlArr[0]['intMemberID'];
-    return $intMemberID;
 }
 
 function restoreDB() {
@@ -81,11 +72,11 @@ function dateDayDiff($date1, $date2) {
     return $days_diff;
 }
 
-function displayButton($name, $caption, $currentMemberID, $currentProjectID) {
+function displayButton($name, $caption, $currentProjectID, $currentMemberID) {
     echo '<form method="post">';
     echo '<input type="hidden" name="page" value="'.$name.'" />' . "\n";
-    echo '<input type="hidden" name="m" value="' . $currentMemberID . '" />' . "\n";
     echo '<input type="hidden" name="p" value="' . $currentProjectID . '" />' . "\n";
+    echo '<input type="hidden" name="m" value="' . $currentMemberID . '" />' . "\n";
     echo '<input type="submit" value="' . $caption . '" class="button" />' . "\n";
     echo '</form>';
 }

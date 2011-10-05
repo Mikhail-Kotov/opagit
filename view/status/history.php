@@ -14,7 +14,7 @@ foreach($sqlArr as $intStatusID => $statusArr) {
         if($columnName != "intProjectMemberID") {
             $historyTableArr[$intStatusID][$columnName] = $value;
         } else {
-            $historyTableArr[$intStatusID]["intMemberName"] = $this->projectMemberObj->getMemberName($value);
+            $historyTableArr[$intStatusID]["intMemberName"] = $this->memberObj->getMemberName($value);
         }
     }
 }

@@ -2,7 +2,6 @@
 $todo = "";
 $currentProjectID = "";
 $currentMemberID = "";
-$currentProjectMemberID = "";
 $currentStatusID = "";
 
 if (isset($_POST["todo"])) {
@@ -32,9 +31,7 @@ if (isset($_POST["page"])) {
 }
 
 if (!($page == "chooseproject" || $page == "choosemember")) {
-    $projectMemberObj = new ProjectMember($projectObj, $memberObj);
-    $projectMemberObj->getDetails();
-    $statusObj = new Status($projectObj, $projectMemberObj);
+    $statusObj = new Status($projectObj, $memberObj);
 }
 
 include_once("view/header.php");
