@@ -32,7 +32,6 @@ if (isset($_POST["page"])) {
 }
 
 if (!($page == "chooseproject" || $page == "choosemember")) {
-    //$currentProjectMemberID = getProjectMember($memberObj->intMemberID, $projectObj->intProjectID);
     $projectMemberObj = new ProjectMember($projectObj, $memberObj);
     $projectMemberObj->getDetails();
     $statusObj = new Status($projectObj, $projectMemberObj);
@@ -43,7 +42,7 @@ include_once("view/header.php");
 if (!($page == "chooseproject" || $page == "choosemember")) {
     include_once("view/menu.php");
 } else {
-    // don't show menu
+    // don't show menu when choosing project & member
     echo '<td width="200">&nbsp;</td>'."\n";
 }
 

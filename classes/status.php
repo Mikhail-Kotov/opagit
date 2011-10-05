@@ -1,8 +1,8 @@
 <?php
 
 class Status {
-    public $projectObj, $projectMemberObj;
-    public $intStatusID, $intProjectID, $intMemberID, $intProjectMemberID;
+    public $projectObj, $memberObj, $projectMemberObj;
+    public $intStatusID;
     public $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition;
     public $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment;
 
@@ -10,9 +10,8 @@ class Status {
         $this->projectObj = $projectObj;
         $this->projectMemberObj = $projectMemberObj;
         
-        $this->intProjectID = $this->projectObj->intProjectID;
-        $this->intProjectMemberID = $this->projectMemberObj->getID();
-        $this->intMemberID = $this->projectMemberObj->intMemberID;
+        $this->memberObj = new Member($this->projectMemberObj->intMemberID);
+        $this->memberObj->getDetails();
     }
 
     function setID($intStatusID) {
@@ -42,7 +41,7 @@ class Status {
     function getLastStatusID() {
         $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition," .
                 "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
-                " WHERE intProjectID = " . $this->intProjectID .
+                " WHERE intProjectID = " . $this->projectObj->getID() .
                 " ORDER BY intStatusID DESC LIMIT 1;";
 
         $sqlArr = getArr($query);
@@ -61,10 +60,17 @@ class Status {
             $strStatusWhy,
             $strStatusGanttLink,
             $strStatusGanttLinkComment) {
-        $query = "UPDATE tblStatus SET intProjectID='$this->intProjectID',intProjectMemberID='$this->intProjectMemberID',dmtStatusCurrentDate='$dmtStatusCurrentDate',".
-                "strStatusDate='$strStatusDate',strStatusActualDate='$strStatusActualDate',strStatusCondition='$strStatusCondition'," .
-                "strStatusDifference='$strStatusDifference',strStatusWhy='$strStatusWhy',strStatusGanttLink='$strStatusGanttLink',".
-                "strStatusGanttLinkComment='$strStatusGanttLinkComment' WHERE intStatusID = '$intStatusID';";
+        $query = "UPDATE tblStatus SET intProjectID='" . $this->projectObj->getID() . 
+                "',intProjectMemberID='" . $this->projectMemberObj->getID() .
+                "',dmtStatusCurrentDate='" . $dmtStatusCurrentDate .
+                "',strStatusDate='" . $strStatusDate . 
+                "',strStatusActualDate='" . $strStatusActualDate .
+                "',strStatusCondition='" .$strStatusCondition . 
+                "',strStatusDifference='" . $strStatusDifference . 
+                "',strStatusWhy='" . $strStatusWhy . 
+                "',strStatusGanttLink='" . $strStatusGanttLink . 
+                "',strStatusGanttLinkComment='" . $strStatusGanttLinkComment . 
+                "' WHERE intStatusID = '" . $intStatusID . "';";
         $sql = mysql_query($query);
 
         if (!$sql)
@@ -74,10 +80,11 @@ class Status {
     function addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition,$strStatusDifference, 
             $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) {
             
-        $query = "INSERT INTO tblStatus(intStatusID,intProjectID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition," .
-                "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment)" .
-                " values (NULL, '$this->intProjectID', '$this->intProjectMemberID', '$dmtStatusCurrentDate', '$strStatusDate', '$strStatusActualDate', '$strStatusCondition'," .
-                "'$strStatusDifference', '$strStatusWhy', '$strStatusGanttLink', '$strStatusGanttLinkComment');";
+        $query = "INSERT INTO tblStatus(intStatusID,intProjectID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," .
+                "strStatusCondition,strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment) " .
+                "values (NULL, '" . $this->projectObj->getID() . "', '" . $this->projectMemberObj->getID() .
+                "', '" . $dmtStatusCurrentDate . "', '" . $strStatusDate . "', '" . $strStatusActualDate . "', '" . $strStatusCondition . "'," .
+                "'" . $strStatusDifference . "', '" . $strStatusWhy . "', '" . $strStatusGanttLink . "', '" . $strStatusGanttLinkComment . "');";
         $sql = mysql_query($query);
 
         if (!$sql)

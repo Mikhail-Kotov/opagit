@@ -2,25 +2,25 @@
     <table width="100%" border="0">
         <tr>
             <td colspan="2">
-                <?php displayButton("status", "Status", $currentMemberID, $currentProjectID); ?>
+                <?php displayButton("status", "Status", $memberObj->getID(), $projectObj->getID()); ?>
             </td>
         </tr>
         <tr>
             <td align="right">&nbsp;</td>
             <td>
-                <?php displayButton("statushistory", "History", $currentMemberID, $currentProjectID); ?>
+                <?php displayButton("statushistory", "History", $memberObj->getID(), $projectObj->getID()); ?>
             </td>
         </tr>
         <tr>
             <td align="right">&nbsp;</td>
             <td>
-                <?php displayButton("statusview", "View Last", $currentMemberID, $currentProjectID); ?>
+                <?php displayButton("statusview", "View Last", $memberObj->getID(), $projectObj->getID()); ?>
             </td>
         </tr>
         <tr>
             <td align="right">&nbsp;</td>
             <td>
-                <?php displayButton("statusadd", "Add", $currentMemberID, $currentProjectID); ?>
+                <?php displayButton("statusadd", "Add", $memberObj->getID(), $projectObj->getID()); ?>
             </td>
         </tr>
         <tr>
@@ -28,12 +28,12 @@
         </tr>
         <tr>
             <td colspan="2">
-                <?php displayButton("issuehistory", "Issue", $currentMemberID, $currentProjectID); ?>
+                <?php displayButton("issuehistory", "Issue", $memberObj->getID(), $projectObj->getID()); ?>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <?php displayButton("riskhistory", "Risk", $currentMemberID, $currentProjectID); ?>
+                <?php displayButton("riskhistory", "Risk", $memberObj->getID(), $projectObj->getID()); ?>
             </td>
         </tr>
         <tr>

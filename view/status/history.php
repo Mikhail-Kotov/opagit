@@ -3,10 +3,10 @@
 
 $query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition,".
         "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment" .
-        " FROM tblStatus WHERE intProjectID = '$this->intProjectID';";
+        " FROM tblStatus WHERE intProjectID = '" . $this->projectObj->getID() . "';";
 $sqlArr = getArr($query);
 
-$caption = "Status History for Project: " . getProjectName($this->intProjectID);
+$caption = "Status History for Project: " . $this->projectObj->strProjectName;
 
 //$arr3 = array();
 foreach($sqlArr as $intStatusID => $statusArr) {
@@ -14,7 +14,7 @@ foreach($sqlArr as $intStatusID => $statusArr) {
         if($columnName != "intProjectMemberID") {
             $historyTableArr[$intStatusID][$columnName] = $value;
         } else {
-            $historyTableArr[$intStatusID]["intMemberName"] = getMemberName_from_tblProjectMember($value);
+            $historyTableArr[$intStatusID]["intMemberName"] = $this->projectMemberObj->getMemberName($value);
         }
     }
 }
@@ -38,9 +38,6 @@ if (isset($historyTableArr[0])) {
     echo "<th>Attachment</th>\n";
     echo "<th>Attachment Comment</th>\n";
     echo "<th>&nbsp;</th>\n"; // for PDF
-    if($_ENV['engineering mode'] == True) {
-        echo "<th>&nbsp;</th>\n"; // for Delete
-    }
     echo "</tr>\n";
 
     foreach ($historyTableArr as $statusArr) {
@@ -48,8 +45,8 @@ if (isset($historyTableArr[0])) {
         echo "<td>\n";
         echo '<form method="post">';
         echo '<input type="hidden" name="page" value="statusview" />' . "\n";
-        echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
-        echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
+        echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
         echo '<input type="submit" value="View" class="button" />' . "\n";
         echo "</form>\n";
@@ -69,25 +66,12 @@ if (isset($historyTableArr[0])) {
         echo '<form method="post">';
         echo '<input type="hidden" name="page" value="status" />' . "\n";
         echo '<input type="hidden" name="todo" value="pdf" />' . "\n";
-        echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
-        echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
+        echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
         echo '<input type="submit" value="PDF" class="button" />' . "\n";
         echo "</form>\n";
         echo "</td>\n";
-        
-        if($_ENV['engineering mode'] == True) {
-            echo "<td>\n";
-            echo '<form method="post">';
-            echo '<input type="hidden" name="page" value="status" />' . "\n";
-            echo '<input type="hidden" name="todo" value="delete" />' . "\n";
-            echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
-            echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
-            echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
-            echo '<input type="submit" value="Delete" class="button" />' . "\n";
-            echo "</form>\n";
-            echo "</td>\n";
-        }
         echo "</tr>\n\n";
     }
     echo '</table>';

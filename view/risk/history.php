@@ -1,4 +1,4 @@
 <?php
 $riskObj = new Risk();
-$riskObj->echoRiskTable($currentMemberID, $currentProjectID);
+$riskObj->echoRiskTable($memberObj->getID(), $projectObj->getID());
 ?>

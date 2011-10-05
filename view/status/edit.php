@@ -3,17 +3,17 @@
     <input type="hidden" name="page" value="status" />
     <input type="hidden" name="todo" value="edit" />
     <input type="hidden" name="s" value="<?php echo $this->intStatusID; ?>" />
-    <input type="hidden" name="m" value="<?php echo $this->intMemberID; ?>" />
-    <input type="hidden" name="p" value="<?php echo $this->intProjectID; ?>" />
+    <input type="hidden" name="m" value="<?php echo $this->memberObj->getID(); ?>" />
+    <input type="hidden" name="p" value="<?php echo $this->projectObj->getID(); ?>" />
     Status Creation Date:<br />
     <input type="text" name="dmtStatusCurrentDate" value="<?php echo $this->dmtStatusCurrentDate; ?>"/><br /><br />
     Project Name:<br />
     <select name ="intProjectID">
         <?php 
-        $projectsArr = getProjects($this->intMemberID);
+        $projectsArr = getProjects($this->memberObj->getID());
         foreach ($projectsArr as $columnName  => $value) {
             echo '<option value="' . $value['intProjectID'].'"';
-            if($value['intProjectID'] == $this->intProjectID) {
+            if($value['intProjectID'] == $this->projectObj->getID()) {
                 echo ' selected="selected"';
             }
             echo'>'.$value['strProjectName']."</option>\n";

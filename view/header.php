@@ -19,11 +19,11 @@ if ($_ENV['engineering mode'] == True) {
     echo "</b>]&nbsp;&nbsp;&nbsp;";
 
     if(isset($projectObj)) {
-        echo "[projectID: <b>$projectObj->intProjectID - ". $projectObj->getName($currentProjectID)."</b>]&nbsp;&nbsp;&nbsp;";
+        echo "[projectID: <b>" . $projectObj->getID() . " - ". $projectObj->strProjectName . "</b>]&nbsp;&nbsp;&nbsp;";
     }
     
     if(isset($memberObj)) {
-        echo "[memberID: <b>$memberObj->intMemberID - " . $memberObj->getName() . "</b>]&nbsp;&nbsp;&nbsp;";
+        echo "[memberID: <b>" . $memberObj->getID() . " - " . $memberObj->strMemberName . "</b>]&nbsp;&nbsp;&nbsp;";
     }
     //echo "[PM_ID: <b>$currentProjectMemberID</b>]\n";
 } else {
