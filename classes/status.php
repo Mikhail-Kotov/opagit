@@ -16,13 +16,13 @@ class Status {
     }
 
     function setID($intStatusID) {
-        $this->intStatusID = $intStatusID();
+        $this->intStatusID = $intStatusID;
     }
     
-    function getDetails($intStatusID) {
+    function getDetails() {
         $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition," . 
                 "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
-                " WHERE intStatusID = " . $intStatusID;
+                " WHERE intStatusID = " . $this->intStatusID;
 
         $sqlArr = getArr($query);
        

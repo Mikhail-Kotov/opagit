@@ -28,6 +28,15 @@ echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n
 echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
 echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
 echo '<input type="submit" value="PDF" class="button" />' . "\n";
-echo "</form></td></tr></table>";
+echo "</form></td><td>";
+echo '<form method="post">';
+echo '<input type="hidden" name="page" value="status" />' . "\n";
+echo '<input type="hidden" name="todo" value="delete" />' . "\n";
+echo '<input type="hidden" name="m" value="' . $this->intMemberID . '" />' . "\n";
+echo '<input type="hidden" name="p" value="' . $this->intProjectID . '" />' . "\n";
+echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
+echo '<input type="submit" value="Delete" class="button" />' . "\n";
+echo "</form>\n";
+echo "</td></tr></table>";
 ?>
 

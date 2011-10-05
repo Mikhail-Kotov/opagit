@@ -36,7 +36,6 @@ if (!($page == "chooseproject" || $page == "choosemember")) {
     $projectMemberObj = new ProjectMember($projectObj, $memberObj);
     $projectMemberObj->getDetails();
     $statusObj = new Status($projectObj, $projectMemberObj);
-    $statusObj->getDetails($intStatusID);
 }
 
 include_once("view/header.php");
@@ -76,12 +75,10 @@ if ($page == "status") {
 
             $statusObj->addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, 
                     $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
-            unset($statusObj);
         }
         
         if ($todo == "delete") {
             $statusObj->delDetails($currentStatusID);
-            unset($statusObj);
         }
         
         if ($todo == "edit") {
@@ -96,7 +93,6 @@ if ($page == "status") {
 
             $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, 
                     $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
-            unset($statusObj);
         }
     }
     
@@ -106,7 +102,7 @@ if ($page == "status") {
 if ($page == "statushistory") {
     $statusObj->getLastStatusID();
     if(isset($statusObj->intStatusID)) {
-        $statusObj->getDetails($statusObj->intStatusID);
+        $statusObj->getDetails();
         include_once("model/status/history.php");
     } else {
         $page = "statusadd";
@@ -120,7 +116,7 @@ if ($page == "statusview") {
         $statusObj->getLastStatusID();
     }
     if(isset($statusObj->intStatusID)) {
-        $statusObj->getDetails($statusObj->intStatusID);
+        $statusObj->getDetails();
         include_once("model/status/view.php");
     } else {
         $page = "statusadd";
@@ -132,9 +128,9 @@ if ($page == "statusadd") {
 }
 
 if ($page == "statusedit") {
-    if (isset($_POST["s"])) {
+    if ($currentStatusID != "") {
         $statusObj->setID($currentStatusID);
-        $statusObj->getDetails($currentStatusID);
+        $statusObj->getDetails();
         $statusObj->displayEditForm();
     } else {
         die("wrong data in edit form");
