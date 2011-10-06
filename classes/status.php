@@ -13,6 +13,10 @@ class Status {
         $this->intProjectMemberID = getProjectMember($this->projectObj->getID(), $this->memberObj->getID());
     }
 
+    function getID() {
+        return $this->intStatusID;
+    }
+    
     function setID($intStatusID) {
         $this->intStatusID = $intStatusID;
     }
@@ -102,6 +106,10 @@ class Status {
         include_once("view/status/bottomMenu.php");
     }
 
+    function pdfStatus() {
+        include_once("view/status/pdf.php");
+    }    
+    
     function displayStatusHistory() {
         include_once("view/status/history.php");
         include_once("view/status/bottomMenu.php");

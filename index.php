@@ -1,9 +1,10 @@
 <?php
-$version = "OPA Team Prototype, version 10.06-1000";
+$version = "OPA Team Prototype, version 10.06-1210";
 
 error_reporting(E_ALL);
 ini_set('display_errors','On');
 require_once('FirePHPCore/FirePHP.class.php');
+include_once("fpdf/fpdf.php");
 include_once("inc/db.php");
 include_once("inc/functions.php");
 include_once("classes/member.php");

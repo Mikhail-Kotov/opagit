@@ -64,8 +64,7 @@ if (isset($historyTableArr[0])) {
 
         echo "<td>\n";
         echo '<form method="post">';
-        echo '<input type="hidden" name="page" value="status" />' . "\n";
-        echo '<input type="hidden" name="todo" value="pdf" />' . "\n";
+        echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
         echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
         echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";

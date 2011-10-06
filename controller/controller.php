@@ -30,6 +30,18 @@ if (isset($_POST["page"])) {
     $page = "chooseproject";
 }
 
+if ($page == "statuspdf") {
+    $statusObj = new Status($projectObj, $memberObj);
+    $statusObj->setID($currentStatusID);
+    
+    if(isset($statusObj->intStatusID)) {
+        $statusObj->getDetails();
+        include_once("model/status/pdf.php");
+    } else {
+        $page = "statusadd";
+    }
+}
+
 if (!($page == "chooseproject" || $page == "choosemember")) {
     $statusObj = new Status($projectObj, $memberObj);
 }
