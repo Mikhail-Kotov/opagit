@@ -1,7 +1,7 @@
 <?php
 //TODO: split this to MVC
 
-$query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,".
+$query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline,".
         "strStatusDifference,strStatusWhy" .
         " FROM tblStatus WHERE intProjectID = '" . $this->projectObj->getID() . "';";
 $sqlArr = getArr($query);
@@ -16,13 +16,14 @@ foreach ($sqlArr as $intStatusID => $statusArr) {
                 $historyTableArr[$intStatusID]["intMemberName"] = $this->memberObj->getMemberName($value);
                 break;
             case "dmtStatusCurrentDate":
-                $historyTableArr[$intStatusID][$columnName] = date("j F Y", strtotime($value));
+                $historyTableArr[$intStatusID][$columnName] = date("jS F Y", strtotime($value));
                 break;
             default:
                 $historyTableArr[$intStatusID][$columnName] = $value;
         }
     }
-    $historyTableArr[$intStatusID]["strAttachmentLink"] = $this->attachmentObj->strAttachmentLink;
+    $this->attachmentObj->getDetailsStatus($historyTableArr[$intStatusID]["intStatusID"]);
+    $historyTableArr[$intStatusID]["strAttachmentLink"] = '<a href="' . $this->attachmentObj->strAttachmentLink . '">' . $this->attachmentObj->strAttachmentLink . "</a>";
     $historyTableArr[$intStatusID]["strAttachmentComment"] = $this->attachmentObj->strAttachmentComment;
 }
 

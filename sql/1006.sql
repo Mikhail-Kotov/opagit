@@ -109,8 +109,8 @@ CREATE TABLE `tblStatus` (
   intProjectID INT(11) NOT NULL COMMENT 'FK',
   intProjectMemberID INT(11) NOT NULL COMMENT 'FK', # author
   dmtStatusCurrentDate DATE NOT NULL,
-  strStatusDate VARCHAR(1000) NULL,
-  strStatusActualDate VARCHAR(1000) NULL,
+  strActualBaseline VARCHAR(1000) NULL,
+  strPlanBaseline VARCHAR(1000) NULL,
   strStatusDifference VARCHAR(5000) NULL,
   strStatusWhy VARCHAR(5000) NULL,
   PRIMARY KEY (intStatusID),
@@ -212,9 +212,9 @@ INSERT INTO `tblMember`(`intMemberID`,`strMemberName`,`strMemberPassword`,`strMe
 INSERT INTO `tblStudent`(`intMemberID`) VALUES (1);
 INSERT INTO `tblTeacher`(`intMemberID`,`strTeacherJobTitle`,`strTeacherPhone`,`strTeacherMobile`) VALUES (1,'Coordinator','+61397009876',NULL);
 INSERT INTO `tblProjectMember`(`intProjectMemberID`,`intMemberID`,`intProjectID`,`intPermissionID`) VALUES (NULL,1,1,NULL),(NULL,1,2,NULL),(NULL,2,1,NULL),(NULL,2,2,NULL);
-INSERT INTO `tblStatus`(`intStatusID`,`intProjectID`,`intProjectMemberID`,`dmtStatusCurrentDate`,`strStatusDate`,`strStatusActualDate`,`strStatusDifference`,`strStatusWhy`) VALUES (NULL,1,1,'2011-09-12','2011-09-15','2011-09-19','Everything is ok','All team works very quickly');
+INSERT INTO `tblStatus`(`intStatusID`,`intProjectID`,`intProjectMemberID`,`dmtStatusCurrentDate`,`strActualBaseline`,`strPlanBaseline`,`strStatusDifference`,`strStatusWhy`) VALUES (NULL,1,1,'2011-09-12','2011-09-15','2011-09-19','Everything is ok','All team works very quickly');
 INSERT INTO `tblIssueType`(`strIssueTypeID`) VALUES ('Bug'),('Environment'),('Financial'),('Management'),('Quality'),('Schedule'),('Technical');
 INSERT INTO `tblRiskType`(`strRiskTypeID`) VALUES ('Financial'),('Management'),('Quality'),('Schedule'),('Technical');
 INSERT INTO `tblRisk`(`intRiskID`,`intProjectMemberID`,`intProjectID`,`strRiskTypeID`,`strRiskDescription`,`strRiskImpactDescription`,`enmRiskStatus`,`strRiskLevelOfImpact`,`strLikelihoodOfImpact`,`strRiskConsequenceOfImpact`,`strRiskMitigationStrategy`,`strRiskContingencyStrategy`,`dmtRiskDateRaised`,`dmtRiskDateClosed`) VALUES (1,1,1,'Financial','desc',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 INSERT INTO `tblIssue`(`intIssueID`,`intProjectMemberID`,`intProjectID`,`intRiskID`,`strIssueTypeID`,`strIssueDescription`,`dmtIssueDateRaised`,`dmtIssueRequirementFinishDate`,`enmIssueStatus`,`dmtIssueDateClosed`,`strIssueOutcome`,`intIssueRating`) VALUES (1,1,1,1,'Environment','desc',NULL,NULL,NULL,NULL,NULL,NULL);
-
+INSERT INTO `tblAttachment`(`intAttachmentID`,`intStatusID`,`intRiskID`,`intIssueID`,`strAttachmentLink`,`strAttachmentComment`) VALUES ( NULL,'1',NULL,NULL,'http://cit3','attachment comment');

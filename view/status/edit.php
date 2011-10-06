@@ -23,9 +23,9 @@
     </select>
     <br /><br />
     Actual Baseline:<br />
-    <textarea name="strStatusDate"><?php echo $this->strStatusDate; ?></textarea><br /><br />
+    <textarea name="strActualBaseline"><?php echo $this->strActualBaseline; ?></textarea><br /><br />
     Plan Baseline:<br />
-    <textarea name="strStatusActualDate"><?php echo $this->strStatusActualDate; ?></textarea><br /><br />
+    <textarea name="strPlanBaseline"><?php echo $this->strPlanBaseline; ?></textarea><br /><br />
     Variation:<br />
     <textarea name="strStatusDifference"><?php echo $this->strStatusDifference; ?></textarea><br /><br />
     Notes/Reasons:<br />

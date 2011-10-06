@@ -72,14 +72,14 @@ if ($page == "status") {
     if ($todo != "") {
         if ($todo == "add") {
             $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
-            $strStatusDate = $_POST["strStatusDate"];
-            $strStatusActualDate = $_POST["strStatusActualDate"];
+            $strActualBaseline = $_POST["strActualBaseline"];
+            $strPlanBaseline = $_POST["strPlanBaseline"];
             $strStatusDifference = $_POST["strStatusDifference"];
             $strStatusWhy = $_POST["strStatusWhy"];
             $strAttachmentLink = $_POST["strAttachmentLink"];
             $strAttachmentComment = $_POST["strAttachmentComment"];
 
-            $statusObj->addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, 
+            $statusObj->addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, 
                     $strStatusDifference, $strStatusWhy, $strAttachmentLink, $strAttachmentComment);
         }
         
@@ -89,14 +89,14 @@ if ($page == "status") {
         
         if ($todo == "edit") {
             $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
-            $strStatusDate = $_POST['strStatusDate'];
-            $strStatusActualDate = $_POST['strStatusActualDate'];
+            $strActualBaseline = $_POST['strActualBaseline'];
+            $strPlanBaseline = $_POST['strPlanBaseline'];
             $strStatusDifference = $_POST['strStatusDifference'];
             $strStatusWhy = $_POST['strStatusWhy'];
             $strAttachmentLink = $_POST['strAttachmentLink'];
             $strAttachmentComment = $_POST['strAttachmentComment'];
 
-            $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, 
+            $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, 
                     $strStatusDifference, $strStatusWhy, $strAttachmentLink, $strAttachmentComment);
         }
     }

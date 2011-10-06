@@ -21,9 +21,9 @@
     </select>
     <br /><br />
     Actual Baseline:<br />
-    <textarea name="strStatusDate" /></textarea><br /><br />
+    <textarea name="strActualBaseline" /></textarea><br /><br />
 Plan Baseline:<br />
-<textarea name="strStatusActualDate" /></textarea><br /><br />
+<textarea name="strPlanBaseline" /></textarea><br /><br />
 Variation:<br />
 <textarea name="strStatusDifference"></textarea><br /><br />
 Notes/Reasons:<br />

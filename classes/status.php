@@ -4,7 +4,7 @@ class Status {
     public $projectObj, $memberObj;
     public $intStatusID;
     public $intProjectMemberID;
-    public $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate;
+    public $dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline;
     public $strStatusDifference, $strStatusWhy;
 
     function __construct($projectObj, $memberObj, $attachmentObj) {
@@ -23,7 +23,7 @@ class Status {
     }
     
     function getDetails() {
-        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," . 
+        $query = "SELECT intStatusID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," . 
                 "strStatusDifference,strStatusWhy FROM tblStatus" .
                 " WHERE intStatusID = " . $this->intStatusID;
 
@@ -32,8 +32,8 @@ class Status {
         if(isset($sqlArr[0])) {
             $this->intStatusID = $sqlArr[0]['intStatusID'];
             $this->dmtStatusCurrentDate = $sqlArr[0]['dmtStatusCurrentDate'];
-            $this->strStatusDate = $sqlArr[0]['strStatusDate'];
-            $this->strStatusActualDate = $sqlArr[0]['strStatusActualDate'];
+            $this->strActualBaseline = $sqlArr[0]['strActualBaseline'];
+            $this->strPlanBaseline = $sqlArr[0]['strPlanBaseline'];
             $this->strStatusDifference = $sqlArr[0]['strStatusDifference'];
             $this->strStatusWhy = $sqlArr[0]['strStatusWhy'];
         }
@@ -42,7 +42,7 @@ class Status {
     }
     
     function getLastStatusID() {
-        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," .
+        $query = "SELECT intStatusID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," .
                 "strStatusDifference,strStatusWhy FROM tblStatus" .
                 " WHERE intProjectID = " . $this->projectObj->getID() .
                 " ORDER BY intStatusID DESC LIMIT 1;";
@@ -71,8 +71,8 @@ class Status {
     
     function setDetails($intStatusID, // <- refactor this!!!
             $dmtStatusCurrentDate,
-            $strStatusDate,
-            $strStatusActualDate,
+            $strActualBaseline,
+            $strPlanBaseline,
             $strStatusDifference,
             $strStatusWhy,
             $strAttachmentLink,
@@ -83,8 +83,8 @@ class Status {
         $query = "UPDATE tblStatus SET intProjectID='" . mysql_real_escape_string($this->projectObj->getID()) . 
                 "',intProjectMemberID='" . mysql_real_escape_string($this->intProjectMemberID) .
                 "',dmtStatusCurrentDate='" . mysql_real_escape_string($dmtStatusCurrentDate) .
-                "',strStatusDate='" . mysql_real_escape_string($strStatusDate) . 
-                "',strStatusActualDate='" . mysql_real_escape_string($strStatusActualDate) .
+                "',strActualBaseline='" . mysql_real_escape_string($strActualBaseline) . 
+                "',strPlanBaseline='" . mysql_real_escape_string($strPlanBaseline) .
                 "',strStatusDifference='" . mysql_real_escape_string($strStatusDifference) . 
                 "',strStatusWhy='" . mysql_real_escape_string($strStatusWhy) . 
                 "' WHERE intStatusID = '" . mysql_real_escape_string($intStatusID) . "';";
@@ -103,7 +103,7 @@ class Status {
             die('Invalid query: ' . mysql_error());                                
     }
 
-    function addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, 
+    function addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusDifference, 
             $strStatusWhy, $strAttachmentLink, $strAttachmentComment) {
 
         $nextStatusID = $this->getGlobalLastStatusID() + 1;
@@ -113,8 +113,8 @@ class Status {
                 "intProjectID," .
                 "intProjectMemberID," .
                 "dmtStatusCurrentDate," .
-                "strStatusDate," .
-                "strStatusActualDate," .
+                "strActualBaseline," .
+                "strPlanBaseline," .
                 "strStatusDifference," .
                 "strStatusWhy) " .
                 "values (" .
@@ -122,8 +122,8 @@ class Status {
                 "', '" . mysql_real_escape_string($this->projectObj->getID()) .
                 "', '" . mysql_real_escape_string($this->intProjectMemberID) .
                 "', '" . mysql_real_escape_string($dmtStatusCurrentDate) .
-                "', '" . mysql_real_escape_string($strStatusDate) .
-                "', '" . mysql_real_escape_string($strStatusActualDate) .
+                "', '" . mysql_real_escape_string($strActualBaseline) .
+                "', '" . mysql_real_escape_string($strPlanBaseline) .
                 "', '" . mysql_real_escape_string($strStatusDifference) .
                 "', '" . mysql_real_escape_string($strStatusWhy) . "');";
         $sql = mysql_query($query);

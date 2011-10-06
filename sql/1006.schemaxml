@@ -69,8 +69,8 @@
 <table name="tblIssueType" view="colnames">
 <left>1306</left>
 <top>688</top>
-<width>209</width>
-<height>96</height>
+<width>134</width>
+<height>90</height>
 <sql_create_table>CREATE TABLE `tblIssueType` (
   `strIssueTypeID` varchar(255) NOT NULL COMMENT 'PK. Lookup type of Issue',
   `strIssueTypeDescription` varchar(255) DEFAULT NULL,
@@ -170,10 +170,10 @@
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</sql_create_table>
 </table>
 <table name="tblRiskType" view="colnames">
-<left>1464</left>
-<top>386</top>
-<width>178</width>
-<height>104</height>
+<left>1523</left>
+<top>389</top>
+<width>127</width>
+<height>90</height>
 <sql_create_table>CREATE TABLE `tblRiskType` (
   `strRiskTypeID` varchar(255) NOT NULL COMMENT 'PK. Lookup type of Risk',
   `strRiskTypeDescription` varchar(255) DEFAULT NULL,
@@ -236,8 +236,8 @@
   `intProjectID` int(11) NOT NULL COMMENT 'FK',
   `intProjectMemberID` int(11) NOT NULL COMMENT 'FK',
   `dmtStatusCurrentDate` date NOT NULL,
-  `strStatusDate` varchar(1000) DEFAULT NULL,
-  `strStatusActualDate` varchar(1000) DEFAULT NULL,
+  `strActualBaseline` varchar(1000) DEFAULT NULL,
+  `strPlanBaseline` varchar(1000) DEFAULT NULL,
   `strStatusDifference` varchar(5000) DEFAULT NULL,
   `strStatusWhy` varchar(5000) DEFAULT NULL,
   PRIMARY KEY (`intStatusID`),
@@ -245,22 +245,28 @@
   KEY `FK_tblStatus_tblProjectMember` (`intProjectMemberID`),
   CONSTRAINT `FK_tblStatus_tblProject` FOREIGN KEY (`intProjectID`) REFERENCES `tblProject` (`intProjectID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_tblStatus_tblProjectMember` FOREIGN KEY (`intProjectMemberID`) REFERENCES `tblProjectMember` (`intProjectMemberID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</sql_create_table>
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8</sql_create_table>
 </table>
-<table name="tblStatusAttachment" view="colnames">
+<table name="tblAttachment" view="colnames">
 <left>430</left>
-<top>103</top>
-<width>218</width>
-<height>141</height>
-<sql_create_table>CREATE TABLE `tblStatusAttachment` (
-  `intStatusAttachmentID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'PK, AI. Project Status Attachment for OPA',
-  `intStatusID` int(11) NOT NULL COMMENT 'FK',
-  `strStatusAttachmentLink` varchar(1000) DEFAULT NULL,
-  `strStatusAttachmentComment` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`intStatusAttachmentID`),
-  KEY `FK_tblStatusAttachment_tblStatus` (`intStatusID`),
-  CONSTRAINT `FK_tblStatusAttachment_tblStatus` FOREIGN KEY (`intStatusID`) REFERENCES `tblStatus` (`intStatusID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+<top>132</top>
+<width>174</width>
+<height>160</height>
+<sql_create_table>CREATE TABLE `tblAttachment` (
+  `intAttachmentID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'PK, AI. Project Status Attachment for OPA',
+  `intStatusID` int(11) DEFAULT NULL COMMENT 'FK',
+  `intRiskID` int(11) DEFAULT NULL COMMENT 'FK',
+  `intIssueID` int(11) DEFAULT NULL COMMENT 'FK',
+  `strAttachmentLink` varchar(1000) DEFAULT NULL,
+  `strAttachmentComment` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`intAttachmentID`),
+  KEY `FK_tblAttachment_tblStatus` (`intStatusID`),
+  KEY `FK_tblAttachment_tblRisk` (`intRiskID`),
+  KEY `FK_tblAttachment_tblIssue` (`intIssueID`),
+  CONSTRAINT `FK_tblAttachment_tblStatus` FOREIGN KEY (`intStatusID`) REFERENCES `tblStatus` (`intStatusID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblAttachment_tblRisk` FOREIGN KEY (`intRiskID`) REFERENCES `tblRisk` (`intRiskID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblAttachment_tblIssue` FOREIGN KEY (`intIssueID`) REFERENCES `tblIssue` (`intIssueID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</sql_create_table>
 </table>
 </tables>
 </canvas>

@@ -1,5 +1,6 @@
 version number is: MM.DD-HHMM
 
+10.07-0100: add attachment table & class, changes in sql db
 10.06-1210: PDF working now
 10.06-1000: refactoring: deleted ProjectMember classe
 10.06-0600: refactoring (more OO)

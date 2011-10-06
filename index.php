@@ -1,5 +1,5 @@
 <?php
-$version = "OPA Team Prototype, version 10.06-1210";
+$version = "OPA Team Prototype, version 10.07-0100";
 
 error_reporting(E_ALL);
 ini_set('display_errors','On');
