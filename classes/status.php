@@ -5,7 +5,7 @@ class Status {
     public $intStatusID;
     public $intProjectMemberID;
     public $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate;
-    public $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment;
+    public $strStatusDifference, $strStatusWhy;
 
     function __construct($projectObj, $memberObj, $attachmentObj) {
         $this->projectObj = $projectObj;
@@ -23,10 +23,6 @@ class Status {
     }
     
     function getDetails() {
-        $query = "";
-        
-        $this->attachmentObj->getDetailsStatus($this->intStatusID);
-        
         $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," . 
                 "strStatusDifference,strStatusWhy FROM tblStatus" .
                 " WHERE intStatusID = " . $this->intStatusID;
@@ -40,9 +36,9 @@ class Status {
             $this->strStatusActualDate = $sqlArr[0]['strStatusActualDate'];
             $this->strStatusDifference = $sqlArr[0]['strStatusDifference'];
             $this->strStatusWhy = $sqlArr[0]['strStatusWhy'];
-            $this->strStatusGanttLink = $this->attachmentObj->strAttachmentLink;
-            $this->strStatusGanttLinkComment = $this->attachmentObj->strAttachmentComment;
         }
+        
+        $this->attachmentObj->getDetailsStatus($this->intStatusID);
     }
     
     function getLastStatusID() {
@@ -58,14 +54,32 @@ class Status {
         }
     }
     
-    function setDetails($intStatusID,
+    function getGlobalLastStatusID() {
+        $globalLastStatusID = 0;
+        
+        $query = "SELECT intStatusID FROM tblStatus" .
+                " ORDER BY intStatusID DESC LIMIT 1;";
+
+        $sqlArr = getArr($query);
+       
+        if(isset($sqlArr[0])) {
+            $globalLastStatusID = $sqlArr[0]['intStatusID'];
+        }
+        
+        return $globalLastStatusID;
+    }
+    
+    function setDetails($intStatusID, // <- refactor this!!!
             $dmtStatusCurrentDate,
             $strStatusDate,
             $strStatusActualDate,
             $strStatusDifference,
             $strStatusWhy,
-            $strStatusGanttLink,
-            $strStatusGanttLinkComment) {
+            $strAttachmentLink,
+            $strAttachmentComment) {
+        
+        $this->attachmentObj->getDetailsStatus($intStatusID);
+        
         $query = "UPDATE tblStatus SET intProjectID='" . mysql_real_escape_string($this->projectObj->getID()) . 
                 "',intProjectMemberID='" . mysql_real_escape_string($this->intProjectMemberID) .
                 "',dmtStatusCurrentDate='" . mysql_real_escape_string($dmtStatusCurrentDate) .
@@ -73,25 +87,54 @@ class Status {
                 "',strStatusActualDate='" . mysql_real_escape_string($strStatusActualDate) .
                 "',strStatusDifference='" . mysql_real_escape_string($strStatusDifference) . 
                 "',strStatusWhy='" . mysql_real_escape_string($strStatusWhy) . 
-                "',strStatusGanttLink='" . mysql_real_escape_string($strStatusGanttLink) . 
-                "',strStatusGanttLinkComment='" . mysql_real_escape_string($strStatusGanttLinkComment) . 
                 "' WHERE intStatusID = '" . mysql_real_escape_string($intStatusID) . "';";
+        
         $sql = mysql_query($query);
 
         if (!$sql)
             die('Invalid query: ' . mysql_error());
+        
+        $query = "UPDATE tblAttachment SET strAttachmentLink='" . mysql_real_escape_string($strAttachmentLink) . 
+                "',strAttachmentComment='" . mysql_real_escape_string($strAttachmentComment) . "' WHERE intAttachmentID=" .$this->attachmentObj->getID() . ";";
+        
+        $sql = mysql_query($query);
+
+        if (!$sql)
+            die('Invalid query: ' . mysql_error());                                
     }
 
     function addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, 
-            $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) {
-            
-        $query = "INSERT INTO tblStatus(intStatusID,intProjectID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," .
-                "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment) " .
-                "values (NULL, '" . mysql_real_escape_string($this->projectObj->getID()) . "', '" . mysql_real_escape_string($this->intProjectMemberID) .
-                "', '" . mysql_real_escape_string($dmtStatusCurrentDate) . "', '" . mysql_real_escape_string($strStatusDate) . 
-                "', '" . mysql_real_escape_string($strStatusActualDate) . "'," .
-                "'" . mysql_real_escape_string($strStatusDifference) . "', '" . mysql_real_escape_string($strStatusWhy) . 
-                "', '" . mysql_real_escape_string($strStatusGanttLink) . "', '" . mysql_real_escape_string($strStatusGanttLinkComment) . "');";
+            $strStatusWhy, $strAttachmentLink, $strAttachmentComment) {
+
+        $nextStatusID = $this->getGlobalLastStatusID() + 1;
+        
+        $query = "INSERT INTO tblStatus(".
+                "intStatusID," .
+                "intProjectID," .
+                "intProjectMemberID," .
+                "dmtStatusCurrentDate," .
+                "strStatusDate," .
+                "strStatusActualDate," .
+                "strStatusDifference," .
+                "strStatusWhy) " .
+                "values (" .
+                "'" . $nextStatusID .
+                "', '" . mysql_real_escape_string($this->projectObj->getID()) .
+                "', '" . mysql_real_escape_string($this->intProjectMemberID) .
+                "', '" . mysql_real_escape_string($dmtStatusCurrentDate) .
+                "', '" . mysql_real_escape_string($strStatusDate) .
+                "', '" . mysql_real_escape_string($strStatusActualDate) .
+                "', '" . mysql_real_escape_string($strStatusDifference) .
+                "', '" . mysql_real_escape_string($strStatusWhy) . "');";
+        $sql = mysql_query($query);
+
+        if (!$sql)
+            die('Invalid query: ' . mysql_error());
+
+        $query = "INSERT INTO tblAttachment(intAttachmentID,intStatusID,strAttachmentLink,strAttachmentComment) " .
+                "values (NULL, '" . $nextStatusID .
+                "', '" . mysql_real_escape_string($strAttachmentLink) . 
+                "', '" . mysql_real_escape_string($strAttachmentComment) . "');";
         $sql = mysql_query($query);
 
         if (!$sql)

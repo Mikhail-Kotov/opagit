@@ -76,11 +76,11 @@ if ($page == "status") {
             $strStatusActualDate = $_POST["strStatusActualDate"];
             $strStatusDifference = $_POST["strStatusDifference"];
             $strStatusWhy = $_POST["strStatusWhy"];
-            $strStatusGanttLink = $_POST["strStatusGanttLink"];
-            $strStatusGanttLinkComment = $_POST["strStatusGanttLinkComment"];
+            $strAttachmentLink = $_POST["strAttachmentLink"];
+            $strAttachmentComment = $_POST["strAttachmentComment"];
 
             $statusObj->addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, 
-                    $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
+                    $strStatusDifference, $strStatusWhy, $strAttachmentLink, $strAttachmentComment);
         }
         
         if ($todo == "delete") {
@@ -93,11 +93,11 @@ if ($page == "status") {
             $strStatusActualDate = $_POST['strStatusActualDate'];
             $strStatusDifference = $_POST['strStatusDifference'];
             $strStatusWhy = $_POST['strStatusWhy'];
-            $strStatusGanttLink = $_POST['strStatusGanttLink'];
-            $strStatusGanttLinkComment = $_POST['strStatusGanttLinkComment'];
+            $strAttachmentLink = $_POST['strAttachmentLink'];
+            $strAttachmentComment = $_POST['strAttachmentComment'];
 
             $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, 
-                    $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
+                    $strStatusDifference, $strStatusWhy, $strAttachmentLink, $strAttachmentComment);
         }
     }
     

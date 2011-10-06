@@ -2,7 +2,7 @@
 //TODO: split this to MVC
 
 $query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,".
-        "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment" .
+        "strStatusDifference,strStatusWhy" .
         " FROM tblStatus WHERE intProjectID = '" . $this->projectObj->getID() . "';";
 $sqlArr = getArr($query);
 
@@ -22,6 +22,8 @@ foreach ($sqlArr as $intStatusID => $statusArr) {
                 $historyTableArr[$intStatusID][$columnName] = $value;
         }
     }
+    $historyTableArr[$intStatusID]["strAttachmentLink"] = $this->attachmentObj->strAttachmentLink;
+    $historyTableArr[$intStatusID]["strAttachmentComment"] = $this->attachmentObj->strAttachmentComment;
 }
 
 

@@ -8,6 +8,6 @@ $currentStatusMessage = "<b>Date:</b> " . date("j F Y", strtotime($this->dmtStat
         $this->strStatusDifference . "<br /><br />" .
         "<b>Notes/Reasons:</b><br />" .
         $this->strStatusWhy . "<br /><br />" .
-        '<b>Attachment:</b><br /><a href="' . $this->strStatusGanttLink . '">' . $this->strStatusGanttLink . "</a><br /><br />" .
-        "<b>Attachment Comment:</b><br />" . $this->strStatusGanttLinkComment . "<br /><br />";
+        '<b>Attachment:</b><br /><a href="' . $this->attachmentObj->strAttachmentLink . '">' . $this->attachmentObj->strAttachmentLink . "</a><br /><br />" .
+        "<b>Attachment Comment:</b><br />" . $this->attachmentObj->strAttachmentComment . "<br /><br />";
 ?>

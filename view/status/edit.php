@@ -31,8 +31,8 @@
     Notes/Reasons:<br />
     <textarea name="strStatusWhy"><?php echo $this->strStatusWhy; ?></textarea><br /><br />
     Attachment:<br />
-    <input type="text" name="strStatusGanttLink" value="<?php echo $this->strStatusGanttLink; ?>" /><br /><br />
+    <input type="text" name="strAttachmentLink" value="<?php echo $this->attachmentObj->strAttachmentLink; ?>" /><br /><br />
     Attachment Comment:<br />
-    <input type="text" name="strStatusGanttLinkComment" value="<?php echo $this->strStatusGanttLinkComment; ?>" /><br /><br />
+    <input type="text" name="strAttachmentComment" value="<?php echo $this->attachmentObj->strAttachmentComment; ?>" /><br /><br />
     <input type="submit" value="Submit" />
 </form>

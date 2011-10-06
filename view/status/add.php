@@ -29,9 +29,9 @@ Variation:<br />
 Notes/Reasons:<br />
 <textarea name="strStatusWhy"></textarea><br /><br />
 Attachment:<br />
-<input type="text" name="strStatusGanttLink" value="http://"/><br /><br />
+<input type="text" name="strAttachmentLink" value="http://"/><br /><br />
 Attachment Comment:<br />
-<input type="text" name="strStatusGanttLinkComment" /><br />
+<input type="text" name="strAttachmentComment" /><br />
 <br />
 <input type="submit" value="Submit" />
 </form>
