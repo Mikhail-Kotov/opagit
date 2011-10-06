@@ -1,7 +1,7 @@
 <?php
 //TODO: split this to MVC
 
-$query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition,".
+$query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,".
         "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment" .
         " FROM tblStatus WHERE intProjectID = '" . $this->projectObj->getID() . "';";
 $sqlArr = getArr($query);
@@ -9,15 +9,21 @@ $sqlArr = getArr($query);
 $caption = "Status History for Project: " . $this->projectObj->strProjectName;
 
 //$arr3 = array();
-foreach($sqlArr as $intStatusID => $statusArr) {
-    foreach($statusArr as $columnName => $value) {
-        if($columnName != "intProjectMemberID") {
-            $historyTableArr[$intStatusID][$columnName] = $value;
-        } else {
-            $historyTableArr[$intStatusID]["intMemberName"] = $this->memberObj->getMemberName($value);
+foreach ($sqlArr as $intStatusID => $statusArr) {
+    foreach ($statusArr as $columnName => $value) {
+        switch ($columnName) {
+            case "intProjectMemberID":
+                $historyTableArr[$intStatusID]["intMemberName"] = $this->memberObj->getMemberName($value);
+                break;
+            case "dmtStatusCurrentDate":
+                $historyTableArr[$intStatusID][$columnName] = date("j F Y", strtotime($value));
+                break;
+            default:
+                $historyTableArr[$intStatusID][$columnName] = $value;
         }
     }
 }
+
 
 unset($columnName);
 unset($statusArr);
@@ -32,7 +38,6 @@ if (isset($historyTableArr[0])) {
     echo "<th>Creation Date</th>\n";
     echo "<th>Actual Baseline</th>\n";
     echo "<th>Plan Baseline</th>\n";
-    echo "<th>Condition</th>\n";
     echo "<th>Variation</th>\n";
     echo "<th>Notes/Reasons</th>\n";
     echo "<th>Attachment</th>\n";

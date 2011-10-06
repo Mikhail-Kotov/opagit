@@ -13,6 +13,7 @@ include_once("classes/project_member.php");
 include_once("classes/status.php");
 include_once("classes/risk.php");
 include_once("classes/issue.php");
+include_once("classes/attachment.php");
 
 // connect to db
 $link = connectDB();

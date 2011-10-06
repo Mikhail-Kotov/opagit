@@ -1,18 +1,5 @@
 <?php
-$currentStatusMessage = "<b>Today is:</b> " . $_ENV['currentDate'] . "<br />\n" . 
-"<b>Status report as of:</b> " . $this->dmtStatusCurrentDate . "<br />\n" . 
-"<b>Status created by:</b> " . $this->memberObj->strMemberFirstName . " " . $this->memberObj->strMemberLastName . "<br />\n" . 
-"<b>For Project:</b> " . $this->projectObj->strProjectName . "<br />\n" . 
-"<b>Current status is:</b> " . $this->strStatusCondition . "<br /><br />\n" . 
-"<b>Actual Baseline:</b><br />" . $this->strStatusDate . "<br /><br />\n" . 
-"<b>Plan Baseline:</b><br />" . $this->strStatusActualDate . "<br /><br />\n" . 
-"<b>Status Condition:</b><br />" . $this->strStatusCondition . "<br /><br />\n" . 
-"<b>Variation:</b><br />\n" . 
-$this->strStatusDifference . "<br /><br />\n" . 
-"<b>Notes/Reasons:</b><br />\n" . 
-$this->strStatusWhy . "<br /><br />\n" . 
-'<b>Attachment:</b><br /><a href="' . $this->strStatusGanttLink . '">' . $this->strStatusGanttLink . "</a><br /><br />\n" . 
-"<b>Attachment Comment:</b><br />" . $this->strStatusGanttLinkComment . "<br /><br />\n";
+include_once("statusMessage.php");
 
 //$pdf = new FPDF();
 //$pdf->AddPage();
@@ -22,7 +9,22 @@ $this->strStatusWhy . "<br /><br />\n" .
 
 
 class PDF extends FPDF {
+    
+    var $B;
+    var $I;
+    var $U;
+    var $HREF;
 
+    function PDF($orientation='P', $unit='mm', $size='A4') {
+        // Call parent constructor
+        $this->FPDF($orientation, $unit, $size);
+        // Initialization
+        $this->B = 0;
+        $this->I = 0;
+        $this->U = 0;
+        $this->HREF = '';
+    }
+    
     function Header() {
         global $title;
     }
@@ -45,22 +47,15 @@ class PDF extends FPDF {
         $this->SetFillColor(200, 220, 255);
         // Title
         $this->Cell(0, 6, $label, 0, 1, 'L', true);
-        // Line break
-        $this->Ln(4);
     }
 
-    function ChapterBody($file) {
-        // Read text file
-        $txt = $file;
-        // Times 12
+    function ChapterBody($txt) {
+        // Arial 12
         $this->SetFont('Arial', '', 12);
         // Output justified text
         $this->MultiCell(0, 5, $txt);
-        // Line break
-        $this->Ln();
         // Mention in italics
         $this->SetFont('', 'I');
-        $this->Cell(0, 5, '');
     }
 
     function PrintChapter($num, $title, $file) {
@@ -69,14 +64,84 @@ class PDF extends FPDF {
         $this->ChapterBody($file);
     }
 
+    function WriteHTML($html) {
+        // HTML parser
+        $html = str_replace("\n", ' ', $html);
+        $a = preg_split('/<(.*)>/U', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
+        foreach ($a as $i => $e) {
+            if ($i % 2 == 0) {
+                // Text
+                if ($this->HREF)
+                    $this->PutLink($this->HREF, $e);
+                else
+                    $this->Write(5, $e);
+            }
+            else {
+                // Tag
+                if ($e[0] == '/')
+                    $this->CloseTag(strtoupper(substr($e, 1)));
+                else {
+                    // Extract attributes
+                    $a2 = explode(' ', $e);
+                    $tag = strtoupper(array_shift($a2));
+                    $attr = array();
+                    foreach ($a2 as $v) {
+                        if (preg_match('/([^=]*)=["\']?([^"\']*)/', $v, $a3))
+                            $attr[strtoupper($a3[1])] = $a3[2];
+                    }
+                    $this->OpenTag($tag, $attr);
+                }
+            }
+        }
+    }
+
+    function OpenTag($tag, $attr) {
+        // Opening tag
+        if ($tag == 'B' || $tag == 'I' || $tag == 'U')
+            $this->SetStyle($tag, true);
+        if ($tag == 'A')
+            $this->HREF = $attr['HREF'];
+        if ($tag == 'BR')
+            $this->Ln(5);
+    }
+
+    function CloseTag($tag) {
+        // Closing tag
+        if ($tag == 'B' || $tag == 'I' || $tag == 'U')
+            $this->SetStyle($tag, false);
+        if ($tag == 'A')
+            $this->HREF = '';
+    }
+
+    function SetStyle($tag, $enable) {
+        // Modify style and select corresponding font
+        $this->$tag += ($enable ? 1 : -1);
+        $style = '';
+        foreach (array('B', 'I', 'U') as $s) {
+            if ($this->$s > 0)
+                $style .= $s;
+        }
+        $this->SetFont('', $style);
+    }
+
+    function PutLink($URL, $txt) {
+        // Put a hyperlink
+        $this->SetTextColor(0, 0, 255);
+        $this->SetStyle('U', true);
+        $this->Write(5, $txt, $URL);
+        $this->SetStyle('U', false);
+        $this->SetTextColor(0);
+    }
+
 }
 
 $pdf = new PDF();
-$title = 'Status #'. $this->getID();
+$pdf->SetDisplayMode('real','default');
+$title = 'Status #' . $this->getID();
 $pdf->SetTitle($title);
 $pdf->SetAuthor('OPA');
-$pdf->PrintChapter(1,'Status #'. $this->getID() ,strip_tags($currentStatusMessage));
-//$pdf->PrintChapter(2,'THE PROS AND CONS','20k_c2.txt');
-$pdf->Output();
+$pdf->PrintChapter(1, 'Status #' . $this->getID(), "");
+$pdf->WriteHTML($currentStatusMessage);
 
+$pdf->Output();
 ?>

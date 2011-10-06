@@ -24,12 +24,6 @@
     <textarea name="strStatusDate" /></textarea><br /><br />
 Plan Baseline:<br />
 <textarea name="strStatusActualDate" /></textarea><br /><br />
-Status Condition:<br />
-<select name ="strStatusCondition">
-    <option value="Up to date">Up to date</option>
-    <option value="Ahead">Ahead</option>
-    <option value="Behind">Behind</option>    
-</select><br /><br />
 Variation:<br />
 <textarea name="strStatusDifference"></textarea><br /><br />
 Notes/Reasons:<br />

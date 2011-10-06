@@ -26,12 +26,6 @@
     <textarea name="strStatusDate"><?php echo $this->strStatusDate; ?></textarea><br /><br />
     Plan Baseline:<br />
     <textarea name="strStatusActualDate"><?php echo $this->strStatusActualDate; ?></textarea><br /><br />
-    Status Condition:<br />
-    <select name ="strStatusCondition">
-        <option value="Up to date"<?php if($this->strStatusCondition == "Up to date") { echo ' selected="selected"'; } ?>>Up to date</option>
-        <option value="Ahead"<?php if($this->strStatusCondition == "Ahead") { echo ' selected="selected"'; } ?>>Ahead</option>
-        <option value="Behind"<?php if($this->strStatusCondition == "Behind") { echo ' selected="selected"'; } ?>>Behind</option>
-    </select><br /><br />
     Variation:<br />
     <textarea name="strStatusDifference"><?php echo $this->strStatusDifference; ?></textarea><br /><br />
     Notes/Reasons:<br />

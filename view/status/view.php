@@ -1,18 +1,5 @@
 <?php
-$currentStatusMessage = "<b>Today is:</b> " . $_ENV['currentDate'] . "<br />\n" . 
-"<b>Status report as of:</b> " . $this->dmtStatusCurrentDate . "<br />\n" . 
-"<b>Status created by:</b> " . $this->memberObj->strMemberFirstName . " " . $this->memberObj->strMemberLastName . "<br />\n" . 
-"<b>For Project:</b> " . $this->projectObj->strProjectName . "<br />\n" . 
-"<b>Current status is:</b> " . $this->strStatusCondition . "<br /><br />\n" . 
-"<b>Actual Baseline:</b><br />" . $this->strStatusDate . "<br /><br />\n" . 
-"<b>Plan Baseline:</b><br />" . $this->strStatusActualDate . "<br /><br />\n" . 
-"<b>Status Condition:</b><br />" . $this->strStatusCondition . "<br /><br />\n" . 
-"<b>Variation:</b><br />\n" . 
-$this->strStatusDifference . "<br /><br />\n" . 
-"<b>Notes/Reasons:</b><br />\n" . 
-$this->strStatusWhy . "<br /><br />\n" . 
-'<b>Attachment:</b><br /><a href="' . $this->strStatusGanttLink . '">' . $this->strStatusGanttLink . "</a><br /><br />\n" . 
-"<b>Attachment Comment:</b><br />" . $this->strStatusGanttLinkComment . "<br /><br />\n";
+include_once("statusMessage.php");
 
 echo $currentStatusMessage;
 

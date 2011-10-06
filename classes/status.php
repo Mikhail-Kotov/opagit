@@ -4,12 +4,13 @@ class Status {
     public $projectObj, $memberObj;
     public $intStatusID;
     public $intProjectMemberID;
-    public $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition;
+    public $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate;
     public $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment;
 
-    function __construct($projectObj, $memberObj) {
+    function __construct($projectObj, $memberObj, $attachmentObj) {
         $this->projectObj = $projectObj;
         $this->memberObj = $memberObj;
+        $this->attachmentObj = $attachmentObj;
         $this->intProjectMemberID = getProjectMember($this->projectObj->getID(), $this->memberObj->getID());
     }
 
@@ -22,8 +23,12 @@ class Status {
     }
     
     function getDetails() {
-        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition," . 
-                "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
+        $query = "";
+        
+        $this->attachmentObj->getDetailsStatus($this->intStatusID);
+        
+        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," . 
+                "strStatusDifference,strStatusWhy FROM tblStatus" .
                 " WHERE intStatusID = " . $this->intStatusID;
 
         $sqlArr = getArr($query);
@@ -33,17 +38,16 @@ class Status {
             $this->dmtStatusCurrentDate = $sqlArr[0]['dmtStatusCurrentDate'];
             $this->strStatusDate = $sqlArr[0]['strStatusDate'];
             $this->strStatusActualDate = $sqlArr[0]['strStatusActualDate'];
-            $this->strStatusCondition = $sqlArr[0]['strStatusCondition'];
             $this->strStatusDifference = $sqlArr[0]['strStatusDifference'];
             $this->strStatusWhy = $sqlArr[0]['strStatusWhy'];
-            $this->strStatusGanttLink = $sqlArr[0]['strStatusGanttLink'];
-            $this->strStatusGanttLinkComment = $sqlArr[0]['strStatusGanttLinkComment'];
+            $this->strStatusGanttLink = $this->attachmentObj->strAttachmentLink;
+            $this->strStatusGanttLinkComment = $this->attachmentObj->strAttachmentComment;
         }
     }
     
     function getLastStatusID() {
-        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate,strStatusCondition," .
-                "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment FROM tblStatus" .
+        $query = "SELECT intStatusID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," .
+                "strStatusDifference,strStatusWhy FROM tblStatus" .
                 " WHERE intProjectID = " . $this->projectObj->getID() .
                 " ORDER BY intStatusID DESC LIMIT 1;";
 
@@ -58,36 +62,36 @@ class Status {
             $dmtStatusCurrentDate,
             $strStatusDate,
             $strStatusActualDate,
-            $strStatusCondition,
             $strStatusDifference,
             $strStatusWhy,
             $strStatusGanttLink,
             $strStatusGanttLinkComment) {
-        $query = "UPDATE tblStatus SET intProjectID='" . $this->projectObj->getID() . 
-                "',intProjectMemberID='" . $this->intProjectMemberID .
-                "',dmtStatusCurrentDate='" . $dmtStatusCurrentDate .
-                "',strStatusDate='" . $strStatusDate . 
-                "',strStatusActualDate='" . $strStatusActualDate .
-                "',strStatusCondition='" .$strStatusCondition . 
-                "',strStatusDifference='" . $strStatusDifference . 
-                "',strStatusWhy='" . $strStatusWhy . 
-                "',strStatusGanttLink='" . $strStatusGanttLink . 
-                "',strStatusGanttLinkComment='" . $strStatusGanttLinkComment . 
-                "' WHERE intStatusID = '" . $intStatusID . "';";
+        $query = "UPDATE tblStatus SET intProjectID='" . mysql_real_escape_string($this->projectObj->getID()) . 
+                "',intProjectMemberID='" . mysql_real_escape_string($this->intProjectMemberID) .
+                "',dmtStatusCurrentDate='" . mysql_real_escape_string($dmtStatusCurrentDate) .
+                "',strStatusDate='" . mysql_real_escape_string($strStatusDate) . 
+                "',strStatusActualDate='" . mysql_real_escape_string($strStatusActualDate) .
+                "',strStatusDifference='" . mysql_real_escape_string($strStatusDifference) . 
+                "',strStatusWhy='" . mysql_real_escape_string($strStatusWhy) . 
+                "',strStatusGanttLink='" . mysql_real_escape_string($strStatusGanttLink) . 
+                "',strStatusGanttLinkComment='" . mysql_real_escape_string($strStatusGanttLinkComment) . 
+                "' WHERE intStatusID = '" . mysql_real_escape_string($intStatusID) . "';";
         $sql = mysql_query($query);
 
         if (!$sql)
             die('Invalid query: ' . mysql_error());
     }
 
-    function addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition,$strStatusDifference, 
+    function addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusDifference, 
             $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment) {
             
         $query = "INSERT INTO tblStatus(intStatusID,intProjectID,intProjectMemberID,dmtStatusCurrentDate,strStatusDate,strStatusActualDate," .
-                "strStatusCondition,strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment) " .
-                "values (NULL, '" . $this->projectObj->getID() . "', '" . $this->intProjectMemberID .
-                "', '" . $dmtStatusCurrentDate . "', '" . $strStatusDate . "', '" . $strStatusActualDate . "', '" . $strStatusCondition . "'," .
-                "'" . $strStatusDifference . "', '" . $strStatusWhy . "', '" . $strStatusGanttLink . "', '" . $strStatusGanttLinkComment . "');";
+                "strStatusDifference,strStatusWhy,strStatusGanttLink,strStatusGanttLinkComment) " .
+                "values (NULL, '" . mysql_real_escape_string($this->projectObj->getID()) . "', '" . mysql_real_escape_string($this->intProjectMemberID) .
+                "', '" . mysql_real_escape_string($dmtStatusCurrentDate) . "', '" . mysql_real_escape_string($strStatusDate) . 
+                "', '" . mysql_real_escape_string($strStatusActualDate) . "'," .
+                "'" . mysql_real_escape_string($strStatusDifference) . "', '" . mysql_real_escape_string($strStatusWhy) . 
+                "', '" . mysql_real_escape_string($strStatusGanttLink) . "', '" . mysql_real_escape_string($strStatusGanttLinkComment) . "');";
         $sql = mysql_query($query);
 
         if (!$sql)

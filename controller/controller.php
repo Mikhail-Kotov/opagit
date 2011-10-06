@@ -31,8 +31,7 @@ if (isset($_POST["page"])) {
 }
 
 if ($page == "statuspdf") {
-    $statusObj = new Status($projectObj, $memberObj);
-    $statusObj->setID($currentStatusID);
+    include_once("controller/objectsInit.php");
     
     if(isset($statusObj->intStatusID)) {
         $statusObj->getDetails();
@@ -43,7 +42,7 @@ if ($page == "statuspdf") {
 }
 
 if (!($page == "chooseproject" || $page == "choosemember")) {
-    $statusObj = new Status($projectObj, $memberObj);
+    include_once("controller/objectsInit.php");
 }
 
 include_once("view/header.php");
@@ -75,13 +74,12 @@ if ($page == "status") {
             $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
             $strStatusDate = $_POST["strStatusDate"];
             $strStatusActualDate = $_POST["strStatusActualDate"];
-            $strStatusCondition = $_POST["strStatusCondition"];
             $strStatusDifference = $_POST["strStatusDifference"];
             $strStatusWhy = $_POST["strStatusWhy"];
             $strStatusGanttLink = $_POST["strStatusGanttLink"];
             $strStatusGanttLinkComment = $_POST["strStatusGanttLinkComment"];
 
-            $statusObj->addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, 
+            $statusObj->addDetails($dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, 
                     $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
         }
         
@@ -93,13 +91,12 @@ if ($page == "status") {
             $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
             $strStatusDate = $_POST['strStatusDate'];
             $strStatusActualDate = $_POST['strStatusActualDate'];
-            $strStatusCondition = $_POST['strStatusCondition'];
             $strStatusDifference = $_POST['strStatusDifference'];
             $strStatusWhy = $_POST['strStatusWhy'];
             $strStatusGanttLink = $_POST['strStatusGanttLink'];
             $strStatusGanttLinkComment = $_POST['strStatusGanttLinkComment'];
 
-            $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, $strStatusCondition, 
+            $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strStatusDate, $strStatusActualDate, 
                     $strStatusDifference, $strStatusWhy, $strStatusGanttLink, $strStatusGanttLinkComment);
         }
     }
