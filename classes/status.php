@@ -42,8 +42,7 @@ class Status {
     }
     
     function getLastStatusID() {
-        $query = "SELECT intStatusID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," .
-                "strStatusDifference,strStatusWhy FROM tblStatus" .
+        $query = "SELECT intStatusID FROM tblStatus" .
                 " WHERE intProjectID = " . $this->projectObj->getID() .
                 " ORDER BY intStatusID DESC LIMIT 1;";
 

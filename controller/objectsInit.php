@@ -1,5 +1,8 @@
 <?php
     $attachmentObj = new Attachment();    
     $statusObj = new Status($projectObj, $memberObj, $attachmentObj);
-    $statusObj->setID($currentStatusID);
+    
+    if($currentStatusID != "") {
+        $statusObj->setID($currentStatusID);
+    }
 ?>

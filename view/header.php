@@ -4,10 +4,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo $version ?></title>
 <link href="prototype.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.qtip.js"></script> 
+<script type="text/javascript">
+// Create the tooltips only on document load
+$(document).ready(function() 
+{
+   // Match all link elements with href attributes within the content div
+   $('#content a[href]').qtip(
+   {
+      content: 'Some basic content for the tooltip' // Give it some content, in this case a simple string
+   });
+});
+</script>
 </head>
 
 <body>
-<a name="top"></a>    
+<a name="top"></a>
+<div id="content" >
 <table width="1450" height="600" border="0">
   <tr>
       <td colspan="2" height="30"><?php
