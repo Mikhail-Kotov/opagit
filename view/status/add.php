@@ -1,5 +1,5 @@
 <b>Add Status</b><br /><br />
-<form method="post">
+<form name="statusadd" method="post">
     <input type="hidden" name="page" value="status" />
     <input type="hidden" name="todo" value="add" />
     <input type="hidden" name="m" value="<?php echo $this->memberObj->getID(); ?>" />
@@ -28,10 +28,15 @@ Variation:<br />
 <textarea name="strStatusDifference"></textarea><br /><br />
 Notes/Reasons:<br />
 <textarea name="strStatusWhy"></textarea><br /><br />
-Attachment:<br />
-<input type="text" name="strAttachmentLink" value="http://"/><br /><br />
-Attachment Comment:<br />
-<input type="text" name="strAttachmentComment" /><br />
+Attachment 1:<br />
+<input type="text" name="strAttachmentLink0" value="http://"/><br /><br />
+Attachment 1 Comment:<br />
+<input type="text" name="strAttachmentComment0" /><br /><br />
+<div id="text">
+
+</div>
+<input type="button" onclick="addAttachmentLink()" name="add" value="Add more attachments" /><br />
+
 <br />
 <input type="submit" value="Submit" />
 </form>

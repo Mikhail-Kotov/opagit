@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo $version ?></title>
 <link href="prototype.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/functions.js"></script> 
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/jquery.qtip.js"></script> 
 <script type="text/javascript">

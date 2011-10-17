@@ -130,14 +130,27 @@ class Status {
         if (!$sql)
             die('Invalid query: ' . mysql_error());
 
-        $query = "INSERT INTO tblAttachment(intAttachmentID,intStatusID,strAttachmentLink,strAttachmentComment) " .
-                "values (NULL, '" . $nextStatusID .
-                "', '" . mysql_real_escape_string($strAttachmentLink) . 
-                "', '" . mysql_real_escape_string($strAttachmentComment) . "');";
-        $sql = mysql_query($query);
+        $isNextAttachment = true;
+        $i = 0;
+        do {
+            $query = "INSERT INTO tblAttachment(intAttachmentID,intStatusID,strAttachmentLink,strAttachmentComment) " .
+                    "values (NULL, '" . $nextStatusID .
+                    "', '" . mysql_real_escape_string($strAttachmentLink[$i]) .
+                    "', '" . mysql_real_escape_string($strAttachmentComment[$i]) . "');";
+            $sql = mysql_query($query);
 
-        if (!$sql)
-            die('Invalid query: ' . mysql_error());
+            if (!$sql)
+                die('Invalid query: ' . mysql_error());            
+            
+            
+            if (isset($_POST["strAttachmentLink" . ($i + 1)])) {
+                $i++;
+            } else {
+                $isNextAttachment = false;
+            }
+        } while ($isNextAttachment == true);
+
+
     }
 
     function delDetails($intStatusID) {
