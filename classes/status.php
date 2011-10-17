@@ -74,6 +74,7 @@ class Status {
             $strPlanBaseline,
             $strStatusDifference,
             $strStatusWhy,
+            $intAttachmentID,
             $strAttachmentLink,
             $strAttachmentComment) {
         
@@ -93,9 +94,9 @@ class Status {
         if (!$sql)
             die('Invalid query: ' . mysql_error());
         
-        foreach ($strAttachmentLink as $id => $value) {
+        foreach ($intAttachmentID as $id => $value) {
             $query = "UPDATE tblAttachment SET strAttachmentLink='" . mysql_real_escape_string($strAttachmentLink[$id]) .
-                    "',strAttachmentComment='" . mysql_real_escape_string($strAttachmentComment[$id]) . "' WHERE intAttachmentID=" . $id . ";";
+                    "',strAttachmentComment='" . mysql_real_escape_string($strAttachmentComment[$id]) . "' WHERE intAttachmentID=" . $intAttachmentID[$id] . ";";
 
             $sql = mysql_query($query);
 
@@ -156,7 +157,12 @@ class Status {
     }
 
     function delDetails($intStatusID) {
-        $query = "DELETE FROM tblStatus where intStatusID='$intStatusID';";
+        $query = "DELETE FROM tblStatus WHERE intStatusID='$intStatusID';";
+        $sql = mysql_query($query);
+        if (!$sql)
+            die('Invalid query: ' . mysql_error());
+        
+        $query = "DELETE FROM tblAttachment WHERE intStatusID='$intStatusID';";
         $sql = mysql_query($query);
         if (!$sql)
             die('Invalid query: ' . mysql_error());

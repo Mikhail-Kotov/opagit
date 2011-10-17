@@ -1,5 +1,6 @@
 version number is: MM.DD-HHMM
 
+10.18-0430: multiple attachments (add, edit)
 10.12-1555: add jQuery & qTip
 10.07-0100: add attachment table & class, changes in sql db
 10.06-1210: PDF working now

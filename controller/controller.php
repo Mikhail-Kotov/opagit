@@ -108,10 +108,11 @@ if ($page == "status") {
             $isNextAttachment = true;
             $i = 0;
             do {
+                $intAttachmentID[$i] = $_POST["intAttachmentID".$i];
                 $strAttachmentLink[$i] = $_POST["strAttachmentLink".$i];
                 $strAttachmentComment[$i] = $_POST["strAttachmentComment".$i];
                 
-                if(isset($_POST["strAttachmentLink".($i+1)])) {
+                if(isset($_POST["intAttachmentID".($i+1)])) {
                     $i++;
                 } else {
                     $isNextAttachment = false;
@@ -119,7 +120,7 @@ if ($page == "status") {
             } while($isNextAttachment == true);
 
             $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, 
-                    $strStatusDifference, $strStatusWhy, $strAttachmentLink, $strAttachmentComment);
+                    $strStatusDifference, $strStatusWhy, $intAttachmentID, $strAttachmentLink, $strAttachmentComment);
         }
     }
     
