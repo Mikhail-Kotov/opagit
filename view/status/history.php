@@ -24,8 +24,14 @@ foreach ($sqlArr as $intStatusID => $statusArr) {
         }
     }
     $this->attachmentObj->getDetailsStatus($historyTableArr[$intStatusID]["intStatusID"]);
-    $historyTableArr[$intStatusID]["strAttachmentLink"] = '<a href="' . $this->attachmentObj->strAttachmentLink . '">' . $this->attachmentObj->strAttachmentLink . "</a>";
-    $historyTableArr[$intStatusID]["strAttachmentComment"] = $this->attachmentObj->strAttachmentComment;
+    
+    $historyTableArr[$intStatusID]["strAttachmentLink"] = "";
+    $historyTableArr[$intStatusID]["strAttachmentComment"] = "";
+    foreach ($this->attachmentObj->strAttachmentLink as $id => $value) {
+        $historyTableArr[$intStatusID]["strAttachmentLink"] .= '<a href="' . $this->attachmentObj->strAttachmentLink[$id] . '">' 
+                . $this->attachmentObj->strAttachmentLink[$id] . "</a><br />";
+        $historyTableArr[$intStatusID]["strAttachmentComment"] .= $this->attachmentObj->strAttachmentComment[$id] . "<br />";
+    }
 }
 
 

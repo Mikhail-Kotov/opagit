@@ -93,13 +93,15 @@ class Status {
         if (!$sql)
             die('Invalid query: ' . mysql_error());
         
-        $query = "UPDATE tblAttachment SET strAttachmentLink='" . mysql_real_escape_string($strAttachmentLink) . 
-                "',strAttachmentComment='" . mysql_real_escape_string($strAttachmentComment) . "' WHERE intAttachmentID=" .$this->attachmentObj->getID() . ";";
-        
-        $sql = mysql_query($query);
+        foreach ($strAttachmentLink as $id => $value) {
+            $query = "UPDATE tblAttachment SET strAttachmentLink='" . mysql_real_escape_string($strAttachmentLink[$id]) .
+                    "',strAttachmentComment='" . mysql_real_escape_string($strAttachmentComment[$id]) . "' WHERE intAttachmentID=" . $id . ";";
 
-        if (!$sql)
-            die('Invalid query: ' . mysql_error());                                
+            $sql = mysql_query($query);
+
+            if (!$sql)
+                die('Invalid query: ' . mysql_error());
+        }
     }
 
     function addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusDifference, 

@@ -104,8 +104,19 @@ if ($page == "status") {
             $strPlanBaseline = $_POST['strPlanBaseline'];
             $strStatusDifference = $_POST['strStatusDifference'];
             $strStatusWhy = $_POST['strStatusWhy'];
-            $strAttachmentLink = $_POST['strAttachmentLink'];
-            $strAttachmentComment = $_POST['strAttachmentComment'];
+            
+            $isNextAttachment = true;
+            $i = 0;
+            do {
+                $strAttachmentLink[$i] = $_POST["strAttachmentLink".$i];
+                $strAttachmentComment[$i] = $_POST["strAttachmentComment".$i];
+                
+                if(isset($_POST["strAttachmentLink".($i+1)])) {
+                    $i++;
+                } else {
+                    $isNextAttachment = false;
+                }
+            } while($isNextAttachment == true);
 
             $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, 
                     $strStatusDifference, $strStatusWhy, $strAttachmentLink, $strAttachmentComment);

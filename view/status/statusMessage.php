@@ -7,7 +7,11 @@ $currentStatusMessage = "<b>Date:</b> " . date("jS F Y", strtotime($this->dmtSta
         "<b>Variation:</b><br />" .
         $this->strStatusDifference . "<br /><br />" .
         "<b>Notes/Reasons:</b><br />" .
-        $this->strStatusWhy . "<br /><br />" .
-        '<b>Attachment:</b><br /><a href="' . $this->attachmentObj->strAttachmentLink . '">' . $this->attachmentObj->strAttachmentLink . "</a><br /><br />" .
-        "<b>Attachment Comment:</b><br />" . $this->attachmentObj->strAttachmentComment . "<br /><br />";
+        $this->strStatusWhy . "<br /><br />";
+foreach ($this->attachmentObj->strAttachmentLink as $id => $strAttachmentLinkValue) {
+    $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $this->attachmentObj->strAttachmentLink[$id] . '">' . 
+            $this->attachmentObj->strAttachmentLink[$id] . "</a><br /><br />" .
+            "<b>Attachment Comment:</b><br />" . $this->attachmentObj->strAttachmentComment[$id] . "<br /><br />";
+}
+    $_ENV['firephp']->log($this->attachmentObj->strAttachmentLink, 'strAttachmentLink');
 ?>

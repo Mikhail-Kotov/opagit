@@ -30,9 +30,13 @@
     <textarea name="strStatusDifference"><?php echo $this->strStatusDifference; ?></textarea><br /><br />
     Notes/Reasons:<br />
     <textarea name="strStatusWhy"><?php echo $this->strStatusWhy; ?></textarea><br /><br />
-    Attachment:<br />
-    <input type="text" name="strAttachmentLink" value="<?php echo $this->attachmentObj->strAttachmentLink; ?>" /><br /><br />
-    Attachment Comment:<br />
-    <input type="text" name="strAttachmentComment" value="<?php echo $this->attachmentObj->strAttachmentComment; ?>" /><br /><br />
+<?php    
+foreach ($this->attachmentObj->strAttachmentLink as $id => $strAttachmentLinkValue) {
+    echo "Attachment:<br />".'<input type="text" name="strAttachmentLink' . $id . '" value="' . $this->attachmentObj->strAttachmentLink[$id].'" /><br /><br />' .
+        "Attachment Comment:<br />" . '<input type="text" name="strAttachmentComment' . $id . '" value="'.$this->attachmentObj->strAttachmentComment[$id].'" /><br /><br />';
+}
+?>
+    
+
     <input type="submit" value="Submit" />
 </form>
