@@ -11,9 +11,20 @@ class Status {
         $this->projectObj = $projectObj;
         $this->memberObj = $memberObj;
         $this->attachmentObj = $attachmentObj;
-        $this->intProjectMemberID = getProjectMember($this->projectObj->getID(), $this->memberObj->getID());
+        $this->intProjectMemberID = $this->getProjectMember();
     }
 
+    function getProjectMember() {
+    $query = "SELECT intProjectMemberID FROM tblProjectMember WHERE" .
+            " intProjectID = " . $this->projectObj->getID() . 
+            " AND intMemberID = " . $this->memberObj->getID() . ";";
+
+    $sqlArr = getArr($query);
+
+    $intProjectMemberID = $sqlArr[0]['intProjectMemberID'];
+    return $intProjectMemberID;
+}
+    
     function getID() {
         return $this->intStatusID;
     }

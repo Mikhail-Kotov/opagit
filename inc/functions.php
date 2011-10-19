@@ -39,17 +39,6 @@ function echoTable($query, $caption = NULL) {
     }
 }
 
-function getProjectMember($intProjectID, $intMemberID) {
-    $query = "SELECT intProjectMemberID FROM tblProjectMember WHERE" .
-            " intProjectID = " . $intProjectID . 
-            " AND intMemberID = " . $intMemberID . ";";
-
-    $sqlArr = getArr($query);
-
-    $intProjectMemberID = $sqlArr[0]['intProjectMemberID'];
-    return $intProjectMemberID;
-}
-
 function restoreDB() {
     
 }

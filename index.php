@@ -9,7 +9,6 @@ include_once("inc/db.php");
 include_once("inc/functions.php");
 include_once("classes/member.php");
 include_once("classes/project.php");
-include_once("classes/project_member.php");
 include_once("classes/status.php");
 include_once("classes/risk.php");
 include_once("classes/issue.php");
