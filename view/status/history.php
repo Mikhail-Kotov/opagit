@@ -1,10 +1,10 @@
 <?php
 //TODO: split this to MVC
 
-$query = "SELECT intStatusID,   intProjectMemberID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline,".
+$query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline,".
         "strStatusVariation,strStatusNotes" .
         " FROM tblStatus WHERE intProjectID = '" . $this->projectObj->getID() . "';";
-$sqlArr = getArr($query);
+$sqlArr = $_ENV['db']->query($query);
 $_ENV['firephp']->log($sqlArr, 'sqlArr');
 
 $caption = "Status History for Project: " . $this->projectObj->strProjectName;

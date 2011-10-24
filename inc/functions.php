@@ -1,20 +1,9 @@
 <?php
 
-function getArr($query) {
-    $sql = mysql_query($query);
-    if (!$sql) {
-        die('Invalid query: ' . mysql_error());
-    }
-
-    while ($arr[] = mysql_fetch_array($sql, MYSQL_ASSOC));
-    unset($arr[(count($arr) - 1)]);
-    return $arr;
-}
-
 function echoTable($query, $caption = NULL) {
     if ($caption == NULL)
         $caption = $query;
-    $sqlArr = getArr($query);
+    $sqlArr = $_ENV['db']->query($query);
     if (isset($sqlArr[0])) {
         echo '<table border="1" rules="all" frame="void">';
         echo "<caption>" . $caption . "</caption>\n";
@@ -39,9 +28,7 @@ function echoTable($query, $caption = NULL) {
     }
 }
 
-function restoreDB() {
-    
-}
+
 
 function dateDayDiff($date1, $date2) {
 //    PHP >= 5.3
@@ -75,7 +62,7 @@ function getMemberName($intMemberID) {
         if ($intMemberID != "") {
             $query = "SELECT strMemberName FROM tblMember WHERE intMemberID = " . $intMemberID . ";";
 
-            $sqlArr = getArr($query);
+            $sqlArr = $_ENV['db']->query($query);
 
             if (isset($sqlArr[0])) {
                 $returnValue = $sqlArr[0]['strMemberName'];
@@ -96,7 +83,7 @@ function getProjects($intMemberID) {
     $query = "SELECT p.intProjectID,p.strProjectName FROM tblProject as p, tblMember AS m, tblProjectMember AS pm " . "
             WHERE p.intProjectID = pm.intProjectID AND m.intMemberID = pm.intMemberID AND m.intMemberID=" . $intMemberID . ";";
 
-    $sqlArr = getArr($query);
+    $sqlArr = $_ENV['db']->query($query);
     return $sqlArr;
 }
 

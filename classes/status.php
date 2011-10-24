@@ -22,7 +22,7 @@ class Status {
             " intProjectID = " . $this->projectObj->getID() . 
             " AND intMemberID = " . $this->memberObj->getID() . ";";
 
-    $sqlArr = getArr($query);
+    $sqlArr = $_ENV['db']->query($query);
 
     $intProjectMemberID = $sqlArr[0]['intProjectMemberID'];
     return $intProjectMemberID;
@@ -41,7 +41,7 @@ class Status {
                 "strStatusVariation,strStatusNotes FROM tblStatus" .
                 " WHERE intStatusID = " . $this->intStatusID;
 
-        $sqlArr = getArr($query);
+        $sqlArr = $_ENV['db']->query($query);
        
         if(isset($sqlArr[0])) {
             $this->intStatusID = $sqlArr[0]['intStatusID'];
@@ -60,7 +60,7 @@ class Status {
                 " WHERE intProjectID = " . $this->projectObj->getID() .
                 " ORDER BY intStatusID DESC LIMIT 1;";
 
-        $sqlArr = getArr($query);
+        $sqlArr = $_ENV['db']->query($query);
        
         if(isset($sqlArr[0])) {
             $this->intStatusID = $sqlArr[0]['intStatusID'];
@@ -73,7 +73,7 @@ class Status {
         $query = "SELECT intStatusID FROM tblStatus" .
                 " ORDER BY intStatusID DESC LIMIT 1;";
 
-        $sqlArr = getArr($query);
+        $sqlArr = $_ENV['db']->query($query);
        
         if(isset($sqlArr[0])) {
             $globalLastStatusID = $sqlArr[0]['intStatusID'];

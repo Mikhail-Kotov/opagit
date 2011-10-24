@@ -14,7 +14,7 @@ m.intMemberID = pm.intMemberID AND
 pm.intProjectID = p.intProjectID AND
 p.intProjectID = " . $projectObj->getID() . ";";    
 
-$arr = getArr($query);
+$arr = $_ENV['db']->query($query);
 
 foreach ($arr[0] as $columnName => $value) {
     $columnArr[] = $columnName;

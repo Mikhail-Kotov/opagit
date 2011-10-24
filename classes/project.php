@@ -10,7 +10,7 @@ class Project {
 
     function getDetails() {
         $query = "SELECT strProjectName, strProjectTeamName FROM tblProject WHERE intProjectID = " . $this->intProjectID . ";";
-        $sqlArr = getArr($query);
+        $sqlArr = $_ENV['db']->query($query);
         $this->strProjectName = $sqlArr[0]['strProjectName'];
         $this->strProjectTeamName = $sqlArr[0]['strProjectTeamName'];
     }
@@ -27,7 +27,7 @@ class Project {
             if ($this->intProjectID != "") {
                 $query = "SELECT strProjectName FROM tblProject WHERE intProjectID = " . $intProjectID . ";";
 
-                $sqlArr = getArr($query);
+                $sqlArr = $_ENV['db']->query($query);
 
                 if (isset($sqlArr[0])) {
                     $returnValue = $sqlArr[0]['strProjectName'];

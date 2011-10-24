@@ -5,9 +5,7 @@ echo "<p>Choose a Project:</p>\n";
 echo '<form method="post">' . "\n<p>\n";
 echo '<select name="p">' . "\n";
 
-$query = "SELECT intProjectID, strProjectName FROM tblProject;";
-
-$arr = getArr($query);
+$arr = $_ENV['db']->query("SELECT intProjectID, strProjectName FROM tblProject;");
 
 foreach ($arr[0] as $columnName => $value) {
     $columnArr[] = $columnName;

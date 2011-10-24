@@ -15,7 +15,7 @@ class Member {
     function getDetails() {
         $query = "SELECT strMemberName, strMemberFirstName, strMemberLastName FROM tblMember WHERE intMemberID = " . $this->intMemberID . ";";
 
-        $sqlArr = getArr($query);
+        $sqlArr = $_ENV['db']->query($query);
         $this->strMemberName = $sqlArr[0]['strMemberName'];
         $this->strMemberFirstName = $sqlArr[0]['strMemberFirstName'];
         $this->strMemberLastName = $sqlArr[0]['strMemberLastName'];
@@ -26,7 +26,7 @@ class Member {
             if ($this->intMemberID != "") {
                 $query = "SELECT strMemberName FROM tblMember WHERE intMemberID = " . $this->intMemberID . ";";
 
-                $sqlArr = getArr($query);
+                $sqlArr = $_ENV['db']->query($query);
 
                 if (isset($sqlArr[0])) {
                     $returnValue = $sqlArr[0]['strMemberName'];
@@ -49,7 +49,7 @@ class Member {
                 $query = "SELECT m.strMemberName FROM tblMember AS m, tblProjectMember AS pm ".
                         "WHERE m.intMemberID = pm.intMemberID AND pm.intProjectMemberID = " . $intProjectMemberID . ";";
 
-                $sqlArr = getArr($query);
+                $sqlArr = $_ENV['db']->query($query);
 
                 if (isset($sqlArr[0])) {
                     $returnValue = $sqlArr[0]['strMemberName'];

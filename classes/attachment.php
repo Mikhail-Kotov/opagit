@@ -29,7 +29,7 @@ class Attachment {
         
         $query = "SELECT intAttachmentID, strAttachmentLink,strAttachmentComment FROM tblAttachment WHERE intStatusID = " . $intStatusID;
 
-        $sqlArr = getArr($query);
+        $sqlArr = $_ENV['db']->query($query);
         $_ENV['firephp']->log($sqlArr, 'sqlArrAtt');
         
         if (isset($sqlArr[0])) {
@@ -46,6 +46,8 @@ class Attachment {
         $sql = mysql_query($query);
         if (!$sql)
             die('Invalid query: ' . mysql_error());
+        
+        //$db->del('tblAttachment', $intStatusID);
     }
 }
 
