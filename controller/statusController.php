@@ -5,8 +5,8 @@ if ($page == "status") {
             $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
             $strActualBaseline = $_POST["strActualBaseline"];
             $strPlanBaseline = $_POST["strPlanBaseline"];
-            $strStatusDifference = $_POST["strStatusDifference"];
-            $strStatusWhy = $_POST["strStatusWhy"];
+            $strStatusVariation = $_POST["strStatusVariation"];
+            $strStatusNotes = $_POST["strStatusNotes"];
             
             $isNextAttachment = true;
             $i = 0;
@@ -22,7 +22,7 @@ if ($page == "status") {
             } while($isNextAttachment == true);
             
             $statusObj->addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, 
-                    $strStatusDifference, $strStatusWhy, $strAttachmentLink, $strAttachmentComment);
+                    $strStatusVariation, $strStatusNotes, $strAttachmentLink, $strAttachmentComment);
         }
         
         if ($todo == "delete") {
@@ -33,8 +33,8 @@ if ($page == "status") {
             $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
             $strActualBaseline = $_POST['strActualBaseline'];
             $strPlanBaseline = $_POST['strPlanBaseline'];
-            $strStatusDifference = $_POST['strStatusDifference'];
-            $strStatusWhy = $_POST['strStatusWhy'];
+            $strStatusVariation = $_POST['strStatusVariation'];
+            $strStatusNotes = $_POST['strStatusNotes'];
             
             $isNextAttachment = true;
             $i = 0;
@@ -51,7 +51,7 @@ if ($page == "status") {
             } while($isNextAttachment == true);
 
             $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, 
-                    $strStatusDifference, $strStatusWhy, $intAttachmentID, $strAttachmentLink, $strAttachmentComment);
+                    $strStatusVariation, $strStatusNotes, $intAttachmentID, $strAttachmentLink, $strAttachmentComment);
         }
     }
     

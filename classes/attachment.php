@@ -2,8 +2,10 @@
 
 class Attachment {
 
-    public $strAttachmentLink, $strAttachmentComment;
-    public $intAttachmentID;
+    private $intAttachmentID;
+    private $strAttachmentLink;
+    private $strAttachmentComment;
+    
 
     function __construct() {
         
@@ -11,6 +13,13 @@ class Attachment {
     
     function getID() {
         return $this->intAttachmentID[0];
+    }
+    
+    function getDetails() {
+        $attachmentArray['intAttachmentID'] = $this->intAttachmentID;
+        $attachmentArray['strAttachmentLink'] = $this->strAttachmentLink;
+        $attachmentArray['strAttachmentComment'] = $this->strAttachmentComment;
+        return $attachmentArray;
     }
     
     function getDetailsStatus($intStatusID) {
@@ -30,6 +39,13 @@ class Attachment {
                 $this->strAttachmentComment[$id] = $sqlArr[$id]['strAttachmentComment'];
             }
         }
+    }
+    
+    function delDetails($intStatusID) {
+        $query = "DELETE FROM tblAttachment WHERE intStatusID='$intStatusID';";
+        $sql = mysql_query($query);
+        if (!$sql)
+            die('Invalid query: ' . mysql_error());
     }
 }
 

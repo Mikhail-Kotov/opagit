@@ -4,6 +4,12 @@ $currentProjectID = "";
 $currentMemberID = "";
 $currentStatusID = "";
 
+if (isset($_POST["page"])) {
+    $page = $_POST["page"];
+} else {
+    $page = "chooseproject";
+}
+
 if (isset($_POST["todo"])) {
     $todo = $_POST["todo"];
 }
@@ -22,12 +28,6 @@ if(isset($_POST["m"])) {
 
 if (isset($_POST["s"])) {
     $currentStatusID = $_POST["s"];
-}
-
-if (isset($_POST["page"])) {
-    $page = $_POST["page"];
-} else {
-    $page = "chooseproject";
 }
 
 if ($page == "statuspdf") {

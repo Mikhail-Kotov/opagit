@@ -25,9 +25,9 @@
 Plan Baseline:<br />
 <textarea name="strPlanBaseline" /></textarea><br /><br />
 Variation:<br />
-<textarea name="strStatusDifference"></textarea><br /><br />
+<textarea name="strStatusVariation"></textarea><br /><br />
 Notes/Reasons:<br />
-<textarea name="strStatusWhy"></textarea><br /><br />
+<textarea name="strStatusNotes"></textarea><br /><br />
 Attachment 1:<br />
 <input type="text" name="strAttachmentLink0" value="http://"/><br /><br />
 Attachment 1 Comment:<br />

@@ -27,14 +27,18 @@
     Plan Baseline:<br />
     <textarea name="strPlanBaseline"><?php echo $this->strPlanBaseline; ?></textarea><br /><br />
     Variation:<br />
-    <textarea name="strStatusDifference"><?php echo $this->strStatusDifference; ?></textarea><br /><br />
+    <textarea name="strStatusVariation"><?php echo $this->strStatusVariation; ?></textarea><br /><br />
     Notes/Reasons:<br />
-    <textarea name="strStatusWhy"><?php echo $this->strStatusWhy; ?></textarea><br /><br />
+    <textarea name="strStatusNotes"><?php echo $this->strStatusNotes; ?></textarea><br /><br />
 <?php    
-foreach ($this->attachmentObj->strAttachmentLink as $id => $strAttachmentLinkValue) {
-    echo '<input type="hidden" name="intAttachmentID' . $id . '" value="' . $this->attachmentObj->intAttachmentID[$id] . '" />' .
-    "Attachment:<br />" . '<input type="text" name="strAttachmentLink' . $id . '" value="' . $this->attachmentObj->strAttachmentLink[$id] . '" /><br /><br />' .
-    "Attachment Comment:<br />" . '<input type="text" name="strAttachmentComment' . $id . '" value="' . $this->attachmentObj->strAttachmentComment[$id] . '" /><br /><br />';
+$attachmentArray = $this->attachmentObj->getDetails();
+foreach ($attachmentArray['intAttachmentID'] as $id => $value_not_using) {
+    echo '<input type="hidden" name="intAttachmentID' . $id .
+            '" value="' . $attachmentArray['intAttachmentID'][$id] . '" />' .
+            "Attachment:<br />" . '<input type="text" name="strAttachmentLink' . $id . 
+            '" value="' . $attachmentArray['strAttachmentLink'][$id] . '" /><br /><br />' .
+            "Attachment Comment:<br />" . '<input type="text" name="strAttachmentComment' . $id . 
+            '" value="' . $attachmentArray['strAttachmentComment'][$id] . '" /><br /><br />';
 }
 ?>
     

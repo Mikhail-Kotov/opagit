@@ -2,7 +2,7 @@
 //TODO: split this to MVC
 
 $query = "SELECT intStatusID,   intProjectMemberID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline,".
-        "strStatusDifference,strStatusWhy" .
+        "strStatusVariation,strStatusNotes" .
         " FROM tblStatus WHERE intProjectID = '" . $this->projectObj->getID() . "';";
 $sqlArr = getArr($query);
 $_ENV['firephp']->log($sqlArr, 'sqlArr');
@@ -23,14 +23,21 @@ foreach ($sqlArr as $intStatusID => $statusArr) {
                 $historyTableArr[$intStatusID][$columnName] = $value;
         }
     }
+    
     $this->attachmentObj->getDetailsStatus($historyTableArr[$intStatusID]["intStatusID"]);
     
     $historyTableArr[$intStatusID]["strAttachmentLink"] = "";
     $historyTableArr[$intStatusID]["strAttachmentComment"] = "";
-    foreach ($this->attachmentObj->strAttachmentLink as $id => $value) {
-        $historyTableArr[$intStatusID]["strAttachmentLink"] .= '<a href="' . $this->attachmentObj->strAttachmentLink[$id] . '">' 
-                . $this->attachmentObj->strAttachmentLink[$id] . "</a><br />";
-        $historyTableArr[$intStatusID]["strAttachmentComment"] .= $this->attachmentObj->strAttachmentComment[$id] . "<br />";
+    
+    $attachmentArray = $this->attachmentObj->getDetails();
+    
+    foreach ($attachmentArray['intAttachmentID'] as $id => $value_not_using) { // not using $value2 anywhere
+        $historyTableArr[$intStatusID]["strAttachmentLink"] .= '<a href="' . 
+                $attachmentArray['strAttachmentLink'][$id] . 
+                '">' . 
+                $attachmentArray['strAttachmentLink'][$id] . 
+                "</a><br />";
+        $historyTableArr[$intStatusID]["strAttachmentComment"] .= $attachmentArray['strAttachmentComment'][$id] . "<br />";
     }
 }
 

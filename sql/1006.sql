@@ -111,8 +111,8 @@ CREATE TABLE `tblStatus` (
   dmtStatusCurrentDate DATE NOT NULL,
   strActualBaseline VARCHAR(1000) NULL,
   strPlanBaseline VARCHAR(1000) NULL,
-  strStatusDifference VARCHAR(5000) NULL,
-  strStatusWhy VARCHAR(5000) NULL,
+  strStatusVariation VARCHAR(5000) NULL,
+  strStatusNotes VARCHAR(5000) NULL,
   PRIMARY KEY (intStatusID),
   KEY `FK_tblStatus_tblProject` (intProjectID),
   KEY `FK_tblStatus_tblProjectMember` (intProjectMemberID),
@@ -212,7 +212,7 @@ INSERT INTO `tblMember`(`intMemberID`,`strMemberName`,`strMemberPassword`,`strMe
 INSERT INTO `tblStudent`(`intMemberID`) VALUES (1);
 INSERT INTO `tblTeacher`(`intMemberID`,`strTeacherJobTitle`,`strTeacherPhone`,`strTeacherMobile`) VALUES (1,'Coordinator','+61397009876',NULL);
 INSERT INTO `tblProjectMember`(`intProjectMemberID`,`intMemberID`,`intProjectID`,`intPermissionID`) VALUES (NULL,1,1,NULL),(NULL,1,2,NULL),(NULL,2,1,NULL),(NULL,2,2,NULL);
-INSERT INTO `tblStatus`(`intStatusID`,`intProjectID`,`intProjectMemberID`,`dmtStatusCurrentDate`,`strActualBaseline`,`strPlanBaseline`,`strStatusDifference`,`strStatusWhy`) VALUES (NULL,1,1,'2011-09-12','2011-09-15','2011-09-19','Everything is ok','All team works very quickly');
+INSERT INTO `tblStatus`(`intStatusID`,`intProjectID`,`intProjectMemberID`,`dmtStatusCurrentDate`,`strActualBaseline`,`strPlanBaseline`,`strStatusVariation`,`strStatusNotes`) VALUES (NULL,1,1,'2011-09-12','2011-09-15','2011-09-19','Everything is ok','All team works very quickly');
 INSERT INTO `tblIssueType`(`strIssueTypeID`) VALUES ('Bug'),('Environment'),('Financial'),('Management'),('Quality'),('Schedule'),('Technical');
 INSERT INTO `tblRiskType`(`strRiskTypeID`) VALUES ('Financial'),('Management'),('Quality'),('Schedule'),('Technical');
 INSERT INTO `tblRisk`(`intRiskID`,`intProjectMemberID`,`intProjectID`,`strRiskTypeID`,`strRiskDescription`,`strRiskImpactDescription`,`enmRiskStatus`,`strRiskLevelOfImpact`,`strLikelihoodOfImpact`,`strRiskConsequenceOfImpact`,`strRiskMitigationStrategy`,`strRiskContingencyStrategy`,`dmtRiskDateRaised`,`dmtRiskDateClosed`) VALUES (1,1,1,'Financial','desc',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);

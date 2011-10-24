@@ -50,7 +50,7 @@
         <tr>
             <td colspan="2">
                 <a href="javascript:history.go(-1)">Back</a><br />
-                <a class ="" href="#">Logout</a>
+                <a class ="" href="">Logout</a>
             </td>
         </tr>            
     </table>

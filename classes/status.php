@@ -4,8 +4,11 @@ class Status {
     public $projectObj, $memberObj;
     public $intStatusID;
     public $intProjectMemberID;
-    public $dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline;
-    public $strStatusDifference, $strStatusWhy;
+    public $dmtStatusCurrentDate;
+    public $strActualBaseline;
+    public $strPlanBaseline;
+    public $strStatusVariation; // variation
+    public $strStatusNotes; // Notes/Reasons
 
     function __construct($projectObj, $memberObj, $attachmentObj) {
         $this->projectObj = $projectObj;
@@ -35,7 +38,7 @@ class Status {
     
     function getDetails() {
         $query = "SELECT intStatusID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," . 
-                "strStatusDifference,strStatusWhy FROM tblStatus" .
+                "strStatusVariation,strStatusNotes FROM tblStatus" .
                 " WHERE intStatusID = " . $this->intStatusID;
 
         $sqlArr = getArr($query);
@@ -45,8 +48,8 @@ class Status {
             $this->dmtStatusCurrentDate = $sqlArr[0]['dmtStatusCurrentDate'];
             $this->strActualBaseline = $sqlArr[0]['strActualBaseline'];
             $this->strPlanBaseline = $sqlArr[0]['strPlanBaseline'];
-            $this->strStatusDifference = $sqlArr[0]['strStatusDifference'];
-            $this->strStatusWhy = $sqlArr[0]['strStatusWhy'];
+            $this->strStatusVariation = $sqlArr[0]['strStatusVariation'];
+            $this->strStatusNotes = $sqlArr[0]['strStatusNotes'];
         }
         
         $this->attachmentObj->getDetailsStatus($this->intStatusID);
@@ -83,8 +86,8 @@ class Status {
             $dmtStatusCurrentDate,
             $strActualBaseline,
             $strPlanBaseline,
-            $strStatusDifference,
-            $strStatusWhy,
+            $strStatusVariation,
+            $strStatusNotes,
             $intAttachmentID,
             $strAttachmentLink,
             $strAttachmentComment) {
@@ -96,8 +99,8 @@ class Status {
                 "',dmtStatusCurrentDate='" . mysql_real_escape_string($dmtStatusCurrentDate) .
                 "',strActualBaseline='" . mysql_real_escape_string($strActualBaseline) . 
                 "',strPlanBaseline='" . mysql_real_escape_string($strPlanBaseline) .
-                "',strStatusDifference='" . mysql_real_escape_string($strStatusDifference) . 
-                "',strStatusWhy='" . mysql_real_escape_string($strStatusWhy) . 
+                "',strStatusVariation='" . mysql_real_escape_string($strStatusVariation) . 
+                "',strStatusNotes='" . mysql_real_escape_string($strStatusNotes) . 
                 "' WHERE intStatusID = '" . mysql_real_escape_string($intStatusID) . "';";
         
         $sql = mysql_query($query);
@@ -116,8 +119,8 @@ class Status {
         }
     }
 
-    function addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusDifference, 
-            $strStatusWhy, $strAttachmentLink, $strAttachmentComment) {
+    function addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusVariation, 
+            $strStatusNotes, $strAttachmentLink, $strAttachmentComment) {
 
         $nextStatusID = $this->getGlobalLastStatusID() + 1;
         
@@ -128,8 +131,8 @@ class Status {
                 "dmtStatusCurrentDate," .
                 "strActualBaseline," .
                 "strPlanBaseline," .
-                "strStatusDifference," .
-                "strStatusWhy) " .
+                "strStatusVariation," .
+                "strStatusNotes) " .
                 "values (" .
                 "'" . $nextStatusID .
                 "', '" . mysql_real_escape_string($this->projectObj->getID()) .
@@ -137,8 +140,8 @@ class Status {
                 "', '" . mysql_real_escape_string($dmtStatusCurrentDate) .
                 "', '" . mysql_real_escape_string($strActualBaseline) .
                 "', '" . mysql_real_escape_string($strPlanBaseline) .
-                "', '" . mysql_real_escape_string($strStatusDifference) .
-                "', '" . mysql_real_escape_string($strStatusWhy) . "');";
+                "', '" . mysql_real_escape_string($strStatusVariation) .
+                "', '" . mysql_real_escape_string($strStatusNotes) . "');";
         $sql = mysql_query($query);
 
         if (!$sql)
@@ -173,10 +176,7 @@ class Status {
         if (!$sql)
             die('Invalid query: ' . mysql_error());
         
-        $query = "DELETE FROM tblAttachment WHERE intStatusID='$intStatusID';";
-        $sql = mysql_query($query);
-        if (!$sql)
-            die('Invalid query: ' . mysql_error());
+        $this->attachmentObj->delDetails($intStatusID);
     }
 
     function displayStatus() {
