@@ -5,27 +5,18 @@ echo "<p>Choose a Member:</p>\n";
 echo '<form method="post">' . "\n<p>\n";
 echo '<select name="m">' . "\n";
 
-$query = "SELECT m.intMemberID, m.strMemberName FROM
-tblMember AS m,
-tblProject AS p,
-tblProjectMember AS pm
-WHERE
-m.intMemberID = pm.intMemberID AND
-pm.intProjectID = p.intProjectID AND
-p.intProjectID = " . $projectObj->getID() . ";";    
-
-$arr = $_ENV['db']->query($query);
+$arr = $_ENV['db']->query("SELECT intMemberID, strMemberName FROM tblMember;");
 
 foreach ($arr[0] as $columnName => $value) {
     $columnArr[] = $columnName;
 }
 
-foreach ($arr as $intStatusID) {
-    echo '<option value="' . $intStatusID[$columnArr[0]] . '">' . $intStatusID[$columnArr[1]] . "</option>\n";
+foreach ($arr as $intMemberID) {
+    echo '<option value="' . $intMemberID[$columnArr[0]] . '">' . $intMemberID[$columnArr[1]] . "</option>\n";
 }
+
 echo "</select>\n";
-echo '<input type="hidden" name="page" value="main" />' . "\n";
-echo '<input type="hidden" name="p" value="' . $projectObj->getID() . '" />' . "\n";
-echo '<input type="submit" value="Choose" />' . "\n";
+echo '<input type="hidden" name="page" value="chooseproject" />' . "\n";
+echo '<input type="submit" value="Submit" />' . "\n";
 echo "</p>\n</form>\n";
 ?>

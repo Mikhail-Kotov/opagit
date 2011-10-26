@@ -18,15 +18,15 @@ class Status {
     }
 
     function getProjectMember() {
-    $query = "SELECT intProjectMemberID FROM tblProjectMember WHERE" .
-            " intProjectID = " . $this->projectObj->getID() . 
-            " AND intMemberID = " . $this->memberObj->getID() . ";";
+        $query = "SELECT intProjectMemberID FROM tblProjectMember WHERE" .
+                " intProjectID = " . $this->projectObj->getID() .
+                " AND intMemberID = " . $this->memberObj->getID() . ";";
 
-    $sqlArr = $_ENV['db']->query($query);
+        $sqlArr = $_ENV['db']->query($query);
 
-    $intProjectMemberID = $sqlArr[0]['intProjectMemberID'];
-    return $intProjectMemberID;
-}
+        $intProjectMemberID = $sqlArr[0]['intProjectMemberID'];
+        return $intProjectMemberID;
+    }
     
     function getID() {
         if(isset($this->intStatusID)) {

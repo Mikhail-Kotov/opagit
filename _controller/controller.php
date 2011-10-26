@@ -7,23 +7,23 @@ $currentStatusID = "";
 if (isset($_POST["page"])) {
     $page = $_POST["page"];
 } else {
-    $page = "chooseproject";
+    $page = "choosemember";
 }
 
 if (isset($_POST["todo"])) {
     $todo = $_POST["todo"];
 }
 
-if(isset($_POST["p"])) {
-    $currentProjectID = $_POST["p"];
-    $projectObj = new Project($currentProjectID);
-    $projectObj->getDetails();
-}
-
 if(isset($_POST["m"])) {
     $currentMemberID = $_POST["m"];
     $memberObj = new Member($currentMemberID);
     $memberObj->getDetails();
+}
+
+if(isset($_POST["p"])) {
+    $currentProjectID = $_POST["p"];
+    $projectObj = new Project($currentProjectID);
+    $projectObj->getDetails();
 }
 
 if (isset($_POST["s"])) {
@@ -54,14 +54,14 @@ if (!($page == "chooseproject" || $page == "choosemember")) {
     echo '<td width="200">&nbsp;</td>'."\n";
 }
 
-if ($page == "chooseproject") {
-    include_once("_view/project/choose.php");
+if ($page == "choosemember") {
+    include_once("_view/member/choose.php");
 }
 
-if ($page == "choosemember") {
-    $currentProjectID = $_POST["p"];
-    $projectObj = new Project($currentProjectID);
-    include_once("_view/member/choose.php");
+if ($page == "chooseproject") {
+    $currentMemberID = $_POST["m"];
+    $memberObj = new Project($currentMemberID);
+    include_once("_view/project/choose.php");
 }
 
 if ($page == "main") {
