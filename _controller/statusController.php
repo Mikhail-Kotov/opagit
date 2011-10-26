@@ -1,7 +1,7 @@
 <?php
-if ($page == "status") {
-    if ($todo != "") {
-        if ($todo == "add") {
+if ($sessionArr['strPage'] == "status") {
+    if ($sessionArr['strTodo'] != "") {
+        if ($sessionArr['strTodo'] == "add") {
             $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
             $strActualBaseline = $_POST["strActualBaseline"];
             $strPlanBaseline = $_POST["strPlanBaseline"];
@@ -25,11 +25,11 @@ if ($page == "status") {
                     $strStatusVariation, $strStatusNotes, $strAttachmentLinkArr, $strAttachmentCommentArr);
         }
         
-        if ($todo == "delete") {
-            $statusObj->delDetails($currentStatusID);
+        if ($sessionArr['strTodo'] == "delete") {
+            $statusObj->delDetails($sessionArr['intStatusID']);
         }
         
-        if ($todo == "edit") {
+        if ($sessionArr['strTodo'] == "edit") {
             $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
             $strActualBaseline = $_POST['strActualBaseline'];
             $strPlanBaseline = $_POST['strPlanBaseline'];
@@ -50,45 +50,47 @@ if ($page == "status") {
                 }
             } while($isNextAttachment == true);
 
-            $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, 
+            $statusObj->setDetails($sessionArr['intStatusID'], $dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, 
                     $strStatusVariation, $strStatusNotes, $intAttachmentIDArr, $strAttachmentLinkArr, $strAttachmentCommentArr);
         }
     }
     
-    $page = "statushistory";
+    $sessionArr['strPage'] = "statushistory";
 }
 
-if ($page == "statushistory") {
+if ($sessionArr['strPage'] == "statushistory") {
     $statusObj->getLastStatusID();
     if(isset($statusObj->intStatusID)) {
         $statusObj->getDetails();
         include_once("_model/status/history.php");
     } else {
-        $page = "statusadd";
+        $sessionArr['strPage'] = "statusadd";
     }
 }
 
-if ($page == "statusview") {
-    if ($currentStatusID != "") {
-        $statusObj->setID($currentStatusID);
+if ($sessionArr['strPage'] == "statusview") {
+    if (isset($sessionArr['intStatusID'])) {
+        $statusObj->setID($sessionArr['intStatusID']);
     } else {
         $statusObj->getLastStatusID();
+        $sessionArr['intStatusID'] = $statusObj->getID();
     }
+
     if(isset($statusObj->intStatusID)) {
         $statusObj->getDetails();
         include_once("_model/status/view.php");
     } else {
-        $page = "statusadd";
+        $sessionArr['strPage'] = "statusadd";
     }
 }
 
-if ($page == "statusadd") {
+if ($sessionArr['strPage'] == "statusadd") {
     $statusObj->displayAddForm();
 }
 
-if ($page == "statusedit") {
-    if ($currentStatusID != "") {
-        $statusObj->setID($currentStatusID);
+if ($sessionArr['strPage'] == "statusedit") {
+    if ($sessionArr['intStatusID'] != "") {
+        $statusObj->setID($sessionArr['intStatusID']);
         $statusObj->getDetails();
         $statusObj->displayEditForm();
     } else {

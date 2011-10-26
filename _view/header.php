@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo $version ?></title>
+<title><?php echo $_ENV['version']; ?></title>
 <link href="prototype.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/functions.js"></script> 
 <script type="text/javascript" src="js/jquery.js"></script>
@@ -27,9 +27,9 @@ $(document).ready(function()
   <tr>
       <td colspan="2" height="30"><?php
 if ($_ENV['engineering mode'] == True) {
-    echo "[page: <b>" . $page;
-    if ($todo != "") {
-        echo ":" . $todo;
+    echo "[page: <b>" . $sessionArr['strPage'];
+    if ($sessionArr['strTodo'] != "") {
+        echo ":" . $sessionArr['strTodo'];
     }
     echo "</b>]&nbsp;&nbsp;&nbsp;";
 

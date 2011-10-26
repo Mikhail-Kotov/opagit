@@ -10,7 +10,7 @@ class Status {
     public $strStatusVariation; // variation
     public $strStatusNotes; // Notes/Reasons
 
-    function __construct($projectObj, $memberObj, $attachmentObj) {
+    function __construct($memberObj, $projectObj, $attachmentObj) {
         $this->projectObj = $projectObj;
         $this->memberObj = $memberObj;
         $this->attachmentObj = $attachmentObj;

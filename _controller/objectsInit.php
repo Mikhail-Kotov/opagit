@@ -1,8 +1,8 @@
 <?php
     $attachmentObj = new Attachment();    
-    $statusObj = new Status($projectObj, $memberObj, $attachmentObj);
+    $statusObj = new Status($memberObj, $projectObj, $attachmentObj);
     
     if($currentStatusID != "") {
-        $statusObj->setID($currentStatusID);
+        $statusObj->setID($sessionArr['intStatusID']);
     }
 ?>
