@@ -112,7 +112,7 @@ class Status {
             die('Invalid query: ' . mysql_error());
         
         $this->attachmentObj->setStatusID($intStatusID);
-        $this->attachmentObj->setDetails($intStatusID);
+        $this->attachmentObj->setDetails($intAttachmentIDArr, $strAttachmentLinkArr, $strAttachmentCommentArr);
     }
 
     function addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusVariation, 

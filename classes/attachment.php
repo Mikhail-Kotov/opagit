@@ -54,10 +54,10 @@ class Attachment {
         //$db->del('tblAttachment', $intStatusID);
     }
     
-    function setDetails($intStatusID) {
-        foreach ($intAttachmentID as $id => $value) {
-            $query = "UPDATE tblAttachment SET strAttachmentLink='" . mysql_real_escape_string($strAttachmentLink[$id]) .
-                    "',strAttachmentComment='" . mysql_real_escape_string($strAttachmentComment[$id]) . "' WHERE intAttachmentID=" . $intAttachmentID[$id] . ";";
+    function setDetails($intAttachmentIDArr, $strAttachmentLinkArr, $strAttachmentCommentArr) {
+        foreach ($intAttachmentIDArr as $id => $value) {
+            $query = "UPDATE tblAttachment SET strAttachmentLink='" . mysql_real_escape_string($strAttachmentLinkArr[$id]) .
+                    "',strAttachmentComment='" . mysql_real_escape_string($strAttachmentCommentArr[$id]) . "' WHERE intAttachmentID=" . $intAttachmentIDArr[$id] . ";";
 
             $sql = mysql_query($query);
 

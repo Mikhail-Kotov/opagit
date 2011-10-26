@@ -32,13 +32,13 @@
     <textarea name="strStatusNotes"><?php echo $this->strStatusNotes; ?></textarea><br /><br />
 <?php    
 $attachmentArr = $this->attachmentObj->getDetails();
-foreach ($attachmentArr['intAttachmentID'] as $id => $value_not_using) {
+foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {
     echo '<input type="hidden" name="intAttachmentID' . $id .
-            '" value="' . $attachmentArr['intAttachmentID'][$id] . '" />' .
+            '" value="' . $attachmentArr['intAttachmentIDArr'][$id] . '" />' .
             "Attachment:<br />" . '<input type="text" name="strAttachmentLink' . $id . 
-            '" value="' . $attachmentArr['strAttachmentLink'][$id] . '" /><br /><br />' .
+            '" value="' . $attachmentArr['strAttachmentLinkArr'][$id] . '" /><br /><br />' .
             "Attachment Comment:<br />" . '<input type="text" name="strAttachmentComment' . $id . 
-            '" value="' . $attachmentArr['strAttachmentComment'][$id] . '" /><br /><br />';
+            '" value="' . $attachmentArr['strAttachmentCommentArr'][$id] . '" /><br /><br />';
 }
 ?>
     
