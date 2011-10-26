@@ -9,14 +9,16 @@ $currentStatusMessage = "<b>Date:</b> " . date("jS F Y", strtotime($this->dmtSta
         "<b>Notes/Reasons:</b><br />" .
         $this->strStatusNotes . "<br /><br />";
 
-$attachmentArray = $this->attachmentObj->getDetails();
+$this->attachmentObj->setStatusID($this->getID());
+$this->attachmentObj->getDetailsFromDB();
+$attachmentArr = $this->attachmentObj->getDetails();
 
-foreach ($attachmentArray['intAttachmentID'] as $id => $value_not_using) {      // don't using this value here
+foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {      // don't using this value here
                                                                                 // so to change 'foreach' to something else???
                                                                                 // don't know better php construction (Mikhail)
-    $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $attachmentArray['strAttachmentLink'][$id] . '">' . 
-            $attachmentArray['strAttachmentLink'][$id] . "</a><br /><br />" .
-            "<b>Attachment Comment:</b><br />" . $attachmentArray['strAttachmentComment'][$id] . "<br /><br />";
+    $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $attachmentArr['strAttachmentLinkArr'][$id] . '">' . 
+            $attachmentArr['strAttachmentLinkArr'][$id] . "</a><br /><br />" .
+            "<b>Attachment Comment:</b><br />" . $attachmentArr['strAttachmentCommentArr'][$id] . "<br /><br />";
 }
     //$_ENV['firephp']->log($attachmentArray, 'attachmentArray');
 ?>

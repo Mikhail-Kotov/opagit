@@ -11,8 +11,8 @@ if ($page == "status") {
             $isNextAttachment = true;
             $i = 0;
             do {
-                $strAttachmentLink[$i] = $_POST["strAttachmentLink".$i];
-                $strAttachmentComment[$i] = $_POST["strAttachmentComment".$i];
+                $strAttachmentLinkArr[$i] = $_POST["strAttachmentLink".$i];
+                $strAttachmentCommentArr[$i] = $_POST["strAttachmentComment".$i];
                 
                 if(isset($_POST["strAttachmentLink".($i+1)])) {
                     $i++;
@@ -22,7 +22,7 @@ if ($page == "status") {
             } while($isNextAttachment == true);
             
             $statusObj->addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, 
-                    $strStatusVariation, $strStatusNotes, $strAttachmentLink, $strAttachmentComment);
+                    $strStatusVariation, $strStatusNotes, $strAttachmentLinkArr, $strAttachmentCommentArr);
         }
         
         if ($todo == "delete") {
@@ -40,8 +40,8 @@ if ($page == "status") {
             $i = 0;
             do {
                 $intAttachmentID[$i] = $_POST["intAttachmentID".$i];
-                $strAttachmentLink[$i] = $_POST["strAttachmentLink".$i];
-                $strAttachmentComment[$i] = $_POST["strAttachmentComment".$i];
+                $strAttachmentLinkArr[$i] = $_POST["strAttachmentLink".$i];
+                $strAttachmentCommentArr[$i] = $_POST["strAttachmentComment".$i];
                 
                 if(isset($_POST["intAttachmentID".($i+1)])) {
                     $i++;
@@ -51,7 +51,7 @@ if ($page == "status") {
             } while($isNextAttachment == true);
 
             $statusObj->setDetails($currentStatusID, $dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, 
-                    $strStatusVariation, $strStatusNotes, $intAttachmentID, $strAttachmentLink, $strAttachmentComment);
+                    $strStatusVariation, $strStatusNotes, $intAttachmentID, $strAttachmentLinkArr, $strAttachmentCommentArr);
         }
     }
     

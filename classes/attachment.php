@@ -2,9 +2,10 @@
 
 class Attachment {
 
-    private $intAttachmentID;
-    private $strAttachmentLink;
-    private $strAttachmentComment;
+    private $intAttachmentIDArr;
+    private $strAttachmentLinkArr;
+    private $strAttachmentCommentArr;
+    private $intStatusID, $intRiskID, $intIssueID;
     
 
     function __construct() {
@@ -12,31 +13,34 @@ class Attachment {
     }
     
     function getID() {
-        return $this->intAttachmentID[0];
+        return $this->intAttachmentIDArr[0];
     }
     
     function getDetails() {
-        $attachmentArray['intAttachmentID'] = $this->intAttachmentID;
-        $attachmentArray['strAttachmentLink'] = $this->strAttachmentLink;
-        $attachmentArray['strAttachmentComment'] = $this->strAttachmentComment;
+        $attachmentArray['intAttachmentIDArr'] = $this->intAttachmentIDArr;
+        $attachmentArray['strAttachmentLinkArr'] = $this->strAttachmentLinkArr;
+        $attachmentArray['strAttachmentCommentArr'] = $this->strAttachmentCommentArr;
         return $attachmentArray;
     }
     
-    function getDetailsStatus($intStatusID) {
-        unset($this->intAttachmentID);
-        unset($this->strAttachmentLink);
-        unset($this->strAttachmentComment);
-        
-        $query = "SELECT intAttachmentID, strAttachmentLink,strAttachmentComment FROM tblAttachment WHERE intStatusID = " . $intStatusID;
+    function setStatusID($intStatusID) {
+        $this->intStatusID = $intStatusID;
+    }
+    
+    function getDetailsFromDB() {
+        unset($this->intAttachmentIDArr);
+        unset($this->strAttachmentLinkArr);
+        unset($this->strAttachmentCommentArr);
+
+        $query = "SELECT intAttachmentID,strAttachmentLink,strAttachmentComment FROM tblAttachment WHERE intStatusID = " . $this->intStatusID;
 
         $sqlArr = $_ENV['db']->query($query);
-        $_ENV['firephp']->log($sqlArr, 'sqlArrAtt');
-        
+
         if (isset($sqlArr[0])) {
             foreach ($sqlArr as $id => $value) {
-                $this->intAttachmentID[$id] = $sqlArr[$id]['intAttachmentID'];
-                $this->strAttachmentLink[$id] = $sqlArr[$id]['strAttachmentLink'];
-                $this->strAttachmentComment[$id] = $sqlArr[$id]['strAttachmentComment'];
+                $this->intAttachmentIDArr[$id] = $sqlArr[$id]['intAttachmentID'];
+                $this->strAttachmentLinkArr[$id] = $sqlArr[$id]['strAttachmentLink'];
+                $this->strAttachmentCommentArr[$id] = $sqlArr[$id]['strAttachmentComment'];
             }
         }
     }
@@ -48,6 +52,40 @@ class Attachment {
             die('Invalid query: ' . mysql_error());
         
         //$db->del('tblAttachment', $intStatusID);
+    }
+    
+    function setDetails($intStatusID) {
+        foreach ($intAttachmentID as $id => $value) {
+            $query = "UPDATE tblAttachment SET strAttachmentLink='" . mysql_real_escape_string($strAttachmentLink[$id]) .
+                    "',strAttachmentComment='" . mysql_real_escape_string($strAttachmentComment[$id]) . "' WHERE intAttachmentID=" . $intAttachmentID[$id] . ";";
+
+            $sql = mysql_query($query);
+
+            if (!$sql)
+                die('Invalid query: ' . mysql_error());
+        }
+    }
+    
+    function addDetails($nextStatusID, $strAttachmentLinkArr, $strAttachmentCommentArr) {
+        $isNextAttachment = true;
+        $i = 0;
+        do {
+            $query = "INSERT INTO tblAttachment(intAttachmentID,intStatusID,strAttachmentLink,strAttachmentComment) " .
+                    "values (NULL, '" . $nextStatusID .
+                    "', '" . mysql_real_escape_string($strAttachmentLinkArr[$i]) .
+                    "', '" . mysql_real_escape_string($strAttachmentCommentArr[$i]) . "');";
+            $sql = mysql_query($query);
+
+            if (!$sql)
+                die('Invalid query: ' . mysql_error());
+
+
+            if (isset($_POST["strAttachmentLink" . ($i + 1)])) {
+                $i++;
+            } else {
+                $isNextAttachment = false;
+            }
+        } while ($isNextAttachment == true);
     }
 }
 

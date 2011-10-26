@@ -31,14 +31,14 @@
     Notes/Reasons:<br />
     <textarea name="strStatusNotes"><?php echo $this->strStatusNotes; ?></textarea><br /><br />
 <?php    
-$attachmentArray = $this->attachmentObj->getDetails();
-foreach ($attachmentArray['intAttachmentID'] as $id => $value_not_using) {
+$attachmentArr = $this->attachmentObj->getDetails();
+foreach ($attachmentArr['intAttachmentID'] as $id => $value_not_using) {
     echo '<input type="hidden" name="intAttachmentID' . $id .
-            '" value="' . $attachmentArray['intAttachmentID'][$id] . '" />' .
+            '" value="' . $attachmentArr['intAttachmentID'][$id] . '" />' .
             "Attachment:<br />" . '<input type="text" name="strAttachmentLink' . $id . 
-            '" value="' . $attachmentArray['strAttachmentLink'][$id] . '" /><br /><br />' .
+            '" value="' . $attachmentArr['strAttachmentLink'][$id] . '" /><br /><br />' .
             "Attachment Comment:<br />" . '<input type="text" name="strAttachmentComment' . $id . 
-            '" value="' . $attachmentArray['strAttachmentComment'][$id] . '" /><br /><br />';
+            '" value="' . $attachmentArr['strAttachmentComment'][$id] . '" /><br /><br />';
 }
 ?>
     

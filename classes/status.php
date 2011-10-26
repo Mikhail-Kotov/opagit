@@ -1,7 +1,7 @@
 <?php
 
 class Status {
-    public $projectObj, $memberObj;
+    private $projectObj, $memberObj;
     public $intStatusID;
     public $intProjectMemberID;
     public $dmtStatusCurrentDate;
@@ -29,7 +29,9 @@ class Status {
 }
     
     function getID() {
-        return $this->intStatusID;
+        if(isset($this->intStatusID)) {
+            return $this->intStatusID;
+        }
     }
     
     function setID($intStatusID) {
@@ -52,7 +54,8 @@ class Status {
             $this->strStatusNotes = $sqlArr[0]['strStatusNotes'];
         }
         
-        $this->attachmentObj->getDetailsStatus($this->intStatusID);
+        $this->attachmentObj->setStatusID($this->intStatusID);
+        $this->attachmentObj->getDetailsFromDB();
     }
     
     function getLastStatusID() {
@@ -88,11 +91,11 @@ class Status {
             $strPlanBaseline,
             $strStatusVariation,
             $strStatusNotes,
-            $intAttachmentID,
-            $strAttachmentLink,
-            $strAttachmentComment) {
+            $intAttachmentIDArr,
+            $strAttachmentLinkArr,
+            $strAttachmentCommentArr) {
         
-        $this->attachmentObj->getDetailsStatus($intStatusID);
+        
         
         $query = "UPDATE tblStatus SET intProjectID='" . mysql_real_escape_string($this->projectObj->getID()) . 
                 "',intProjectMemberID='" . mysql_real_escape_string($this->intProjectMemberID) .
@@ -108,19 +111,12 @@ class Status {
         if (!$sql)
             die('Invalid query: ' . mysql_error());
         
-        foreach ($intAttachmentID as $id => $value) {
-            $query = "UPDATE tblAttachment SET strAttachmentLink='" . mysql_real_escape_string($strAttachmentLink[$id]) .
-                    "',strAttachmentComment='" . mysql_real_escape_string($strAttachmentComment[$id]) . "' WHERE intAttachmentID=" . $intAttachmentID[$id] . ";";
-
-            $sql = mysql_query($query);
-
-            if (!$sql)
-                die('Invalid query: ' . mysql_error());
-        }
+        $this->attachmentObj->setStatusID($intStatusID);
+        $this->attachmentObj->setDetails($intStatusID);
     }
 
     function addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusVariation, 
-            $strStatusNotes, $strAttachmentLink, $strAttachmentComment) {
+            $strStatusNotes, $strAttachmentLinkArr, $strAttachmentCommentArr) {
 
         $nextStatusID = $this->getGlobalLastStatusID() + 1;
         
@@ -147,25 +143,7 @@ class Status {
         if (!$sql)
             die('Invalid query: ' . mysql_error());
 
-        $isNextAttachment = true;
-        $i = 0;
-        do {
-            $query = "INSERT INTO tblAttachment(intAttachmentID,intStatusID,strAttachmentLink,strAttachmentComment) " .
-                    "values (NULL, '" . $nextStatusID .
-                    "', '" . mysql_real_escape_string($strAttachmentLink[$i]) .
-                    "', '" . mysql_real_escape_string($strAttachmentComment[$i]) . "');";
-            $sql = mysql_query($query);
-
-            if (!$sql)
-                die('Invalid query: ' . mysql_error());            
-            
-            
-            if (isset($_POST["strAttachmentLink" . ($i + 1)])) {
-                $i++;
-            } else {
-                $isNextAttachment = false;
-            }
-        } while ($isNextAttachment == true);
+        $this->addAttachment($nextStatusID, $strAttachmentLinkArr, $strAttachmentCommentArr);
 
 
     }
