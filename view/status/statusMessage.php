@@ -10,15 +10,19 @@ $currentStatusMessage = "<b>Date:</b> " . date("jS F Y", strtotime($this->dmtSta
         $this->strStatusNotes . "<br /><br />";
 
 $this->attachmentObj->setStatusID($this->getID());
+
 $this->attachmentObj->getDetailsFromDB();
 $attachmentArr = $this->attachmentObj->getDetails();
-
-foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {      // don't using this value here
-                                                                                // so to change 'foreach' to something else???
-                                                                                // don't know better php construction (Mikhail)
-    $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $attachmentArr['strAttachmentLinkArr'][$id] . '">' . 
-            $attachmentArr['strAttachmentLinkArr'][$id] . "</a><br /><br />" .
-            "<b>Attachment Comment:</b><br />" . $attachmentArr['strAttachmentCommentArr'][$id] . "<br /><br />";
+if($attachmentArr != null) {
+    foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {      // don't using this value here
+        // so to change 'foreach' to something else???
+        // don't know better php construction (Mikhail)
+        $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
+                $attachmentArr['strAttachmentLinkArr'][$id] . "</a><br /><br />" .
+                "<b>Attachment Comment:</b><br />" . $attachmentArr['strAttachmentCommentArr'][$id] . "<br /><br />";
+    }    
 }
-    //$_ENV['firephp']->log($attachmentArray, 'attachmentArray');
+
+
+    $_ENV['firephp']->log($attachmentArr, 'attachmentArray');
 ?>

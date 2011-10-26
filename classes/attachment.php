@@ -17,9 +17,13 @@ class Attachment {
     }
     
     function getDetails() {
-        $attachmentArray['intAttachmentIDArr'] = $this->intAttachmentIDArr;
-        $attachmentArray['strAttachmentLinkArr'] = $this->strAttachmentLinkArr;
-        $attachmentArray['strAttachmentCommentArr'] = $this->strAttachmentCommentArr;
+        if(isset($this->intAttachmentIDArr)) {
+            $attachmentArray['intAttachmentIDArr'] = $this->intAttachmentIDArr;
+            $attachmentArray['strAttachmentLinkArr'] = $this->strAttachmentLinkArr;
+            $attachmentArray['strAttachmentCommentArr'] = $this->strAttachmentCommentArr;
+        } else {
+            $attachmentArray = null;
+        }
         return $attachmentArray;
     }
     

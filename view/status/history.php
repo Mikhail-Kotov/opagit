@@ -31,14 +31,18 @@ foreach ($sqlArr as $intStatusID => $statusArr) {
     $historyTableArr[$intStatusID]["strAttachmentCommentArr"] = "";
     
     $attachmentArr = $this->attachmentObj->getDetails();
-    
-    foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) { // not using $value2 anywhere
-        $historyTableArr[$intStatusID]["strAttachmentLinkArr"] .= '<a href="' . 
-                $attachmentArr['strAttachmentLinkArr'][$id] . 
-                '">' . 
-                $attachmentArr['strAttachmentLinkArr'][$id] . 
-                "</a><br />";
-        $historyTableArr[$intStatusID]['strAttachmentCommentArr'] .= $attachmentArr['strAttachmentCommentArr'][$id] . "<br />";
+    if($attachmentArr != null) {
+        foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) { // not using $value2 anywhere
+            $historyTableArr[$intStatusID]["strAttachmentLinkArr"] .= '<a href="' .
+                    $attachmentArr['strAttachmentLinkArr'][$id] .
+                    '">' .
+                    $attachmentArr['strAttachmentLinkArr'][$id] .
+                    "</a><br />";
+            $historyTableArr[$intStatusID]['strAttachmentCommentArr'] .= $attachmentArr['strAttachmentCommentArr'][$id] . "<br />";
+        }
+    } else {
+        $historyTableArr[$intStatusID]['strAttachmentLinkArr'] = "&nbsp;";
+        $historyTableArr[$intStatusID]['strAttachmentCommentArr'] = "&nbsp;";
     }
 }
 

@@ -143,7 +143,7 @@ class Status {
         if (!$sql)
             die('Invalid query: ' . mysql_error());
 
-        $this->addAttachment($nextStatusID, $strAttachmentLinkArr, $strAttachmentCommentArr);
+        $this->attachmentObj->addDetails($nextStatusID, $strAttachmentLinkArr, $strAttachmentCommentArr);
 
 
     }
