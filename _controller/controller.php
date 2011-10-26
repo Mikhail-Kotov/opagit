@@ -31,52 +31,52 @@ if (isset($_POST["s"])) {
 }
 
 if ($page == "statuspdf") {
-    include_once("controller/objectsInit.php");
+    include_once("_controller/objectsInit.php");
     
     if(isset($statusObj->intStatusID)) {
         $statusObj->getDetails();
-        include_once("model/status/pdf.php");
+        include_once("_model/status/pdf.php");
     } else {
         $page = "statusadd";
     }
 }
 
 if (!($page == "chooseproject" || $page == "choosemember")) {
-    include_once("controller/objectsInit.php");
+    include_once("_controller/objectsInit.php");
 }
 
-include_once("view/header.php");
+include_once("_view/header.php");
 
 if (!($page == "chooseproject" || $page == "choosemember")) {
-    include_once("view/menu.php");
+    include_once("_view/menu.php");
 } else {
     // don't show menu when choosing project & member
     echo '<td width="200">&nbsp;</td>'."\n";
 }
 
 if ($page == "chooseproject") {
-    include_once("view/project/choose.php");
+    include_once("_view/project/choose.php");
 }
 
 if ($page == "choosemember") {
     $currentProjectID = $_POST["p"];
     $projectObj = new Project($currentProjectID);
-    include_once("view/member/choose.php");
+    include_once("_view/member/choose.php");
 }
 
 if ($page == "main") {
-    include_once("view/main.php");
+    include_once("_view/main.php");
 }
 
-include_once("controller/statusController.php");
+include_once("_controller/statusController.php");
 
 if ($page == "issuehistory") {
-    include_once("view/issue/history.php");
+    include_once("_view/issue/history.php");
 }
 
 if ($page == "riskhistory") {
-    include_once("view/risk/history.php");
+    include_once("_view/risk/history.php");
 }
 
-include_once("view/footer.php");
+include_once("_view/footer.php");
 ?>

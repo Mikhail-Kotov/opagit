@@ -158,17 +158,17 @@ class Status {
     }
 
     function displayStatus() {
-        include_once("view/status/view.php");
-        include_once("view/status/bottomMenu.php");
+        include_once("_view/status/view.php");
+        include_once("_view/status/bottomMenu.php");
     }
 
     function pdfStatus() {
-        include_once("view/status/pdf.php");
+        include_once("_view/status/pdf.php");
     }    
     
     function displayStatusHistory() {
-        include_once("view/status/history.php");
-        include_once("view/status/bottomMenu.php");
+        include_once("_view/status/history.php");
+        include_once("_view/status/bottomMenu.php");
     }
 
     function printStatus() {
@@ -180,11 +180,11 @@ class Status {
     }
 
     function displayAddForm() {
-        include_once("view/status/add.php");
+        include_once("_view/status/add.php");
     }
     
     function displayEditForm() {
-        include_once("view/status/edit.php");
+        include_once("_view/status/edit.php");
     }
 }
 ?>

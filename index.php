@@ -5,14 +5,14 @@ error_reporting(E_ALL);
 ini_set('display_errors','On');
 require_once('FirePHPCore/FirePHP.class.php');
 include_once("fpdf/fpdf.php");
-include_once("classes/db.php");
+include_once("_model/db.php");
 include_once("inc/functions.php");
-include_once("classes/member.php");
-include_once("classes/project.php");
-include_once("classes/status.php");
-include_once("classes/risk.php");
-include_once("classes/issue.php");
-include_once("classes/attachment.php");
+include_once("_model/member.php");
+include_once("_model/project.php");
+include_once("_model/status.php");
+include_once("_model/risk.php");
+include_once("_model/issue.php");
+include_once("_model/attachment.php");
 
 // connect to db
 $_ENV['db'] = new DB();
@@ -25,7 +25,7 @@ $_ENV['engineering mode'] = 1;
 ob_start();
 $_ENV['firephp']->log($_POST, '_POST');
 
-include_once("controller/controller.php");
+include_once("_controller/controller.php");
 
 $_ENV['db']->closeDB();
 ?>

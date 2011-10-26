@@ -62,7 +62,7 @@ if ($page == "statushistory") {
     $statusObj->getLastStatusID();
     if(isset($statusObj->intStatusID)) {
         $statusObj->getDetails();
-        include_once("model/status/history.php");
+        include_once("_model/status/history.php");
     } else {
         $page = "statusadd";
     }
@@ -76,7 +76,7 @@ if ($page == "statusview") {
     }
     if(isset($statusObj->intStatusID)) {
         $statusObj->getDetails();
-        include_once("model/status/view.php");
+        include_once("_model/status/view.php");
     } else {
         $page = "statusadd";
     }
