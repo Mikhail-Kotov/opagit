@@ -3,6 +3,7 @@
 
 USE opadmin;
 
+DROP TABLE IF EXISTS tblSession;
 DROP TABLE IF EXISTS tblAttachment;
 DROP TABLE IF EXISTS tblIssue;
 DROP TABLE IF EXISTS tblIssueType;
@@ -205,6 +206,19 @@ CREATE TABLE `tblAttachment` (
   CONSTRAINT `FK_tblAttachment_tblStatus` FOREIGN KEY (intStatusID) REFERENCES tblStatus (intStatusID) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_tblAttachment_tblRisk` FOREIGN KEY (intRiskID) REFERENCES tblRisk (intRiskID) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_tblAttachment_tblIssue` FOREIGN KEY (intIssueID) REFERENCES tblIssue (intIssueID) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tblSession` (
+  intSessionID INT(11) NOT NULL AUTO_INCREMENT COMMENT 'PK, AI. Sessions for OPA',
+  intSessionSID INT(11) NULL,
+  strPage VARCHAR(255) NULL,
+  strTodo VARCHAR(255) NULL,
+  intMemberID INT(11) NULL,
+  intProjectID INT(11) NULL,
+  intStatusID INT(11) NULL,
+  intRiskID INT(11) NULL,
+  intIssueID INT(11) NULL,
+  PRIMARY KEY (intSessionID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 INSERT INTO `tblProject`(`intProjectID`,`strProjectName`,`strProjectSponsor`,`strProjectDescription`,`dmtProjectStartDate`,`dmtProjectEndDate`,`strProjectTeamName`,`strProjectTeamLeader`,`strProjectSiteURL`) VALUES (1,'OPA','James','OPA IRS Tracker','2009-07-13','2011-12-31','OPAdmin','Robyn','http://cit3.ldl.swin.edu.au/~opadmin/'),(2,'Project2',NULL,NULL,'2009-07-13',NULL,NULL,NULL,NULL);

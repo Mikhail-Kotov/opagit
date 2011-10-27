@@ -158,17 +158,173 @@ class Status {
     }
 
     function displayStatus() {
-        include_once("_view/status/view.php");
-        include_once("_view/status/bottomMenu.php");
+        $currentStatusMessage = $this->statusMessage();
+
+        echo $currentStatusMessage;
+
+        echo '<table border="0">';
+        echo '<tr><td><form method="post">';
+        echo '<input type="hidden" name="page" value="statusedit" />' . "\n";
+        echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
+        echo '<input type="submit" value="Edit Status" class="button" />' . "\n";
+        echo '</form></td>';
+        echo '<td><form method="post">';
+        echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
+        echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
+        echo '<input type="submit" value="PDF" class="button" />' . "\n";
+        echo "</form></td><td>";
+        echo '<form method="post">';
+        echo '<input type="hidden" name="page" value="status" />' . "\n";
+        echo '<input type="hidden" name="todo" value="delete" />' . "\n";
+        echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
+        echo '<input type="submit" value="Delete" class="button" />' . "\n";
+        echo "</form>\n";
+        echo "</td></tr></table>";
+
+        $this->bottomMenu();
+    }
+    
+    function bottomMenu() {
+        echo '<br /><table border="0"><tr><td>';
+        displayButton("statusadd", "Add Status", $this->projectObj->getID(), $this->memberObj->getID());
+        echo "</td><td>";
+        displayButton("statushistory", "Status History", $this->projectObj->getID(), $this->memberObj->getID());
+        echo "</td><td>";
+        displayButton("statusview", "View Last Status", $this->projectObj->getID(), $this->memberObj->getID());
+        echo '</td></tr></table><br /><a href="#top">Back to Top</a>';
     }
 
     function pdfStatus() {
-        include_once("_view/status/pdf.php");
-    }    
-    
+        $currentStatusMessage = $this->statusMessage();
+
+        //$pdf = new FPDF();
+        //$pdf->AddPage();
+        //$pdf->SetFont('Arial','',10);
+        //$pdf->Cell(40,10,$currentStatusMessage);
+        //$pdf->Output();
+
+
+
+        $pdf = new PDF();
+        $pdf->SetDisplayMode('real', 'default');
+        $title = 'Status #' . $this->getID();
+        $pdf->SetTitle($title);
+        $pdf->SetAuthor('OPA');
+        $pdf->PrintChapter(1, 'Status #' . $this->getID(), "");
+        $pdf->WriteHTML($currentStatusMessage);
+
+        $pdf->Output();
+    }
+
     function displayStatusHistory() {
-        include_once("_view/status/history.php");
-        include_once("_view/status/bottomMenu.php");
+        $query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," .
+                "strStatusVariation,strStatusNotes" .
+                " FROM tblStatus WHERE intProjectID = '" . $this->projectObj->getID() . "';";
+        $sqlArr = $_ENV['db']->query($query);
+        $_ENV['firephp']->log($sqlArr, 'sqlArr');
+
+        $caption = "Status History for Project: " . $this->projectObj->strProjectName;
+
+//$arr3 = array();
+        foreach ($sqlArr as $intStatusID => $statusArr) {
+            foreach ($statusArr as $columnName => $value) {
+                switch ($columnName) {
+                    case "intProjectMemberID":
+                        $historyTableArr[$intStatusID]["intMemberName"] = $this->memberObj->getMemberName($value);
+                        break;
+                    case "dmtStatusCurrentDate":
+                        $historyTableArr[$intStatusID][$columnName] = date("jS F Y", strtotime($value));
+                        break;
+                    default:
+                        $historyTableArr[$intStatusID][$columnName] = $value;
+                }
+            }
+
+            $this->attachmentObj->setStatusID($historyTableArr[$intStatusID]["intStatusID"]);
+            $this->attachmentObj->getDetailsFromDB();
+
+            $historyTableArr[$intStatusID]["strAttachmentLinkArr"] = "";
+            $historyTableArr[$intStatusID]["strAttachmentCommentArr"] = "";
+
+            $attachmentArr = $this->attachmentObj->getDetails();
+            if ($attachmentArr != null) {
+                foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) { // not using $value2 anywhere
+                    $historyTableArr[$intStatusID]["strAttachmentLinkArr"] .= '<a href="' .
+                            $attachmentArr['strAttachmentLinkArr'][$id] .
+                            '">' .
+                            $attachmentArr['strAttachmentLinkArr'][$id] .
+                            "</a><br />";
+                    $historyTableArr[$intStatusID]['strAttachmentCommentArr'] .= $attachmentArr['strAttachmentCommentArr'][$id] . "<br />";
+                }
+            } else {
+                $historyTableArr[$intStatusID]['strAttachmentLinkArr'] = "&nbsp;";
+                $historyTableArr[$intStatusID]['strAttachmentCommentArr'] = "&nbsp;";
+            }
+        }
+
+
+        unset($columnName);
+        unset($statusArr);
+
+        if (isset($historyTableArr[0])) {
+            echo '<table border="1" rules="all" frame="void">';
+            echo "<caption>" . $caption . "</caption>\n";
+            echo "<tr>\n";
+            echo "<th>&nbsp;</th>\n";
+            echo "<th>ID</th>\n";
+            echo "<th>Member</th>\n";
+            echo "<th>Creation Date</th>\n";
+            echo "<th>Actual Baseline</th>\n";
+            echo "<th>Plan Baseline</th>\n";
+            echo "<th>Variation</th>\n";
+            echo "<th>Notes/Reasons</th>\n";
+            echo "<th>Attachment</th>\n";
+            echo "<th>Attachment Comment</th>\n";
+            echo "<th>&nbsp;</th>\n"; // for PDF
+            echo "</tr>\n";
+
+            foreach ($historyTableArr as $statusArr) {
+                echo "<tr>\n";
+                echo "<td>\n";
+                echo '<form method="post">';
+                echo '<input type="hidden" name="page" value="statusview" />' . "\n";
+                echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
+                echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
+                echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
+                echo '<input type="submit" value="View" class="button" />' . "\n";
+                echo "</form>\n";
+                echo "</td>\n";
+
+                foreach ($statusArr as $columnName => $value) {
+                    echo "<td>";
+                    if (isset($value)) {
+                        echo $value;
+                    } else {
+                        echo "&nbsp;";
+                    }
+                    echo "</td>\n";
+                }
+
+                echo "<td>\n";
+                echo '<form method="post">';
+                echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
+                echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
+                echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
+                echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
+                echo '<input type="submit" value="PDF" class="button" />' . "\n";
+                echo "</form>\n";
+                echo "</td>\n";
+                echo "</tr>\n\n";
+            }
+            echo '</table>';
+        }
+        $this->bottomMenu();
     }
 
     function printStatus() {
@@ -180,11 +336,133 @@ class Status {
     }
 
     function displayAddForm() {
-        include_once("_view/status/add.php");
+        ?>
+        <b>Add Status</b><br /><br />
+        <form name="statusadd" method="post">
+            <input type="hidden" name="page" value="status" />
+            <input type="hidden" name="todo" value="add" />
+            <input type="hidden" name="m" value="<?php echo $this->memberObj->getID(); ?>" />
+            <input type="hidden" name="p" value="<?php echo $this->projectObj->getID(); ?>" />
+            Status Creation Date:<br />
+            <input type="text" name="dmtStatusCurrentDate" value="<?php echo $_ENV['currentDate']; ?>"/><br /><br />
+            Project Name:<br />
+            <select name ="intProjectID">
+                <?php
+                $projectsArr = getProjects($this->memberObj->getID());
+                foreach ($projectsArr as $columnName => $value) {
+                    echo '<option value="' . $value['intProjectID'] . '"';
+                    if ($value['intProjectID'] == $this->projectObj->getID()) {
+                        echo ' selected="selected"';
+                    }
+                    echo'>' . $value['strProjectName'] . "</option>\n";
+                }
+                ?>
+            </select>
+            <br /><br />
+            Actual Baseline:<br />
+            <textarea name="strActualBaseline" /></textarea><br /><br />
+        Plan Baseline:<br />
+        <textarea name="strPlanBaseline" /></textarea><br /><br />
+        Variation:<br />
+        <textarea name="strStatusVariation"></textarea><br /><br />
+        Notes/Reasons:<br />
+        <textarea name="strStatusNotes"></textarea><br /><br />
+        Attachment 1:<br />
+        <input type="text" name="strAttachmentLink0" value="http://"/><br /><br />
+        Attachment 1 Comment:<br />
+        <input type="text" name="strAttachmentComment0" /><br /><br />
+        <div id="text">
+            
+        </div>
+        <input type="button" onclick="addAttachmentLink()" name="add" value="Add more attachments" /><br />
+            
+        <br />
+        <input type="submit" value="Submit" />
+        </form>
+            
+        <?php
+        $this->bottomMenu();
+    }
+    
+    function statusMessage() {
+        $currentStatusMessage = "<b>Date:</b> " . date("jS F Y", strtotime($this->dmtStatusCurrentDate)) . "<br />" .
+                "<b>Status created by:</b> " . $this->memberObj->strMemberFirstName . " " . $this->memberObj->strMemberLastName . "<br />" .
+                "<b>Project:</b> " . $this->projectObj->strProjectName . "<br /><br />" .
+                "<b>Actual Baseline:</b><br />" . $this->strActualBaseline . "<br /><br />" .
+                "<b>Plan Baseline:</b><br />" . $this->strPlanBaseline . "<br /><br />" .
+                "<b>Variation:</b><br />" .
+                $this->strStatusVariation . "<br /><br />" .
+                "<b>Notes/Reasons:</b><br />" .
+                $this->strStatusNotes . "<br /><br />";
+
+        $this->attachmentObj->setStatusID($this->getID());
+
+        $this->attachmentObj->getDetailsFromDB();
+        $attachmentArr = $this->attachmentObj->getDetails();
+        if ($attachmentArr != null) {
+            foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {      // don't using this value here
+                // so to change 'foreach' to something else???
+                // don't know better php construction (Mikhail)
+                $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
+                        $attachmentArr['strAttachmentLinkArr'][$id] . "</a><br /><br />" .
+                        "<b>Attachment Comment:</b><br />" . $attachmentArr['strAttachmentCommentArr'][$id] . "<br /><br />";
+            }
+        }
+
+        //$_ENV['firephp']->log($attachmentArr, 'attachmentArray');
+        return $currentStatusMessage;
     }
     
     function displayEditForm() {
-        include_once("_view/status/edit.php");
+        ?>
+                <b>Edit Status</b><br /><br />
+        <form method="post">
+            <input type="hidden" name="page" value="status" />
+            <input type="hidden" name="todo" value="edit" />
+            <input type="hidden" name="s" value="<?php echo $this->intStatusID; ?>" />
+            <input type="hidden" name="m" value="<?php echo $this->memberObj->getID(); ?>" />
+            <input type="hidden" name="p" value="<?php echo $this->projectObj->getID(); ?>" />
+            Status Creation Date:<br />
+            <input type="text" name="dmtStatusCurrentDate" value="<?php echo $this->dmtStatusCurrentDate; ?>"/><br /><br />
+            Project Name:<br />
+            <select name ="intProjectID">
+        <?php
+        $projectsArr = getProjects($this->memberObj->getID());
+        foreach ($projectsArr as $columnName => $value) {
+            echo '<option value="' . $value['intProjectID'] . '"';
+            if ($value['intProjectID'] == $this->projectObj->getID()) {
+                echo ' selected="selected"';
+            }
+            echo'>' . $value['strProjectName'] . "</option>\n";
+        }
+        $_ENV['firephp']->log($projectsArr, 'ProjectsArr');
+        ?>
+            </select>
+            <br /><br />
+            Actual Baseline:<br />
+            <textarea name="strActualBaseline"><?php echo $this->strActualBaseline; ?></textarea><br /><br />
+            Plan Baseline:<br />
+            <textarea name="strPlanBaseline"><?php echo $this->strPlanBaseline; ?></textarea><br /><br />
+            Variation:<br />
+            <textarea name="strStatusVariation"><?php echo $this->strStatusVariation; ?></textarea><br /><br />
+            Notes/Reasons:<br />
+            <textarea name="strStatusNotes"><?php echo $this->strStatusNotes; ?></textarea><br /><br />
+        <?php
+        $attachmentArr = $this->attachmentObj->getDetails();
+        foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {
+            echo '<input type="hidden" name="intAttachmentID' . $id .
+            '" value="' . $attachmentArr['intAttachmentIDArr'][$id] . '" />' .
+            "Attachment:<br />" . '<input type="text" name="strAttachmentLink' . $id .
+            '" value="' . $attachmentArr['strAttachmentLinkArr'][$id] . '" /><br /><br />' .
+            "Attachment Comment:<br />" . '<input type="text" name="strAttachmentComment' . $id .
+            '" value="' . $attachmentArr['strAttachmentCommentArr'][$id] . '" /><br /><br />';
+        }
+        ?>
+            
+            
+            <input type="submit" value="Submit" />
+        </form>
+        <?php
     }
 }
 ?>
