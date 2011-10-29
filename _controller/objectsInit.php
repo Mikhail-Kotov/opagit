@@ -2,7 +2,7 @@
     $attachmentObj = new Attachment();    
     $statusObj = new Status($memberObj, $projectObj, $attachmentObj);
     
-    if($currentStatusID != "") {
+    if(!(is_null($sessionArr['intStatusID']))) {
         $statusObj->setID($sessionArr['intStatusID']);
     }
 ?>

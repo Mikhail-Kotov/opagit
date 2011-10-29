@@ -415,7 +415,7 @@ class Status {
     
     function displayEditForm() {
         ?>
-                <b>Edit Status</b><br /><br />
+        <b>Edit Status</b><br /><br />
         <form method="post">
             <input type="hidden" name="page" value="status" />
             <input type="hidden" name="todo" value="edit" />

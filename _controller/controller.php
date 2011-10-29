@@ -3,11 +3,7 @@
 class Controller {
 
     function main() {
-        $todo = "";
-        $currentProjectID = "";
-        $currentMemberID = "";
-        $currentStatusID = "";
-        
+       
         $sessionObj = new Session();
         if(isset($_POST["page"])) {
             $strPage = $_POST["page"];
@@ -39,39 +35,39 @@ class Controller {
         $sessionArr = $sessionObj->getDetails();
         
         $GUIObj = new GUI();
-        $statusGUIObj = new statusGUI();
 
-        if (isset($sessionArr['intMemberID'])) {
+        if (!empty($sessionArr['intMemberID'])) {
             $memberObj = new Member($sessionArr['intMemberID']);
             $memberObj->getDetails();
         }
 
-        if (isset($sessionArr['intProjectID'])) {
-            $currentProjectID = $_POST["p"];
-            $projectObj = new Project($currentProjectID);
+        if (!empty($sessionArr['intProjectID'])) {
+            $projectObj = new Project($sessionArr['intProjectID']);
             $projectObj->getDetails();
         }
 
-        if (isset($_POST["s"])) {
-            $currentStatusID = $_POST["s"];
-        }
-        
-        if ($sessionArr['strPage'] == "statuspdf") {
-            include_once("_controller/objectsInit.php");
-
-            if (isset($statusObj->intStatusID)) {
-                $statusObj->getDetails();
-                include_once("_model/status/pdf.php");
-            } else {
-                $sessionArr['strPage'] = "statusadd";
+        if (!($sessionArr['strPage'] == "chooseproject" || $sessionArr['strPage'] == "choosemember") || $sessionArr['strPage'] == "statuspdf") {
+            $attachmentObj = new Attachment();    
+            $statusObj = new Status($memberObj, $projectObj, $attachmentObj);
+    
+            // init status by default
+            if(!empty($sessionArr['intStatusID'])) {
+                $statusObj->setID($sessionArr['intStatusID']);
+                $statusGUIObj = new statusGUI($memberObj, $projectObj);
             }
         }
 
-        if (!($sessionArr['strPage'] == "chooseproject" || $sessionArr['strPage'] == "choosemember")) {
-            include_once("_controller/objectsInit.php");
-        }
-
-        include_once("_view/header.php");
+        if ($sessionArr['strPage'] == "statuspdf") {
+            if(!(is_null($sessionArr['intStatusID']))) {
+                $statusObj->getDetails();
+                $statusObj->pdfStatus();
+            } else {
+                $sessionArr['strPage'] = "statusadd";
+            }
+        }        
+        
+        $GUIObj->header();
+        //include_once("_view/header.php");
 
         if (!($sessionArr['strPage'] == "chooseproject" || $sessionArr['strPage'] == "choosemember")) {
             include_once("_view/menu.php");
@@ -105,7 +101,6 @@ class Controller {
 
         include_once("_view/footer.php");
     }
-
 }
 
 ?>
