@@ -6,47 +6,61 @@ class Controller {
        
         $sessionObj = new Session();
 
-        $strSessionSID = 'SID'; // draft
+        
+        $sessionArr = array();
 
+        $sessionArr['strSessionSID'] = 'SID'; // draft
         if(!empty($_POST["intSessionID"])) {
-            $intSessionID = $_POST["intSessionID"];
+            $sessionArr['intSessionID'] = $_POST["intSessionID"];
         } else {
-            $intSessionID = 1; // draft
-        }
-     
-        if(isset($_POST["page"])) {
-            $strPage = $_POST["page"];
-        } else {
-            $strPage = "choosemember";
+            $sessionArr['intSessionID'] = 1; // draft
         }
 
-        if(isset($_POST["todo"])) {
-            $strTodo = $_POST["todo"];
+        if(!empty($_POST["page"])) {
+            $sessionArr['strPage'] = $_POST["page"];
         } else {
-            $strTodo = null;
+            $sessionArr['strPage'] = "choosemember";
+        }
+
+        if(!empty($_POST["todo"])) {
+            $sessionArr['strTodo'] = $_POST["todo"];
+        } else {
+            $sessionArr['strTodo'] = null;
         }
 
         if(isset($_POST["m"])) {
-            $intMemberID = $_POST["m"];
+            $sessionArr['intMemberID'] = $_POST["m"];
         } else {
-            $intMemberID = null;
+            $sessionArr['intMemberID'] = null;
         }
         
         if(isset($_POST["p"])) {
-            $intProjectID = $_POST["p"];
+            $sessionArr['intProjectID'] = $_POST["p"];
         } else {
-            $intProjectID = null;
+            $sessionArr['intProjectID'] = null;
         }
-        
   
         if(isset($_POST["s"])) {
-            $intStatusID = $_POST["s"];
+            $sessionArr['intStatusID'] = $_POST["s"];
         } else {
-            $intStatusID = null;
+            $sessionArr['intStatusID'] = null;
         }
         
-        $sessionObj->setDetails($intSessionID, $strSessionSID, $strPage, $strTodo, $intMemberID, $intProjectID, $intStatusID);
-        $sessionArr = $sessionObj->getDetails($intSessionID, $strSessionSID);
+        if(isset($_POST["r"])) {
+            $sessionArr['intRiskID'] = $_POST["s"];
+        } else {
+            $sessionArr['intRiskID'] = null;
+        }
+        
+        if(isset($_POST["i"])) {
+            $sessionArr['intIssueID'] = $_POST["s"];
+        } else {
+            $sessionArr['intIssueID'] = null;
+        }  
+        
+        $sessionObj->setDetails($sessionArr);
+        $sessionArr = $sessionObj->getDetails();
+        
         var_dump($sessionArr);
         //$sessionObj->setDetails(1, 'SID', $strPage, $strTodo, $intMemberID, $intProjectID, $intStatusID);
         

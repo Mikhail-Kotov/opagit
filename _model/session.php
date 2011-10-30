@@ -11,21 +11,33 @@ class Session {
 
     public function __construct() {
         $this->sessionDAObj = new sessionDA();
+        $this->intStatusID = null;
+        $this->intRiskID = null;
+        $this->intIssueID = null;
     }
     
-    function setDetails($intSessionID, $strSessionSID, $strPage, $strTodo, $intMemberID, $intProjectID, 
-            $intStatusID = null, $intIssueID = null, $intRiskID = null) {
-
-        $this->sessionDAObj->setDetails(1, 'SID', $this->strPage, $this->strTodo, $this->intMemberID, $this->intProjectID, $this->intStatusID);
+    function setDetails($sessionArr) {
+        $this->intSessionID = $sessionArr['intSessionID'];
+        $this->strSessionSID = $sessionArr['strSessionSID'];
+        $this->strPage = $sessionArr['strPage'];
+        $this->strTodo = $sessionArr['strTodo'];
+        $this->intMemberID = $sessionArr['intMemberID'];
+        $this->intProjectID = $sessionArr['intProjectID'];
+        $this->intStatusID = $sessionArr['intStatusID'];
+        $this->intRiskID = $sessionArr['intRiskID'];
+        $this->intIssueID = $sessionArr['intIssueID'];
+        
+        $this->sessionDAObj->setDetails($this->intSessionID, $this->strSessionSID, $this->strPage, $this->strTodo, 
+                $this->intMemberID, $this->intProjectID, $this->intStatusID, $this->intRiskID, $this->intIssueID);
     }
 
     function getID() {
         return $this - intSessionID;
     }
 
-    function getDetails($intSessionID, $strSessionSID) {
+    function getDetails() {
         
-        $sessionArr = $this->sessionDAObj->getDetails($intSessionID, $strSessionSID);
+        $sessionArr = $this->sessionDAObj->getDetails($this->intSessionID, $this->strSessionSID);
                 
         $this->intSessionID = $sessionArr['intSessionID'];
         $this->strSessionSID = $sessionArr['strSessionSID'];
@@ -36,14 +48,20 @@ class Session {
         
         if (!empty($sessionArr['intStatusID'])) {
             $this->intStatusID = $sessionArr['intStatusID'];
+        } else {
+            $this->intStatusID = null;
         }
         
         if (!empty($sessionArr['intRiskID'])) {
             $this->intRiskID = $sessionArr['intRiskID'];
+        } else {
+            $this->intRiskID = null;
         }
         
         if (!empty($sessionArr['intIssueID'])) {
             $this->intIssueID = $sessionArr['intIssueID'];
+        } else {
+            $this->intIssueID = null;
         }
         
         return $sessionArr;
