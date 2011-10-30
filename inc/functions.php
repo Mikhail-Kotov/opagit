@@ -57,6 +57,14 @@ function displayButton($name, $caption, $currentProjectID, $currentMemberID) {
     echo '</form>';
 }
 
+function displayButtonNew($name, $caption, $intSessionID) {
+    echo '<form method="post">';
+    echo '<input type="hidden" name="page" value="' . $name . '" />' . "\n";
+    echo '<input type="hidden" name="intSessionID" value="' . $intSessionID . '" />' . "\n";
+    echo '<input type="submit" value="' . $caption . '" class="button" />' . "\n";
+    echo '</form>';
+}
+
 function getMemberName($intMemberID) {
     if (isset($intMemberID)) {
         if ($intMemberID != "") {

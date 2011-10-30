@@ -7,6 +7,7 @@ require_once('FirePHPCore/FirePHP.class.php');
 include_once("fpdf/fpdf.php");
 include_once("_model/db.php");
 include_once("_model/session.php");
+include_once("_model/da/sessionDA.php");
 include_once("_model/pdf.php");
 include_once("_controller/controller.php");
 include_once("_view/GUI.php");

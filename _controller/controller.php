@@ -5,36 +5,53 @@ class Controller {
     function main() {
        
         $sessionObj = new Session();
+
+        $strSessionSID = 'SID'; // draft
+
+        if(!empty($_POST["intSessionID"])) {
+            $intSessionID = $_POST["intSessionID"];
+        } else {
+            $intSessionID = 1; // draft
+        }
+     
         if(isset($_POST["page"])) {
             $strPage = $_POST["page"];
         } else {
             $strPage = "choosemember";
         }
+
         if(isset($_POST["todo"])) {
             $strTodo = $_POST["todo"];
         } else {
             $strTodo = null;
         }
+
         if(isset($_POST["m"])) {
             $intMemberID = $_POST["m"];
         } else {
             $intMemberID = null;
         }
+        
         if(isset($_POST["p"])) {
             $intProjectID = $_POST["p"];
         } else {
             $intProjectID = null;
         }
+        
+  
         if(isset($_POST["s"])) {
             $intStatusID = $_POST["s"];
         } else {
             $intStatusID = null;
         }
         
-        $sessionObj->setDetails(1, 'SID', $strPage, $strTodo, $intMemberID, $intProjectID, $intStatusID);
-        $sessionArr = $sessionObj->getDetails();
+        $sessionObj->setDetails($intSessionID, $strSessionSID, $strPage, $strTodo, $intMemberID, $intProjectID, $intStatusID);
+        $sessionArr = $sessionObj->getDetails($intSessionID, $strSessionSID);
+        var_dump($sessionArr);
+        //$sessionObj->setDetails(1, 'SID', $strPage, $strTodo, $intMemberID, $intProjectID, $intStatusID);
         
         $GUIObj = new GUI();
+        $GUIObj->setSession($sessionArr);
 
         if (!empty($sessionArr['intMemberID'])) {
             $memberObj = new Member($sessionArr['intMemberID']);

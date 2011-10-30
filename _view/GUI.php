@@ -1,8 +1,18 @@
 <?php
 
 class GUI {
+    
+    private $sessionArr;
+    
+    public function __construct() {
+    
+    }
 
-    function header() {
+    public function setSession($sessionArr) {
+        $this->sessionArr = $sessionArr;
+    }
+    
+    public function header() {
         ?>
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
         <html xmlns="http://www.w3.org/1999/xhtml">
@@ -31,32 +41,37 @@ class GUI {
                 <div id="content" >
                     <table width="1450" height="600" border="0">
                         <tr>
-                            <td colspan="2" height="30"><?php
+                            <td colspan="2" height="30">
+<?php
         if ($_ENV['engineering mode'] == True) {
-            echo "[page: <b>" . $sessionArr['strPage'];
-            if ($sessionArr['strTodo'] != "") {
-                echo ":" . $sessionArr['strTodo'];
+            echo "[page: <b>";
+            if(!empty($this->sessionArr['strPage'])) {
+                echo $this->sessionArr['strPage'];
             }
+            if(!empty($this->sessionArr['strTodo'])) {
+                echo ":" . $this->sessionArr['strTodo'];
+            }
+            
             echo "</b>]&nbsp;&nbsp;&nbsp;";
 
-            //// it will goes to statusGUI->header()
-//            if (isset($projectObj)) {
-//                echo "[projectID: <b>" . $projectObj->getID() . " - " . $projectObj->strProjectName . "</b>]&nbsp;&nbsp;&nbsp;";
-//            }
-//
-//            if (isset($memberObj)) {
-//                echo "[memberID: <b>" . $memberObj->getID() . " - " . $memberObj->strMemberName . "</b>]&nbsp;&nbsp;&nbsp;";
-//            }
-            //echo "[PM_ID: <b>$currentProjectMemberID</b>]\n";
+            if(!empty($this->sessionArr['intProjectID'])) {
+                echo "[projectID: <b>" . $this->sessionArr['intProjectID']. "</b>]&nbsp;&nbsp;&nbsp;";
+            }
+
+            if(!empty($this->sessionArr['intMemberID'])) {
+                echo "[memberID: <b>" . $this->sessionArr['intMemberID'] . "</b>]&nbsp;&nbsp;&nbsp;";
+            }
+            
         } else {
             echo "OPA Prototype\n";
         }
-        ?><br /><br /><hr /><br /></td>
+?>
+                                <br /><br /><hr /><br />
+                            </td>
                         </tr>
                         <tr>
                             <!-- header  header  header  header  header  header  header  header  header  header -->
-                            <?php
-                        }
-
-                    }
-                    ?>
+<?php
+    }
+}
+?>

@@ -69,14 +69,14 @@ if ($sessionArr['strPage'] == "statushistory") {
 }
 
 if ($sessionArr['strPage'] == "statusview") {
-    if (isset($sessionArr['intStatusID'])) {
+    if (!empty($sessionArr['intStatusID'])) {
         $statusObj->setID($sessionArr['intStatusID']);
     } else {
         $statusObj->getLastStatusID();
         $sessionArr['intStatusID'] = $statusObj->getID();
     }
 
-    if(isset($statusObj->intStatusID)) {
+    if(!empty($statusObj->intStatusID)) {
         $statusObj->getDetails();
         include_once("_model/status/view.php");
     } else {

@@ -210,7 +210,7 @@ CREATE TABLE `tblAttachment` (
 
 CREATE TABLE `tblSession` (
   intSessionID INT(11) NOT NULL AUTO_INCREMENT COMMENT 'PK, AI. Sessions for OPA',
-  intSessionSID INT(11) NULL,
+  strSessionSID VARCHAR(255) NULL,
   strPage VARCHAR(255) NULL,
   strTodo VARCHAR(255) NULL,
   intMemberID INT(11) NULL,
