@@ -102,7 +102,7 @@ class Controller {
         //include_once("_view/header.php");
 
         if (!($sessionArr['strPage'] == "chooseproject" || $sessionArr['strPage'] == "choosemember")) {
-            include_once("_view/menu.php");
+            $GUIObj->menu();
         } else {
 // don't show menu when choosing project & member
             echo '<td width="200">&nbsp;</td>' . "\n";
@@ -118,7 +118,7 @@ class Controller {
         }
 
         if ($sessionArr['strPage'] == "main") {
-            include_once("_view/main.php");
+            $GUIObj->welcome();
         }
 
         include_once("_controller/statusController.php");
@@ -131,7 +131,7 @@ class Controller {
             include_once("_view/risk/history.php");
         }
 
-        include_once("_view/footer.php");
+        $GUIObj->footer();
     }
 }
 

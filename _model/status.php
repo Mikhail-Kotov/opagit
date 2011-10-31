@@ -166,23 +166,20 @@ class Status {
         echo '<table border="0">';
         echo '<tr><td><form method="post">';
         echo '<input type="hidden" name="page" value="statusedit" />' . "\n";
-        echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
-        echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
         echo '<input type="submit" value="Edit Status" class="button" />' . "\n";
         echo '</form></td>';
         echo '<td><form method="post">';
         echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
-        echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
-        echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
         echo '<input type="submit" value="PDF" class="button" />' . "\n";
         echo "</form></td><td>";
         echo '<form method="post">';
         echo '<input type="hidden" name="page" value="status" />' . "\n";
         echo '<input type="hidden" name="todo" value="delete" />' . "\n";
-        echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
-        echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
         echo '<input type="submit" value="Delete" class="button" />' . "\n";
         echo "</form>\n";
@@ -295,8 +292,7 @@ class Status {
                 echo "<td>\n";
                 echo '<form method="post">';
                 echo '<input type="hidden" name="page" value="statusview" />' . "\n";
-                echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
-                echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
+                echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
                 echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
                 echo '<input type="submit" value="View" class="button" />' . "\n";
                 echo "</form>\n";
@@ -315,8 +311,7 @@ class Status {
                 echo "<td>\n";
                 echo '<form method="post">';
                 echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
-                echo '<input type="hidden" name="p" value="' . $this->projectObj->getID() . '" />' . "\n";
-                echo '<input type="hidden" name="m" value="' . $this->memberObj->getID() . '" />' . "\n";
+                echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
                 echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
                 echo '<input type="submit" value="PDF" class="button" />' . "\n";
                 echo "</form>\n";
@@ -342,8 +337,7 @@ class Status {
         <form name="statusadd" method="post">
             <input type="hidden" name="page" value="status" />
             <input type="hidden" name="todo" value="add" />
-            <input type="hidden" name="m" value="<?php echo $this->memberObj->getID(); ?>" />
-            <input type="hidden" name="p" value="<?php echo $this->projectObj->getID(); ?>" />
+            <input type="hidden" name="intSessionID" value="<?php echo $this->sessionObj->getID(); ?>" />
             Status Creation Date:<br />
             <input type="text" name="dmtStatusCurrentDate" value="<?php echo $_ENV['currentDate']; ?>"/><br /><br />
             Project Name:<br />
@@ -421,8 +415,7 @@ class Status {
             <input type="hidden" name="page" value="status" />
             <input type="hidden" name="todo" value="edit" />
             <input type="hidden" name="s" value="<?php echo $this->intStatusID; ?>" />
-            <input type="hidden" name="m" value="<?php echo $this->memberObj->getID(); ?>" />
-            <input type="hidden" name="p" value="<?php echo $this->projectObj->getID(); ?>" />
+            <input type="hidden" name="intSessionID" value="<?php echo $this->sessionObj->getID(); ?>" />
             Status Creation Date:<br />
             <input type="text" name="dmtStatusCurrentDate" value="<?php echo $this->dmtStatusCurrentDate; ?>"/><br /><br />
             Project Name:<br />

@@ -30,7 +30,7 @@ class sessionDA {
             $sqlArr = $_ENV['db']->query($query);
            
             if(!empty($sqlArr[0])) {
-                $intSessionID = intval($sqlArr[0]['intSessionID']) + 1;
+                $intSessionID = intval($sqlArr[0]['intSessionID']) + 1; // bug ???
             } else {
                 $intSessionID = 1;
             }

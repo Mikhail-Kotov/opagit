@@ -27,6 +27,7 @@ foreach ($arr as $intProjectID) {
 echo "</select>\n";
 echo '<input type="hidden" name="page" value="main" />' . "\n";
 echo '<input type="hidden" name="m" value="' . $memberObj->getID() . '" />' . "\n";
+echo '<input type="hidden" name="intSessionID" value="' . $sessionObj->getID() . '" />' . "\n";
 echo '<input type="submit" value="Choose" />' . "\n";
 echo "</p>\n</form>\n";
 ?>
