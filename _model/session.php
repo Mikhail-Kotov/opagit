@@ -27,12 +27,13 @@ class Session {
         $this->intRiskID = $sessionArr['intRiskID'];
         $this->intIssueID = $sessionArr['intIssueID'];
         
-        $this->sessionDAObj->setDetails($this->intSessionID, $this->strSessionSID, $this->strPage, $this->strTodo, 
-                $this->intMemberID, $this->intProjectID, $this->intStatusID, $this->intRiskID, $this->intIssueID);
+
+        $this->intSessionID = $this->sessionDAObj->setDetails($this->intSessionID, $this->strSessionSID, $this->strPage, $this->strTodo, 
+                $this->intMemberID, $this->intProjectID, $this->intStatusID, $this->intRiskID, $this->intIssueID); // if intSessionID is empty - create a new one
     }
 
     function getID() {
-        return $this - intSessionID;
+        return $this->intSessionID;
     }
 
     function getDetails() {
@@ -66,7 +67,6 @@ class Session {
         
         return $sessionArr;
     }
-
 }
 
 ?>

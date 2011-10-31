@@ -8,13 +8,13 @@
         <tr>
             <td align="right">&nbsp;</td>
             <td>
-                <?php displayButton("statushistory", "History", $projectObj->getID(), $memberObj->getID()); ?>
+                <?php displayButtonNew("statushistory", "History", $sessionArr['intSessionID']); ?>
             </td>
         </tr>
         <tr>
             <td align="right">&nbsp;</td>
             <td>
-                <?php displayButton("statusview", "View Last", $projectObj->getID(), $memberObj->getID()); ?>
+                <?php displayButtonNew("statusview", "View Last", $sessionArr['intSessionID']); ?>
             </td>
         </tr>
         <tr>

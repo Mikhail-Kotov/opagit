@@ -13,7 +13,7 @@ class Controller {
         if(!empty($_POST["intSessionID"])) {
             $sessionArr['intSessionID'] = $_POST["intSessionID"];
         } else {
-            $sessionArr['intSessionID'] = 1; // draft
+            $sessionArr['intSessionID'] = null;
         }
 
         if(!empty($_POST["page"])) {
@@ -59,10 +59,11 @@ class Controller {
         }  
         
         $sessionObj->setDetails($sessionArr);
+        unset($sessionArr);
         $sessionArr = $sessionObj->getDetails();
         
         var_dump($sessionArr);
-        //$sessionObj->setDetails(1, 'SID', $strPage, $strTodo, $intMemberID, $intProjectID, $intStatusID);
+        
         
         $GUIObj = new GUI();
         $GUIObj->setSession($sessionArr);
