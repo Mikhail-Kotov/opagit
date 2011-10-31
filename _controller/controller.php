@@ -80,7 +80,7 @@ class Controller {
 
         if (!($sessionArr['strPage'] == "chooseproject" || $sessionArr['strPage'] == "choosemember") || $sessionArr['strPage'] == "statuspdf") {
             $attachmentObj = new Attachment();    
-            $statusObj = new Status($memberObj, $projectObj, $attachmentObj);
+            $statusObj = new Status($memberObj, $projectObj, $attachmentObj, $sessionObj);
     
             // init status by default
             if(!empty($sessionArr['intStatusID'])) {

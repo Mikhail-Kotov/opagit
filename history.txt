@@ -1,5 +1,6 @@
 version number is: MM.DD-HHMM
 
+10.30-1640: sessionDA updated & more MVC and OO
 10.27-0940: mvc update, session added
 10.18-0430: multiple attachments (add, edit)
 10.12-1555: add jQuery & qTip

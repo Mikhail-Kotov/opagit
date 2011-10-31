@@ -2,7 +2,7 @@
     <table width="100%" border="0">
         <tr>
             <td colspan="2">
-                <?php displayButton("status", "Status", $projectObj->getID(), $memberObj->getID()); ?>
+                <?php displayButtonNew("status", "Status", $sessionArr['intSessionID']); ?>
             </td>
         </tr>
         <tr>
@@ -20,7 +20,7 @@
         <tr>
             <td align="right">&nbsp;</td>
             <td>
-                <?php displayButton("statusadd", "Add", $projectObj->getID(), $memberObj->getID()); ?>
+                <?php displayButtonNew("statusadd", "Add", $sessionArr['intSessionID']); ?>
             </td>
         </tr>
         <tr>
@@ -28,12 +28,12 @@
         </tr>
         <tr>
             <td colspan="2">
-                <?php displayButton("issuehistory", "Issue", $projectObj->getID(), $memberObj->getID()); ?>
+                <?php displayButtonNew("issuehistory", "Issue", $sessionArr['intSessionID']); ?>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <?php displayButton("riskhistory", "Risk", $projectObj->getID(), $memberObj->getID()); ?>
+                <?php displayButtonNew("riskhistory", "Risk", $sessionArr['intSessionID']); ?>
             </td>
         </tr>
         <tr>

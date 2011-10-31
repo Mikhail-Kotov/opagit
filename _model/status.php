@@ -1,7 +1,7 @@
 <?php
 
 class Status {
-    private $projectObj, $memberObj;
+    private $projectObj, $memberObj, $attachmentObj, $sessionObj;
     public $intStatusID;
     public $intProjectMemberID;
     public $dmtStatusCurrentDate;
@@ -10,10 +10,11 @@ class Status {
     public $strStatusVariation; // variation
     public $strStatusNotes; // Notes/Reasons
 
-    function __construct($memberObj, $projectObj, $attachmentObj) {
+    function __construct($memberObj, $projectObj, $attachmentObj, $sessionObj) {
         $this->projectObj = $projectObj;
         $this->memberObj = $memberObj;
         $this->attachmentObj = $attachmentObj;
+        $this->sessionObj = $sessionObj;
         $this->intProjectMemberID = $this->getProjectMember();
     }
 
@@ -192,11 +193,11 @@ class Status {
     
     function bottomMenu() {
         echo '<br /><table border="0"><tr><td>';
-        displayButton("statusadd", "Add Status", $this->projectObj->getID(), $this->memberObj->getID());
+        displayButtonNew("statusadd", "Add Status", $this->sessionObj->getID());
         echo "</td><td>";
-        displayButton("statushistory", "Status History", $this->projectObj->getID(), $this->memberObj->getID());
+        displayButtonNew("statushistory", "Status History", $this->sessionObj->getID());
         echo "</td><td>";
-        displayButton("statusview", "View Last Status", $this->projectObj->getID(), $this->memberObj->getID());
+        displayButtonNew("statusview", "View Last Status", $this->sessionObj->getID());
         echo '</td></tr></table><br /><a href="#top">Back to Top</a>';
     }
 

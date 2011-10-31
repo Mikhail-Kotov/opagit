@@ -48,7 +48,7 @@ function dateDayDiff($date1, $date2) {
     return $days_diff;
 }
 
-function displayButton($name, $caption, $currentProjectID, $currentMemberID) {
+function displayButtonOld($name, $caption, $currentProjectID, $currentMemberID) {
     echo '<form method="post">';
     echo '<input type="hidden" name="page" value="'.$name.'" />' . "\n";
     echo '<input type="hidden" name="p" value="' . $currentProjectID . '" />' . "\n";
