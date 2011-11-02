@@ -1,6 +1,5 @@
-<td valign="top">
 <?php
-
+echo '<td valign="top">'."\n";
 echo "<p>Choose a Member:</p>\n";
 echo '<form method="post">' . "\n<p>\n";
 echo '<select name="m">' . "\n";

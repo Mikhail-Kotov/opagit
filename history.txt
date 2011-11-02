@@ -1,5 +1,6 @@
 version number is: MM.DD-HHMM
 
+11.02-1730: added Project & Member classes (improve GUI) more OO & MVC
 11.02-1505: added classes RiskHistoryGUI & IssueHistoryGUI
 10.30-1640: sessionDA updated & more MVC and OO
 10.27-0940: mvc update, session added

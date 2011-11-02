@@ -16,7 +16,7 @@ class sessionDA {
             
             $query = "UPDATE tblSession SET ";
             if(!empty($strPage)) { $query .= "strPage='" . $strPage . "'"; }
-            if(!empty($strPage)) { $query .= ",strTodo='" . $strTodo . "'";  } else { $query .= ",strTodo=NULL"; }
+            if(!empty($strTodo)) { $query .= ",strTodo='" . $strTodo . "'";  } else { $query .= ",strTodo=NULL"; }
             if(!empty($intMemberID)) { $query .= ",intMemberID='" . $intMemberID . "'"; }
             if(!empty($intProjectID)) { $query .= ",intProjectID='" . $intProjectID . "'"; } 
             if(!empty($intStatusID)) { $query .= ",intStatusID='" . $intStatusID . "'"; } 

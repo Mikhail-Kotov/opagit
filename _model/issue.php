@@ -2,6 +2,8 @@
 
 class Issue {
 
+    private $sessionArr;
+    
     public function setSession($sessionArr) {
         $this->sessionArr = $sessionArr;
     }

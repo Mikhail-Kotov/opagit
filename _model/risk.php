@@ -1,6 +1,7 @@
 <?php
 
 class Risk {
+    
     private $sessionArr;
     
     public function setSession($sessionArr) {

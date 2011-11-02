@@ -62,19 +62,22 @@ class Controller {
         unset($sessionArr);
         $sessionArr = $sessionObj->getDetails();
         
-        var_dump($sessionArr);
+        //var_dump($sessionArr);
+        $_ENV['firephp']->log($sessionArr, 'sessionArr');
         
         
         $GUIObj = new GUI();
         $GUIObj->setSession($sessionArr);
 
         if (!empty($sessionArr['intMemberID'])) {
-            $memberObj = new Member($sessionArr['intMemberID']);
+            $memberObj = new Member();
+            $memberObj->setSession($sessionArr);
             $memberObj->getDetails();
         }
 
         if (!empty($sessionArr['intProjectID'])) {
-            $projectObj = new Project($sessionArr['intProjectID']);
+            $projectObj = new Project();
+            $projectObj->setSession($sessionArr);
             $projectObj->getDetails();
         }
 
@@ -99,22 +102,35 @@ class Controller {
         }        
         
         $GUIObj->header();
-        //include_once("_view/header.php");
 
-        if (!($sessionArr['strPage'] == "chooseproject" || $sessionArr['strPage'] == "choosemember")) {
+        if (!($sessionArr['strPage'] == "choosemember" || $sessionArr['strPage'] == "chooseproject")) {
             $GUIObj->menu();
         } else {
-// don't show menu when choosing project & member
+// don't show menu when choosing member
             echo '<td width="200">&nbsp;</td>' . "\n";
         }
 
         if ($sessionArr['strPage'] == "choosemember") {
-            include_once("_view/member/choose.php");
+            //include_once("_view/member/choose.php");
+            $memberObj = new Member();
+            $memberObj->setSession($sessionArr);
+            
+            $memberGUIObj = new MemberGUI();
+            $memberGUIObj->setSession($sessionArr);
+            $memberGUIObj->chooseMember();
         }
 
         if ($sessionArr['strPage'] == "chooseproject") {
-            $memberObj = new Member($sessionArr['intMemberID']);
-            include_once("_view/project/choose.php");
+            $memberObj = new Member();
+            $memberObj->setSession($sessionArr);
+            
+            $projectObj = new Project();
+            $projectObj->setSession($sessionArr);
+            
+            $projectGUIObj = new ProjectGUI();
+            $projectGUIObj->setSession($sessionArr);
+            $projectGUIObj->chooseProject();
+            //include_once("_view/project/choose.php");
         }
 
         if ($sessionArr['strPage'] == "main") {
