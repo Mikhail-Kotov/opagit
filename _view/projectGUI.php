@@ -1,6 +1,6 @@
 <?php
 
-class projectGUI {
+class ProjectGUI {
 
 }
 

@@ -1,5 +1,6 @@
 version number is: MM.DD-HHMM
 
+11.02-1505: added classes RiskHistoryGUI & IssueHistoryGUI
 10.30-1640: sessionDA updated & more MVC and OO
 10.27-0940: mvc update, session added
 10.18-0430: multiple attachments (add, edit)

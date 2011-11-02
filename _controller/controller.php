@@ -124,11 +124,19 @@ class Controller {
         include_once("_controller/statusController.php");
 
         if ($sessionArr['strPage'] == "issuehistory") {
-            include_once("_view/issue/history.php");
+            $issueObj = new Issue();
+            $issueObj->setSession($sessionArr);
+            
+            $issueHistoryObj = new IssueHistoryGUI();
+            $issueHistoryObj->display($issueObj->getHistoryDetails());
         }
 
         if ($sessionArr['strPage'] == "riskhistory") {
-            include_once("_view/risk/history.php");
+            $riskObj = new Risk();
+            $riskObj->setSession($sessionArr);
+            
+            $riskHistoryObj = new RiskHistoryGUI();
+            $riskHistoryObj->display($riskObj->getHistoryDetails());
         }
 
         $GUIObj->footer();

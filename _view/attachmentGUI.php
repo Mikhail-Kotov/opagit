@@ -1,6 +1,6 @@
 <?php
 
-class attachmentGUI {
+class AttachmentGUI {
 
 }
 

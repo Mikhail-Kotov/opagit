@@ -97,47 +97,53 @@ class GUI {
     <table width="100%" border="0">
         <tr>
             <td colspan="2">
-                <?php displayButtonNew("status", "Status", $this->sessionArr['intSessionID']); ?>
-            </td>
-        </tr>
-        <tr>
-            <td align="right">&nbsp;</td>
-            <td>
-                <?php displayButtonNew("statushistory", "History", $this->sessionArr['intSessionID']); ?>
-            </td>
-        </tr>
-        <tr>
-            <td align="right">&nbsp;</td>
-            <td>
-                <?php displayButtonNew("statusview", "View Last", $this->sessionArr['intSessionID']); ?>
-            </td>
-        </tr>
-        <tr>
-            <td align="right">&nbsp;</td>
-            <td>
-                <?php displayButtonNew("statusadd", "Add", $this->sessionArr['intSessionID']); ?>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">&nbsp;</td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <?php displayButtonNew("issuehistory", "Issue", $this->sessionArr['intSessionID']); ?>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <?php displayButtonNew("riskhistory", "Risk", $this->sessionArr['intSessionID']); ?>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">&nbsp;</td>
-        </tr>
-        <tr>
-            <td colspan="2">
                 <a href="#">Timesheets</a>
             </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                &nbsp;
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <?php displayButton("status", "Status", $this->sessionArr['intSessionID']); ?>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">&nbsp;</td>
+            <td>
+                <?php displayButton("statushistory", "History", $this->sessionArr['intSessionID']); ?>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">&nbsp;</td>
+            <td>
+                <?php displayButton("statusview", "View Last", $this->sessionArr['intSessionID']); ?>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">&nbsp;</td>
+            <td>
+                <?php displayButton("statusadd", "Add", $this->sessionArr['intSessionID']); ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php displayButton("issuehistory", "Issue", $this->sessionArr['intSessionID']); ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php displayButton("riskhistory", "Risk", $this->sessionArr['intSessionID']); ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
         </tr>
         <tr>
             <td colspan="2">&nbsp;</td>
@@ -158,7 +164,8 @@ class GUI {
 //        echo "Hello <b>" . $this->memberObj->strMemberFirstName . " " . $this->memberObj->strMemberLastName . "</b><br />";
 //        echo "Your Team is <b>" . $this->projectObj->strProjectTeamName . "</b><br />";
 //        echo "Your Project is <b>" . $this->projectObj->strProjectName . "</b><br /><br />";
-        echo "<b>Please choose something from menu</b>";
+        echo 'Hello $username!'."<br />";
+        echo "<b>Please choose something from left menu</b>";
     }
 }
 ?>

@@ -190,11 +190,11 @@ class Status {
     
     function bottomMenu() {
         echo '<br /><table border="0"><tr><td>';
-        displayButtonNew("statusadd", "Add Status", $this->sessionObj->getID());
+        displayButton("statusadd", "Add Status", $this->sessionObj->getID());
         echo "</td><td>";
-        displayButtonNew("statushistory", "Status History", $this->sessionObj->getID());
+        displayButton("statushistory", "Status History", $this->sessionObj->getID());
         echo "</td><td>";
-        displayButtonNew("statusview", "View Last Status", $this->sessionObj->getID());
+        displayButton("statusview", "View Last Status", $this->sessionObj->getID());
         echo '</td></tr></table><br /><a href="#top">Back to Top</a>';
     }
 
