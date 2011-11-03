@@ -1,5 +1,5 @@
 <?php
-$_ENV['version'] = "OPA Team Prototype, version 11.02-1730";
+$_ENV['version'] = "OPA Team Prototype, version 11.03-1210";
 
 error_reporting(E_ALL);
 ini_set('display_errors','On');

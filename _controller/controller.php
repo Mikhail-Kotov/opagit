@@ -81,14 +81,19 @@ class Controller {
             $projectObj->getDetails();
         }
 
-        if (!($sessionArr['strPage'] == "chooseproject" || $sessionArr['strPage'] == "choosemember") || $sessionArr['strPage'] == "statuspdf") {
+        if (($sessionArr['strPage'] == "status" || $sessionArr['strPage'] == "riskhistory" || $sessionArr['strPage'] == "issuehistory") && empty($sessionArr['intProjectID'])) {
+            $sessionArr['strPage'] = "chooseproject";
+            //die("choose PROJ !");
+        }
+        
+        //if (!($sessionArr['strPage'] == "chooseproject" || $sessionArr['strPage'] == "choosemember" || $sessionArr['strPage'] == "statuspdf")) {
+        if(isset($memberObj) && isset($projectObj)) {
             $attachmentObj = new Attachment();    
             $statusObj = new Status($memberObj, $projectObj, $attachmentObj, $sessionObj);
     
             // init status by default
             if(!empty($sessionArr['intStatusID'])) {
                 $statusObj->setID($sessionArr['intStatusID']);
-                $statusGUIObj = new statusGUI($memberObj, $projectObj);
             }
         }
 
@@ -103,7 +108,7 @@ class Controller {
         
         $GUIObj->header();
 
-        if (!($sessionArr['strPage'] == "choosemember" || $sessionArr['strPage'] == "chooseproject")) {
+        if (!($sessionArr['strPage'] == "choosemember")) {
             $GUIObj->menu();
         } else {
 // don't show menu when choosing member
@@ -111,7 +116,6 @@ class Controller {
         }
 
         if ($sessionArr['strPage'] == "choosemember") {
-            //include_once("_view/member/choose.php");
             $memberObj = new Member();
             $memberObj->setSession($sessionArr);
             
@@ -133,7 +137,7 @@ class Controller {
             //include_once("_view/project/choose.php");
         }
 
-        if ($sessionArr['strPage'] == "main") {
+        if ($sessionArr['strPage'] == "welcome") {
             $GUIObj->welcome();
         }
 

@@ -13,7 +13,7 @@ class Member {
         return $this->intMemberID;
     }
     
-    function setID($intMemberID) {
+    function setID($intMemberID) { // private ???
         $this->intMemberID = $intMemberID;
     }
     

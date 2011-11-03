@@ -105,7 +105,17 @@ class GUI {
                 &nbsp;
             </td>
         </tr>
-
+        <tr>
+            <td colspan="2">
+                <?php displayButton("chooseproject", "Choose Project", $this->sessionArr['intSessionID']); ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                &nbsp;
+            </td>
+        </tr>
+        
         <tr>
             <td colspan="2">
                 <?php displayButton("status", "Status", $this->sessionArr['intSessionID']); ?>

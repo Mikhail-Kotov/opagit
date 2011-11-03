@@ -9,7 +9,6 @@ class ProjectGUI {
     }
 
     public function chooseProject() {
-        echo '<td valign="top">' . "\n";
         echo "<p>Choose a Project:</p>\n";
         echo '<form method="post">' . "\n<p>\n";
         echo '<select name="p">' . "\n";
@@ -34,7 +33,7 @@ class ProjectGUI {
         }
 
         echo "</select>\n";
-        echo '<input type="hidden" name="page" value="main" />' . "\n";
+        echo '<input type="hidden" name="page" value="statushistory" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
         echo '<input type="submit" value="Choose" />' . "\n";
         echo "</p>\n</form>\n";

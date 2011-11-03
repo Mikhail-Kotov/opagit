@@ -25,7 +25,7 @@ class MemberGUI {
         }
 
         echo "</select>\n";
-        echo '<input type="hidden" name="page" value="chooseproject" />' . "\n";
+        echo '<input type="hidden" name="page" value="welcome" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
         echo '<input type="submit" value="Submit" />' . "\n";
         echo "</p>\n</form>\n";
