@@ -20,10 +20,10 @@ function dateDayDiff($date1, $date2) {
 }
 
 function displayButton($name, $caption, $intSessionID) {
-    echo '<form method="post">';
+    echo '<form  action="" method="post">\n<div>';
     echo '<input type="hidden" name="page" value="' . $name . '" />' . "\n";
     echo '<input type="hidden" name="intSessionID" value="' . $intSessionID . '" />' . "\n";
-    echo '<input type="submit" value="' . $caption . '" class="button" />' . "\n";
+    echo '<input type="submit" value="' . $caption . '" class="button" />' . "\n</div>\n";
     echo '</form>';
 }
 

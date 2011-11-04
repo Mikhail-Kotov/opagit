@@ -1,53 +1,56 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><?php echo $_ENV['version']; ?></title>
-        <link href="prototype.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="js/functions.js"></script> 
-        <script type="text/javascript" src="js/jquery.js"></script>
-        <script type="text/javascript" src="js/jquery.qtip.js"></script> 
-        <script type="text/javascript">
-            // Create the tooltips only on document load
-            $(document).ready(function() 
-            {
-                // Match all link elements with href attributes within the content div
-                $('#content a[href]').qtip(
-                {
-                    content: 'Some basic content for the tooltip' // Give it some content, in this case a simple string
-                });
-            });
-        </script>
-    </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Swinburne ICT Online Project Administration</title>
+<link rel="stylesheet" type="text/css" href="opa_files/import.css" />
+<script type="text/javascript" src="opa_files/javascript_functions.js"></script>
+<script type="text/javascript" src="opa_files/functions.js"></script>
+<script type="text/javascript" src="opa_files/jquery.js"></script>
+<script type="text/javascript" src="opa_files/jquery_002.js"></script>
+<link rel="icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
 
-    <body>
-        <a name="top"></a>
-        <div id="content" >
-            <table width="1450" height="600" border="0">
-                <tr>
-                    <td colspan="2" height="30">
-                        <?php
-                        if ($_ENV['engineering mode'] == True) {
-                            echo "[page: <b>";
-                            if (!empty($this->sessionArr['strPage'])) {
-                                echo $this->sessionArr['strPage'];
-                            }
-                            if (!empty($this->sessionArr['strTodo'])) {
-                                echo ":" . $this->sessionArr['strTodo'];
-                            }
+<!-- START META WRITER v2.0 -->
+<meta name="description" content="Online Project Administration is a tool for ICT students to keep project administration up to date." />
+<meta name="keywords" content="Online Project Administration, OPA,Status, Risk, Issues, Timesheets" />
+<link rel="stylesheet" type="text/css" href="opa_files/website.css" />
+<!-- END META WRITER v2.0 -->
+</head>
 
-                            echo "</b>]&nbsp;&nbsp;&nbsp;";
+<body>
 
-                            if (!empty($this->sessionArr['intMemberID'])) {
-                                echo "[memberID: <b>" . $this->sessionArr['intMemberID'] . "</b>]&nbsp;&nbsp;&nbsp;";
-                            }
+<!-- START: TOP NAVIGATION -->
+<div id="top"><a id="skip_content" href="#content" accesskey="S">Skip to Content</a></div>
+<div id="navigation">
+  <ul id="top_menu">
+    <li class="first"> <a id="nav_home" href="http://www.swinburne.edu.au/index.php" accesskey="1"> Swinburne Home<em title="Swinburne Home"></em></a></li>
+    <li><a id="nav_courses" href="http://courses.swinburne.edu.au/">Courses<em title="Courses"></em></a></li>
+    <li><a id="nav_faculties" href="http://www.swinburne.edu.au/level2.php3?page=Schools/Departments">Faculties &amp; TAFE<em title="Faculties &amp; TAFE"></em></a></li>
+    <li><a id="nav_international" href="http://www.international.swinburne.edu/">International <em title="International"></em></a></li>
+    <li><a id="nav_campuses" href="http://www.swinburne.edu.au/campus.htm">Campuses <em title="Campuses"></em></a></li>
+    <li><a id="nav_research" href="http://www.research.swinburne.edu.au/">Research<em title="Research"></em></a></li>
+    <li><a id="nav_staff" href="http://www.swinburne.edu.au/staff">Staff<em title="Staff"></em></a></li>
+    <li><a id="nav_student" href="http://www.swinburne.edu.au/student">Current Students<em title="Current Students"></em></a></li>
+    <li><a id="nav_my" href="http://my.swinburne.edu.au/pls/portal/PORTAL.home">My.Swinburne<em title="My.Swinburne"></em></a></li>
+    <li><a id="nav_search" href="http://www.swinburne.edu.au/cwis/search.htm" accesskey="4">Search<em title="Search"></em></a></li>
+    <li><a id="nav_index" href="http://www.swinburne.edu.au/admin/autoindex/index.htm" accesskey="3">Index<em title="Index"></em></a></li>
+  </ul>
+</div>
+<!-- END: TOP NAVIGATION -->
 
-                            if (!empty($this->sessionArr['intProjectID'])) {
-                                echo "[projectID: <b>" . $this->sessionArr['intProjectID'] . "</b>]&nbsp;&nbsp;&nbsp;";
-                            }
-                        } else {
-                            echo "OPA Prototype\n";
-                        }
+<div id="main">
+  <div id="container"> 
+    <div id="wrapper">
+      <div id="column"> 
+        
+        <!-- Start Banner Large Version 2 -->
+        <div id="banners">
+          <div>
+            <p id="banner-logo"><span>Online Project Administration</span></p>
+            <p id="pagetitle"><span>Status</span></p>
+          </div>
+        </div>
 
-                        echo "<br /><br /><hr /><br /></td></tr><tr>\n<!-- header  header  header  header  header  header  header  header  header  header -->\n";
-                        ?>
+        <!-- End Banner Large Version 2 --> 
+        <!-- End OPA header -->
