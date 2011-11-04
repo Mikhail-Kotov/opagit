@@ -1,5 +1,5 @@
 <?php
-class riskDA {
+class RiskDA {
 
 }
 

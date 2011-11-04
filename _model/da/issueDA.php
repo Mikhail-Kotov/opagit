@@ -1,5 +1,5 @@
 <?php
-class issueDA {
+class IssueDA {
 
 }
 

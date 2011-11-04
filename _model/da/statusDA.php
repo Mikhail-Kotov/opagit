@@ -1,5 +1,5 @@
 <?php
-class statusDA {
+class StatusDA {
 
 }
 

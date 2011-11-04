@@ -25,6 +25,8 @@ class RiskHistoryGUI {
                 echo "</tr>\n";
             }
             echo '</table>';
+        } else {
+            echo "There is no Risks here";
         }
     }
 }

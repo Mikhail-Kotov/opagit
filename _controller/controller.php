@@ -5,7 +5,6 @@ class Controller {
     function main() {
        
         $sessionObj = new Session();
-
         
         $sessionArr = array();
 
@@ -81,12 +80,14 @@ class Controller {
             $projectObj->getDetails();
         }
 
-        if (($sessionArr['strPage'] == "status" || $sessionArr['strPage'] == "riskhistory" || $sessionArr['strPage'] == "issuehistory") && empty($sessionArr['intProjectID'])) {
+        if (((substr_compare($sessionArr['strPage'], "status", 0, 6) == 0) || 
+                (substr_compare($sessionArr['strPage'], "risk", 0, 4) == 0) ||
+                (substr_compare($sessionArr['strPage'], "issue", 0, 5) == 0)) &&
+                empty($sessionArr['intProjectID'])) {
+            $lastPage = $sessionArr['strPage'];
             $sessionArr['strPage'] = "chooseproject";
-            //die("choose PROJ !");
         }
         
-        //if (!($sessionArr['strPage'] == "chooseproject" || $sessionArr['strPage'] == "choosemember" || $sessionArr['strPage'] == "statuspdf")) {
         if(isset($memberObj) && isset($projectObj)) {
             $attachmentObj = new Attachment();    
             $statusObj = new Status($memberObj, $projectObj, $attachmentObj, $sessionObj);
@@ -108,12 +109,7 @@ class Controller {
         
         $GUIObj->header();
 
-        if (!($sessionArr['strPage'] == "choosemember")) {
-            $GUIObj->menu();
-        } else {
-// don't show menu when choosing member
-            echo '<td width="200">&nbsp;</td>' . "\n";
-        }
+        $GUIObj->menu();
 
         if ($sessionArr['strPage'] == "choosemember") {
             $memberObj = new Member();
@@ -133,8 +129,11 @@ class Controller {
             
             $projectGUIObj = new ProjectGUI();
             $projectGUIObj->setSession($sessionArr);
-            $projectGUIObj->chooseProject();
-            //include_once("_view/project/choose.php");
+            
+            if(empty($lastPage)) {
+                $lastPage = "welcome";
+            }
+            $projectGUIObj->chooseProject($lastPage);
         }
 
         if ($sessionArr['strPage'] == "welcome") {

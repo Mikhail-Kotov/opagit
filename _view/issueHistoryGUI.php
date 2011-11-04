@@ -24,6 +24,8 @@ class IssueHistoryGUI {
                 echo "</tr>\n";
             }
             echo '</table>';
+        } else {
+            echo "There is no Issues here";
         }
     }
 }

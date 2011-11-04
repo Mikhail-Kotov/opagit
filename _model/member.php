@@ -3,10 +3,10 @@
 class Member {
 
     private $sessionArr;
-    var $intMemberID, $strMemberName, $strMemberFirstName, $strMemberLastName;
+    private $intMemberID, $strMemberName, $strMemberFirstName, $strMemberLastName;
 
     function __construct() {
-
+        $this->memberDAObj = new MemberDA();
     }
     
     function getID() {
@@ -24,13 +24,14 @@ class Member {
         }
     }
     
-    function getDetails() {
-        $query = "SELECT strMemberName, strMemberFirstName, strMemberLastName FROM tblMember WHERE intMemberID = " . $this->sessionArr['intMemberID'] . ";";
-
-        $sqlArr = $_ENV['db']->query($query);
-        $this->strMemberName = $sqlArr[0]['strMemberName'];
-        $this->strMemberFirstName = $sqlArr[0]['strMemberFirstName'];
-        $this->strMemberLastName = $sqlArr[0]['strMemberLastName'];
+    public function getDetails() {
+        $memberArr = $this->memberDAObj->getDetails($this->intMemberID);
+        
+        $this->strMemberName = $memberArr['strMemberName'];
+        $this->strMemberFirstName = $memberArr['strMemberFirstName'];
+        $this->strMemberLastName = $memberArr['strMemberLastName'];
+        
+        return $memberArr;
     }
     
     function getName() {

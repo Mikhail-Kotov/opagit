@@ -3,17 +3,18 @@
 class Project {
 
     private $sessionArr;
-    public $intProjectID, $strProjectName, $strProjectTeamName;
+    private $intProjectID, $strProjectName, $strProjectTeamName;
 
     function __construct() {
-        
+        $this->projectDAObj = new ProjectDA();
     }
 
     function getDetails() {
-        $query = "SELECT strProjectName, strProjectTeamName FROM tblProject WHERE intProjectID = " . $this->sessionArr['intProjectID'] . ";";
-        $sqlArr = $_ENV['db']->query($query);
-        $this->strProjectName = $sqlArr[0]['strProjectName'];
-        $this->strProjectTeamName = $sqlArr[0]['strProjectTeamName'];
+        $projectArr = $this->projectDAObj->getDetails($this->intProjectID);
+        $this->strProjectName = $projectArr['strProjectName'];
+        $this->strProjectTeamName = $projectArr['strProjectTeamName'];
+        
+        return $projectArr;
     }
     
     function getID() {
@@ -30,31 +31,7 @@ class Project {
             $this->setID($this->sessionArr['intProjectID']);
         }
     }
-    
-    function getName($intProjectID = null) {
-        if(is_null($intProjectID)) {
-            $intProjectID = $this->intProjectID;
-        }
-        if (isset($this->intProjectID)) {
-            if ($this->intProjectID != "") {
-                $query = "SELECT strProjectName FROM tblProject WHERE intProjectID = " . $intProjectID . ";";
 
-                $sqlArr = $_ENV['db']->query($query);
-
-                if (isset($sqlArr[0])) {
-                    $returnValue = $sqlArr[0]['strProjectName'];
-                } else {
-                    $returnValue = null;
-                }
-            } else {
-                $returnValue = null;
-            }
-        } else {
-            $returnValue = null;
-        }
-
-        return $returnValue;
-    }
 }
 
 ?>

@@ -10,7 +10,7 @@ class Session {
     private $sessionDAObj;
 
     public function __construct() {
-        $this->sessionDAObj = new sessionDA();
+        $this->sessionDAObj = new SessionDA();
         $this->intStatusID = null;
         $this->intRiskID = null;
         $this->intIssueID = null;
@@ -36,7 +36,7 @@ class Session {
         return $this->intSessionID;
     }
 
-    function getDetails() {
+    public function getDetails() {
         
         $sessionArr = $this->sessionDAObj->getDetails($this->intSessionID, $this->strSessionSID);
                 

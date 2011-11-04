@@ -2,6 +2,7 @@
 
 class Status {
     private $projectObj, $memberObj, $attachmentObj, $sessionObj;
+    private $memberArr, $projectArr;
     public $intStatusID;
     public $intProjectMemberID;
     public $dmtStatusCurrentDate;
@@ -16,6 +17,9 @@ class Status {
         $this->attachmentObj = $attachmentObj;
         $this->sessionObj = $sessionObj;
         $this->intProjectMemberID = $this->getProjectMember();
+        
+        $this->memberArr = $this->memberObj->getDetails();
+        $this->projectArr = $this->projectObj->getDetails();
     }
 
     function getProjectMember() {
@@ -227,7 +231,7 @@ class Status {
         $sqlArr = $_ENV['db']->query($query);
         $_ENV['firephp']->log($sqlArr, 'sqlArr');
 
-        $caption = "Status History for Project: " . $this->projectObj->strProjectName;
+        $caption = "Status History for Project: " . $this->projectArr['strProjectName'];
 
 //$arr3 = array();
         foreach ($sqlArr as $intStatusID => $statusArr) {
@@ -338,6 +342,8 @@ class Status {
             <input type="hidden" name="page" value="status" />
             <input type="hidden" name="todo" value="add" />
             <input type="hidden" name="intSessionID" value="<?php echo $this->sessionObj->getID(); ?>" />
+            User:<br />
+            some user<br /><br />
             Status Creation Date:<br />
             <input type="text" name="dmtStatusCurrentDate" value="<?php echo $_ENV['currentDate']; ?>"/><br /><br />
             Project Name:<br />
@@ -381,8 +387,8 @@ class Status {
     
     function statusMessage() {
         $currentStatusMessage = "<b>Date:</b> " . date("jS F Y", strtotime($this->dmtStatusCurrentDate)) . "<br />" .
-                "<b>Status created by:</b> " . $this->memberObj->strMemberFirstName . " " . $this->memberObj->strMemberLastName . "<br />" .
-                "<b>Project:</b> " . $this->projectObj->strProjectName . "<br /><br />" .
+                "<b>Status created by:</b> " . $this->memberArr['strMemberFirstName'] . " " . $this->memberArr['strMemberLastName'] . "<br />" .
+                "<b>Project:</b> " . $this->projectArr['strProjectName'] . "<br /><br />" .
                 "<b>Actual Baseline:</b><br />" . $this->strActualBaseline . "<br /><br />" .
                 "<b>Plan Baseline:</b><br />" . $this->strPlanBaseline . "<br /><br />" .
                 "<b>Variation:</b><br />" .

@@ -1,5 +1,5 @@
 <?php
-$_ENV['version'] = "OPA Team Prototype, version 11.03-1210";
+$_ENV['version'] = "OPA Team Prototype, version 11.04-1220";
 
 error_reporting(E_ALL);
 ini_set('display_errors','On');
@@ -15,15 +15,21 @@ include_once("_view/statusAddEditViewGUI.php");
 include_once("_view/statusHistoryGUI.php");
 include_once("inc/functions.php");
 include_once("_model/member.php");
+include_once("_model/da/memberDA.php");
 include_once("_view/memberGUI.php");
 include_once("_model/project.php");
+include_once("_model/da/projectDA.php");
 include_once("_view/projectGUI.php");
 include_once("_model/status.php");
+include_once("_model/da/statusDA.php");
 include_once("_model/risk.php");
+include_once("_model/da/riskDA.php");
 include_once("_view/riskHistoryGUI.php");
 include_once("_model/issue.php");
+include_once("_model/da/issueDA.php");
 include_once("_view/issueHistoryGUI.php");
 include_once("_model/attachment.php");
+include_once("_model/da/attachmentDA.php");
 
 // connect to db
 $_ENV['db'] = new DB();

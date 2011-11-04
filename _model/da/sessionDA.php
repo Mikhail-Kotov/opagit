@@ -1,6 +1,6 @@
 <?php
 
-class sessionDA {
+class SessionDA {
    
     public function setDetails($intSessionID, $strSessionSID, $strPage, $strTodo, $intMemberID, $intProjectID, $intStatusID, $intRiskID, $intIssueID) {
         $strPage = mysql_real_escape_string($strPage);
