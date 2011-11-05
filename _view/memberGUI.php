@@ -10,7 +10,7 @@ class MemberGUI {
     
     public function chooseMember() {
         echo "<p>Choose a Member:</p>\n";
-        echo '<form method="post">' . "\n<p>\n";
+        echo '<form method="post" action="">' . "\n<p>\n";
         echo '<select name="m">' . "\n";
 
         $arr = $_ENV['db']->query("SELECT intMemberID, strMemberName FROM tblMember;");

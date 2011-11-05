@@ -168,24 +168,30 @@ class Status {
         echo $currentStatusMessage;
 
         echo '<table border="0">';
-        echo '<tr><td><form method="post">';
+        echo '<tr><td><form method="post" action="">';
+        echo "<div>\n";
         echo '<input type="hidden" name="page" value="statusedit" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
         echo '<input type="submit" value="Edit Status" class="button" />' . "\n";
+        echo "</div>\n";
         echo '</form></td>';
-        echo '<td><form method="post">';
+        echo '<td><form method="post" action="">';
+        echo "<div>\n";
         echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
         echo '<input type="submit" value="PDF" class="button" />' . "\n";
+        echo "</div>\n";
         echo "</form></td><td>";
-        echo '<form method="post">';
+        echo '<form method="post" action="">';
+        echo "<div>\n";
         echo '<input type="hidden" name="page" value="status" />' . "\n";
         echo '<input type="hidden" name="todo" value="delete" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
         echo '<input type="submit" value="Delete" class="button" />' . "\n";
+        echo "</div>\n";
         echo "</form>\n";
         echo "</td></tr></table>";
 
@@ -294,7 +300,7 @@ class Status {
             foreach ($historyTableArr as $statusArr) {
                 echo "<tr>\n";
                 echo "<td>\n";
-                echo '<form method="post">';
+                echo '<form method="post" action="">';
                 echo '<input type="hidden" name="page" value="statusview" />' . "\n";
                 echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
                 echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
@@ -313,7 +319,7 @@ class Status {
                 }
 
                 echo "<td>\n";
-                echo '<form method="post">';
+                echo '<form method="post" action="">';
                 echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
                 echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
                 echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
@@ -338,7 +344,7 @@ class Status {
     function displayAddForm() {
         ?>
         <b>Add Status</b><br /><br />
-        <form name="statusadd" method="post">
+        <form name="statusadd" method="post" action="">
             <input type="hidden" name="page" value="status" />
             <input type="hidden" name="todo" value="add" />
             <input type="hidden" name="intSessionID" value="<?php echo $this->sessionObj->getID(); ?>" />
@@ -417,7 +423,7 @@ class Status {
     function displayEditForm() {
         ?>
         <b>Edit Status</b><br /><br />
-        <form method="post">
+        <form method="post" action="">
             <input type="hidden" name="page" value="status" />
             <input type="hidden" name="todo" value="edit" />
             <input type="hidden" name="s" value="<?php echo $this->intStatusID; ?>" />

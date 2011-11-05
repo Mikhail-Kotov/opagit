@@ -1,5 +1,5 @@
 <!-- Start OPA footer -->
-        </div>
+        </div></div>
       </div>
     </div>
     <div class="clear">&nbsp;</div>

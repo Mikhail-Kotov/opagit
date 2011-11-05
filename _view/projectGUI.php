@@ -10,7 +10,7 @@ class ProjectGUI {
 
     public function chooseProject($lastPage) {
         echo "<p>Choose a Project:</p>\n";
-        echo '<form method="post">' . "\n<p>\n";
+        echo '<form method="post" action="">' . "\n<p>\n";
         echo '<select name="p">' . "\n";
 
         $query = "SELECT p.intProjectID, p.strProjectName FROM " .

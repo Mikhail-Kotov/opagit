@@ -15,7 +15,7 @@
         </script>
     </head>
     <body>
-        <form name="form">
+        <form name="form" action ="">
             <input type="button" onclick="addInput()" name="add" value="Add input field" />
         </form>
         <div id="text">
