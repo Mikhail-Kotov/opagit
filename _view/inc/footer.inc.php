@@ -1,10 +1,11 @@
 <!-- Start OPA footer -->
-        </div></div>
-      </div>
-    </div>
+          </div><!-- END content-col -->
+        </div><!-- END content -->
+      </div><!-- END column -->
+    </div><!-- END wrapper -->
     <div class="clear">&nbsp;</div>
-  </div>
-</div>
+  </div><!-- END container -->
+</div><!-- END main -->
 
 <!-- START FOOTER WRITER v2.0 --> 
 

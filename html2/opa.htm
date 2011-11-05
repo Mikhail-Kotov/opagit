@@ -3,18 +3,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Swinburne ICT Online Project Administration</title>
-<link rel="stylesheet" type="text/css" href="opa_files/import.css" />
-<script type="text/javascript" src="opa_files/javascript_functions.js"></script>
-<script type="text/javascript" src="opa_files/functions.js"></script>
-<script type="text/javascript" src="opa_files/jquery.js"></script>
-<script type="text/javascript" src="opa_files/jquery_002.js"></script>
+<link rel="stylesheet" type="text/css" href="import/import.css" />
+<script type="text/javascript" src="import/js/javascript_functions.js"></script>
+<script type="text/javascript" src="js/functions.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.qtip.js"></script>
 <link rel="icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
 
 <!-- START META WRITER v2.0 -->
 <meta name="description" content="Online Project Administration is a tool for ICT students to keep project administration up to date." />
 <meta name="keywords" content="Online Project Administration, OPA,Status, Risk, Issues, Timesheets" />
-<link rel="stylesheet" type="text/css" href="opa_files/website.css" />
+<link rel="stylesheet" type="text/css" href="import/website.css" />
 <!-- END META WRITER v2.0 -->
 </head>
 
@@ -64,7 +64,7 @@
                 <form  action="" method="post">
                   <div>
                     <input type="hidden" name="page" value="chooseproject" />
-                    <input type="hidden" name="intSessionID" value="38" />
+                    <input type="hidden" name="intSessionID" value="91" />
                     <input type="submit" value="Choose Project" class="button" />
                   </div>
                 </form>
@@ -73,18 +73,16 @@
                 <form  action="" method="post">
                   <div>
                     <input type="hidden" name="page" value="status" />
-                    <input type="hidden" name="intSessionID" value="38" />
+                    <input type="hidden" name="intSessionID" value="91" />
                     <input type="submit" value="Status" class="button" />
                   </div>
                 </form>
-              </li>
-              <li>
                 <ul>
                   <li class="selected">
                     <form  action="" method="post">
                       <div>
                         <input type="hidden" name="page" value="statushistory" />
-                        <input type="hidden" name="intSessionID" value="38" />
+                        <input type="hidden" name="intSessionID" value="91" />
                         <input type="submit" value="History" class="button" />
                       </div>
                     </form>
@@ -93,7 +91,7 @@
                     <form  action="" method="post">
                       <div>
                         <input type="hidden" name="page" value="statusadd" />
-                        <input type="hidden" name="intSessionID" value="38" />
+                        <input type="hidden" name="intSessionID" value="91" />
                         <input type="submit" value="Add" class="button" />
                       </div>
                     </form>
@@ -102,7 +100,7 @@
                     <form  action="" method="post">
                       <div>
                         <input type="hidden" name="page" value="statusview" />
-                        <input type="hidden" name="intSessionID" value="38" />
+                        <input type="hidden" name="intSessionID" value="91" />
                         <input type="submit" value="View Last" class="button" />
                       </div>
                     </form>
@@ -113,7 +111,7 @@
                 <form  action="" method="post">
                   <div>
                     <input type="hidden" name="page" value="risk" />
-                    <input type="hidden" name="intSessionID" value="38" />
+                    <input type="hidden" name="intSessionID" value="91" />
                     <input type="submit" value="Risk" class="button" />
                   </div>
                 </form>
@@ -122,7 +120,7 @@
                 <form  action="" method="post">
                   <div>
                     <input type="hidden" name="page" value="issue" />
-                    <input type="hidden" name="intSessionID" value="38" />
+                    <input type="hidden" name="intSessionID" value="91" />
                     <input type="submit" value="Issue" class="button" />
                   </div>
                 </form>
@@ -132,100 +130,111 @@
               <li><a class="" href="">Logout</a></li>
             </ul>
           </div>
+          <!-- END left_menu --> 
+          
         </div>
-        <div> 
-          <!-- END MENU WRITER v2.0 --> 
-          <b>Date:</b> 31st October 2011<br />
-          <b>Status created by:</b> Mikhail Kotov<br />
-          <b>Project:</b> OPA<br />
-          <br />
-          <b>Actual Baseline:</b><br />
-          fasdffafff<br />
-          <br />
-          <b>Plan Baseline:</b><br />
-          fadsf<br />
-          <br />
-          <b>Variation:</b><br />
-          faf<br />
-          <br />
-          <b>Notes/Reasons:</b><br />
-          fsdaf<br />
-          <br />
-          <b>Attachment:</b><br />
-          <a href="http://vvv">http://vvv</a><br />
-          <br />
-          <b>Attachment Comment:</b><br />
-          aaa<br />
-          <br />
-          <b>Attachment:</b><br />
-          <a href="http://5455">http://5455</a><br />
-          <br />
-          <b>Attachment Comment:</b><br />
-          aaaaaavvv<br />
-          <br />
-          <table border="0">
-            <tr>
-              <td><form method="post" action="">
-                  <div>
-                    <input type="hidden" name="page" value="statusedit" />
-                    <input type="hidden" name="intSessionID" value="38" />
-                    <input type="hidden" name="s" value="11" />
-                    <input type="submit" value="Edit Status" class="button" />
-                  </div>
-                </form></td>
-              <td><form method="post" action="">
-                  <div>
-                    <input type="hidden" name="page" value="statuspdf" />
-                    <input type="hidden" name="intSessionID" value="38" />
-                    <input type="hidden" name="s" value="11" />
-                    <input type="submit" value="PDF" class="button" />
-                  </div>
-                </form></td>
-              <td><form method="post" action="">
-                  <div>
-                    <input type="hidden" name="page" value="status" />
-                    <input type="hidden" name="todo" value="delete" />
-                    <input type="hidden" name="intSessionID" value="38" />
-                    <input type="hidden" name="s" value="11" />
-                    <input type="submit" value="Delete" class="button" />
-                  </div>
-                </form></td>
-            </tr>
-          </table>
-          <br />
-          <table border="0">
-            <tr>
-              <td><form  action="" method="post">
-                  <div>
-                    <input type="hidden" name="page" value="statusadd" />
-                    <input type="hidden" name="intSessionID" value="38" />
-                    <input type="submit" value="Add Status" class="button" />
-                  </div>
-                </form></td>
-              <td><form  action="" method="post">
-                  <div>
-                    <input type="hidden" name="page" value="statushistory" />
-                    <input type="hidden" name="intSessionID" value="38" />
-                    <input type="submit" value="Status History" class="button" />
-                  </div>
-                </form></td>
-              <td><form  action="" method="post">
-                  <div>
-                    <input type="hidden" name="page" value="statusview" />
-                    <input type="hidden" name="intSessionID" value="38" />
-                    <input type="submit" value="View Last Status" class="button" />
-                  </div>
-                </form></td>
-            </tr>
-          </table>
-          <br />
-          <a href="#top">Back to Top</a><!-- Start OPA footer --> 
+        <!-- END navcol -->
+        <div id="content">
+          <div id="content-col"> 
+            <!-- END MENU WRITER v2.0 --> 
+            <b>Date:</b> 31st October 2011<br />
+            <b>Status created by:</b> Mikhail Kotov<br />
+            <b>Project:</b> OPA<br />
+            <br />
+            <b>Actual Baseline:</b><br />
+            fasdffafff<br />
+            <br />
+            <b>Plan Baseline:</b><br />
+            fadsf<br />
+            <br />
+            <b>Variation:</b><br />
+            faf<br />
+            <br />
+            <b>Notes/Reasons:</b><br />
+            fsdaf<br />
+            <br />
+            <b>Attachment:</b><br />
+            <a href="http://vvv">http://vvv</a><br />
+            <br />
+            <b>Attachment Comment:</b><br />
+            aaa<br />
+            <br />
+            <b>Attachment:</b><br />
+            <a href="http://5455">http://5455</a><br />
+            <br />
+            <b>Attachment Comment:</b><br />
+            aaaaaavvv<br />
+            <br />
+            <table border="0">
+              <tr>
+                <td><form method="post" action="">
+                    <div>
+                      <input type="hidden" name="page" value="statusedit" />
+                      <input type="hidden" name="intSessionID" value="91" />
+                      <input type="hidden" name="s" value="11" />
+                      <input type="submit" value="Edit Status" class="button" />
+                    </div>
+                  </form></td>
+                <td><form method="post" action="">
+                    <div>
+                      <input type="hidden" name="page" value="statuspdf" />
+                      <input type="hidden" name="intSessionID" value="91" />
+                      <input type="hidden" name="s" value="11" />
+                      <input type="submit" value="PDF" class="button" />
+                    </div>
+                  </form></td>
+                <td><form method="post" action="">
+                    <div>
+                      <input type="hidden" name="page" value="status" />
+                      <input type="hidden" name="todo" value="delete" />
+                      <input type="hidden" name="intSessionID" value="91" />
+                      <input type="hidden" name="s" value="11" />
+                      <input type="submit" value="Delete" class="button" />
+                    </div>
+                  </form></td>
+              </tr>
+            </table>
+            <br />
+            <table border="0">
+              <tr>
+                <td><form  action="" method="post">
+                    <div>
+                      <input type="hidden" name="page" value="statusadd" />
+                      <input type="hidden" name="intSessionID" value="91" />
+                      <input type="submit" value="Add Status" class="button" />
+                    </div>
+                  </form></td>
+                <td><form  action="" method="post">
+                    <div>
+                      <input type="hidden" name="page" value="statushistory" />
+                      <input type="hidden" name="intSessionID" value="91" />
+                      <input type="submit" value="Status History" class="button" />
+                    </div>
+                  </form></td>
+                <td><form  action="" method="post">
+                    <div>
+                      <input type="hidden" name="page" value="statusview" />
+                      <input type="hidden" name="intSessionID" value="91" />
+                      <input type="submit" value="View Last Status" class="button" />
+                    </div>
+                  </form></td>
+              </tr>
+            </table>
+            <br />
+            <a href="#top">Back to Top</a><!-- Start OPA footer --> 
+          </div>
+          <!-- END content-col --> 
         </div>
+        <!-- END content --> 
       </div>
+      <!-- END column --> 
     </div>
+    <!-- END wrapper -->
     <div class="clear">&nbsp;</div>
   </div>
+  <!-- END container --> 
 </div>
+<!-- END main --> 
 
 <!-- START FOOTER WRITER v2.0 --> 
 

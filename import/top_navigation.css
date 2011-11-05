@@ -1,0 +1,180 @@
+/** Swinburne University of Technology Website: navtop CSS
+ *  Cascade Style Sheet file including Styles destined to the
+ *  presentation of the top navigation and top banner area of the website
+ *
+ *  MODIFIED:
+ *  version 1.0, 26 April 2007
+ */
+
+/* 
+	Table Style classes used to define the appearance of the
+	tables in the top banner
+*/
+
+
+/* For table based nav - So both types of menus can work together */
+
+#top td {
+	background: #8A8A8A
+}
+
+#top td.dark {
+	background: #666
+}
+
+/* Generic style similar across all menus */
+
+#skip_content {
+	position: absolute;
+	text-align: right;
+	top: 0;
+	right: 0;
+	height:22px;
+	width:200px;
+	font-size: .8em;
+	color: #E9E9E9;
+}
+
+#skip_content a{
+	position: absolute;
+	text-align: right;
+	top: 0;
+	right: 0;
+	height:22px;
+	width:200px;
+	font-size: .8em;
+	color: #E9E9E9;
+}
+
+#navigation {
+	color: #717171;
+ 	padding: 0px;
+ 	margin: 0px 0px 34px 0px;
+	background: #E9E9E9 url(../images/nav/background.gif) repeat-x;
+	min-width: 987px;
+	height: 32px;
+}
+
+#top_menu {
+	font-size:12px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	width: 100%;
+	background: #E9E9E9 url('../images/nav/background.gif');
+	text-align: left;
+	float: left;
+	/*border-bottom: 1px solid #fff;
+	margin-bottom: 34px;*/
+}
+
+* html #top_menu {
+	width: 987px;
+	
+}
+
+#top_menu li {
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0;
+	border-right: 1px solid #d5d5d5;
+}
+
+#top_menu li.first {
+	border-left: 1px solid #d5d5d5;
+	padding-left: 14px;
+}
+
+
+#top_menu li a {
+	float: left;
+	margin: 0;
+	padding: 0;
+	background: #e7e7e7;
+	font: normal 1.1em "Arial Narrow", Arial, sans-serif;
+	color: #707070;
+	text-decoration: none;
+	border: none;
+	position: relative;
+	height: 32px;
+	line-height: 22px;
+	text-align: center;
+	overflow:hidden;
+}
+
+#top_menu li a em {
+	background-position: 0 0;
+	position:absolute;
+	left:0;
+	top:0;
+	display:block;
+	height:32px;
+	overflow:hidden;
+}
+
+#top_menu li #nav_staff, #top_menu li #nav_student, #top_menu li #nav_my, #top_menu li #nav_search, #top_menu li #nav_index {
+	background: #f0f0f0;
+}
+
+*#top_menu li #nav_my:hover,     #top_menu li #nav_search:hover,  #top_menu li #nav_index:hover,  #top_menu li #nav_student:hover,
+#top_menu li #nav_staff:hover  {
+	background-color: #fff;
+}
+
+#top_menu li a:hover {
+	background-color: #fff;
+	cursor: pointer;
+}
+
+#top_menu li a:hover em, #top_menu li a.selected em, #top_menu li a.selected em {
+	background-position: 0 -32px;
+}
+
+#top_menu li #nav_home {width:119px}
+
+#top_menu li #nav_home em {width:119px; background-image:url(../images/nav/home.gif)}
+
+#top_menu li #nav_courses {width: 70px}
+
+#top_menu li #nav_courses em {width: 70px; background-image:url(../images/nav/courses.gif)}
+
+#top_menu li #nav_faculties {width: 119px}
+
+#top_menu li #nav_faculties em {width: 119px; background-image:url(../images/nav/faculties_tafe.gif)}
+
+#top_menu li #nav_international {width: 104px}
+
+#top_menu li #nav_international em {width: 104px; background-image:url(../images/nav/international.gif)}
+
+#top_menu li #nav_campuses {width: 79px}
+
+#top_menu li #nav_campuses em {width: 79px; background-image:url(../images/nav/campuses.gif)}
+
+#top_menu li #nav_research {width: 73px}
+
+#top_menu li #nav_research em {width: 73px; background-image:url(../images/nav/research.gif)}
+
+#top_menu li #nav_about {width: 73px}
+
+#top_menu li #nav_about em {width: 73px; background-image:url(../images/nav/research.gif)}
+
+#top_menu li #nav_student {width: 125px}
+
+#top_menu li #nav_student em {width: 125px; background-image:url(../images/nav/student.gif)}
+
+#top_menu li #nav_staff {width: 54px}
+
+#top_menu li #nav_staff em {width: 54px; background-image:url(../images/nav/staff.gif)}
+
+#top_menu li #nav_my {width: 102px}
+
+#top_menu li #nav_my em {width: 102px; background-image:url(../images/nav/myswinburne.gif)}
+
+#top_menu li #nav_search {width: 63px}
+
+#top_menu li #nav_search em {width: 63px; background-image:url(../images/nav/search.gif)}
+
+#top_menu li #nav_index {width: 53px}
+
+#top_menu li #nav_index em {width: 53px; background-image:url(../images/nav/index.gif)}

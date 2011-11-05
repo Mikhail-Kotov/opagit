@@ -3,18 +3,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Swinburne ICT Online Project Administration</title>
-<link rel="stylesheet" type="text/css" href="opa_files/import.css" />
-<script type="text/javascript" src="opa_files/javascript_functions.js"></script>
-<script type="text/javascript" src="opa_files/functions.js"></script>
-<script type="text/javascript" src="opa_files/jquery.js"></script>
-<script type="text/javascript" src="opa_files/jquery_002.js"></script>
+<link rel="stylesheet" type="text/css" href="import/import.css" />
+<script type="text/javascript" src="import/js/javascript_functions.js"></script>
+
+<script type="text/javascript" src="js/functions.js"></script> 
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.qtip.js"></script> 
+
 <link rel="icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
 
 <!-- START META WRITER v2.0 -->
 <meta name="description" content="Online Project Administration is a tool for ICT students to keep project administration up to date." />
 <meta name="keywords" content="Online Project Administration, OPA,Status, Risk, Issues, Timesheets" />
-<link rel="stylesheet" type="text/css" href="opa_files/website.css" />
+<link rel="stylesheet" type="text/css" href="import/website.css" />
 <!-- END META WRITER v2.0 -->
 </head>
 
