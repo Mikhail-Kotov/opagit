@@ -72,6 +72,8 @@ class Controller {
             $memberObj = new Member();
             $memberObj->setSession($sessionArr);
             $memberObj->getDetails();
+        } else {
+            $sessionArr['strPage'] = "choosemember";
         }
 
         if (!empty($sessionArr['intProjectID'])) {
@@ -83,7 +85,7 @@ class Controller {
         if (((substr_compare($sessionArr['strPage'], "status", 0, 6) == 0) || 
                 (substr_compare($sessionArr['strPage'], "risk", 0, 4) == 0) ||
                 (substr_compare($sessionArr['strPage'], "issue", 0, 5) == 0)) &&
-                empty($sessionArr['intProjectID'])) {
+                empty($sessionArr['intProjectID']) && !empty($sessionArr['intMemberID'])) {
             $lastPage = $sessionArr['strPage'];
             $sessionArr['strPage'] = "chooseproject";
         }
