@@ -5,7 +5,7 @@ class DB {
     private $link;
 
     function connectDB() {
-        $this->link = mysql_connect('localhost', 'opadmin', 'Hu3bi9');
+    	 $this->link = mysql_connect('localhost', 'opadmin', 'Hu3bi9');
         if (!$this->link) {
             die('Could not connect: ' . mysql_error());
         }

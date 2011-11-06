@@ -1,0 +1,418 @@
+/** Swinburne University of Technology Website: Main CSS
+ *  Cascade Style Sheet file including Styles destined to presentation
+ *  of the main area of the website
+ *
+ *  MODIFIED:
+ *  version 1.0, 26 April 2007
+ *  version 2.0, 27 February 2007
+ */
+
+/*
+	main class used to define the major container for the main content
+ 	usually is implemented in the "td" tag of an outer table
+	example: &lt;td class="main"&gt;-----content ------&lt;/td&gt;
+*/
+
+.main
+{
+	vertical-align: top; 
+	width: 100%;
+}
+.home
+{
+	vertical-align: top; 
+	width: 100%;
+}
+
+/*
+  	Content Style classes used to define the appearance of
+	the fonts, usually is implemented in the "td" tag of the
+ 	corresponding table or in independent tags like "&lt;div&gt;" or "&lt;span&gt;"
+	example: &lt;span class="main_intro_grey"&gt;----content----&lt;/span&gt;
+*/
+
+.main_intro_grey 		
+{
+	font-size: 1.3em;
+	color: #474747;
+}
+
+.main_text_black_bold 		
+{
+	font-weight: bold; 
+}
+
+.main_text_secondary_grey 		
+{
+	color: #666;
+}
+
+.main_text_secondary_grey_bold 	
+{
+	color: #666;
+	font-weight: bold; 
+}
+.main_title_black		
+{
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+.main_title_grey 		
+{
+	font-size: 1.3em;
+	color: #474747;
+	font-weight: bold;
+}
+
+.main_title_ltgrey 
+{
+	font-size: 1.3em;
+	color: #666;
+}
+
+.main_title_dkgrey
+{
+	font-size: 1.05em;
+	font-weight: bold;
+}
+
+
+/*
+	List Style classes used to define the appearance of the lists
+	example: &lt;ul class="main_ul"&gt;&lt;li&gt;item 1&lt;/li&gt;&lt;/ul&gt;
+*/
+
+.main_ul, .main_ul_2
+{
+	list-style-type: none;
+	margin: 0;
+	padding:0;
+}
+
+.main_ul li, .main_ul_2 li
+{
+	background: url(../images/arrow7.gif) no-repeat top left;
+	padding-left: 1.3em;
+	padding-top: 0.15em;
+}
+
+.main_ul_2 li
+{
+	background-image: url(../images/arrow8.gif);
+	padding-left: 1.3em;
+	padding-top: 0.15em;
+}
+
+
+/*	Definition lists, in keeping with the other Swinburne list styles */
+
+.main_dl, .main_dl_2 {
+	list-style-type: none;
+	margin: 1em 0;
+	padding: 0;
+}
+
+.main_dl dt, .main_dl_2 dt {
+	background: url(../images/arrow7.gif) no-repeat 0 -3px;
+	padding-left: 1.3em
+}
+
+.main_dl_2 dt {
+	background: url(../images/arrow8.gif) no-repeat 4px -3px;
+}
+
+/*
+ 	Table Style classes used to define the appearance of the
+ 	tables in the main content, note that the class main_table
+	is the default and there are other classes provided for particular cases
+*/
+table .main_table 
+{
+	border-collapse: collapse;
+	padding: 0;
+	border-right: 1px solid #fff;
+}
+
+/* Main Swinburne Table */
+
+.main_results_table th {
+	background-color: #CCC;
+	font-weight: bold; 
+	text-align: left;
+	padding: 2px 10px 2px 5px;
+}
+
+.main_results_table td {
+	padding: 2px 10px 2px 5px;	
+	vertical-align: top;
+}
+
+.main_results_table tr.dark {
+	background-color: #EFEFEF;
+}
+
+.main_results_table tr.light {
+	background-color: #FFF;
+}
+
+.main_results_table tr.darker {
+	background-color: #CCC;
+	font-weight: bold;
+}
+
+
+/*
+  	Miscelanous Style classes, used to define extra classes
+  	for particular purposes
+*/
+hr {
+	clear:both;
+	border: none;
+	background-color: #e4e4e4;
+	color: #e4e4e4;
+	height: 1px;
+	width: 100%;
+}
+
+.dotted_line {
+	display:block;
+	background: url(../images/main_div.gif) repeat-x bottom;
+	height:5px;
+}
+
+/* CMS -Is this still required? */
+.mceVisualAid {
+	border: 1px dashed #BBBBBB;
+}
+
+
+/*  New Template Styles --------------------------*/
+
+/* -------------------------------------------------
+ * Standard table format
+------------------------------------------------- */
+table.standard { border:0; width:98%; }
+table.standard th { background:#fafafa; border:1px solid #e1e1e1; border-width:1px 0; text-align:left; padding:5px; }
+table.standard td { padding:3px 5px; vertical-align:top; }
+table.standard tr.alt { background:#f9f9f9; }
+table.standard tr:hover td { background:#f4f4f4; }
+
+/*-----------------------------
+ image styles & layouts
+------------------------------- */
+img { border:0; }
+img.flow-left { border:0; float:left; padding-right:10px; padding-bottom:15px; }
+img.flow-right { border:0; float:right; padding-left:10px; padding-bottom:15px; }
+div.flow-left { border:0; float:left; margin-right:20px; margin-bottom:20px; }
+div.flow-right { border:0; float:right; margin-left:20px; margin-bottom:15px; }
+
+/* -------------------------------------------------
+ * First Level Menus
+ * Code Example:
+ * <ul class="first-level-menu">
+ *   <li><a href="#"><strong>Title</strong>
+ *     <span>description</span></a>
+ *   </li>
+------------------------------------------------- */
+ul.first-level-menu { border-top:1px solid #f1f1f1; margin:10px 0 20px; padding:0; }
+ul.first-level-menu li { margin:0; list-style:none; border-bottom:1px solid #f1f1f1; }
+ul.first-level-menu li ul,
+ul.first-level-menu li ul li { list-style-type:square; border:none;}
+ul.first-level-menu a  { padding:5px 0 5px 20px; text-decoration:none; font-size:1.2em; display:block; background:transparent url(../images/icons/bullet-red.gif) scroll no-repeat 11px 10px; }
+ul.first-level-menu a:hover { background-color:#f9f9f9; text-decoration:none;}
+ul.first-level-menu a span { display:block; font-size:.9em; padding:3px 0; color:#555; text-decoration:none; }
+ul.first-level-menu a:hover strong { text-decoration:underline; }
+
+/* -------------------------------------------------
+ * Image Layouts
+ * Extra styles can be applied to extend
+ * this style.
+ *  div.fl (float left)
+ *  div.fr (float right) 
+ * These allow floating an image to either side of 
+ * the page as required.
+ * By default images will have borders unless the
+ * "display-image-simple" class is added"
+------------------------------------------------- */
+div.display-image { border:1px solid #e4e4e4; padding:10px 15px; text-align:center; margin-bottom:20px; }
+div.display-image p { font-weight:bold; margin:0; }
+div.display-image img { margin:5px auto; }
+.zoom { display:block; font-size: .90em; padding-left: 20px; background: url(../images/icons/image-zoom.gif) scroll no-repeat left bottom; text-align:left; }
+div.display-image-simple { border:0; }
+
+/* -------------------------------------------------
+ * Floated bullet point list
+ * Extra styles can be found in main.css to extend
+ * this style.
+ *  div.fl (float left)
+ *  div.fr (float right) 
+ * These allow floating an image to either side of 
+ * the page as required.
+------------------------------------------------- */
+div.bullet-points { background:#fafafa; padding:5px 10px; font-size:.9em; margin-bottom:15px; width:200px; }
+div.bullet-points ul { list-style-image: url(../images/icons/bullet-red.gif); padding-left:0; margin:0 0 1em 20px; }
+div.bullet-points p { margin:0 0 1em; }
+
+
+/* -------------------------------------------------
+ * Podcast episodes
+------------------------------------------------- */
+ul.podcast-episodes { list-style:none; margin:0; padding:0; border-top:1px solid #f0f0f0;}
+ul.podcast-episodes li { margin:0 0 2px; padding:10px; border-bottom:1px solid #f0f0f0;  }
+ul.podcast-episodes li.alt { background:#fbfbfb; }
+ul.podcast-episodes li img { float:left; }
+ul.podcast-episodes li div { margin-left:70px; padding-left:8px; background:transparent url(../images/icons/bullet-red.gif) scroll no-repeat left 7px; font-size:.95em; }
+ul.podcast-episodes li ul,
+ul.podcast-episodes li ul li,
+ul.podcast-episodes li h3 { list-style:none; margin:0; border:0; padding:0; line-height:1.2em; }
+ul.podcast-episodes li h3 { font-size:1.2em; }
+ul.podcast-episodes li h3 a { text-decoration:none; }
+ul.podcast-episodes li h3 a:hover { text-decoration:underline; }
+ul.podcast-episodes li p { margin:0 0 1em; }
+ul.podcast-episodes li dl,
+ul.podcast-episodes li dl li { line-height:1.5em; }
+ul.podcast-episodes li dt { float: left; width:9em; display:block; font-weight:bold; }
+ul.podcast-episodes li dd { margin-left:10em; }
+
+
+/* -------------------------------------------------
+ * Pullquote
+ * Extra class required as many pages of site 
+ * incorrectly use <blockquote> for altering margins
+------------------------------------------------- */
+blockquote.pullquote { margin:10px 30px; background:#fafafa url(../images/icons/pullquote-bottom.gif) scroll no-repeat right bottom; }
+blockquote.pullquote p { padding:20px 50px; background:transparent url(../images/icons/pullquote-top.gif) scroll no-repeat left top; font-weight:bold; font-style:italic; line-height:1.5em; }
+
+/* -------------------------------------------------
+ * Default bullet type
+------------------------------------------------- */
+ul { list-style-type:square; }
+ul li { }
+
+/* -------------------------------------------------
+ * Overwrite default .type3 bullet list
+ * Type reason for overwriting the .type3 class is
+ * to change the colour of the bullet point.
+------------------------------------------------- */
+ul.bulletpoints li { list-style-image:url(../images/icons/bullet-red.gif); padding:0; }
+ul.bulletpoints-2col {
+	list-style-type:none;
+}
+ul.bulletpoints-2col li {
+	background:transparent url(../images/icons/bullet-red.gif) no-repeat scroll 1px 6px;
+	float:left;
+	list-style-image:none;
+	margin:0px;
+	padding-left:10px;
+	padding-right:2px;
+	width:45%;
+}
+ul.divided { padding-bottom: 10px; border-bottom:1px solid #f0f0f0; }
+
+
+/* -------------------------------------------------
+ * Document Downloads
+------------------------------------------------- */
+ul.downloadable-documents { list-style:none; margin:0; padding:0; border-top:1px solid #f0f0f0;}
+ul.downloadable-documents li { margin:0 0 2px; padding:10px; border-bottom:1px solid #f0f0f0; clear:both; min-height: 40px;  }
+* html ul.downloadable-documents li { height: 40px;  } /*Set height for IE6 */
+ul.downloadable-documents li.alt { background:#fbfbfb; }
+ul.downloadable-documents li img { float:left; }
+ul.downloadable-documents li div { margin-left:50px; padding-left:8px; background:transparent url(../images/icons/bullet-red.gif) scroll no-repeat left 7px; font-size:.95em; }
+ul.downloadable-documents li ul,
+ul.downloadable-documents li ul li,
+ul.downloadable-documents li h3 { list-style:none; margin:0; border:0; padding:0; line-height:1.2em; }
+ul.downloadable-documents li h3 { font-size:1.2em; }
+ul.downloadable-documents li h3 a { text-decoration:none; }
+ul.downloadable-documents li h3 a:hover { text-decoration:underline; }
+ul.downloadable-documents li p { margin:0 0 1em; }
+ul.downloadable-documents li dl,
+ul.downloadable-documents li dl li { line-height:1.5em; }
+ul.downloadable-documents li dt { float: left; width:9em; display:block; font-weight:bold; }
+ul.downloadable-documents li dd { margin-left:10em; }
+
+
+/* -------------------------------------------------
+ * Bulletin
+------------------------------------------------- */
+div.bulletin-latest { background:#fafafa; margin:10px 30px; padding:20px; border:1px solid #e1e1e1; border-width:1px 0; }
+div.bulletin-latest h2 { margin:0; }
+div.bulletin-latest img { float:left; margin-right:20px; }
+div.bulletin-latest strong { margin-right:20px; }
+div.bulletin-latest a { text-decoration:none; }
+div.bulletin-latest a:hover { text-decoration:underline; }
+div.bulletin-latest dl { line-height:1.5em; }
+div.bulletin-latest dt { float: left; width:9em; display:block; font-weight:bold; }
+div.bulletin-latest dd { margin-left:10em; }
+
+/* -------------------------------------------------
+ * Events
+------------------------------------------------- */
+dl.event-details { margin:10px; padding:10px; border:0px solid #e1e1e1; }
+dl.event-details dt { float: left; width:9em; display:block; font-weight:bold; padding-bottom:7px; }
+dl.event-details dd { margin-left:10em; padding-bottom:7px; }
+dl.event-details dd p { margin:0 0 1em; }
+dl.alt { background:#fafafa; border-width:1px 0; }
+
+/* -------------------------------------------------
+ * Form - specific form styles are after default
+ * form styles.
+------------------------------------------------- */
+form { margin:0; }
+form fieldset { margin: 0 0 8px; padding:0; border: 0; }
+form fieldset.group {clear: both; }
+form fieldset label { float: left; width: 11em; margin: 0 1em 0 0; font-weight: bold; line-height: 1.5em; }
+form fieldset div.field { float: left; margin: 0 1em 0 0; }
+form fieldset div.field div { margin:2px 0 0; }
+form fieldset div.field label { float: none; width: auto; font-weight: normal; }
+form fieldset div.field input.input-text { padding: 2px; font-family: Arial, sans-serif; font-size: 1em; color: #646870; border:1px solid #ccc; }
+form fieldset div.field input[type=radio] { vertical-align:top; }
+form div.submit { clear: both; padding: 5px 0 15px 13em; }
+form div.submit img,
+form div.submit input { margin-right:10px; }
+
+form .sml { width:4em; }
+form .med { width:8em; }
+form .lge { width:14em; }
+form#event-submission { background:#f1f1f1; margin:0 0 2em; }//changed from fafafa 3Nov robynIus
+form#event-submission h4 { background:#dedadb; font-weight:normal; margin:0 0 10px; padding:5px; }
+form#event-submission fieldset { margin-left:15px; margin-right:15px; }
+
+div.top {
+	background: url(../images/icons/top.gif) no-repeat left 3px;
+	padding-left: 12px;
+	font-size: 0.95em;
+}
+
+/* --------------------------------------------------
+	Breadcrumbs
+ -----------------------------------------------------*/
+#breadcrumbs { 
+	margin: 0px;
+	padding: 0px; 
+	color: #999;
+}
+
+#breadcrumbs ul {
+	border-top: 1px solid #e4e4e4;
+	border-bottom: 1px solid #e4e4e4;
+	list-style: none;
+	margin: 0px 0 0 0;
+	padding: 5px 0px 5px 0px;
+	font-size: 0.95em;
+}
+
+#breadcrumbs li {
+	margin: 0px;
+	padding: 0px 10px 0px 0px;
+	display:inline;
+}
+
+#breadcrumbs li a {
+	text-decoration: none;
+}
+
+#breadcrumbs li a:hover {
+	text-decoration: underline;
+}
