@@ -17,14 +17,20 @@
  * usually is implemented in the "td" tag of an outer table
  * example: &lt;td class="nav_left">----content-------&lt;/td>
  */
- input.button { //this style was updated to change the nav buttons Robyn 2Nov
-    color: #;
+ input.button { /* this style was updated to change the nav buttons Robyn 2Nov */
+    color: #000;
     border: none;
     background: none;
     text-decoration: none;
-    cursor: hand;
 }
 
+ input.buttonselected { /* this style was updated to change the nav buttons Robyn 2Nov */
+    color: #000;
+    border: none;
+    background: none;
+    text-decoration: none;
+    font-weight: bold;
+}
  
 #left_menu a { 
 	color:#000; 

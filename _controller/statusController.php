@@ -62,7 +62,7 @@ if ($sessionArr['strPage'] == "statushistory") {
     $statusObj->getLastStatusID();
     if(isset($statusObj->intStatusID)) {
         $statusObj->getDetails();
-        include_once("_model/status/history.php");
+        $statusObj->displayStatusHistory();
     } else {
         $sessionArr['strPage'] = "statusadd";
     }

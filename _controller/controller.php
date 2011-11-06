@@ -143,22 +143,8 @@ class Controller {
         }
 
         include_once("_controller/statusController.php");
-
-        if ($sessionArr['strPage'] == "issuehistory") {
-            $issueObj = new Issue();
-            $issueObj->setSession($sessionArr);
-            
-            $issueHistoryObj = new IssueHistoryGUI();
-            $issueHistoryObj->display($issueObj->getHistoryDetails());
-        }
-
-        if ($sessionArr['strPage'] == "riskhistory") {
-            $riskObj = new Risk();
-            $riskObj->setSession($sessionArr);
-            
-            $riskHistoryObj = new RiskHistoryGUI();
-            $riskHistoryObj->display($riskObj->getHistoryDetails());
-        }
+        include_once("_controller/riskController.php");
+        include_once("_controller/issueController.php");
 
         $GUIObj->footer();
     }

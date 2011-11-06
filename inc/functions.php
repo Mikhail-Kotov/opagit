@@ -27,6 +27,18 @@ function displayButton($name, $caption, $intSessionID) {
     echo '</form>';
 }
 
+function displayMenuButton($name, $caption, $intSessionID, $isSelected = false) {
+    echo '<form  action="" method="post">'."\n<div>";
+    echo '<input type="hidden" name="page" value="' . $name . '" />' . "\n";
+    echo '<input type="hidden" name="intSessionID" value="' . $intSessionID . '" />' . "\n";
+    echo '<a><input type="submit" value="' . $caption . '" class="button';
+    if($isSelected == true) {
+        echo 'selected';
+    }
+    echo '" /></a>' . "\n</div>\n";
+    echo '</form>';
+}
+
 function getMemberName($intMemberID) {
     if (isset($intMemberID)) {
         if ($intMemberID != "") {
