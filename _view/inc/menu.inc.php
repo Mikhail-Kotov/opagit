@@ -6,7 +6,7 @@
             <li class="top_item"><a href="">Timesheets</a></li>
             <li class="selected"><?php displayMenuButton("chooseproject", "Choose Project", $this->sessionArr['intSessionID'], ($this->sessionArr['strPage'] == "chooseproject")); ?></li>
             <li class="selected"><?php displayMenuButton("status", "Status", $this->sessionArr['intSessionID']); ?>
-                <?php if (substr_compare($this->sessionArr['strPage'], "status", 0, 6) == 0) { ?>
+                <?php if (strcmp("status", substr($this->sessionArr['strPage'], 0, 6)) == 0) { ?>
                     <ul><li class="selected"><?php displayMenuButton("statushistory", "History", $this->sessionArr['intSessionID'], 
                             ($this->sessionArr['strPage'] == "statushistory") || ($this->sessionArr['strPage'] == "status")); ?></li>
                         <li class="selected"><?php displayMenuButton("statusadd", "Add", $this->sessionArr['intSessionID'], 
@@ -16,7 +16,7 @@
                     </ul>
                 <?php } ?></li>
             <li class="selected"><?php displayMenuButton("risk", "Risk", $this->sessionArr['intSessionID']); ?>
-                <?php if (substr_compare($this->sessionArr['strPage'], "risk", 0, 4) == 0) { ?>
+                <?php if (strcmp("risk", substr($this->sessionArr['strPage'], 0, 4)) == 0) { ?>
                     <ul><li class="selected"><?php displayMenuButton("riskhistory", "History", $this->sessionArr['intSessionID'], 
                             ($this->sessionArr['strPage'] == "riskhistory") || ($this->sessionArr['strPage'] == "risk")); ?></li>
                         <li class="selected"><?php displayMenuButton("riskadd", "Add", $this->sessionArr['intSessionID'], 
@@ -26,7 +26,7 @@
                         </ul>
                 <?php } ?></li>
             <li class="selected"><?php displayMenuButton("issue", "Issue", $this->sessionArr['intSessionID']); ?>
-                <?php if (substr_compare($this->sessionArr['strPage'], "issue", 0, 5) == 0) { ?>
+                <?php if (strcmp("issue", substr($this->sessionArr['strPage'], 0, 5)) == 0) { ?>
                     <ul><li class="selected"><?php displayMenuButton("issuehistory", "History", $this->sessionArr['intSessionID'], 
                             ($this->sessionArr['strPage'] == "issuehistory") || ($this->sessionArr['strPage'] == "issue")); ?></li>
                         <li class="selected"><?php displayMenuButton("issueadd", "Add", $this->sessionArr['intSessionID'], 

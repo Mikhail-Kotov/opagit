@@ -214,9 +214,9 @@ div#column2 div#sidecol { border-top: none; }
 #banners p { margin:0; }
 #banners p span { display:none; }
 #banners p { width:500px; height:48px; margin:6px 0 0 194px; }
-#banners p#banner-logo { background:transparent url('http://localhost/images/banners/swinburne_logo.gif') no-repeat; width:179px; height:91px; margin:0 0 0 94px; }
+#banners p#banner-logo { background:transparent url('../images/banners/swinburne_logo.gif') no-repeat; width:179px; height:91px; margin:0 0 0 94px; }
 #banners div { background:transparent url('../images/banners/banner_corporate_right.gif') scroll no-repeat right top; }
-#column2 #banners div { background:transparent url('/images/banners/research/banner_research_right.gif') scroll no-repeat right top;margin-right:255px; }
+#column2 #banners div { background:transparent url('../images/banners/research/banner_research_right.gif') scroll no-repeat right top;margin-right:255px; }
 #column1 #banners div { border-right: 1px solid #fff; }
 
 
@@ -263,4 +263,12 @@ div#column2 div#sidecol { border-top: none; }
 /* google results page */
 .j {
 font-size:16px;
+}
+
+td.historyodd {
+    background-color: #eee;
+}
+
+td.historyeven {
+    background-color: #f8f8f8;
 }

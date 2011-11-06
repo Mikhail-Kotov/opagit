@@ -81,11 +81,10 @@ class Controller {
             $projectObj->setSession($sessionArr);
             $projectObj->getDetails();
         }
-
-        if (((substr_compare($sessionArr['strPage'], "status", 0, 6) == 0) || 
-                (substr_compare($sessionArr['strPage'], "risk", 0, 4) == 0) ||
-                (substr_compare($sessionArr['strPage'], "issue", 0, 5) == 0)) &&
-                empty($sessionArr['intProjectID']) && !empty($sessionArr['intMemberID'])) {
+        if ( ( (strcmp("status", substr($sessionArr['strPage'], 0, 6)) == 0) || 
+               (strcmp("risk", substr($sessionArr['strPage'], 0, 4))   == 0) ||
+               (strcmp("issue", substr($sessionArr['strPage'], 0, 5))  == 0)
+             ) && empty($sessionArr['intProjectID']) && !empty($sessionArr['intMemberID'])) {
             $lastPage = $sessionArr['strPage'];
             $sessionArr['strPage'] = "chooseproject";
         }
@@ -98,6 +97,10 @@ class Controller {
             if(!empty($sessionArr['intStatusID'])) {
                 $statusObj->setID($sessionArr['intStatusID']);
             }
+        }
+        
+        if(isset($memberObj) && !isset($projectObj)) {
+            $sessionArr['strPage'] = "chooseproject";
         }
 
         if ($sessionArr['strPage'] == "statuspdf") {

@@ -296,10 +296,11 @@ class Status {
             echo "<th>Attachment Comment</th>\n";
             echo "<th>&nbsp;</th>\n"; // for PDF
             echo "</tr>\n";
-
+            
+            $oddOrEven = "historyodd";
             foreach ($historyTableArr as $statusArr) {
                 echo "<tr>\n";
-                echo "<td>\n";
+                echo '<td class="' . $oddOrEven . '">'."\n";
                 echo '<form method="post" action="">';
                 echo '<input type="hidden" name="page" value="statusview" />' . "\n";
                 echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
@@ -309,7 +310,7 @@ class Status {
                 echo "</td>\n";
 
                 foreach ($statusArr as $columnName => $value) {
-                    echo "<td>";
+                    echo '<td class="' . $oddOrEven . '">'."\n";
                     if (isset($value)) {
                         echo $value;
                     } else {
@@ -318,7 +319,7 @@ class Status {
                     echo "</td>\n";
                 }
 
-                echo "<td>\n";
+                echo '<td class="' . $oddOrEven . '">'."\n";
                 echo '<form method="post" action="">';
                 echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
                 echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
@@ -327,6 +328,12 @@ class Status {
                 echo "</form>\n";
                 echo "</td>\n";
                 echo "</tr>\n\n";
+                
+                if ($oddOrEven == "historyodd") {
+                    $oddOrEven = "historyeven";
+                } else {
+                    $oddOrEven = "historyodd";
+                }
             }
             echo '</table>';
         }

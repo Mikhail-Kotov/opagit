@@ -6,9 +6,9 @@
 <link rel="stylesheet" type="text/css" href="import/import.css" />
 <script type="text/javascript" src="import/js/javascript_functions.js"></script>
 
-<script type="text/javascript" src="js/functions.js"></script> 
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/jquery.qtip.js"></script> 
+<script type="text/javascript" src="import/js/opa/functions.js"></script> 
+<script type="text/javascript" src="import/js/opa/jquery.js"></script>
+<script type="text/javascript" src="import/js/opa/jquery.qtip.js"></script> 
 
 <link rel="icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
