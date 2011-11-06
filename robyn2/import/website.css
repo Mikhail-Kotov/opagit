@@ -1,0 +1,26 @@
+/*
+	Website CSS
+	Defines the banners, headings, and background images and colours
+*/
+
+/* Main background color and image used on websites larger than 1024 */
+#main {
+	background: #FEBC3E url(../images/backgrounds/corporate.gif) no-repeat 986px 0px;
+}
+
+/* Banner styles */
+#banners {
+	background: #D8CDBA url(../images/banners/banner_corporate_left.gif) no-repeat;
+}
+
+#banners p#pagetitle {
+	background: transparent url(../images/banners/banner_default.gif) no-repeat;
+}
+	
+#banners div {
+	background: transparent url(../images/banners/banner_corporate_right.gif) scroll no-repeat right top;
+}	
+
+#column2 #banners div {
+	background: trasnparent url(../images/banners/banner_corporate_right.gif) scroll no-repear right top;
+}

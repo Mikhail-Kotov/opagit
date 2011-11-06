@@ -2,8 +2,8 @@
           </div><!-- END content-col -->
         </div><!-- END content -->
       </div><!-- END column -->
-    <div class="clear">&nbsp;</div>    
     </div><!-- END wrapper -->
+    <div class="clear">&nbsp;</div>
   </div><!-- END container -->
 </div><!-- END main -->
 
@@ -44,9 +44,11 @@
 // Create the tooltips only on document load
 $(document).ready(function() 
 {
-   // Match all link elements with href attributes within the content div
-   $('a[title]').qtip({ style: { name: 'cream', tip: true } })
-   
+   // HTML title values will be shown for each of the following form types ie input, textarea, select and label as a tool tip
+   $('input').qtip({ style: { name: 'cream', tip: true } })
+   $('textarea').qtip({ style: { name: 'cream', tip: true } })
+   $('select').qtip({ style: { name: 'cream', tip: true } })
+   $('label').qtip({ style: { name: 'cream', tip: true , color:black, target: 'topRight',tooltip: 'bottomLeft'} })   
 });
 </script>
 </body>

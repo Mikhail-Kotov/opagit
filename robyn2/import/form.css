@@ -1,0 +1,245 @@
+/** Swinburne University of Technology Website: form CSS
+ *  Cascade Style Sheet file including Styles destined to the 
+ *  presentation of forms in the website
+ *
+ *  MODIFIED:
+ *  version 1.0, 26 April 2007
+ *---	version 2.0, Oct 2011 Robyn Ius--
+*/
+/*qtip is from qtip library for the purpose of styling tool tips*/
+.qtip-title{
+       
+}
+.qtip-tip{
+    
+}
+
+.qtip-borderTop{
+ 
+}
+
+/* Styling of link buttons on bottom of forms
+created by Robyn*/  
+#bottom-menu{
+
+    text-decoration:none;
+    float:left;
+    margin:5px;
+    display:block;
+    width:
+    color:#999;
+	}
+	#addstatus{
+	    float:left;
+	    margin:5px;
+		}
+	
+	#history{
+	    float:left;
+	    margin:5px;
+		}
+	
+	#view-last-status{
+	    float:left;
+	    margin:5px;
+		}
+
+/* Styling of buttons on forms
+created by Robyn*/
+#menu-options{
+    text-decoration:none;
+    clear: both; 
+    padding: 15px 0 15px 12em; 
+	margin:5px 5px  5px 0 ;
+	}
+	
+	#edit-button{
+	    float:left;
+	    margin:0 5px 0 0;
+		}
+
+	#pdf-button{
+	    float:left;
+	    margin:0 5px 0 0;
+		}
+	
+	#delete-button{
+	    float:left;
+	    margin:0 5px 0 0;
+		}	
+	
+
+form {
+	vertical-align: top;
+	margin: 0;
+}
+/*
+  	Form Element classes used to define the aspect of the form elements
+  	contains all the form elements like buttons, checkboxes or input fields
+  	example: <input type="checkbox" class="form_checkbox">
+*/
+
+.form_button {
+	background-color: #ccc;
+	font-size: 0.90em;
+	font-family: Arial, Geneva, Helvetica;
+	font-weight: bold;
+	border: 1px solid #FFF;
+	border-width: 1px;
+	border-right-style: inset;
+	border-bottom-style: inset;
+	border-bottom-color: #666;
+	border-right-color: #666;
+}
+.form_dropdown {
+	font-family: Arial, Geneva, Helvetica;
+	font-size:1em;
+	color: #3A3939;
+	border: 1px solid #666;
+	width: 195px;
+}
+.form_textfield {
+	font-family: Arial, Geneva, Helvetica;
+	font-size:1em;
+	color: #3A3939;
+	border: 1px solid #666;
+	width: 190px;
+}
+.form_textfield_small {
+	font-family: Arial, Geneva, Helvetica;
+	font-size:1em;
+	color: #3A3939;
+	border: 1px solid #666;
+	width: 140px;
+}
+.form_textarea {
+	/* Couldn't use inherit - doesn't work in IE quirks mode. */
+
+	font-family: Arial, Geneva, Helvetica;
+	font-size:1em;
+	color: #3A3939;
+	border: 1px solid #666;
+}
+
+img { border: none; }
+
+/* Lists */
+.admin_list {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	margin-top: 1em;
+}
+.admin_list td {
+	margin: 0;
+	padding: 4px;
+	background: #F1F1F1;
+	border-bottom: 1px solid #FFF;
+	vertical-align: top;
+}
+.admin_list td.menu {
+	padding-left: 12px;	
+	background: #F1F1F1 url(../images/arrow7.gif) no-repeat top left;
+}
+.admin_list td.submenu {
+	padding-left: 20px;
+	background: #F1F1F1 url(../images/arrow5.gif) no-repeat 12px .75em;
+}
+.admin_list tr.dark td.menu {
+	padding-left: 12px;	
+	background: #E8E8E8 url(../images/arrow7.gif) no-repeat top left;
+}
+.admin_list tr.dark td.submenu {
+	padding-left: 20px;
+	background: #E8E8E8 url(../images/arrow5.gif) no-repeat 12px .75em;
+}
+.admin_list tr.invisible td.menu a, .admin_list tr.invisible td.submenu a {
+	color: #555;
+}
+.admin_list th {
+	text-align: left;
+	background: #CCC;
+	padding: 4px;
+	border-bottom: 1px solid #BBB;
+}
+.admin_list tr.dark td {
+	background: #E8E8E8
+}
+
+
+/* Forms */
+.form_radio_group { 
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.admin_list select {
+	height: 2em;
+	font-size: 1em;
+}
+.admin_list label select {
+	margin-left: .5em;
+}
+.admin_list input, textarea {
+	font-size: .8em;
+	font-family: "MS Shell Dlg", Arial, Helvetica, sans-serif
+}
+.admin_list input[type=text] {
+	border: 1px solid #555;
+	padding-left: 2px;
+}
+.admin_list textarea {
+	width: 420px;
+	height: 100px;
+	border: 1px solid #555;
+	padding-left: 2px;
+}
+.admin_list label {
+	color: #3A3939;
+	position: relative;
+	width: 100%;
+	display: block;
+}
+.admin_list abbr {
+	font-weight: normal;
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: #E91C17;
+	border: none;
+}
+.admin_list abbr {color: #E91C17;}
+.error { 
+	color: #E81C17; 
+	font-weight: bold;
+}
+.login_box .error {
+	background: #E91C17;
+	color: white;
+	font-weight: normal;
+}
+.admin_list .main_ul_2 {
+	padding: 1em;
+}
+.greyDottedLine {
+	display:block;
+	background: url(../images/main_div_gray_bg.gif) repeat-x bottom;
+	height:13px;
+}
+.msg {
+	background: #F9F9F9;
+	border: 1px solid #DDD;
+	padding: 10px;
+}
+.login_error
+		{
+			background-color: #EFEFEF ;
+			border: 1px solid #E99; 
+			color: #555; 
+			padding: 5px 10px 5px 10px; 
+			font-weight: bold;
+		}
+#login-box{
+	text-decoration:underline;
+	image
+	}
