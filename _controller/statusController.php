@@ -78,7 +78,7 @@ if ($sessionArr['strPage'] == "statusview") {
 
     if(!empty($statusObj->intStatusID)) {
         $statusObj->getDetails();
-        include_once("_model/status/view.php");
+        $statusObj->displayStatus();
     } else {
         $sessionArr['strPage'] = "statusadd";
     }
