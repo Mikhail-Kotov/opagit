@@ -122,7 +122,8 @@ class Controller {
             
             $memberGUIObj = new MemberGUI();
             $memberGUIObj->setSession($sessionArr);
-            $memberGUIObj->chooseMember();
+            $membersArr = $memberObj->getAllDetails();
+            $memberGUIObj->chooseMember($membersArr);
         }
 
         if ($sessionArr['strPage'] == "chooseproject") {

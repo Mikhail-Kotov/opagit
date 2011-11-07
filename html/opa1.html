@@ -6,9 +6,9 @@
 <link rel="stylesheet" type="text/css" href="import/import.css" />
 <script type="text/javascript" src="import/js/javascript_functions.js"></script>
 
-<script type="text/javascript" src="js/functions.js"></script> 
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/jquery.qtip.js"></script> 
+<script type="text/javascript" src="import/js/opa/functions.js"></script> 
+<script type="text/javascript" src="import/js/opa/jquery.js"></script>
+<script type="text/javascript" src="import/js/opa/jquery.qtip.js"></script> 
 
 <link rel="icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
 
@@ -70,118 +70,55 @@
             <li class="top_item"><a href="">Timesheets</a></li>
             <li class="selected"><form  action="" method="post">
 <div><input type="hidden" name="page" value="chooseproject" />
-<input type="hidden" name="intSessionID" value="200" />
+<input type="hidden" name="intSessionID" value="97" />
 <a><input type="submit" value="Choose Project" class="button" /></a>
 </div>
 </form></li>
             <li class="selected"><form  action="" method="post">
 <div><input type="hidden" name="page" value="status" />
-<input type="hidden" name="intSessionID" value="200" />
+<input type="hidden" name="intSessionID" value="97" />
 <a><input type="submit" value="Status" class="button" /></a>
 </div>
-</form>                                    <ul><li class="selected"><form  action="" method="post">
+</form>                </li>
 
-<div><input type="hidden" name="page" value="statushistory" />
-<input type="hidden" name="intSessionID" value="200" />
-<a><input type="submit" value="History" class="button" /></a>
-</div>
-</form></li>
-                        <li class="selected"><form  action="" method="post">
-<div><input type="hidden" name="page" value="statusadd" />
-<input type="hidden" name="intSessionID" value="200" />
-<a><input type="submit" value="Add" class="buttonselected" /></a>
-</div>
-</form></li>
-                        <li class="selected"><form  action="" method="post">
-<div><input type="hidden" name="page" value="statusview" />
-<input type="hidden" name="intSessionID" value="200" />
-<a><input type="submit" value="View Last" class="button" /></a>
-
-</div>
-</form></li>
-                    </ul>
-                </li>
             <li class="selected"><form  action="" method="post">
 <div><input type="hidden" name="page" value="risk" />
-<input type="hidden" name="intSessionID" value="200" />
+<input type="hidden" name="intSessionID" value="97" />
 <a><input type="submit" value="Risk" class="button" /></a>
 </div>
 </form>                </li>
             <li class="selected"><form  action="" method="post">
 <div><input type="hidden" name="page" value="issue" />
-
-<input type="hidden" name="intSessionID" value="200" />
+<input type="hidden" name="intSessionID" value="97" />
 <a><input type="submit" value="Issue" class="button" /></a>
 </div>
 </form>                </li>
             <li><a href="http://cit.wta.swin.edu.au/">CIT</a></li>
+
             <li><a href="#">Help</a></li>
-                            <li><a class="" href="">Logout</a></li>
                     </ul>
     </div><!-- END left_menu -->
-
 </div><!-- END navcol -->
 <div id="content">
     <div id="content-col">
         <!-- END MENU WRITER v2.0 -->
-        <h1>Add Status</h1>
-        <form method="post" action="" id="event-submission">
-            <div>
-            <input type="hidden" name="page" value="status" />
-            <input type="hidden" name="todo" value="add" />
+<div id="login_box">
+<div id="box"><h1>Login Here</h1>
+<p>Students and staff can now login to do project administration.</p>
 
-            <input type="hidden" name="intSessionID" value="200" />
-            <label for="strMemberName" title="Automatic name field.">Member Name:</label>
-            <div class="field"><input type="text" name="strMemberName" value="Your name" class="input-text"  size="35" maxlength="40" disabled="disabled" /></div><br />
-            <label for="intProjectID" title="Select a project that you want to report on.">Project Name:</label>
-            <div class="field">
-            <select name ="intProjectID">
-                <option value="1" selected="selected">OPA</option>
+<form method="post" action="" id="event-submission"><div>
+<label for="m">Choose a Member:</label><br /><select name="m" id="m" class="form_dropdown">
+<option value="1">Mikhail</option>
+<option value="2">Robyn</option>
+</select><br /><br />
+<label for="ssousername" title="Enter SIMS username.">SIMS Username:</label><br /><input class="form_textfield" style="width: 150px;" tabindex="1" type="text" id="ssousername" name="ssousername" value="" /><br /><br /><label for="password">SIMS Password:</label><br /><input name="password" id="password" class="form_textfield" style="width: 150px;" tabindex="2" type="password" /><br /><br /><input type="hidden" name="page" value="welcome" />
+<input type="hidden" name="intSessionID" value="97" />
+<input name="Submit" type="image" src="images/submit.gif" alt="Submit" />
 
-<option value="2">Project2</option>
-            </select>
-            </div><br />
-            <label for="dmtStatusCreationDate" title="The current date can be modified.">Status Creation Date:</label>
-            <div class="field"><input type="text" name="dmtStatusCurrentDate" class="input-text" size="10" maxlength="10" value="2011-11-06" /></div><br />
-            <label for="strActualBaseline" title="The actual baseline is based on your project management or Gantt. Enter your actual project status.">Actual Baseline:</label>
-            <div class="field">
-            <textarea name="strActualBaseline" title="The actual baseline is based on your project management or Gantt. Enter your actual project status." rows="2" cols="43"></textarea></div><br />
-
-            <label for="strPlanBaseline" title="The Plan Baseline is where you expect to be in your project management.">Plan Baseline:</label>
-            <div class="field"><textarea name="strPlanBaseline" title="The Plan Baseline is where you expect to be in your project management." rows="2" cols="43"></textarea></div><br />
-            <label for="strStatusVariation" title="Variation is the difference between the actual baseline and the planned baseline.">Variation:</label>
-            <div class="field"><textarea name="strStatusVariation" title="Variation is the difference between the actual baseline and the planned baseline." rows="2" cols="43"></textarea></div><br />
-            <label for="strStatusNotes" title="Enter the reason for a variation in your planned and actual baseline. Enter other notes here.">Notes/Reasons:</label>
-            <div class="field"><textarea name="strStatusNotes" title="Enter the reason for a variation in your planned and actual baseline. Enter other notes here." rows="2" cols="43"></textarea></div><br />
-
-            <label for="strAttachmentLink0" title="Browse for a file to substantiate your status e.g.Gantt image. You can upload the following file types: PDF, jpg, tiff, png, docx, xls.">Attachment 1:</label>
-            <div class="field"><input type="text" name="strAttachmentLink0" value="http://"/></div><br />
-            <label for="strAttachmentComment0" title="Name your attachment or add a comment.">Attachment Comment:</label>
-            <div class="field"><input type="text" name="strAttachmentComment0" /></div><br />
-            <br />
-            <input type="button" onclick="addAttachmentLink()" name="add" value="Add more attachments" /><br />
-            <br />
-            <input type="submit" value="Submit" />
-
-            </div>
-            </form>
-        <br /><table border="0"><tr><td><form  action="" method="post">
-<div><input type="hidden" name="page" value="statusadd" />
-<input type="hidden" name="intSessionID" value="200" />
-<a><input type="submit" value="Add Status" class="button" /></a>
 </div>
-</form></td><td><form  action="" method="post">
-<div><input type="hidden" name="page" value="statushistory" />
-<input type="hidden" name="intSessionID" value="200" />
-<a><input type="submit" value="Status History" class="button" /></a>
-</div>
-</form></td><td><form  action="" method="post">
-<div><input type="hidden" name="page" value="statusview" />
+</form>
+<p><a href="http://www.its.swinburne.edu.au/students/guides/faqs/sims.htm" title="Swinburne Identity Management System (SIMS) User Guide"><img src="images/arrow8.gif" alt="" height="10" width="8" />SIMS User Guide</a></p><p><a href="http://www.its.swinburne.edu.au/students/guides/faqs/sims.htm#student"><img src="images/arrow8.gif" alt="" height="10" width="8" />Help I forgot my username</a></p><p><a href=""><img src="images/arrow8.gif" alt="" height="10" width="8" />Help I forgot my password</a></p></div></div><!-- Start OPA footer -->
 
-<input type="hidden" name="intSessionID" value="200" />
-<a><input type="submit" value="View Last Status" class="button" /></a>
-</div>
-</form></td></tr></table><br /><a href="#top">Back to Top</a><!-- Start OPA footer -->
           </div><!-- END content-col -->
         </div><!-- END content -->
       </div><!-- END column -->
@@ -202,26 +139,26 @@
     }
 </script>
 <div id="footer">
+
   <div id="foot">
     <ul>
       <li>© Swinburne</li>
       <li>CRICOS number 00111D</li>
       <li><a href="http://www.swinburne.edu.au/contact.htm">Contact Us</a></li>
-
       <li><a href="http://localhost/disclaimer.htm" accesskey="8">Copyright and disclaimer</a></li>
       <li><a href="http://localhost/privacy.htm">Privacy</a></li>
+
       <li><a href="http://localhost/feedback.htm" accesskey="9">Feedback</a></li>
       <li><a href="http://localhost/accessibility.htm" accesskey="0">Accessibility Information</a></li>
       <li><a href="javascript:swinResizeText('-1')">- Smaller Font</a></li>
       <li class="last"><a href="javascript:swinResizeText('1')">+ Larger Font </a></li>
-
     </ul>
     <ul>
       <li>Style Last Updated: Wednesday, 18-Jun-2008 17:00:47 EST</li>
+
       <li>Style maintained by: Caroline Rojas <a href="mailto:webmaster@swin.edu.au">(webmaster@swin.edu.au)</a></li>
       <li>Authorised by: Andrew Normand <a href="mailto:webmaster@swin.edu.au">(webmaster@swin.edu.au)</a></li>
     </ul>
-
   </div>
 </div>
 
@@ -235,5 +172,6 @@ $(document).ready(function()
    
 });
 </script>
+
 </body>
 </html>

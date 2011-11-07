@@ -34,6 +34,11 @@ class Member {
         return $memberArr;
     }
     
+    public function getAllDetails() {
+        $membersArr = $this->memberDAObj->getAllDetails();
+        return $membersArr;
+    }
+    
     function getName() {
         if (isset($this->intMemberID)) {
             if ($this->intMemberID != "") {
