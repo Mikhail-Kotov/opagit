@@ -1,455 +1,181 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>Swinburne ICT Online Project Administration</title>
+
 <link rel="stylesheet" type="text/css" href="import/import.css" />
-<script src="import/js/javascript_functions.js" type="text/JavaScript"></script>
-<script type="text/javascript" src="js/functions.js"></script>
+
+<script type="text/javascript" src="import/js/javascript_functions.js"></script>
+<script type="text/javascript" src="js/functions.js"></script> 
 <script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/jquery.qtip.js"></script>
+<script type="text/javascript" src="js/jquery.qtip.js"></script> 
+
+
 <link rel="icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
 
 <!-- START META WRITER v2.0 -->
-
 <meta name="description" content="Online Project Administration is a tool for ICT students to keep project administration up to date." />
-<meta name="keywords" content="Online Project Administration, OPA,Status, Risk, Issues,Timesheets," />
+<meta name="keywords" content="Online Project Administration, OPA,Status, Risk, Issues, Timesheets" />
+
 <link rel="stylesheet" type="text/css" href="import/website.css" />
-
 <!-- END META WRITER v2.0 -->
-
-<title>Swinburne ICT Online Project Administration</title>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-
-<!--<title>OPA Team Prototype, version 10.27-0940</title>
-<link href="prototype.css" rel="stylesheet" type="text/css" />-->
-
 </head>
 
 <body>
 
 <!-- START: TOP NAVIGATION -->
-
 <div id="top"><a id="skip_content" href="#content" accesskey="S">Skip to Content</a></div>
 <div id="navigation">
+
   <ul id="top_menu">
     <li class="first"> <a id="nav_home" href="http://www.swinburne.edu.au/index.php" accesskey="1"> Swinburne Home<em title="Swinburne Home"></em></a></li>
-    <li><a id="nav_courses" href="http://courses.swinburne.edu.au/" 
-
-        >Courses<em title="Courses"></em></a></li>
-    <li><a id="nav_faculties" href="http://www.swinburne.edu.au/level2.php3?page=Schools/Departments" 
-
-        >Faculties &amp; TAFE<em title="Faculties &amp; TAFE"></em></a></li>
+    <li><a id="nav_courses" href="http://courses.swinburne.edu.au/">Courses<em title="Courses"></em></a></li>
+    <li><a id="nav_faculties" href="http://www.swinburne.edu.au/level2.php3?page=Schools/Departments">Faculties &amp; TAFE<em title="Faculties &amp; TAFE"></em></a></li>
     <li><a id="nav_international" href="http://www.international.swinburne.edu/">International <em title="International"></em></a></li>
+
     <li><a id="nav_campuses" href="http://www.swinburne.edu.au/campus.htm">Campuses <em title="Campuses"></em></a></li>
-    <li><a id="nav_research" href="http://www.research.swinburne.edu.au" 
+    <li><a id="nav_research" href="http://www.research.swinburne.edu.au/">Research<em title="Research"></em></a></li>
+    <li><a id="nav_staff" href="http://www.swinburne.edu.au/staff">Staff<em title="Staff"></em></a></li>
+    <li><a id="nav_student" href="http://www.swinburne.edu.au/student">Current Students<em title="Current Students"></em></a></li>
+    <li><a id="nav_my" href="http://my.swinburne.edu.au/pls/portal/PORTAL.home">My.Swinburne<em title="My.Swinburne"></em></a></li>
+    <li><a id="nav_search" href="http://www.swinburne.edu.au/cwis/search.htm" accesskey="4">Search<em title="Search"></em></a></li>
 
-        >Research<em title="Research"></em></a></li>
-    <li><a id="nav_staff" href="http://www.swinburne.edu.au/staff" 
-
-        >Staff<em title="Staff"></em></a></li>
-    <li><a id="nav_student" href="http://www.swinburne.edu.au/student" 
-
-        >Current Students<em title="Current Students"></em></a></li>
-    <li><a id="nav_my" href="http://my.swinburne.edu.au/pls/portal/PORTAL.home" 
-
-        >My.Swinburne<em title="My.Swinburne"></em></a></li>
-    <li><a id="nav_search" href="http://www.swinburne.edu.au/cwis/search.htm" 
-
-        accesskey="4" >Search<em title="Search"></em></a></li>
-    <li><a id="nav_index" href="http://www.swinburne.edu.au/admin/autoindex/index.htm" 
-
-        accesskey="3">Index<em title="Index"></em></a></li>
+    <li><a id="nav_index" href="http://www.swinburne.edu.au/admin/autoindex/index.htm" accesskey="3">Index<em title="Index"></em></a></li>
   </ul>
 </div>
+<!-- END: TOP NAVIGATION -->
+
 <div id="main">
   <div id="container"> 
-    
-    <!-- END: TOP NAVIGATION -->
     <div id="wrapper">
       <div id="column"> 
         
         <!-- Start Banner Large Version 2 -->
-        
         <div id="banners">
+
           <div>
             <p id="banner-logo"><span>Online Project Administration</span></p>
             <p id="pagetitle"><span>Status</span></p>
           </div>
         </div>
-        
+
         <!-- End Banner Large Version 2 --> 
+        <!-- End OPA header -->
         
-        <!--<div>--> 
-        <!--<table> width="1450" height="600" border="0"--> 
-        <!-- <tr>
-						      <td colspan="2" height="30">
-						      
-						</td>
-						  </tr>
-						  <tr>--> 
-        
-        <!-- header  header  header  header  header  header  header  header  header  header -->
-        
-        <div id="navcol"> 
-          <!-- START MENU WRITER v2.0 -->
-          <div id="left_menu">
-            <ul>
-              <li class="top_item"><a href="#">Timesheets</a></li>
-              <li class="selected"><a>
-                <form method="post">
-                  <input type="hidden" name="page" value="status" />
-                  <input type="hidden" name="p" value="1" />
-                  <input type="hidden" name="m" value="1" />
-                  <input type="submit" value="Status" class="button" />
-                </form>
-                </a>
-                <ul>
-                  <li class="selected"><a>
-                    <form method="post">
-                      <input type="hidden" name="page" value="statushistory" />
-                      <input type="hidden" name="p" value="1" />
-                      <input type="hidden" name="m" value="1" />
-                      <input type="submit" value="History" class="button" />
-                    </form>
-                    </a></li>
-                  <li class="selected"><a>
-                    <form method="post">
-                      <input type="hidden" name="page" value="statusadd" />
-                      <input type="hidden" name="p" value="1" />
-                      <input type="hidden" name="m" value="1" />
-                      <input type="submit" value="Add" class="button" />
-                    </form>
-                    </a></li>
-                  <li class="selected"><a>
-                    <form method="post">
-                      <input type="hidden" name="page" value="statusview" />
-                      <input type="hidden" name="p" value="1" />
-                      <input type="hidden" name="m" value="1" />
-                      <input type="submit" value="View Last" class="button" />
-                    </form>
-                    </a></li>
-                </ul>
-              </li>
-              <li><a href="#">Risk</a>
-                <ul>
-                  <li class="selected">
-                    <form method="post">
-                      <input type="hidden" name="page" value="riskhistory" />
-                      <input type="hidden" name="p" value="1" />
-                      <input type="hidden" name="m" value="1" />
-                      <input type="submit" value="Risk" class="button" />
-                    </form>
-                  </li>
-                  <li class="selected"><a href="#">Add Risk</a></li>
-                  <li class="selected"><a href="#">View Last Risk</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Issues</a>
-                <ul>
-                  <li class="selected">
-                    <form method="post">
-                      <input type="hidden" name="page" value="issuehistory" />
-                      <input type="hidden" name="p" value="1" />
-                      <input type="hidden" name="m" value="1" />
-                      <input type="submit" value="Issue" class="button" />
-                    </form>
-                  </li>
-                  <li class="selected"><a href="#">Add Issue</a></li>
-                  <li class="selected"><a href="#">View Last Issue</a></li>
-                </ul>
-              </li>
-              <li><a href="http://cit.wta.swin.edu.au">CIT</a></li>
-              <li><a href="#">Help</a></li>
-              <li><a href="javascript:history.go(-1)">Back</a></li>
-              <br />
-              <li><a class ="" href="">Logout</a></li>
-            </ul>
-          </div>
-          <!-- END MENU WRITER --> 
-        </div>
-        <!-- <table width="100%" border="0">
-        <tr>
-            <td colspan="2">
-                <form method="post"><input type="hidden" name="page" value="status" />
-<input type="hidden" name="p" value="1" />
-<input type="hidden" name="m" value="1" />
-<input type="submit" value="Status" class="button" />
-</form>            </td>
-        </tr>
-        <tr>
-            <td align="right">&nbsp;</td>
-            <td>
-                <form method="post"><input type="hidden" name="page" value="statushistory" />
-<input type="hidden" name="p" value="1" />
-<input type="hidden" name="m" value="1" />
-<input type="submit" value="History" class="button" />
-</form>            </td>
-        </tr>
-        <tr>
-            <td align="right">&nbsp;</td>
-            <td>
-                <form method="post"><input type="hidden" name="page" value="statusview" />
-<input type="hidden" name="p" value="1" />
-<input type="hidden" name="m" value="1" />
-<input type="submit" value="View Last" class="button" />
-</form>            </td>
-        </tr>
-        <tr>
-            <td align="right">&nbsp;</td>
-            <td>
-                <form method="post"><input type="hidden" name="page" value="statusadd" />
-<input type="hidden" name="p" value="1" />
-<input type="hidden" name="m" value="1" />
-<input type="submit" value="Add" class="button" />
-</form>            </td>
-        </tr>
-        <tr>
-            <td colspan="2">&nbsp;</td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <form method="post"><input type="hidden" name="page" value="issuehistory" />
-<input type="hidden" name="p" value="1" />
-<input type="hidden" name="m" value="1" />
-<input type="submit" value="Issue" class="button" />
-</form>            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <form method="post"><input type="hidden" name="page" value="riskhistory" />
-<input type="hidden" name="p" value="1" />
-<input type="hidden" name="m" value="1" />
-<input type="submit" value="Risk" class="button" />
-</form>            </td>
-        </tr>
-        <tr>
-            <td colspan="2">&nbsp;</td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <a href="#">Timesheets</a>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">&nbsp;</td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <a href="javascript:history.go(-1)">Back</a><br />
-                <a class ="" href="">Logout</a>
-            </td>
-        </tr>            
-    </table>
-</td>
-<td valign="top">-->
-        
-        <div id="content">
-          <div id="content-col"> 
-            
-            <!-- START: BREADCRUMBS --> 
-            
-            <!--<div id="breadcrumbs">
 
-                        <ul>
-
-                            <li>&gt; <a href="http://cit3.ldl.swin.edu.au/~opamin/files/prototypes/Mikhails-prototype/index.php">Status</a></li>
-
-                        </ul>
-
-                    </div>-->
-            <div class="clear" ></div>
-            
-            <!-- END: BREADCRUMBS -->
-            
-            <h1> Add Status</h1>
-            <p></p>
-            <div class="qtip-tip" rel="cornerValue">
-              <div class="qtip-title">
-                <div class="qtip-borderTop">
-                  <form name="statusadd" method="post" action="" id="event-submission">
-                    <h4 >&nbsp;</h4>
-                    <fieldset class="group">
-                      <input type="hidden" name="page" value="status" />
-                    </fieldset>
-                    <fieldset class="group">
-                      <input type="hidden" name="todo" value="add" />
-                    </fieldset>
-                    <fieldset class="group">
-                      <label for="m" title="Automatic name field.">Member Name:</label>
-                      <div class="field">
-                        <input type="text" class="input-text"  name="m" value="1" size="35" maxlength="40"/>
-                      </div>
-                    </fieldset>
-                    <input type="hidden" name="p" value="1" />
-                    <fieldset class="group">
-                      <label for="intProjectID" title="Select a project that you want to report on.">Project Name:</label>
-                      <div class="field">
-                        <select name ="intProjectID" title="Select a project that you want to report on.">
-                          <option value="1" selected="selected">OPA</option>
-                          <option value="2">Project2</option>
-                        </select>
-                      </div>
-                    </fieldset>
-                    <fieldset class="group">
-                      <label for="dmtStatusCurrentDate" title="The current date can be modified.">Status Creation Date:</label>
-                      <div class="field">
-                        <input class="input-text" title="The current date can be modified." type="text" name="dmtStatusCurrentDate" id="dmtStatusCurrentDate" value="2011-11-06" size="35" maxlength="40" />
-                      </div>
-                    </fieldset>
-                    <fieldset class="group">
-                      <label for="strActualBaseline" title="The actual baseline is based on your project management or Gantt. Enter your actual project status.">Actual Baseline:</label>
-                      <div class="field">
-                        <textarea name="strActualBaseline" title="The actual baseline is based on your project management or Gantt. Enter your actual project status." rows="2" cols="43"/>
-                        </textarea>
-                      </div>
-                    </fieldset>
-                    <fieldset class="group">
-                      <label for="strPlanBaseline" title="The Plan Baseline is where you expect to be in your project management.">Plan Baseline:</label>
-                      <div class="field">
-                        <textarea name="strPlanBaseline" title="The Plan Baseline is where you expect to be in your project management." rows="2" cols="43"/>
-                        </textarea>
-                      </div>
-                    </fieldset>
-                    <fieldset class="group">
-                      <label for="strStatusVariation" title="Variation is the difference between the actual baseline and the planned baseline.">Variation:</label>
-                      <div class="field">
-                        <textarea name="strStatusVariation" title="Variation is the difference between the actual baseline and the planned baseline." rows="2" cols="43"></textarea>
-                      </div>
-                    </fieldset>
-                    <fieldset class="group">
-                      <label for="strStatusNotes" title="Enter the reason for a variation in your planned and actual baseline. Enter other notes here.">Notes/Reasons:</label>
-                      <div class="field">
-                        <textarea name="strStatusNotes" title="Enter the reason for a variation in your planned and actual baseline. Enter other notes here." rows="2" cols="43"></textarea>
-                      </div>
-                    </fieldset>
-                    <fieldset class="group">
-                      <label for="strAttachmentLink0" title="Browse for a file to substantiate your status e.g.Gantt image. You can upload the following file types: PDF, jpg, tiff, png, docx, xls.">Attachment 1:</label>
-                      <div class="field">
-                        <input class="input-text" type="text" title="Browse for a file to substantiate your status e.g.Gantt image. You can upload the following file types: PDF, jpg, tiff, png, docx, xls." name="strAttachmentLink0" id="strAttachmentLink0" value="" size="35" maxlength="40" />
-                      </div>
-                    </fieldset>
-                    <fieldset class="group">
-                      <label for="strAttachmentComment0" title="Name your attachment or add a comment.">Attachment Comment:</label>
-                      <div class="field">
-                        <input class="input-text" type="text" name="strAttachmentComment0" id="strAttachmentComment0" value="" size="35" maxlength="40" />
-                      </div>
-                    </fieldset>
-                    <div class="submit"> 
-                      
-                      <!--create image for buttons--> 
-                      <!--<input type="image" src="http://www.swinburne.edu.au/images/buttons/form-btn-request.gif" name="btn-submit" />
-
-         <a href=""><img src="http://www.swinburne.edu.au/images/buttons/form-btn-reset.gif" alt="Reset" /></a>-->
-                      
-                      <input type="image" onclick="addAttachmentLink()" name="add" value="Add more attachments" src="images/addattach-button.gif"/>
-                      <br />
-                    </div>
-                    <div class="submit"> 
-                      <!--<input type="submit" value="Submit" />-->
-                      <input type="image" src="images/submit-button.gif" name="btn-submit" />
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div id="bottom-menu">
-              <li><a>
-                <form method="post">
-                  <input type="hidden" name="page" value="statusadd" />
-                  <input type="hidden" name="p" value="1" />
-                  <input type="hidden" name="m" value="1" />
-                  <input type="submit" value="Add Status" class="button" />
-                </form>
-                </a></li>
-              <li><a>
-                <form method="post">
-                  <input type="hidden" name="page" value="statushistory" />
-                  <input type="hidden" name="p" value="1" />
-                  <input type="hidden" name="m" value="1" />
-                  <input type="submit" value="Status History" class="button" />
-                </form>
-                </a></li>
-              <li><a>
-                <form method="post">
-                  <input type="hidden" name="page" value="statusview" />
-                  <input type="hidden" name="p" value="1" />
-                  <input type="hidden" name="m" value="1" />
-                  <input type="submit" value="View Last Status" class="button" />
-                </form>
-                </a></li>
-              <a href="#top">Back to Top</a></div>
-            
-            <!-- footer  footer  footer  footer  footer  footer  footer  footer  footer  footer --> 
-            <!--<div>
-      </div>--> 
-            
-          </div>
-          <!-- END: Engineering mode --> 
-          
-          <!-- END: Main page content --> 
-          
-        </div>
-      </div>
-      <div class="clear">&nbsp;</div>
-    </div>
-  </div>
-  
-  <!-- START FOOTER WRTIER v2.0 --> 
-  
+<!-- START MENU WRITER v2.0 -->
+<div id="navcol">
+    <div id="left_menu">
+        <ul>
+            <li class="top_item"><a href="">Timesheets</a></li>
+            <li class="selected"><form  action="" method="post">
+<div><input type="hidden" name="page" value="chooseproject" />
+<input type="hidden" name="intSessionID" value="112" />
+<input type="submit" value="Choose Project" class="button" />
 </div>
+</form></li>
+            <li class="selected"><form  action="" method="post">
+
+<div><input type="hidden" name="page" value="status" />
+<input type="hidden" name="intSessionID" value="112" />
+<input type="submit" value="Status" class="button" />
+</div>
+</form>                </li>
+            <li class="selected"><form  action="" method="post">
+<div><input type="hidden" name="page" value="risk" />
+<input type="hidden" name="intSessionID" value="112" />
+<input type="submit" value="Risk" class="button" />
+</div>
+</form>                </li>
+            <li class="selected"><form  action="" method="post">
+<div><input type="hidden" name="page" value="issue" />
+
+<input type="hidden" name="intSessionID" value="112" />
+<input type="submit" value="Issue" class="button" />
+</div>
+</form>                </li>
+            <li><a href="http://cit.wta.swin.edu.au/">CIT</a></li>
+            <li><a href="#">Help</a></li>
+                    </ul>
+    </div><!-- END left_menu -->
+</div><!-- END navcol -->
+<div id="content">
+
+    <div id="content-col">
+<!-- END MENU WRITER v2.0 -->
+    <div id="login_box" summary="Login Here">
+<div id="box"><h1>Login Here</h1>
+<p>Students and staff can now login to do project administration.</p>
+<form method="post" action="" id="event-submission">
+<p>
+<p><label for="m">Choose a Member:</label><br /><select name="m" class="form_dropdown">
+<option value="1">Mikhail</option>
+<option value="2">Robyn</option>
+
+</select>
+<p><label for="ssousername" title="Enter SIMS username.">SIMS Username:</label><br /><input class="form_textfield" style="width: 150px;" tabindex="1" type="text" id="ssousername" name="ssousername" value=""></p><p><label for="password">SIMS Password:</label><br /><input name="password" id="password" class="form_textfield" style="width: 150px;" tabindex="2" type="password"></p><input type="hidden" name="page" value="welcome" />
+<input type="hidden" name="intSessionID" value="112" />
+<p><input name="Submit" type="image" src="images/submit.gif" alt="Submit" /></p>
+</p>
+</form>
+<p><a href="http://www.its.swinburne.edu.au/students/guides/faqs/sims.htm" title="Swinburne Identity Management System (SIMS) User Guide"><img src="images/arrow8.gif" alt="" border="0" height="10" width="8">SIMS User Guide</a></p><p><a href="http://www.its.swinburne.edu.au/students/guides/faqs/sims.htm#student"><img src="images/arrow8.gif" alt="" border="0" height="10" width="8">Help I forgot my username</a></p><p><a href=""><img src="images/arrow8.gif" alt="" border="0" height="10" width="8">Help I forgot my password</a></p></div></div><!-- Start OPA footer -->
+          </div><!-- END content-col -->
+        </div><!-- END content -->
+      </div><!-- END column -->
+
+    </div><!-- END wrapper -->
+    <div class="clear">&nbsp;</div>
+  </div><!-- END container -->
+</div><!-- END main -->
+
+<!-- START FOOTER WRITER v2.0 --> 
+
 <script type="text/javascript">
-
-function swinResizeText(param)
-
-{
-
-	if(param=='-1')
-
-	{
-
-		swinResizeSmall();
-
-	}
-
-	else {
-
-		swinResizeLarge();
-
-	}
-
-}
-
+    function swinResizeText(param) {
+        if(param=='-1') {
+            swinResizeSmall();
+        } else {
+            swinResizeLarge();
+        }
+    }
 </script>
 <div id="footer">
   <div id="foot">
     <ul>
-      <li>&copy; Swinburne</li>
+      <li>© Swinburne</li>
+
       <li>CRICOS number 00111D</li>
       <li><a href="http://www.swinburne.edu.au/contact.htm">Contact Us</a></li>
-      <li><a href="/disclaimer.htm" accesskey="8">Copyright and disclaimer</a></li>
-      <li><a href="/privacy.htm">Privacy</a></li>
-      <li><a href="/feedback.htm" accesskey="9">Feedback</a></li>
-      <li><a href="/accessibility.htm" accesskey="0">Accessibility Information</a></li>
+      <li><a href="http://localhost/disclaimer.htm" accesskey="8">Copyright and disclaimer</a></li>
+      <li><a href="http://localhost/privacy.htm">Privacy</a></li>
+      <li><a href="http://localhost/feedback.htm" accesskey="9">Feedback</a></li>
+      <li><a href="http://localhost/accessibility.htm" accesskey="0">Accessibility Information</a></li>
+
       <li><a href="javascript:swinResizeText('-1')">- Smaller Font</a></li>
       <li class="last"><a href="javascript:swinResizeText('1')">+ Larger Font </a></li>
     </ul>
     <ul>
       <li>Style Last Updated: Wednesday, 18-Jun-2008 17:00:47 EST</li>
-      <li>Style maintained by: Caroline Rojas <a href="mailto:webmaster&#64;&#115;&#119;&#105;&#110;&#46;edu&#46;au">(webmaster&#64;&#115;&#119;&#105;&#110;&#46;edu&#46;au)</a></li>
+      <li>Style maintained by: Caroline Rojas <a href="mailto:webmaster@swin.edu.au">(webmaster@swin.edu.au)</a></li>
+
       <li>Authorised by: Andrew Normand <a href="mailto:webmaster@swin.edu.au">(webmaster@swin.edu.au)</a></li>
     </ul>
   </div>
 </div>
 
-<!-- END FOOTER WRTIER --> 
+<!-- END FOOTER WRITER --> 
 <script type="text/javascript">
 // Create the tooltips only on document load
 $(document).ready(function() 
 {
-   // Match all link elements with href attributes within the content div
-   $('a[title]').qtip({ style: { name: 'cream', tip: true } })
-   
+   // HTML title values will be shown for each of the following form types ie input, textarea, select and label as a tool tip
+   $('input').qtip({ style: { name: 'cream', tip: true } })
+   $('textarea').qtip({ style: { name: 'cream', tip: true } })
+   $('select').qtip({ style: { name: 'cream', tip: true } })
+   $('label').qtip({ style: { name: 'cream', tip: true , color:black, target: 'topRight',tooltip: 'bottomLeft'} })   
 });
 </script>
 </body>

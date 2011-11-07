@@ -1,6 +1,7 @@
 <?php
 
 class Status {
+    private $statusDAObj;
     private $projectObj, $memberObj, $attachmentObj, $sessionObj;
     private $memberArr, $projectArr;
     public $intStatusID;
@@ -12,6 +13,8 @@ class Status {
     public $strStatusNotes; // Notes/Reasons
 
     function __construct($memberObj, $projectObj, $attachmentObj, $sessionObj) {
+        $this->statusDAObj = new StatusDA();
+        
         $this->projectObj = $projectObj;
         $this->memberObj = $memberObj;
         $this->attachmentObj = $attachmentObj;
@@ -44,19 +47,15 @@ class Status {
     }
     
     function getDetails() {
-        $query = "SELECT intStatusID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," . 
-                "strStatusVariation,strStatusNotes FROM tblStatus" .
-                " WHERE intStatusID = " . $this->intStatusID;
+        $memberArr = $this->statusDAObj->getDetails($this->intStatusID);
 
-        $sqlArr = $_ENV['db']->query($query);
-       
-        if(isset($sqlArr[0])) {
-            $this->intStatusID = $sqlArr[0]['intStatusID'];
-            $this->dmtStatusCurrentDate = $sqlArr[0]['dmtStatusCurrentDate'];
-            $this->strActualBaseline = $sqlArr[0]['strActualBaseline'];
-            $this->strPlanBaseline = $sqlArr[0]['strPlanBaseline'];
-            $this->strStatusVariation = $sqlArr[0]['strStatusVariation'];
-            $this->strStatusNotes = $sqlArr[0]['strStatusNotes'];
+        if(isset($memberArr)) {
+            $this->intStatusID = $memberArr['intStatusID'];
+            $this->dmtStatusCurrentDate = $memberArr['dmtStatusCurrentDate'];
+            $this->strActualBaseline = $memberArr['strActualBaseline'];
+            $this->strPlanBaseline = $memberArr['strPlanBaseline'];
+            $this->strStatusVariation = $memberArr['strStatusVariation'];
+            $this->strStatusNotes = $memberArr['strStatusNotes'];
         }
         
         $this->attachmentObj->setStatusID($this->intStatusID);
@@ -64,14 +63,10 @@ class Status {
     }
     
     function getLastStatusID() {
-        $query = "SELECT intStatusID FROM tblStatus" .
-                " WHERE intProjectID = " . $this->projectObj->getID() .
-                " ORDER BY intStatusID DESC LIMIT 1;";
-
-        $sqlArr = $_ENV['db']->query($query);
+        $intStatusID = $this->statusDAObj->getLastStatusID($this->projectObj->getID());
        
-        if(isset($sqlArr[0])) {
-            $this->intStatusID = $sqlArr[0]['intStatusID'];
+        if(!empty($intStatusID)) {
+            $this->intStatusID = $intStatusID;
         }
     }
     
@@ -351,7 +346,7 @@ class Status {
     function displayAddForm() {
         ?>
         <h1>Add Status</h1>
-        <form name="statusadd" method="post" action="">
+        <form name="statusadd" method="post" action="" id="event-submission">
         <!-- <form name="statusadd" method="post" action="" id="event-submission"> -->
             <div>
             <input type="hidden" name="page" value="status" />
