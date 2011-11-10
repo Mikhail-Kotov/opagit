@@ -33,6 +33,13 @@ class StatusDA {
         
         return $intStatusID;
     }
+    
+    public function delDetails($intStatusID) {
+        $query = "DELETE FROM tblStatus WHERE intStatusID='" . $intStatusID . "';";
+        $sql = mysql_query($query);
+        if (!$sql)
+            die('Invalid query: ' . mysql_error());
+    }
 
 }
 

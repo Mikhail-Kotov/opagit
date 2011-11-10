@@ -2,7 +2,8 @@
 
 class Status {
     private $statusDAObj;
-    private $projectObj, $memberObj, $attachmentObj, $sessionObj;
+    private $projectObj, $memberObj, $attachmentObj;
+    private $intSessionID;
     private $memberArr, $projectArr;
     public $intStatusID;
     public $intProjectMemberID;
@@ -12,13 +13,13 @@ class Status {
     public $strStatusVariation; // variation
     public $strStatusNotes; // Notes/Reasons
 
-    function __construct($memberObj, $projectObj, $attachmentObj, $sessionObj) {
+    function __construct($memberObj, $projectObj, $attachmentObj, $intSessionID) {
         $this->statusDAObj = new StatusDA();
         
         $this->projectObj = $projectObj;
         $this->memberObj = $memberObj;
         $this->attachmentObj = $attachmentObj;
-        $this->sessionObj = $sessionObj;
+        $this->intSessionID = $intSessionID;
         $this->intProjectMemberID = $this->getProjectMember();
         
         $this->memberArr = $this->memberObj->getDetails();
@@ -152,14 +153,9 @@ class Status {
 
     }
 
-    function delDetails($intStatusID) {
-        $query = "DELETE FROM tblStatus WHERE intStatusID='$intStatusID';";
-        $sql = mysql_query($query);
-        if (!$sql)
-            die('Invalid query: ' . mysql_error());
-        
-        $this->attachmentObj->delDetails($intStatusID);
-        
+    function delDetails() {
+        $this->statusDAObj->delDetails($this->intStatusID);
+        $this->attachmentObj->delDetails($this->intStatusID);
         unset($this->intStatusID);
     }
 
@@ -172,7 +168,7 @@ class Status {
         echo '<tr><td><form method="post" action="">';
         echo "<div>\n";
         echo '<input type="hidden" name="page" value="statusedit" />' . "\n";
-        echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="intSessionID" value="' . $this->intSessionID . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
         echo '<input type="submit" value="Edit Status" class="button" />' . "\n";
         echo "</div>\n";
@@ -180,7 +176,7 @@ class Status {
         echo '<td><form method="post" action="">';
         echo "<div>\n";
         echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
-        echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="intSessionID" value="' . $this->intSessionID . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
         echo '<input type="submit" value="PDF" class="button" />' . "\n";
         echo "</div>\n";
@@ -189,7 +185,7 @@ class Status {
         echo "<div>\n";
         echo '<input type="hidden" name="page" value="status" />' . "\n";
         echo '<input type="hidden" name="todo" value="delete" />' . "\n";
-        echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
+        echo '<input type="hidden" name="intSessionID" value="' . $this->intSessionID . '" />' . "\n";
         echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
         echo '<input type="submit" value="Delete" class="button" />' . "\n";
         echo "</div>\n";
@@ -201,11 +197,11 @@ class Status {
     
     function bottomMenu() {
         echo '<br /><table border="0"><tr><td>';
-        displayButton("statusadd", "Add Status", $this->sessionObj->getID());
+        displayButton("statusadd", "Add Status", $this->intSessionID);
         echo "</td><td>";
-        displayButton("statushistory", "Status History", $this->sessionObj->getID());
+        displayButton("statushistory", "Status History", $this->intSessionID);
         echo "</td><td>";
-        displayButton("statusview", "View Last Status", $this->sessionObj->getID());
+        displayButton("statusview", "View Last Status", $this->intSessionID);
         echo '</td></tr></table><br /><a href="#top">Back to Top</a>';
     }
 
@@ -304,7 +300,7 @@ class Status {
                 echo '<td class="' . $oddOrEven . '">'."\n";
                 echo '<form method="post" action="">';
                 echo '<input type="hidden" name="page" value="statusview" />' . "\n";
-                echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
+                echo '<input type="hidden" name="intSessionID" value="' . $this->intSessionID . '" />' . "\n";
                 echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
                 echo '<input type="submit" value="View" title="View current Status" class="button" />' . "\n";
                 echo "</form>\n";
@@ -323,7 +319,7 @@ class Status {
                 echo '<td class="' . $oddOrEven . '">'."\n";
                 echo '<form method="post" action="">';
                 echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
-                echo '<input type="hidden" name="intSessionID" value="' . $this->sessionObj->getID() . '" />' . "\n";
+                echo '<input type="hidden" name="intSessionID" value="' . $this->intSessionID . '" />' . "\n";
                 echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
                 echo '<input type="submit" value="PDF" title="PDF current Status" class="button" />' . "\n";
                 echo "</form>\n";
@@ -357,7 +353,7 @@ class Status {
             <div>
             <input type="hidden" name="page" value="status" />
             <input type="hidden" name="todo" value="add" />
-            <input type="hidden" name="intSessionID" value="<?php echo $this->sessionObj->getID(); ?>" />
+            <input type="hidden" name="intSessionID" value="<?php echo $this->intSessionID; ?>" />
             <label for="strMemberName" title="Automatic name field.">Member Name:</label>
             <div class="field"><input type="text" name="strMemberName" value="Your name" class="input-text"  size="35" maxlength="40" disabled="disabled" /></div><br />
             
@@ -442,7 +438,7 @@ class Status {
             <input type="hidden" name="page" value="status" />
             <input type="hidden" name="todo" value="edit" />
             <input type="hidden" name="s" value="<?php echo $this->intStatusID; ?>" />
-            <input type="hidden" name="intSessionID" value="<?php echo $this->sessionObj->getID(); ?>" />
+            <input type="hidden" name="intSessionID" value="<?php echo $this->intSessionID; ?>" />
             Status Creation Date:<br />
             <input type="text" name="dmtStatusCurrentDate" value="<?php echo $this->dmtStatusCurrentDate; ?>"/><br /><br />
             Project Name:<br />

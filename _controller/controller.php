@@ -91,7 +91,7 @@ class Controller {
         
         if(isset($memberObj) && isset($projectObj)) {
             $attachmentObj = new Attachment();    
-            $statusObj = new Status($memberObj, $projectObj, $attachmentObj, $sessionObj);
+            $statusObj = new Status($memberObj, $projectObj, $attachmentObj, $sessionArr['intSessionID']);
     
             // init status by default
             if(!empty($sessionArr['intStatusID'])) {

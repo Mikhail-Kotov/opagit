@@ -19,9 +19,9 @@ class SessionDA {
             if(!empty($strTodo)) { $query .= ",strTodo='" . $strTodo . "'";  } else { $query .= ",strTodo=NULL"; }
             if(!empty($intMemberID)) { $query .= ",intMemberID='" . $intMemberID . "'"; }
             if(!empty($intProjectID)) { $query .= ",intProjectID='" . $intProjectID . "'"; } 
-            if(!empty($intStatusID)) { $query .= ",intStatusID='" . $intStatusID . "'"; } 
-            if(!empty($intRiskID)) { $query .= ",intRiskID='" . $intRiskID . "'"; } 
-            if(!empty($intIssueID)) { $query .= ",intIssueID='" . $intIssueID . "'"; } 
+            if(!empty($intStatusID)) { $query .= ",intStatusID='" . $intStatusID . "'"; } else { $query .= ",intStatusID=NULL"; }
+            if(!empty($intRiskID)) { $query .= ",intRiskID='" . $intRiskID . "'"; }  else { $query .= ",intRiskID=NULL"; }
+            if(!empty($intIssueID)) { $query .= ",intIssueID='" . $intIssueID . "'"; }  else { $query .= ",intIssueID=NULL"; }
             $query .= " WHERE intSessionID = '" . $intSessionID . "';"; // AND SID
         } else {
             // find out next intSessionID

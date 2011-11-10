@@ -26,9 +26,12 @@ if ($sessionArr['strPage'] == "status") {
         }
         
         if ($sessionArr['strTodo'] == "delete") {
-            $statusObj->delDetails($sessionArr['intStatusID']);
-            unset($sessionArr['intStatusID']);
+            $statusObj->setID($sessionArr['intStatusID']);
+            $statusObj->delDetails();
+            
+            $sessionArr['intStatusID'] = null;
             $sessionObj->setDetails($sessionArr);
+            var_dump($sessionArr);
         }
         
         if ($sessionArr['strTodo'] == "edit") {
@@ -90,6 +93,9 @@ if ($sessionArr['strPage'] == "statusview") {
 }
 
 if ($sessionArr['strPage'] == "statusadd") {
+    $sessionArr['intStatusID'] = null;
+    $sessionObj->setDetails($sessionArr);
+    
     $statusObj->displayAddForm();
 }
 
