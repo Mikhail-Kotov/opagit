@@ -23,10 +23,21 @@ class Session {
         $this->strTodo = $sessionArr['strTodo'];
         $this->intMemberID = $sessionArr['intMemberID'];
         $this->intProjectID = $sessionArr['intProjectID'];
-        $this->intStatusID = $sessionArr['intStatusID'];
-        $this->intRiskID = $sessionArr['intRiskID'];
-        $this->intIssueID = $sessionArr['intIssueID'];
-        
+        if(isset($sessionArr['intStatusID'])) {
+            $this->intStatusID = $sessionArr['intStatusID'];
+        } else {
+            $this->intStatusID = null;
+        }
+        if(isset($sessionArr['intRiskID'])) {
+            $this->intRiskID = $sessionArr['intRiskID'];
+        } else {
+            $this->intRiskID = null;
+        }
+        if(isset($sessionArr['intIssueID'])) {
+            $this->intIssueID = $sessionArr['intIssueID'];
+        } else {
+            $this->intIssueID = null;
+        }
 
         $this->intSessionID = $this->sessionDAObj->setDetails($this->intSessionID, $this->strSessionSID, $this->strPage, $this->strTodo, 
                 $this->intMemberID, $this->intProjectID, $this->intStatusID, $this->intRiskID, $this->intIssueID); // if intSessionID is empty - create a new one

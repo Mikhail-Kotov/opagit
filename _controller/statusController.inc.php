@@ -27,6 +27,8 @@ if ($sessionArr['strPage'] == "status") {
         
         if ($sessionArr['strTodo'] == "delete") {
             $statusObj->delDetails($sessionArr['intStatusID']);
+            unset($sessionArr['intStatusID']);
+            $sessionObj->setDetails($sessionArr);
         }
         
         if ($sessionArr['strTodo'] == "edit") {
@@ -60,7 +62,7 @@ if ($sessionArr['strPage'] == "status") {
 
 if ($sessionArr['strPage'] == "statushistory") {
     $statusObj->getLastStatusID();
-    if(isset($statusObj->intStatusID)) {
+    if(!empty($statusObj->intStatusID)) {
         $statusObj->getDetails();
         $statusObj->displayStatusHistory();
     } else {
@@ -70,17 +72,20 @@ if ($sessionArr['strPage'] == "statushistory") {
 
 if ($sessionArr['strPage'] == "statusview") {
     if (!empty($sessionArr['intStatusID'])) {
+        echo "aaaaaaaaaaaaaaaaaa".$sessionArr['intStatusID']; // debug
         $statusObj->setID($sessionArr['intStatusID']);
-    } else {
-        $statusObj->getLastStatusID();
-        $sessionArr['intStatusID'] = $statusObj->getID();
-    }
-
-    if(!empty($statusObj->intStatusID)) {
         $statusObj->getDetails();
         $statusObj->displayStatus();
     } else {
-        $sessionArr['strPage'] = "statusadd";
+        $sessionArr['intStatusID'] = $statusObj->getLastStatusID();
+        $sessionObj->setDetails($sessionArr);
+        if (!empty($sessionArr['intStatusID'])) {
+            $statusObj->setID($sessionArr['intStatusID']);
+            $statusObj->getDetails();
+            $statusObj->displayStatus();
+        } else {
+            $sessionArr['strPage'] = "statusadd";
+        }
     }
 }
 

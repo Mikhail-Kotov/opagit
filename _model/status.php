@@ -67,7 +67,11 @@ class Status {
        
         if(!empty($intStatusID)) {
             $this->intStatusID = $intStatusID;
+        } else {
+            unset($this->intStatusID);
         }
+        
+        return $intStatusID;
     }
     
     function getGlobalLastStatusID() {
@@ -155,6 +159,8 @@ class Status {
             die('Invalid query: ' . mysql_error());
         
         $this->attachmentObj->delDetails($intStatusID);
+        
+        unset($this->intStatusID);
     }
 
     function displayStatus() {

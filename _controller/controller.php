@@ -146,9 +146,9 @@ class Controller {
             $GUIObj->welcome();
         }
 
-        include_once("_controller/statusController.php");
-        include_once("_controller/riskController.php");
-        include_once("_controller/issueController.php");
+        include_once("_controller/statusController.inc.php");
+        include_once("_controller/riskController.inc.php");
+        include_once("_controller/issueController.inc.php");
 
         $GUIObj->footer();
     }

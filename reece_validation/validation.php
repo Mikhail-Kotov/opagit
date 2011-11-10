@@ -1,17 +1,17 @@
 <?php
 
 /*
- 
-Function to validate diffrent things on a form. I.e filesize, String Length
-Email
-      
-*/
+
+  Function to validate diffrent things on a form. I.e filesize, String Length
+  Email
+
+ */
 
 //function to validate string depending on it's length
 function validateString($string, $length) {
-    if (strlen($string) < $length){
+    if (strlen($string) < $length) {
         return false;
-    }else{
+    } else {
         return true;
     }
 }
@@ -22,13 +22,12 @@ function validateEmail($email) {
 }
 
 //function to validate file size
-function validateFileSize($file_name){
-    if(filesize($file_name) <= 2097152){
+function validateFileSize($file_name) {
+    if (filesize($file_name) <= 2097152) {
         return true;
-    }else{
+    } else {
         return false;
-    }    
+    }
 }
-
 
 ?>
