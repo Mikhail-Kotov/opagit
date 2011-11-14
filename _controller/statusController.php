@@ -153,6 +153,10 @@ class statusController {
             die("wrong data in edit form");
         }
     }
+    
+    private function displayEmailStatusForm() {
+        
+    }
 
 }
 

@@ -2,7 +2,7 @@
 
 class Status {
     private $statusDAObj;
-    private $projectObj, $memberObj, $attachmentObj;
+    private $attachmentObj;
     private $intSessionID;
     private $memberArr, $projectArr;
     public $intStatusID;
@@ -13,23 +13,21 @@ class Status {
     public $strStatusVariation; // variation
     public $strStatusNotes; // Notes/Reasons
 
-    function __construct($memberObj, $projectObj, $attachmentObj, $intSessionID) {
+    function __construct($memberArr, $projectArr, $attachmentObj, $intSessionID) {
         $this->statusDAObj = new StatusDA();
         
-        $this->projectObj = $projectObj;
-        $this->memberObj = $memberObj;
+        $this->memberArr = $memberArr;
+        $this->projectArr = $projectArr;
+        
         $this->attachmentObj = $attachmentObj;
         $this->intSessionID = $intSessionID;
         $this->intProjectMemberID = $this->getProjectMember();
-        
-        $this->memberArr = $this->memberObj->getDetails();
-        $this->projectArr = $this->projectObj->getDetails();
     }
 
     function getProjectMember() {
         $query = "SELECT intProjectMemberID FROM tblProjectMember WHERE" .
-                " intProjectID = " . $this->projectObj->getID() .
-                " AND intMemberID = " . $this->memberObj->getID() . ";";
+                " intProjectID = " . $this->projectArr['intProjectID'] .
+                " AND intMemberID = " . $this->memberArr['intMemberID'] . ";";
 
         $sqlArr = $_ENV['db']->query($query);
 
@@ -64,7 +62,7 @@ class Status {
     }
     
     function getLastStatusID() {
-        $intStatusID = $this->statusDAObj->getLastStatusID($this->projectObj->getID());
+        $intStatusID = $this->statusDAObj->getLastStatusID($this->projectArr['intProjectID']);
        
         if(!empty($intStatusID)) {
             $this->intStatusID = $intStatusID;
@@ -102,7 +100,7 @@ class Status {
         
         
         
-        $query = "UPDATE tblStatus SET intProjectID='" . mysql_real_escape_string($this->projectObj->getID()) . 
+        $query = "UPDATE tblStatus SET intProjectID='" . mysql_real_escape_string($this->projectArr['intProjectID']) . 
                 "',intProjectMemberID='" . mysql_real_escape_string($this->intProjectMemberID) .
                 "',dmtStatusCurrentDate='" . mysql_real_escape_string($dmtStatusCurrentDate) .
                 "',strActualBaseline='" . mysql_real_escape_string($strActualBaseline) . 
@@ -136,7 +134,7 @@ class Status {
                 "strStatusNotes) " .
                 "values (" .
                 "'" . $nextStatusID .
-                "', '" . mysql_real_escape_string($this->projectObj->getID()) .
+                "', '" . mysql_real_escape_string($this->projectArr['intProjectID']) .
                 "', '" . mysql_real_escape_string($this->intProjectMemberID) .
                 "', '" . mysql_real_escape_string($dmtStatusCurrentDate) .
                 "', '" . mysql_real_escape_string($strActualBaseline) .
@@ -230,18 +228,19 @@ class Status {
     function displayStatusHistory() {
         $query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," .
                 "strStatusVariation,strStatusNotes" .
-                " FROM tblStatus WHERE intProjectID = '" . $this->projectObj->getID() . "';";
+                " FROM tblStatus WHERE intProjectID = '" . $this->projectArr['intProjectID'] . "';";
         $sqlArr = $_ENV['db']->query($query);
         $_ENV['firephp']->log($sqlArr, 'sqlArr');
 
         $caption = "Status History for Project: " . $this->projectArr['strProjectName'];
 
-//$arr3 = array();
+        $memberObj = new Member();
+        
         foreach ($sqlArr as $intStatusID => $statusArr) {
             foreach ($statusArr as $columnName => $value) {
                 switch ($columnName) {
                     case "intProjectMemberID":
-                        $historyTableArr[$intStatusID]["intMemberName"] = $this->memberObj->getMemberName($value);
+                        $historyTableArr[$intStatusID]["intMemberName"] = $memberObj->getMemberName($value);
                         break;
                     case "dmtStatusCurrentDate":
                         $historyTableArr[$intStatusID][$columnName] = date("jS F Y", strtotime($value));
@@ -361,10 +360,10 @@ class Status {
             <div class="field">
             <select name="intProjectID">
                 <?php
-                $projectsArr = getProjects($this->memberObj->getID());
+                $projectsArr = getProjects($this->memberArr['intMemberID']);
                 foreach ($projectsArr as $columnName => $value) {
                     echo '<option value="' . $value['intProjectID'] . '"';
-                    if ($value['intProjectID'] == $this->projectObj->getID()) {
+                    if ($value['intProjectID'] == $this->projectArr['intProjectID']) {
                         echo ' selected="selected"';
                     }
                     echo'>' . $value['strProjectName'] . "</option>\n";
@@ -403,6 +402,7 @@ class Status {
     }
     
     function statusMessage() {
+        
         $currentStatusMessage = "<b>Date:</b> " . date("jS F Y", strtotime($this->dmtStatusCurrentDate)) . "<br />" .
                 "<b>Status created by:</b> " . $this->memberArr['strMemberFirstName'] . " " . $this->memberArr['strMemberLastName'] . "<br />" .
                 "<b>Project:</b> " . $this->projectArr['strProjectName'] . "<br /><br />" .
@@ -444,10 +444,10 @@ class Status {
             Project Name:<br />
             <select name ="intProjectID">
         <?php
-        $projectsArr = getProjects($this->memberObj->getID());
+        $projectsArr = getProjects($this->memberArr['intMemberID']);
         foreach ($projectsArr as $columnName => $value) {
             echo '<option value="' . $value['intProjectID'] . '"';
-            if ($value['intProjectID'] == $this->projectObj->getID()) {
+            if ($value['intProjectID'] == $this->projectArr['intProjectID']) {
                 echo ' selected="selected"';
             }
             echo'>' . $value['strProjectName'] . "</option>\n";

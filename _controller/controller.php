@@ -71,7 +71,7 @@ class Controller {
         if (!empty($sessionArr['intMemberID'])) {
             $memberObj = new Member();
             $memberObj->setSession($sessionArr);
-            $memberObj->getDetails();
+            $memberArr = $memberObj->getDetails();
         } else {
             $sessionArr['strPage'] = "choosemember";
         }
@@ -79,7 +79,7 @@ class Controller {
         if (!empty($sessionArr['intProjectID'])) {
             $projectObj = new Project();
             $projectObj->setSession($sessionArr);
-            $projectObj->getDetails();
+            $projectArr = $projectObj->getDetails();
         }
         if ( ( (strcmp("status", substr($sessionArr['strPage'], 0, 6)) == 0) || 
                (strcmp("risk", substr($sessionArr['strPage'], 0, 4))   == 0) ||
@@ -91,7 +91,7 @@ class Controller {
         
         if(isset($memberObj) && isset($projectObj)) {
             $attachmentObj = new Attachment();    
-            $statusObj = new Status($memberObj, $projectObj, $attachmentObj, $sessionArr['intSessionID']);
+            $statusObj = new Status($memberArr, $projectArr, $attachmentObj, $sessionArr['intSessionID']);
     
             // init status by default
             if(!empty($sessionArr['intStatusID'])) {
