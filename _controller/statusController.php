@@ -111,9 +111,14 @@ class statusController {
     
     private function displayHistoryStatus() {
         $this->statusObj->getLastStatusID();
+        $statusHistoryGUIObj = new StatusHistoryGUI();
+        $statusHistoryGUIObj->setSession($this->sessionArr);
+                
         if (!empty($this->statusObj->intStatusID)) {
             $this->statusObj->getDetails();
-            $this->statusObj->displayStatusHistory();
+            $historyTableArr = $this->statusObj->historyStatus();
+            $statusHistoryGUIObj->display($historyTableArr);
+            $statusHistoryGUIObj->displayStatusBottomMenu();
         } else {
             $this->sessionArr['strPage'] = "statusadd";
         }

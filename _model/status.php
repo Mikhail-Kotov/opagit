@@ -194,13 +194,7 @@ class Status {
     }
     
     function bottomMenu() {
-        echo '<br /><table border="0"><tr><td>';
-        displayButton("statusadd", "Add Status", $this->intSessionID);
-        echo "</td><td>";
-        displayButton("statushistory", "Status History", $this->intSessionID);
-        echo "</td><td>";
-        displayButton("statusview", "View Last Status", $this->intSessionID);
-        echo '</td></tr></table><br /><a href="#top">Back to Top</a>';
+
     }
 
     function pdfStatus() {
@@ -225,115 +219,55 @@ class Status {
         $pdf->Output();
     }
 
-    function displayStatusHistory() {
+    function historyStatus() {
         $query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," .
                 "strStatusVariation,strStatusNotes" .
                 " FROM tblStatus WHERE intProjectID = '" . $this->projectArr['intProjectID'] . "';";
         $sqlArr = $_ENV['db']->query($query);
         $_ENV['firephp']->log($sqlArr, 'sqlArr');
 
-        $caption = "Status History for Project: " . $this->projectArr['strProjectName'];
-
         $memberObj = new Member();
-        
+
         foreach ($sqlArr as $intStatusID => $statusArr) {
             foreach ($statusArr as $columnName => $value) {
                 switch ($columnName) {
                     case "intProjectMemberID":
-                        $historyTableArr[$intStatusID]["intMemberName"] = $memberObj->getMemberName($value);
+                        $tableArr[$intStatusID]["intMemberName"] = $memberObj->getMemberName($value);
                         break;
                     case "dmtStatusCurrentDate":
-                        $historyTableArr[$intStatusID][$columnName] = date("jS F Y", strtotime($value));
+                        $tableArr[$intStatusID][$columnName] = date("jS F Y", strtotime($value));
                         break;
                     default:
-                        $historyTableArr[$intStatusID][$columnName] = $value;
+                        $tableArr[$intStatusID][$columnName] = $value;
                 }
             }
 
-            $this->attachmentObj->setStatusID($historyTableArr[$intStatusID]["intStatusID"]);
+            $this->attachmentObj->setStatusID($tableArr[$intStatusID]["intStatusID"]);
             $this->attachmentObj->getDetailsFromDB();
 
-            $historyTableArr[$intStatusID]["strAttachmentLinkArr"] = "";
-            $historyTableArr[$intStatusID]["strAttachmentCommentArr"] = "";
+            $tableArr[$intStatusID]["strAttachmentLinkArr"] = "";
+            $tableArr[$intStatusID]["strAttachmentCommentArr"] = "";
 
             $attachmentArr = $this->attachmentObj->getDetails();
             if ($attachmentArr != null) {
                 foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) { // not using $value2 anywhere
-                    $historyTableArr[$intStatusID]["strAttachmentLinkArr"] .= '<a href="' .
+                    $tableArr[$intStatusID]["strAttachmentLinkArr"] .= '<a href="' .
                             $attachmentArr['strAttachmentLinkArr'][$id] .
                             '">' .
                             $attachmentArr['strAttachmentLinkArr'][$id] .
                             "</a><br />";
-                    $historyTableArr[$intStatusID]['strAttachmentCommentArr'] .= $attachmentArr['strAttachmentCommentArr'][$id] . "<br />";
+                    $tableArr[$intStatusID]['strAttachmentCommentArr'] .= $attachmentArr['strAttachmentCommentArr'][$id] . "<br />";
                 }
             } else {
-                $historyTableArr[$intStatusID]['strAttachmentLinkArr'] = "&nbsp;";
-                $historyTableArr[$intStatusID]['strAttachmentCommentArr'] = "&nbsp;";
+                $tableArr[$intStatusID]['strAttachmentLinkArr'] = "&nbsp;";
+                $tableArr[$intStatusID]['strAttachmentCommentArr'] = "&nbsp;";
             }
         }
-
-
-        unset($columnName);
-        unset($statusArr);
-
-        if (isset($historyTableArr[0])) {
-            echo '<table class="standard" cellspacing="0">';
-            echo "<caption>" . $caption . "</caption>\n";
-            echo "<tr>\n";
-            echo "<th>&nbsp;</th>\n";
-            echo "<th>ID</th>\n";
-            echo "<th>Member</th>\n";
-            echo "<th>Creation Date</th>\n";
-            echo "<th>Actual Baseline</th>\n";
-            echo "<th>Plan Baseline</th>\n";
-            echo "<th>Variation</th>\n";
-            echo "<th>Notes/Reasons</th>\n";
-            echo "<th>Attachment</th>\n";
-            echo "<th>Attachment Comment</th>\n";
-            echo "<th>&nbsp;</th>\n"; // for PDF
-            echo "</tr>\n";
-            
-            $oddOrEven = "historyodd";
-            foreach ($historyTableArr as $statusArr) {
-                echo "<tr>\n";
-                echo '<td class="' . $oddOrEven . '">'."\n";
-                echo '<form method="post" action="">';
-                echo '<input type="hidden" name="page" value="statusview" />' . "\n";
-                echo '<input type="hidden" name="intSessionID" value="' . $this->intSessionID . '" />' . "\n";
-                echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
-                echo '<input type="submit" value="View" title="View current Status" class="button" />' . "\n";
-                echo "</form>\n";
-                echo "</td>\n";
-
-                foreach ($statusArr as $columnName => $value) {
-                    echo '<td class="' . $oddOrEven . '">'."\n";
-                    if (isset($value)) {
-                        echo $value;
-                    } else {
-                        echo "&nbsp;";
-                    }
-                    echo "</td>\n";
-                }
-
-                echo '<td class="' . $oddOrEven . '">'."\n";
-                echo '<form method="post" action="">';
-                echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
-                echo '<input type="hidden" name="intSessionID" value="' . $this->intSessionID . '" />' . "\n";
-                echo '<input type="hidden" name="s" value="' . $statusArr["intStatusID"] . '" />' . "\n";
-                echo '<input type="submit" value="PDF" title="PDF current Status" class="button" />' . "\n";
-                echo "</form>\n";
-                echo "</td>\n";
-                echo "</tr>\n\n";
-                
-                if ($oddOrEven == "historyodd") {
-                    $oddOrEven = "historyeven";
-                } else {
-                    $oddOrEven = "historyodd";
-                }
-            }
-            echo '</table>';
-        }
-        $this->bottomMenu();
+        
+        $statusHistoryTableArr[0]['caption'] = "Status History for Project: " . $this->projectArr['strProjectName'];
+        $statusHistoryTableArr[1] = $tableArr;
+        
+        return $statusHistoryTableArr;
     }
 
     function printStatus() {

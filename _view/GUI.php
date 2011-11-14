@@ -7,11 +7,11 @@ class GUI {
     public function __construct() {
         
     }
-
+    
     public function setSession($sessionArr) {
         $this->sessionArr = $sessionArr;
     }
-    
+
     public function header() {
         include_once("_view/inc/header.inc.php");
     }
@@ -28,7 +28,9 @@ class GUI {
 //        echo "Hello <b>" . $this->memberObj->strMemberFirstName . " " . $this->memberObj->strMemberLastName . "</b><br />";
 //        echo "Your Team is <b>" . $this->projectObj->strProjectTeamName . "</b><br />";
 //        echo "Your Project is <b>" . $this->projectObj->strProjectName . "</b><br /><br />";
-        echo 'Hello ' . $this->sessionArr['intMemberID'] . "<br />";
+        
+        $memberObj = new Member();
+        echo 'Hello ' . $memberObj->getMemberName($this->sessionArr['intMemberID']) . "<br />";
         echo "<b>Please choose something from left menu</b>";
     }
 }
