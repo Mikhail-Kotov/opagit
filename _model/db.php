@@ -16,7 +16,7 @@ class DB {
         mysql_close($this->link);
     }
     
-    function query($query) {
+    function query($query) { // add please validation here
         $sql = mysql_query($query);
         if (!$sql) {
             die('Invalid query: ' . mysql_error());

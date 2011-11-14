@@ -10,6 +10,7 @@ include_once("_model/session.php");
 include_once("_model/da/sessionDA.php");
 include_once("_model/pdf.php");
 include_once("_controller/controller.php");
+include_once("_controller/statusController.php");
 include_once("_view/GUI.php");
 include_once("_view/statusAddEditViewGUI.php");
 include_once("_view/statusHistoryGUI.php");

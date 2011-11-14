@@ -146,7 +146,11 @@ class Controller {
             $GUIObj->welcome();
         }
 
-        include_once("_controller/statusController.inc.php");
+        if(isset($statusObj)) {
+            $statusControllerObj = new StatusController($sessionArr, $statusObj);
+            $statusControllerObj->main();
+        }
+        
         include_once("_controller/riskController.inc.php");
         include_once("_controller/issueController.inc.php");
 
