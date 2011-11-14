@@ -126,20 +126,26 @@ class statusController {
 
     private function displayViewStatus() {
         if (!empty($this->sessionArr['intStatusID'])) {
-            $this->statusObj->setID($this->sessionArr['intStatusID']);
-            $this->statusObj->getDetails();
-            $this->statusObj->displayStatus();
+            $this->displayViewStatusPart();
         } else {
             $this->sessionArr['intStatusID'] = $this->statusObj->getLastStatusID();
             $this->sessionObj->setDetails($this->sessionArr);
             if (!empty($this->sessionArr['intStatusID'])) {
-                $this->statusObj->setID($this->sessionArr['intStatusID']);
-                $this->statusObj->getDetails();
-                $this->statusObj->displayStatus();
+                $this->displayViewStatusPart();
             } else {
                 $this->sessionArr['strPage'] = "statusadd";
             }
         }
+    }
+
+    private function displayViewStatusPart() {
+        $this->statusObj->setID($this->sessionArr['intStatusID']);
+        $this->statusObj->getDetails();
+        $currentStatusMessage = $this->statusObj->viewStatus();
+        
+        $statusGUIObj = new StatusGUI();
+        $statusGUIObj->setSession($this->sessionArr);
+        $statusGUIObj->display($currentStatusMessage);
     }
     
     private function displayAddStatusForm() {

@@ -1,6 +1,6 @@
 <?php
 
-class RiskAddEditViewGUI {
+class RiskGUI {
 
     private $sessionArr;
 

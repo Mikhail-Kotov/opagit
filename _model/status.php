@@ -158,40 +158,11 @@ class Status {
         unset($this->intStatusID);
     }
 
-    function displayStatus() {
+    public function viewStatus() {
         $currentStatusMessage = $this->statusMessage();
 
-        echo $currentStatusMessage;
+        return $currentStatusMessage;
 
-        echo '<table border="0">';
-        echo '<tr><td><form method="post" action="">';
-        echo "<div>\n";
-        echo '<input type="hidden" name="page" value="statusedit" />' . "\n";
-        echo '<input type="hidden" name="intSessionID" value="' . $this->intSessionID . '" />' . "\n";
-        echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
-        echo '<input type="submit" value="Edit Status" class="button" />' . "\n";
-        echo "</div>\n";
-        echo '</form></td>';
-        echo '<td><form method="post" action="">';
-        echo "<div>\n";
-        echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
-        echo '<input type="hidden" name="intSessionID" value="' . $this->intSessionID . '" />' . "\n";
-        echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
-        echo '<input type="submit" value="PDF" class="button" />' . "\n";
-        echo "</div>\n";
-        echo "</form></td><td>";
-        echo '<form method="post" action="">';
-        echo "<div>\n";
-        echo '<input type="hidden" name="page" value="status" />' . "\n";
-        echo '<input type="hidden" name="todo" value="delete" />' . "\n";
-        echo '<input type="hidden" name="intSessionID" value="' . $this->intSessionID . '" />' . "\n";
-        echo '<input type="hidden" name="s" value="' . $this->intStatusID . '" />' . "\n";
-        echo '<input type="submit" value="Delete" class="button" />' . "\n";
-        echo "</div>\n";
-        echo "</form>\n";
-        echo "</td></tr></table>";
-
-        $this->bottomMenu();
     }
     
     function bottomMenu() {
@@ -220,7 +191,7 @@ class Status {
         $pdf->Output();
     }
 
-    function historyStatus() {
+    public function historyStatus() {
         $sqlArr = $this->statusDAObj->getAll($this->projectArr['intProjectID']);
 
         $memberObj = new Member();

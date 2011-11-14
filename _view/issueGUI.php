@@ -1,6 +1,6 @@
 <?php
 
-class IssueAddEditViewGUI {
+class IssueGUI {
 
     private $sessionArr;
 
