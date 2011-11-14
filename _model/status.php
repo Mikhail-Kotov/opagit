@@ -99,21 +99,8 @@ class Status {
             $strAttachmentLinkArr,
             $strAttachmentCommentArr) {
         
-        
-        
-        $query = "UPDATE tblStatus SET intProjectID='" . mysql_real_escape_string($this->projectArr['intProjectID']) . 
-                "',intProjectMemberID='" . mysql_real_escape_string($this->intProjectMemberID) .
-                "',dmtStatusCurrentDate='" . mysql_real_escape_string($dmtStatusCurrentDate) .
-                "',strActualBaseline='" . mysql_real_escape_string($strActualBaseline) . 
-                "',strPlanBaseline='" . mysql_real_escape_string($strPlanBaseline) .
-                "',strStatusVariation='" . mysql_real_escape_string($strStatusVariation) . 
-                "',strStatusNotes='" . mysql_real_escape_string($strStatusNotes) . 
-                "' WHERE intStatusID = '" . mysql_real_escape_string($intStatusID) . "';";
-        
-        $sql = mysql_query($query);
-
-        if (!$sql)
-            die('Invalid query: ' . mysql_error());
+        $this->statusDAObj->setDetails($intStatusID, $this->projectArr['intProjectID'], $this->intProjectMemberID, $dmtStatusCurrentDate, $strActualBaseline, 
+                $strPlanBaseline, $strStatusVariation, $strStatusNotes);
         
         $this->attachmentObj->setStatusID($intStatusID);
         $this->attachmentObj->setDetails($intAttachmentIDArr, $strAttachmentLinkArr, $strAttachmentCommentArr);
@@ -159,18 +146,45 @@ class Status {
     }
 
     public function viewStatus() {
-        $currentStatusMessage = $this->statusMessage();
+        
+        // DRAFT (RAW CODE)
+//        $memberObj = new Member();
+//        $memberObj->getMemberID($this->intProjectMemberID);
+//        $memberObj->setID();
+//        $memberArr = $memberObj->getDetails();
+        
+        $currentStatusMessage = "<b>Date:</b> " . date("jS F Y", strtotime($this->dmtStatusCurrentDate)) . "<br />" .
+                // "<b>Status created by:</b> " . $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'] . "<br />" .
+                "<b>Status created by:</b> __MEMBER_NAME_HERE__<br />" .
+                "<b>Project:</b> " . $this->projectArr['strProjectName'] . "<br /><br />" .
+                "<b>Actual Baseline:</b><br />" . $this->strActualBaseline . "<br /><br />" .
+                "<b>Plan Baseline:</b><br />" . $this->strPlanBaseline . "<br /><br />" .
+                "<b>Variation:</b><br />" .
+                $this->strStatusVariation . "<br /><br />" .
+                "<b>Notes/Reasons:</b><br />" .
+                $this->strStatusNotes . "<br /><br />";
 
+        $this->attachmentObj->setStatusID($this->getID());
+
+        $this->attachmentObj->getDetailsFromDB();
+        $attachmentArr = $this->attachmentObj->getDetails();
+        if ($attachmentArr != null) {
+            foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {      // don't using this value here
+                // so to change 'foreach' to something else???
+                // don't know better php construction (Mikhail)
+                $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
+                        $attachmentArr['strAttachmentLinkArr'][$id] . "</a><br /><br />" .
+                        "<b>Attachment Comment:</b><br />" . $attachmentArr['strAttachmentCommentArr'][$id] . "<br /><br />";
+            }
+        }
+
+        //$_ENV['firephp']->log($attachmentArr, 'attachmentArray');
         return $currentStatusMessage;
-
-    }
-    
-    function bottomMenu() {
 
     }
 
     function pdfStatus() {
-        $currentStatusMessage = $this->statusMessage();
+        $currentStatusMessage = $this->viewStatus();
 
         //$pdf = new FPDF();
         //$pdf->AddPage();
@@ -238,14 +252,6 @@ class Status {
         return $statusHistoryTableArr;
     }
 
-    function printStatus() {
-        
-    }
-
-    function addAttachment() {
-        
-    }
-
     function displayAddForm() {
         ?>
         <h1>Add Status</h1>
@@ -301,42 +307,6 @@ class Status {
             </form>
         <?php
         $this->bottomMenu();
-    }
-    
-    function statusMessage() {
-// DRAFT (RAW CODE)
-//        $memberObj = new Member();
-//        $memberObj->getMemberID($this->intProjectMemberID);
-//        $memberObj->setID();
-//        $memberArr = $memberObj->getDetails();
-        
-        $currentStatusMessage = "<b>Date:</b> " . date("jS F Y", strtotime($this->dmtStatusCurrentDate)) . "<br />" .
-                // "<b>Status created by:</b> " . $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'] . "<br />" .
-                "<b>Status created by:</b> __MEMBER_NAME_HERE__<br />" .
-                "<b>Project:</b> " . $this->projectArr['strProjectName'] . "<br /><br />" .
-                "<b>Actual Baseline:</b><br />" . $this->strActualBaseline . "<br /><br />" .
-                "<b>Plan Baseline:</b><br />" . $this->strPlanBaseline . "<br /><br />" .
-                "<b>Variation:</b><br />" .
-                $this->strStatusVariation . "<br /><br />" .
-                "<b>Notes/Reasons:</b><br />" .
-                $this->strStatusNotes . "<br /><br />";
-
-        $this->attachmentObj->setStatusID($this->getID());
-
-        $this->attachmentObj->getDetailsFromDB();
-        $attachmentArr = $this->attachmentObj->getDetails();
-        if ($attachmentArr != null) {
-            foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {      // don't using this value here
-                // so to change 'foreach' to something else???
-                // don't know better php construction (Mikhail)
-                $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
-                        $attachmentArr['strAttachmentLinkArr'][$id] . "</a><br /><br />" .
-                        "<b>Attachment Comment:</b><br />" . $attachmentArr['strAttachmentCommentArr'][$id] . "<br /><br />";
-            }
-        }
-
-        //$_ENV['firephp']->log($attachmentArr, 'attachmentArray');
-        return $currentStatusMessage;
     }
     
     function displayEditForm() {

@@ -54,6 +54,33 @@ class StatusDA {
         
         return $sqlArr;
     }
+    
+    public function setDetails($intStatusID, $intProjectID, $intProjectMemberID, $dmtStatusCurrentDate, $strActualBaseline, 
+                $strPlanBaseline, $strStatusVariation, $strStatusNotes) {
+        
+        $intStatusID = mysql_real_escape_string($intStatusID);
+        $intProjectID = mysql_real_escape_string($intProjectID);
+        $intProjectMemberID = mysql_real_escape_string($intProjectMemberID);
+        $dmtStatusCurrentDate = mysql_real_escape_string($dmtStatusCurrentDate);
+        $strActualBaseline = mysql_real_escape_string($strActualBaseline);
+        $strPlanBaseline = mysql_real_escape_string($strPlanBaseline );
+        $strStatusVariation = mysql_real_escape_string($strStatusVariation);
+        $strStatusNotes = mysql_real_escape_string($strStatusNotes);
+
+        $query = "UPDATE tblStatus SET intProjectID='" . $intProjectID . 
+                "',intProjectMemberID='" . $intProjectMemberID .
+                "',dmtStatusCurrentDate='" . $dmtStatusCurrentDate .
+                "',strActualBaseline='" . $strActualBaseline . 
+                "',strPlanBaseline='" . $strPlanBaseline .
+                "',strStatusVariation='" . $strStatusVariation . 
+                "',strStatusNotes='" . $strStatusNotes . 
+                "' WHERE intStatusID = '" . $intStatusID . "';";
+        
+        $sql = mysql_query($query);
+
+        if (!$sql)
+            die('Invalid query: ' . mysql_error());
+    }
 }
 
 ?>
