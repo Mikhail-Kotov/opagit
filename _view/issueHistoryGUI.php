@@ -1,6 +1,17 @@
 <?php
 
 class IssueHistoryGUI {
+
+    private $sessionArr;
+
+    public function __construct() {
+        
+    }
+
+    public function setSession($sessionArr) {
+        $this->sessionArr = $sessionArr;
+    }
+
     public function display($sqlArr) {
         $caption = "Issue History";
         if (isset($sqlArr[0])) {
@@ -28,6 +39,7 @@ class IssueHistoryGUI {
             echo "There is no Issues here";
         }
     }
+
 }
 
 ?>

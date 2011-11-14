@@ -1,7 +1,17 @@
 <?php
 
 class RiskHistoryGUI {
-    
+
+    private $sessionArr;
+
+    public function __construct() {
+        
+    }
+
+    public function setSession($sessionArr) {
+        $this->sessionArr = $sessionArr;
+    }
+
     public function display($sqlArr) {
         $caption = "Risk History";
         if (isset($sqlArr[0])) {

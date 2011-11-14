@@ -1,16 +1,17 @@
 <?php
 
 class StatusHistoryGUI {
+
     private $sessionArr;
-    
+
     public function __construct() {
         
     }
-    
+
     public function setSession($sessionArr) {
         $this->sessionArr = $sessionArr;
     }
-    
+
     public function display($statusHistoryTableArr) {
         if (isset($statusHistoryTableArr[1])) {
             echo '<table class="standard" cellspacing="0">';
@@ -70,15 +71,9 @@ class StatusHistoryGUI {
             echo '</table>';
         }
     }
-    
+
     public function displayStatusBottomMenu() {
-        echo '<br /><table border="0"><tr><td>';
-        displayButton("statusadd", "Add Status", $this->sessionArr['intSessionID']);
-        echo "</td><td>";
-        displayButton("statushistory", "Status History", $this->sessionArr['intSessionID']);
-        echo "</td><td>";
-        displayButton("statusview", "View Last Status", $this->sessionArr['intSessionID']);
-        echo '</td></tr></table><br /><a href="#top">Back to Top</a>';
+        include_once("inc/statusBottomMenu.inc.php");
     }
 
 }

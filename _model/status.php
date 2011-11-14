@@ -50,6 +50,7 @@ class Status {
 
         if(isset($memberArr)) {
             $this->intStatusID = $memberArr['intStatusID'];
+            $this->intProjectMemberID = $memberArr['intProjectMemberID'];
             $this->dmtStatusCurrentDate = $memberArr['dmtStatusCurrentDate'];
             $this->strActualBaseline = $memberArr['strActualBaseline'];
             $this->strPlanBaseline = $memberArr['strPlanBaseline'];
@@ -220,11 +221,7 @@ class Status {
     }
 
     function historyStatus() {
-        $query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," .
-                "strStatusVariation,strStatusNotes" .
-                " FROM tblStatus WHERE intProjectID = '" . $this->projectArr['intProjectID'] . "';";
-        $sqlArr = $_ENV['db']->query($query);
-        $_ENV['firephp']->log($sqlArr, 'sqlArr');
+        $sqlArr = $this->statusDAObj->getAll($this->projectArr['intProjectID']);
 
         $memberObj = new Member();
 
@@ -336,9 +333,15 @@ class Status {
     }
     
     function statusMessage() {
+// DRAFT (RAW CODE)
+//        $memberObj = new Member();
+//        $memberObj->getMemberID($this->intProjectMemberID);
+//        $memberObj->setID();
+//        $memberArr = $memberObj->getDetails();
         
         $currentStatusMessage = "<b>Date:</b> " . date("jS F Y", strtotime($this->dmtStatusCurrentDate)) . "<br />" .
-                "<b>Status created by:</b> " . $this->memberArr['strMemberFirstName'] . " " . $this->memberArr['strMemberLastName'] . "<br />" .
+                // "<b>Status created by:</b> " . $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'] . "<br />" .
+                "<b>Status created by:</b> __MEMBER_NAME_HERE__<br />" .
                 "<b>Project:</b> " . $this->projectArr['strProjectName'] . "<br /><br />" .
                 "<b>Actual Baseline:</b><br />" . $this->strActualBaseline . "<br /><br />" .
                 "<b>Plan Baseline:</b><br />" . $this->strPlanBaseline . "<br /><br />" .

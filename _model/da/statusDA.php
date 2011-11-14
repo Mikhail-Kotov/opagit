@@ -1,11 +1,16 @@
 <?php
 
 class StatusDA {
-
+    private $sessionArr;
+    
+    public function __construct() {
+        
+    }
+    
     public function getDetails($intStatusID) {
         $statusDAArr = array();
         
-        $query = "SELECT intStatusID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," . 
+        $query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," . 
                 "strStatusVariation,strStatusNotes FROM tblStatus" .
                 " WHERE intStatusID = " . $intStatusID;
 
@@ -41,6 +46,14 @@ class StatusDA {
             die('Invalid query: ' . mysql_error());
     }
 
+    public function getAll($intProjectID) {
+        $query = "SELECT intStatusID,intProjectMemberID,dmtStatusCurrentDate,strActualBaseline,strPlanBaseline," .
+                "strStatusVariation,strStatusNotes" .
+                " FROM tblStatus WHERE intProjectID = '" . $intProjectID . "';";
+        $sqlArr = $_ENV['db']->query($query);
+        
+        return $sqlArr;
+    }
 }
 
 ?>
