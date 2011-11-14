@@ -46,6 +46,11 @@ class StatusGUI {
         $this->displayStatusBottomMenu();
     }
     
+    public function displayAddForm() {
+        include_once("inc/statusAddForm.inc.php");
+        $this->displayStatusBottomMenu();
+    }
+    
     public function displayStatusBottomMenu() {
         include_once("inc/statusBottomMenu.inc.php");
     }

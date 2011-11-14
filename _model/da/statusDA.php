@@ -81,6 +81,43 @@ class StatusDA {
         if (!$sql)
             die('Invalid query: ' . mysql_error());
     }
+    
+    public function addDetails($intStatusID, $intProjectID, $intProjectMemberID, $dmtStatusCurrentDate, $strActualBaseline, 
+                $strPlanBaseline, $strStatusVariation, $strStatusNotes) {
+        
+        $intStatusID = mysql_real_escape_string($intStatusID);
+        $intProjectID = mysql_real_escape_string($intProjectID);
+        $intProjectMemberID = mysql_real_escape_string($intProjectMemberID);
+        $dmtStatusCurrentDate = mysql_real_escape_string($dmtStatusCurrentDate);
+        $strActualBaseline = mysql_real_escape_string($strActualBaseline);
+        $strPlanBaseline = mysql_real_escape_string($strPlanBaseline );
+        $strStatusVariation = mysql_real_escape_string($strStatusVariation);
+        $strStatusNotes = mysql_real_escape_string($strStatusNotes);
+
+        
+        $query = "INSERT INTO tblStatus(".
+                "intStatusID," .
+                "intProjectID," .
+                "intProjectMemberID," .
+                "dmtStatusCurrentDate," .
+                "strActualBaseline," .
+                "strPlanBaseline," .
+                "strStatusVariation," .
+                "strStatusNotes) " .
+                "values (" .
+                "'" . $intStatusID .
+                "', '" . mysql_real_escape_string($intProjectID) .
+                "', '" . mysql_real_escape_string($intProjectMemberID) .
+                "', '" . mysql_real_escape_string($dmtStatusCurrentDate) .
+                "', '" . mysql_real_escape_string($strActualBaseline) .
+                "', '" . mysql_real_escape_string($strPlanBaseline) .
+                "', '" . mysql_real_escape_string($strStatusVariation) .
+                "', '" . mysql_real_escape_string($strStatusNotes) . "');";
+        $sql = mysql_query($query);
+
+        if (!$sql)
+            die('Invalid query: ' . mysql_error());
+    }
 }
 
 ?>
