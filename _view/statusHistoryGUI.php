@@ -21,8 +21,8 @@ class StatusHistoryGUI {
             echo "<th>ID</th>\n";
             echo "<th>Member</th>\n";
             echo "<th>Creation Date</th>\n";
-            echo "<th>Actual Baseline</th>\n";
-            echo "<th>Plan Baseline</th>\n";
+            echo "<th>Actual Status</th>\n";
+            echo "<th>Planned Baseline</th>\n";
             echo "<th>Variation</th>\n";
             echo "<th>Notes/Reasons</th>\n";
             echo "<th>Attachment</th>\n";
@@ -34,7 +34,7 @@ class StatusHistoryGUI {
             foreach ($statusHistoryTableArr[1] as $statusArr) {
                 echo "<tr>\n";
                 echo '<td class="' . $oddOrEven . '">' . "\n";
-                echo '<form method="post" action="">';
+                echo '<form method="post" action="" id="event-submission">';
                 echo '<input type="hidden" name="page" value="statusview" />' . "\n";
                 echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
                 echo '<input type="hidden" name="s" value="' . $statusArr['intStatusID'] . '" />' . "\n";

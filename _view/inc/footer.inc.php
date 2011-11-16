@@ -45,7 +45,9 @@
 $(document).ready(function() 
 {
    // Match all link elements with href attributes within the content div
-   $('a[title]').qtip({ style: { name: 'cream', tip: true } })
+   $('input').qtip({ style: { name: 'cream', tip: true } })
+   $('textarea').qtip({ style: { name: 'cream', tip: true } })
+   $('label').qtip({ style: { name: 'cream', tip: true } })
    
 });
 </script>

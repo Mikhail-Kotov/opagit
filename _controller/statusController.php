@@ -160,12 +160,11 @@ class statusController {
     private function displayEditStatusForm() {
         if ($this->sessionArr['intStatusID'] != "") {
             $this->statusObj->setID($this->sessionArr['intStatusID']);
-            $this->statusObj->getDetails();
-            $this->statusObj->displayEditForm();
+            $statusArr = $this->statusObj->getDetails();
             
-        $statusGUIObj = new StatusGUI();
-        $statusGUIObj->setSession($this->sessionArr);
-        $statusGUIObj->displayAddForm();
+            $statusGUIObj = new StatusGUI();
+            $statusGUIObj->setSession($this->sessionArr);
+            $statusGUIObj->displayEditForm($statusArr);
         } else {
             die("wrong data in edit form");
         }

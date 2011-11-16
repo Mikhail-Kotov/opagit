@@ -1,6 +1,6 @@
 <?php
 
-echo '<br /><table border="0"><tr><td>';
+echo '<br /><table border="0" id="redLinks"><tr><td>';
 displayButton("statusadd", "Add Status", $this->sessionArr['intSessionID']);
 echo "</td><td>";
 displayButton("statushistory", "Status History", $this->sessionArr['intSessionID']);

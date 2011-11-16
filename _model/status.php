@@ -56,10 +56,20 @@ class Status {
             $this->strPlanBaseline = $memberArr['strPlanBaseline'];
             $this->strStatusVariation = $memberArr['strStatusVariation'];
             $this->strStatusNotes = $memberArr['strStatusNotes'];
+            
+            $statusArr['intStatusID'] = $this->intStatusID;
+            $statusArr['intProjectMemberID'] = $this->intProjectMemberID;
+            $statusArr['dmtStatusCurrentDate'] = $this->dmtStatusCurrentDate;
+            $statusArr['strActualBaseline'] = $this->strActualBaseline;
+            $statusArr['strPlanBaseline'] = $this->strPlanBaseline;
+            $statusArr['strStatusVariation'] = $this->strStatusVariation;
+            $statusArr['strStatusNotes'] = $this->strStatusNotes;
         }
         
         $this->attachmentObj->setStatusID($this->intStatusID);
         $this->attachmentObj->getDetailsFromDB();
+        
+        return $statusArr;
     }
     
     function getLastStatusID() {

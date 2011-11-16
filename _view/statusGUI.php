@@ -51,6 +51,10 @@ class StatusGUI {
         $this->displayStatusBottomMenu();
     }
     
+    public function displayEditForm($statusArr) {
+        include_once("inc/statusEditForm.inc.php");
+    }
+    
     public function displayStatusBottomMenu() {
         include_once("inc/statusBottomMenu.inc.php");
     }
