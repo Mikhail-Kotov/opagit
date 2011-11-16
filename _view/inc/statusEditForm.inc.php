@@ -31,7 +31,6 @@
     Notes/Reasons:<br />
     <textarea name="strStatusNotes"><?php echo $statusArr['strStatusNotes']; ?></textarea><br /><br />
     <?php
-    $attachmentArr = $this->attachmentObj->getDetails();
     foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {
         echo '<input type="hidden" name="intAttachmentID' . $id .
         '" value="' . $attachmentArr['intAttachmentIDArr'][$id] . '" />' .

@@ -39,13 +39,19 @@
         <label for="strStatusNotes" title="Enter the reason for a variation in your planned and actual baseline. Enter other notes here.">Notes/Reasons:</label>
         <div class="field"><textarea name="strStatusNotes" title="Enter the reason for a variation in your planned and actual baseline. Enter other notes here." rows="2" cols="43"></textarea></div><br />
 
-        <label for="strAttachmentLink0" title="Browse for a file to substantiate your status e.g.Gantt. You can upload the following file types: PDF, jpg, tiff, png, docx, xls.">Attachment 1:</label>
+        <!--
         <div class="field"><input type="file" name="file" id="file" value="" /></div>
-        <input type="hidden" name="MAX_FILE_SIZE" value="2000000" /> <!--this line is not accurate yet for Browse-->
+        <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
+        -->
+        
+        <label for="strAttachmentLink0" title="Browse for a file to substantiate your status e.g. Gantt image. You can upload the following file types: PDF, jpg, tiff, png, docx, xls.">Attachment 1:</label>
+        <div class="field"><input type="text" name="strAttachmentLink0" value="http://" /></div><br />
+
+        
         <label for="strAttachmentComment0" title="Name your attachment or add a comment.">Attachment Comment:</label>
         <div class="field"><input type="text" name="strAttachmentComment0" /></div><br /><div id="text"></div>
-        <input type="image" onclick="addAttachmentLink()" src="images/add-more-attachments.gif" name="add" value="Add more attachments" />
+        <input type="button" onclick="addAttachmentLink()" src="images/add-more-attachments.gif" name="add" value="Add more attachments" />
         <br /><br />
-        <input type="image" src="images/submit.gif" value="Submit" />
+        <input type="submit" src="images/submit.gif" value="Submit" />
     </div>
 </form>

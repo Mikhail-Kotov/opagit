@@ -13,13 +13,13 @@ class Status {
     public $strStatusVariation; // variation
     public $strStatusNotes; // Notes/Reasons
 
-    function __construct($memberArr, $projectArr, $attachmentObj, $intSessionID) {
+    function __construct($memberArr, $projectArr, $intSessionID) {
         $this->statusDAObj = new StatusDA();
         
         $this->memberArr = $memberArr;
         $this->projectArr = $projectArr;
         
-        $this->attachmentObj = $attachmentObj;
+        $this->attachmentObj = new Attachment();
         $this->intSessionID = $intSessionID;
         $this->intProjectMemberID = $this->getProjectMember();
     }
@@ -169,28 +169,6 @@ class Status {
         //$_ENV['firephp']->log($attachmentArr, 'attachmentArray');
         return $currentStatusMessage;
 
-    }
-
-    function pdfStatus() {
-        $currentStatusMessage = $this->viewStatus();
-
-        //$pdf = new FPDF();
-        //$pdf->AddPage();
-        //$pdf->SetFont('Arial','',10);
-        //$pdf->Cell(40,10,$currentStatusMessage);
-        //$pdf->Output();
-
-
-
-        $pdf = new PDF();
-        $pdf->SetDisplayMode('real', 'default');
-        $title = 'Status #' . $this->getID();
-        $pdf->SetTitle($title);
-        $pdf->SetAuthor('OPA');
-        $pdf->PrintChapter(1, 'Status #' . $this->getID(), "");
-        $pdf->WriteHTML($currentStatusMessage);
-
-        $pdf->Output();
     }
 
     public function historyStatus() {

@@ -9,7 +9,7 @@ class Attachment {
     
 
     function __construct() {
-        
+        $this->attachmentDAObj = new AttachmentDA();
     }
     
     function getID() {
@@ -36,15 +36,13 @@ class Attachment {
         unset($this->strAttachmentLinkArr);
         unset($this->strAttachmentCommentArr);
 
-        $query = "SELECT intAttachmentID,strAttachmentLink,strAttachmentComment FROM tblAttachment WHERE intStatusID = " . $this->intStatusID;
+        $attachmentArr = $this->attachmentDAObj->getDetails($this->intStatusID);
 
-        $sqlArr = $_ENV['db']->query($query);
-
-        if (isset($sqlArr[0])) {
-            foreach ($sqlArr as $id => $value) {
-                $this->intAttachmentIDArr[$id] = $sqlArr[$id]['intAttachmentID'];
-                $this->strAttachmentLinkArr[$id] = $sqlArr[$id]['strAttachmentLink'];
-                $this->strAttachmentCommentArr[$id] = $sqlArr[$id]['strAttachmentComment'];
+        if (isset($attachmentArr[0])) {
+            foreach ($attachmentArr as $id => $value) {    
+                $this->intAttachmentIDArr[$id] = $attachmentArr[$id]['intAttachmentID'];
+                $this->strAttachmentLinkArr[$id] = $attachmentArr[$id]['strAttachmentLink'];
+                $this->strAttachmentCommentArr[$id] = $attachmentArr[$id]['strAttachmentComment'];
             }
         }
     }

@@ -89,72 +89,71 @@ class Controller {
             $sessionArr['strPage'] = "chooseproject";
         }
         
-        if(isset($memberObj) && isset($projectObj)) {
-            $attachmentObj = new Attachment();    
-            $statusObj = new Status($memberArr, $projectArr, $attachmentObj, $sessionArr['intSessionID']);
-    
-            // init status by default
-            if(!empty($sessionArr['intStatusID'])) {
-                $statusObj->setID($sessionArr['intStatusID']);
-            }
-        }
+
+
         
         if(isset($memberObj) && !isset($projectObj)) {
             $sessionArr['strPage'] = "chooseproject";
         }
-
-        if ($sessionArr['strPage'] == "statuspdf") {
-            if(!(is_null($sessionArr['intStatusID']))) {
-                $statusObj->getDetails();
-                $statusObj->pdfStatus();
-            } else {
-                $sessionArr['strPage'] = "statusadd";
-            }
-        }        
         
-        $GUIObj->header();
+        $is_pdf = strpos($sessionArr['strPage'], "pdf");
+        if ($is_pdf === false) {
+            $GUIObj->header();
+            $GUIObj->menu();
 
-        $GUIObj->menu();
+            if ($sessionArr['strPage'] == "choosemember") {
+                $memberObj = new Member();
+                $memberObj->setSession($sessionArr);
 
-        if ($sessionArr['strPage'] == "choosemember") {
-            $memberObj = new Member();
-            $memberObj->setSession($sessionArr);
-            
-            $memberGUIObj = new MemberGUI();
-            $memberGUIObj->setSession($sessionArr);
-            $membersArr = $memberObj->getAllDetails();
-            $memberGUIObj->chooseMember($membersArr);
-        }
-
-        if ($sessionArr['strPage'] == "chooseproject") {
-            $memberObj = new Member();
-            $memberObj->setSession($sessionArr);
-            
-            $projectObj = new Project();
-            $projectObj->setSession($sessionArr);
-            
-            $projectGUIObj = new ProjectGUI();
-            $projectGUIObj->setSession($sessionArr);
-            
-            if(empty($lastPage)) {
-                $lastPage = "welcome";
+                $memberGUIObj = new MemberGUI();
+                $memberGUIObj->setSession($sessionArr);
+                $membersArr = $memberObj->getAllDetails();
+                $memberGUIObj->chooseMember($membersArr);
             }
-            $projectGUIObj->chooseProject($lastPage);
-        }
 
-        if ($sessionArr['strPage'] == "welcome") {
-            $GUIObj->welcome();
-        }
+            if ($sessionArr['strPage'] == "chooseproject") {
+                $memberObj = new Member();
+                $memberObj->setSession($sessionArr);
 
-        if(isset($statusObj)) {
-            $statusControllerObj = new StatusController($sessionArr, $statusObj);
-            $statusControllerObj->main();
+                $projectObj = new Project();
+                $projectObj->setSession($sessionArr);
+
+                $projectGUIObj = new ProjectGUI();
+                $projectGUIObj->setSession($sessionArr);
+
+                if (empty($lastPage)) {
+                    $lastPage = "welcome";
+                }
+                $projectGUIObj->chooseProject($lastPage);
+            }
+
+            if ($sessionArr['strPage'] == "welcome") {
+                $GUIObj->welcome();
+            }
         }
         
-        include_once("_controller/riskController.inc.php");
-        include_once("_controller/issueController.inc.php");
-
-        $GUIObj->footer();
+        if(!empty($sessionArr['intMemberID']) && !empty($sessionArr['intProjectID'])) {
+            $is_status = strpos($sessionArr['strPage'], "status");
+            $is_risk = strpos($sessionArr['strPage'], "risk");
+            $is_issue = strpos($sessionArr['strPage'], "issue");
+            
+            if($is_status !== false) {
+                $statusControllerObj = new StatusController($memberArr, $projectArr, $sessionArr);
+                $statusControllerObj->main();
+            }
+            
+            if($is_risk !== false) {
+                include_once("_controller/riskController.inc.php");
+            }
+            
+            if($is_issue !== false) {
+                include_once("_controller/issueController.inc.php");
+            }
+        }
+        
+        if ($is_pdf === false) {
+            $GUIObj->footer();
+        }
     }
 }
 

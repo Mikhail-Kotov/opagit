@@ -2,47 +2,56 @@
 
 class statusController {
 
-    private $statusObj;
+    private $statusObj, $attachmentObj;
     private $sessionArr, $sessionObj;
 
-    public function __construct($sessionArr, $statusObj) {
+    public function __construct($memberArr, $projectArr, $sessionArr) {
         $this->sessionObj = new Session();
         $this->sessionArr = $sessionArr; // don't need to getDetails from Session Class, because we are already got SessionArr from Controller
 
-        $this->statusObj = $statusObj;
+        
+        $this->statusObj = new Status($memberArr, $projectArr, $sessionArr['intSessionID']);
+        $this->attachmentObj = new Attachment();
     }
 
     public function main() {
-        if ($this->sessionArr['strPage'] == "status") {
-            if ($this->sessionArr['strTodo'] != "") {
-                if ($this->sessionArr['strTodo'] == "add") {
-                    $this->todoAddStatus();
+        switch($this->sessionArr['strPage']) {
+            case "status":
+                if ($this->sessionArr['strTodo'] != "") {
+                    switch ($this->sessionArr['strTodo']) {
+                        case "add":
+                            $this->todoAddStatus();
+                            break;
+                        case "edit":
+                            $this->todoEditStatus();
+                            break;
+                        case "delete":
+                            $this->todoDeleteStatus();
+                            break;
+                    }
                 }
-                if ($this->sessionArr['strTodo'] == "delete") {
-                    $this->todoDeleteStatus();
-                }
-                if ($this->sessionArr['strTodo'] == "edit") {
-                    $this->todoEditStatus();
-                }
-            }
-
-            $this->sessionArr['strPage'] = "statushistory"; // if user choose Status from Menu
-        }
-
-        if ($this->sessionArr['strPage'] == "statushistory") {
-            $this->displayHistoryStatus();
-        }
-
-        if ($this->sessionArr['strPage'] == "statusview") {
-            $this->displayViewStatus();
-        }
-
-        if ($this->sessionArr['strPage'] == "statusadd") {
-            $this->displayAddStatusForm();
-        }
-
-        if ($this->sessionArr['strPage'] == "statusedit") {
-            $this->displayEditStatusForm();
+                
+                $this->sessionArr['strPage'] = "statushistory"; // if user choose Status from Menu
+            
+           case "statushistory":
+               $this->displayHistoryStatus();
+               break;
+           
+           case "statusview":
+               $this->displayViewStatus();
+               break;
+           
+           case "statuspdf":
+               $this->displayPDFStatus();
+               break;
+           
+           case "statusadd":
+               $this->displayAddStatusForm();
+               break;
+           
+           case "statusedit":
+               $this->displayEditStatusForm();
+               break;
         }
     }
 
@@ -137,7 +146,7 @@ class statusController {
             }
         }
     }
-
+    
     private function displayViewStatusPart() {
         $this->statusObj->setID($this->sessionArr['intStatusID']);
         $this->statusObj->getDetails();
@@ -146,6 +155,16 @@ class statusController {
         $statusGUIObj = new StatusGUI();
         $statusGUIObj->setSession($this->sessionArr);
         $statusGUIObj->display($currentStatusMessage);
+    }
+    
+    private function displayPDFStatus() {
+        $this->statusObj->setID($this->sessionArr['intStatusID']);
+        $this->statusObj->getDetails();
+        $currentStatusMessage = $this->statusObj->viewStatus();
+        
+        $statusGUIObj = new StatusGUI();
+        $statusGUIObj->setSession($this->sessionArr);
+        $statusGUIObj->displayPDFStatus($currentStatusMessage);
     }
     
     private function displayAddStatusForm() {
@@ -161,10 +180,13 @@ class statusController {
         if ($this->sessionArr['intStatusID'] != "") {
             $this->statusObj->setID($this->sessionArr['intStatusID']);
             $statusArr = $this->statusObj->getDetails();
+            $this->attachmentObj->setStatusID($this->sessionArr['intStatusID']);
+            $this->attachmentObj->getDetailsFromDB();
+            $attachmentArr = $this->attachmentObj->getDetails();
             
             $statusGUIObj = new StatusGUI();
             $statusGUIObj->setSession($this->sessionArr);
-            $statusGUIObj->displayEditForm($statusArr);
+            $statusGUIObj->displayEditForm($statusArr, $attachmentArr);
         } else {
             die("wrong data in edit form");
         }

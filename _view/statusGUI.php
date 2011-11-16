@@ -46,12 +46,30 @@ class StatusGUI {
         $this->displayStatusBottomMenu();
     }
     
+    public function displayPDFStatus($currentStatusMessage) {
+        //$pdf = new FPDF();
+        //$pdf->AddPage();
+        //$pdf->SetFont('Arial','',10);
+        //$pdf->Cell(40,10,$currentStatusMessage);
+        //$pdf->Output();
+
+        $pdf = new PDF();
+        $pdf->SetDisplayMode('real', 'default');
+        $title = 'Status #' . $this->sessionArr['intStatusID'];
+        $pdf->SetTitle($title);
+        $pdf->SetAuthor('OPA');
+        $pdf->PrintChapter(1, 'Status #' . $this->sessionArr['intStatusID'], "");
+        $pdf->WriteHTML($currentStatusMessage);
+
+        $pdf->Output();
+    }
+    
     public function displayAddForm() {
         include_once("inc/statusAddForm.inc.php");
         $this->displayStatusBottomMenu();
     }
     
-    public function displayEditForm($statusArr) {
+    public function displayEditForm($statusArr, $attachmentArr) {
         include_once("inc/statusEditForm.inc.php");
     }
     
