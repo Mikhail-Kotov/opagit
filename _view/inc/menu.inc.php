@@ -4,7 +4,7 @@
     <div id="left_menu">
         <ul>
             <li class="top_item"><a href="">Timesheets</a></li>
-            <li class="selected"><?php displayMenuButton("chooseproject", "Choose Project", $this->sessionArr['intSessionID'], ($this->sessionArr['strPage'] == "chooseproject")); ?></li>
+            <li class="selected"><?php displayMenuButton("chooseproject", "Choose Project", $this->sessionArr['intSessionID']); ?></li>
             <li class="selected"><?php displayMenuButton("status", "Status", $this->sessionArr['intSessionID']); ?>
                 <?php if (strcmp("status", substr($this->sessionArr['strPage'], 0, 6)) == 0) { ?>
                     <ul><li class="selected"><?php displayMenuButton("statushistory", "History", $this->sessionArr['intSessionID'], 

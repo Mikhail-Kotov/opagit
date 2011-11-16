@@ -5,11 +5,29 @@ class DB {
     private $link;
 
     function connectDB() {
-    	 $this->link = mysql_connect('localhost', 'opadmin', 'Hu3bi9');
+        $filename = "../../../../db_credentials.txt";
+        
+        $is_stable = strpos($_SERVER["SCRIPT_NAME"], "/stable/");
+        
+        if ($is_stable !== false) {
+            $dbname = 'opadmin';
+        } else {
+            $dbname = 'opadmindev';
+            $filename = "../" . $filename; // For directories inside dev/
+        }
+        
+        $handle = fopen($filename, "r");
+        $contents = fread($handle, filesize($filename));
+        fclose($handle);
+
+        list($server, $login, $pass) = explode(",", $contents);
+
+        $this->link = mysql_connect($server, $login, $pass);
         if (!$this->link) {
             die('Could not connect: ' . mysql_error());
         }
-        mysql_select_db('opadmin');
+
+        mysql_select_db($dbname);
     }
 
     function closeDB() {

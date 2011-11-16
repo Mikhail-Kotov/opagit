@@ -213,6 +213,7 @@ CREATE TABLE `tblSession` (
   strSessionSID VARCHAR(255) NULL,
   strPage VARCHAR(255) NULL,
   strTodo VARCHAR(255) NULL,
+  strAlert VARCHAR(5000) NULL,  
   intMemberID INT(11) NULL,
   intProjectID INT(11) NULL,
   intStatusID INT(11) NULL,
