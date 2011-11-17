@@ -34,6 +34,11 @@ include_once("_view/issueHistoryGUI.php");
 include_once("_model/attachment.php");
 include_once("_model/da/attachmentDA.php");
 
+$_ENV['uploads_dir'] = "uploads/";
+if(isset($_SERVER['REQUEST_URI'])) {
+    $_ENV['http_dir'] = "http://" . $_SERVER['HTTP_HOST'] . str_replace("index.php", "", $_SERVER['REQUEST_URI']);
+}
+
 // connect to db
 $_ENV['db'] = new DB();
 $_ENV['db']->connectDB();

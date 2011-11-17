@@ -82,7 +82,7 @@ class Attachment {
                 die('Invalid query: ' . mysql_error());
 
 
-            if (isset($_POST["strAttachmentLink" . ($i + 1)])) {
+            if (isset($strAttachmentLinkArr[($i + 1)])) {
                 $i++;
             } else {
                 $isNextAttachment = false;

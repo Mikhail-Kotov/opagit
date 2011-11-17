@@ -65,16 +65,21 @@ class statusController {
         $isNextAttachment = true;
         $i = 0;
         do {
-            $strAttachmentLinkArr[$i] = $_POST["strAttachmentLink" . $i];
-            $strAttachmentCommentArr[$i] = $_POST["strAttachmentComment" . $i];
+            $target = $_ENV['uploads_dir'] . basename($_FILES['strAttachmentLink' . $i]['name']);
+            if (!move_uploaded_file($_FILES['strAttachmentLink' . $i]['tmp_name'], $target)) {
+                echo "Sorry, there was a problem uploading your file."; // <--/this is Alert/
+            } else {
+                $strAttachmentLinkArr[$i] = basename($_FILES['strAttachmentLink' . $i]['name']);
+                $strAttachmentCommentArr[$i] = $_POST["strAttachmentComment" . $i];
+            }
 
-            if (isset($_POST["strAttachmentLink" . ($i + 1)])) {
+            if (isset($_FILES['strAttachmentLink' . ($i + 1)])) {
                 $i++;
             } else {
                 $isNextAttachment = false;
             }
         } while ($isNextAttachment == true);
-
+        
         $this->statusObj->addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusVariation, 
                 $strStatusNotes, $strAttachmentLinkArr, $strAttachmentCommentArr);
 

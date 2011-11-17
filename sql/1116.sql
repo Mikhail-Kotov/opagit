@@ -1,7 +1,8 @@
 #DROP DATABASE IF EXISTS opadmin;
 #CREATE DATABASE opadmin character set utf8;
 
-USE opadmin;
+#USE opadmin;
+#USE opadmindev;
 
 DROP TABLE IF EXISTS tblSession;
 DROP TABLE IF EXISTS tblAttachment;

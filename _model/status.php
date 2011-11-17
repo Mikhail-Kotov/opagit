@@ -199,11 +199,8 @@ class Status {
             $attachmentArr = $this->attachmentObj->getDetails();
             if ($attachmentArr != null) {
                 foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) { // not using $value2 anywhere
-                    $tableArr[$intStatusID]["strAttachmentLinkArr"] .= '<a href="' .
-                            $attachmentArr['strAttachmentLinkArr'][$id] .
-                            '">' .
-                            $attachmentArr['strAttachmentLinkArr'][$id] .
-                            "</a><br />";
+                    $tableArr[$intStatusID]["strAttachmentLinkArr"] .= '<a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] .
+                            $attachmentArr['strAttachmentLinkArr'][$id] . '">' . $attachmentArr['strAttachmentLinkArr'][$id] . '</a><br />';
                     $tableArr[$intStatusID]['strAttachmentCommentArr'] .= $attachmentArr['strAttachmentCommentArr'][$id] . "<br />";
                 }
             } else {
