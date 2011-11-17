@@ -5,11 +5,11 @@ class Project {
     private $sessionArr;
     private $intProjectID, $strProjectName, $strProjectTeamName;
 
-    function __construct() {
+    public function __construct() {
         $this->projectDAObj = new ProjectDA();
     }
 
-    function getDetails() {
+    public function getDetails() {
         $projectArr = $this->projectDAObj->getDetails($this->intProjectID);
         $this->strProjectName = $projectArr['strProjectName'];
         $this->strProjectTeamName = $projectArr['strProjectTeamName'];
@@ -17,11 +17,17 @@ class Project {
         return $projectArr;
     }
     
-    function getID() {
+    public function getAll() {
+        $allProjectsArr = $this->projectDAObj->getAll();
+        
+        return $allProjectsArr;
+    }
+    
+    public function getID() {
         return $this->intProjectID;
     }
     
-    function setID($intProjectID) {
+    public function setID($intProjectID) {
         $this->intProjectID = $intProjectID;
     }
     

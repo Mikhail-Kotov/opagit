@@ -8,15 +8,15 @@ class Attachment {
     private $intStatusID, $intRiskID, $intIssueID;
     
 
-    function __construct() {
+    public function __construct() {
         $this->attachmentDAObj = new AttachmentDA();
     }
     
-    function getID() {
+    public function getID() {
         return $this->intAttachmentIDArr[0];
     }
     
-    function getDetails() {
+    public function getDetails() {
         if(isset($this->intAttachmentIDArr)) {
             $attachmentArray['intAttachmentIDArr'] = $this->intAttachmentIDArr;
             $attachmentArray['strAttachmentLinkArr'] = $this->strAttachmentLinkArr;
@@ -27,11 +27,11 @@ class Attachment {
         return $attachmentArray;
     }
     
-    function setStatusID($intStatusID) {
+    public function setStatusID($intStatusID) {
         $this->intStatusID = $intStatusID;
     }
     
-    function getDetailsFromDB() {
+    public function getDetailsFromDB() {
         unset($this->intAttachmentIDArr);
         unset($this->strAttachmentLinkArr);
         unset($this->strAttachmentCommentArr);
@@ -47,16 +47,11 @@ class Attachment {
         }
     }
     
-    function delDetails($intStatusID) {
-        $query = "DELETE FROM tblAttachment WHERE intStatusID='$intStatusID';";
-        $sql = mysql_query($query);
-        if (!$sql)
-            die('Invalid query: ' . mysql_error());
-        
-        //$db->del('tblAttachment', $intStatusID);
+    public function delDetails($intStatusID) {
+        $this->attachmentDAObj->delDetails($intStatusID);
     }
     
-    function setDetails($intAttachmentIDArr, $strAttachmentLinkArr, $strAttachmentCommentArr) {
+    public function setDetails($intAttachmentIDArr, $strAttachmentLinkArr, $strAttachmentCommentArr) {
         foreach ($intAttachmentIDArr as $id => $value) {
             $query = "UPDATE tblAttachment SET strAttachmentLink='" . mysql_real_escape_string($strAttachmentLinkArr[$id]) .
                     "',strAttachmentComment='" . mysql_real_escape_string($strAttachmentCommentArr[$id]) . "' WHERE intAttachmentID=" . $intAttachmentIDArr[$id] . ";";
@@ -68,12 +63,12 @@ class Attachment {
         }
     }
     
-    function addDetails($nextStatusID, $strAttachmentLinkArr, $strAttachmentCommentArr) {
+    public function addDetails($nextStatusID, $strAttachmentLinkArr, $strAttachmentCommentArr) {
         $isNextAttachment = true;
         $i = 0;
-        do {
+        while (isset($strAttachmentLinkArr[$i])) {
             $query = "INSERT INTO tblAttachment(intAttachmentID,intStatusID,strAttachmentLink,strAttachmentComment) " .
-                    "values (NULL, '" . $nextStatusID .
+                    "VALUES (NULL, '" . $nextStatusID .
                     "', '" . mysql_real_escape_string($strAttachmentLinkArr[$i]) .
                     "', '" . mysql_real_escape_string($strAttachmentCommentArr[$i]) . "');";
             $sql = mysql_query($query);
@@ -81,13 +76,8 @@ class Attachment {
             if (!$sql)
                 die('Invalid query: ' . mysql_error());
 
-
-            if (isset($strAttachmentLinkArr[($i + 1)])) {
-                $i++;
-            } else {
-                $isNextAttachment = false;
-            }
-        } while ($isNextAttachment == true);
+            $i++;
+        }
     }
 }
 

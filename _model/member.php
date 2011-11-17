@@ -34,9 +34,10 @@ class Member {
         return $memberArr;
     }
     
-    public function getAllDetails() {
-        $membersArr = $this->memberDAObj->getAllDetails();
-        return $membersArr;
+    public function getAll() {
+        $allMembersArr = $this->memberDAObj->getAll();
+        
+        return $allMembersArr;
     }
     
     function getName() {

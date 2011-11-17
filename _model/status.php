@@ -160,7 +160,7 @@ class Status {
             foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {      // don't using this value here
                 // so to change 'foreach' to something else???
                 // don't know better php construction (Mikhail)
-                $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
+                $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] . $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
                         $attachmentArr['strAttachmentLinkArr'][$id] . "</a><br /><br />" .
                         "<b>Attachment Comment:</b><br />" . $attachmentArr['strAttachmentCommentArr'][$id] . "<br /><br />";
             }

@@ -13,6 +13,19 @@ class ProjectDA {
 
         return $projectDAArr;
     }
+    
+    public function getAll() {
+        $allProjectsDAArr = array();
+        
+        $query = "SELECT * FROM tblProject;";
+        $sqlArr = $_ENV['db']->query($query);
+
+        if (isset($sqlArr[0])) {
+            $allProjectsDAArr = $sqlArr;
+        }
+        
+        return $allProjectsDAArr;
+    }
 
 }
 

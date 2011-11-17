@@ -1,6 +1,6 @@
 <?php
 
-class MemberGUI {
+class LoginGUI {
 
     private $sessionArr;
     
@@ -8,8 +8,8 @@ class MemberGUI {
         $this->sessionArr = $sessionArr;
     }
     
-    public function chooseMember($membersArr) {
-        $_ENV['firephp']->log($membersArr, 'membersArr');
+    public function displayLoginForm($allMembersArr, $allProjectsArr) {
+        $_ENV['firephp']->log($allMembersArr, 'membersArr');
         echo '<div id="login_box">' . "\n";
     	echo '<div id="box">';
     	echo "<h1>Login Here</h1>\n";
@@ -18,11 +18,23 @@ class MemberGUI {
         echo '<label for="m">Choose a Member:</label><br />';
         echo '<select name="m" id="m" class="form_dropdown">' . "\n";
 
-        foreach ($membersArr as $id => $value) {
-            echo '<option value="' . $membersArr[$id]['intMemberID'] . '">' . $membersArr[$id]['strMemberName'] . "</option>\n";
+        foreach ($allMembersArr as $id => $value) {
+            echo '<option value="' . $allMembersArr[$id]['intMemberID'] . '">' . $allMembersArr[$id]['strMemberName'] . "</option>\n";
         }
 
         echo "</select><br /><br />\n";
+        
+        
+        echo '<label for="p">Choose a Project:</label><br />';
+        echo '<select name="p" id="p" class="form_dropdown">' . "\n";
+
+        foreach ($allProjectsArr as $id => $value) {
+            echo '<option value="' . $allProjectsArr[$id]['intProjectID'] . '">' . $allProjectsArr[$id]['strProjectName'] . "</option>\n";
+        }
+
+        echo "</select><br /><br />\n";
+        
+        
         //Username is not implemented yet
         echo '<label for="ssousername" title="Enter SIMS username.">SIMS Username:</label><br />';
     	echo '<input class="form_textfield" style="width: 150px;" tabindex="1" type="text" id="ssousername" name="ssousername" value="" /><br /><br />';

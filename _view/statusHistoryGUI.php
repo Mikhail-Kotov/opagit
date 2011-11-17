@@ -17,7 +17,7 @@ class StatusHistoryGUI {
             echo '<table class="standard" cellspacing="0">';
             echo "<caption>" . $statusHistoryTableArr[0]['caption'] . "</caption>\n";
             echo "<tr>\n";
-            echo "<th>&nbsp;</th>\n";
+            echo "<th>Individual Status</th>\n";
             echo "<th>ID</th>\n";
             echo "<th>Member</th>\n";
             echo "<th>Creation Date</th>\n";
@@ -27,7 +27,7 @@ class StatusHistoryGUI {
             echo "<th>Notes/Reasons</th>\n";
             echo "<th>Attachment</th>\n";
             echo "<th>Attachment Comment</th>\n";
-            echo "<th>&nbsp;</th>\n"; // for PDF
+            echo "<th>Convert to PDF</th>\n"; // for PDF
             echo "</tr>\n";
 
             $oddOrEven = "historyodd";

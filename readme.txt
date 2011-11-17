@@ -1,3 +1,9 @@
+TODO:
+fix: add Status/Risk/Issue if there is no Statuses/Risks/Issues 
+fix: check if login with wrong project from a Login screen
+
+
+History:
 version number is: MM.DD-HHMM
 
 11.17-0030: attachments fixed, controllers fixed, status displayPDF moved to GUI

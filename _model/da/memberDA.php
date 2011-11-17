@@ -16,15 +16,15 @@ class MemberDA {
         return $memberDAArr;
     }
     
-    public function getAllDetails() {
-        $membersDAArr = array();
+    public function getAll() {
+        $allMembersDAArr = array();
         $sqlArr = $_ENV['db']->query("SELECT intMemberID,strMemberName,strMemberFirstName,strMemberLastName FROM tblMember;");
 
         if(isset($sqlArr[0])) {
-            $membersDAArr = $sqlArr;
+            $allMembersDAArr = $sqlArr;
         }
         
-        return $membersDAArr;
+        return $allMembersDAArr;
     }
 }
 

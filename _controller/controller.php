@@ -104,11 +104,15 @@ class Controller {
             if ($sessionArr['strPage'] == "choosemember") {
                 $memberObj = new Member();
                 $memberObj->setSession($sessionArr);
-
-                $memberGUIObj = new MemberGUI();
-                $memberGUIObj->setSession($sessionArr);
-                $membersArr = $memberObj->getAllDetails();
-                $memberGUIObj->chooseMember($membersArr);
+                $allMembersArr = $memberObj->getAll();
+                
+                $projectObj = new Project();
+                $projectObj->setSession($sessionArr);
+                $allProjectsArr = $projectObj->getAll();
+                
+                $loginGUIObj = new LoginGUI();
+                $loginGUIObj->setSession($sessionArr);
+                $loginGUIObj->displayLoginForm($allMembersArr, $allProjectsArr);
             }
 
             if ($sessionArr['strPage'] == "chooseproject") {
