@@ -17,23 +17,10 @@ class LoginGUI {
         echo '<form method="post" action="" id="event-submission">' . "<div>\n";
         echo '<label for="m">Choose a Member:</label><br />';
         echo '<select name="m" id="m" class="form_dropdown">' . "\n";
-
         foreach ($allMembersArr as $id => $value) {
             echo '<option value="' . $allMembersArr[$id]['intMemberID'] . '">' . $allMembersArr[$id]['strMemberName'] . "</option>\n";
         }
-
         echo "</select><br /><br />\n";
-        
-        
-        echo '<label for="p">Choose a Project:</label><br />';
-        echo '<select name="p" id="p" class="form_dropdown">' . "\n";
-
-        foreach ($allProjectsArr as $id => $value) {
-            echo '<option value="' . $allProjectsArr[$id]['intProjectID'] . '">' . $allProjectsArr[$id]['strProjectName'] . "</option>\n";
-        }
-
-        echo "</select><br /><br />\n";
-        
         
         //Username is not implemented yet
         echo '<label for="ssousername" title="Enter SIMS username.">SIMS Username:</label><br />';
@@ -41,6 +28,14 @@ class LoginGUI {
     	//Password is not implemented yet
         echo '<label for="password">SIMS Password:</label><br />';
         echo '<input name="password" id="password" class="form_textfield" style="width: 150px;" tabindex="2" type="password" /><br /><br />';
+
+        echo '<label for="p">Choose a Project:</label><br />';
+        echo '<select name="p" id="p" class="form_dropdown">' . "\n";
+        foreach ($allProjectsArr as $id => $value) {
+            echo '<option value="' . $allProjectsArr[$id]['intProjectID'] . '">' . $allProjectsArr[$id]['strProjectName'] . "</option>\n";
+        }
+        echo "</select><br /><br />\n";
+
         echo '<input type="hidden" name="page" value="welcome" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
         echo '<input name="Submit" type="image" src="images/submit.gif" alt="Submit" />' . "\n";
