@@ -1,7 +1,7 @@
 <?php
 
 class MemberDA {
-
+    //this function returns details for one member
     public function getDetails($intMemberID) {
         $memberDAArr = array();
         
@@ -16,6 +16,7 @@ class MemberDA {
         return $memberDAArr;
     }
     
+    //function to return details for all members
     public function getAll() {
         $allMembersDAArr = array();
         $sqlArr = $_ENV['db']->query("SELECT intMemberID,strMemberName,strMemberFirstName,strMemberLastName FROM tblMember;");
