@@ -3,30 +3,42 @@
 class Controller {
 
     function main() {
-       
+
         $sessionObj = new Session();
-        
+
         $sessionArr = array();
 
         $sessionArr['strSessionSID'] = 'SID'; // draft
-        if(!empty($_POST["intSessionID"])) {
+        if (!empty($_POST["intSessionID"])) {
             $sessionArr['intSessionID'] = $_POST["intSessionID"];
         } else {
             $sessionArr['intSessionID'] = null;
         }
 
-        if(!empty($_POST["page"])) {
+        if (!empty($_POST["page"])) {
             $sessionArr['strPage'] = $_POST["page"];
         } else {
             $sessionArr['strPage'] = "choosemember";
         }
 
-        if(!empty($_POST["todo"])) {
+        if (!empty($_POST["todo"])) {
             $sessionArr['strTodo'] = $_POST["todo"];
         } else {
             $sessionArr['strTodo'] = null;
         }
 
+        if (!empty($_POST['ssousername'])) {
+            $ssousername = $_POST['ssousername'];
+        } else {
+            $ssousername = null;
+        }
+        
+        if (!empty($_POST['password'])) {
+            $password = $_POST['password'];
+        } else {
+            $password = null;
+        }
+        
         if(isset($_POST["m"])) {
             $sessionArr['intMemberID'] = $_POST["m"];
         } else {
@@ -38,127 +50,143 @@ class Controller {
         } else {
             $sessionArr['intProjectID'] = null;
         }
-  
-        if(isset($_POST["s"])) {
+
+        if (isset($_POST["s"])) {
             $sessionArr['intStatusID'] = $_POST["s"];
         } else {
             $sessionArr['intStatusID'] = null;
         }
-        
-        if(isset($_POST["r"])) {
+
+        if (isset($_POST["r"])) {
             $sessionArr['intRiskID'] = $_POST["s"];
         } else {
             $sessionArr['intRiskID'] = null;
         }
-        
-        if(isset($_POST["i"])) {
+
+        if (isset($_POST["i"])) {
             $sessionArr['intIssueID'] = $_POST["s"];
         } else {
             $sessionArr['intIssueID'] = null;
-        }  
-        
+        }
+
+        // Session sync with DB
         $sessionObj->setDetails($sessionArr);
         unset($sessionArr);
         $sessionArr = $sessionObj->getDetails();
-        
+
         //var_dump($sessionArr);
         $_ENV['firephp']->log($sessionArr, 'sessionArr');
-        
-        
+
+
         $GUIObj = new GUI();
         $GUIObj->setSession($sessionArr);
 
-        if (!empty($sessionArr['intMemberID'])) {
+        if (!empty($sessionArr['intMemberID']) && !empty($sessionArr['intProjectID'])) {
             $memberObj = new Member();
             $memberObj->setSession($sessionArr);
             $memberArr = $memberObj->getDetails();
-        } else {
-            $sessionArr['strPage'] = "choosemember";
-        }
 
-        if (!empty($sessionArr['intProjectID'])) {
             $projectObj = new Project();
             $projectObj->setSession($sessionArr);
             $projectArr = $projectObj->getDetails();
+        } else {
+            echo "0000";
+            if(empty($ssousername) || empty($password)) {
+                $sessionArr['strPage'] = "login";
+            }
         }
-        if ( ( (strcmp("status", substr($sessionArr['strPage'], 0, 6)) == 0) || 
-               (strcmp("risk", substr($sessionArr['strPage'], 0, 4))   == 0) ||
-               (strcmp("issue", substr($sessionArr['strPage'], 0, 5))  == 0)
-             ) && empty($sessionArr['intProjectID']) && !empty($sessionArr['intMemberID'])) {
-            $lastPage = $sessionArr['strPage'];
-            $sessionArr['strPage'] = "chooseproject";
-        }
-        
 
-
-        
-        if(isset($memberObj) && !isset($projectObj)) {
-            $sessionArr['strPage'] = "chooseproject";
-        }
-        
         $is_pdf = strpos($sessionArr['strPage'], "pdf");
         if ($is_pdf === false) {
             $GUIObj->header();
             $GUIObj->menu();
 
-            if ($sessionArr['strPage'] == "choosemember") {
-                $memberObj = new Member();
-                $memberObj->setSession($sessionArr);
-                $allMembersArr = $memberObj->getAll();
-                
-                $projectObj = new Project();
-                $projectObj->setSession($sessionArr);
-                $allProjectsArr = $projectObj->getAll();
-                
-                $loginGUIObj = new LoginGUI();
-                $loginGUIObj->setSession($sessionArr);
-                $loginGUIObj->displayLoginForm($allMembersArr, $allProjectsArr);
+            if ($sessionArr['strPage'] == "welcome") {
+                $query = "SELECT intMemberID, strMemberPassword FROM tblMember WHERE strMemberName='" . $ssousername . "';";
+                $sqlArr = $_ENV['db']->query($query);
+
+                if (isset($sqlArr[0])) {
+                    $strMemberPassword = $sqlArr[0]['strMemberPassword'];
+                } else {
+                    // ALERT: Wrong ID or Password
+                    echo "aaa";
+                    $sessionArr['strPage'] = "login";
+                }
+
+                if (crypt($password, $strMemberPassword) == $strMemberPassword) {
+                    echo "Password verified!";
+                    $sessionArr['intMemberID'] = $sqlArr[0]['intMemberID'];
+                    
+                    // Session sync with DB
+                    $sessionObj->setDetails($sessionArr);
+                    unset($sessionArr);
+                    $sessionArr = $sessionObj->getDetails();
+
+                    $query = "SELECT intProjectMemberID FROM tblProjectMember WHERE intMemberID='" . $sessionArr['intMemberID'] .
+                            "' AND intProjectID='" . $sessionArr['intProjectID'] . "' LIMIT 1;";
+                    $sqlArr = $_ENV['db']->query($query);
+
+                    if (isset($sqlArr[0])) {
+                        $intProjectMemberID = $sqlArr[0]['intProjectMemberID'];
+                    } else {
+                        // ALERT: incorrect project
+                        $sessionArr['strPage'] = "chooseproject";
+                    }
+                    $GUIObj->welcome();
+                } else {
+                    // ALERT: Wrong ID or Password
+                   echo "ALERT: Wrong ID or Password";
+                   $sessionArr['strPage'] = "login";
+                }
             }
 
             if ($sessionArr['strPage'] == "chooseproject") {
-                $memberObj = new Member();
-                $memberObj->setSession($sessionArr);
-
                 $projectObj = new Project();
                 $projectObj->setSession($sessionArr);
 
                 $projectGUIObj = new ProjectGUI();
                 $projectGUIObj->setSession($sessionArr);
 
-                if (empty($lastPage)) {
-                    $lastPage = "welcome";
-                }
-                $projectGUIObj->chooseProject($lastPage);
+                $projectGUIObj->chooseProject();
             }
 
-            if ($sessionArr['strPage'] == "welcome") {
-                $GUIObj->welcome();
+            if ($sessionArr['strPage'] == "login") {
+                $memberObj = new Member();
+                $allMembersArr = $memberObj->getAll();
+
+                $projectObj = new Project();
+                $allProjectsArr = $projectObj->getAll();
+
+                $loginGUIObj = new LoginGUI();
+                $loginGUIObj->setSession($sessionArr);
+                $loginGUIObj->displayLoginForm($allMembersArr, $allProjectsArr);
             }
         }
-        
-        if(!empty($sessionArr['intMemberID']) && !empty($sessionArr['intProjectID'])) {
+
+        if (!empty($sessionArr['intMemberID']) && !empty($sessionArr['intProjectID'])) {
             $is_status = strpos($sessionArr['strPage'], "status");
             $is_risk = strpos($sessionArr['strPage'], "risk");
             $is_issue = strpos($sessionArr['strPage'], "issue");
-            
-            if($is_status !== false) {
+
+            if ($is_status !== false) {
                 $statusControllerObj = new StatusController($memberArr, $projectArr, $sessionArr);
                 $statusControllerObj->main();
             }
-            
-            if($is_risk !== false) {
+
+            if ($is_risk !== false) {
                 include_once("_controller/riskController.inc.php");
             }
-            
-            if($is_issue !== false) {
+
+            if ($is_issue !== false) {
                 include_once("_controller/issueController.inc.php");
             }
         }
-        
+
         if ($is_pdf === false) {
             $GUIObj->footer();
         }
     }
+
 }
 
 ?>

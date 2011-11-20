@@ -15,13 +15,6 @@ class LoginGUI {
     	echo "<h1>Login Here</h1>\n";
     	echo "<p>Students and staff can now login to do project administration.</p>\n";
         echo '<form method="post" action="" id="event-submission">' . "<div>\n";
-        echo '<label for="m">Choose a Member:</label><br />';
-        echo '<select name="m" id="m" class="form_dropdown">' . "\n";
-        foreach ($allMembersArr as $id => $value) {
-            echo '<option value="' . $allMembersArr[$id]['intMemberID'] . '">' . $allMembersArr[$id]['strMemberName'] . "</option>\n";
-        }
-        echo "</select><br /><br />\n";
-        
         //Username is not implemented yet
         echo '<label for="ssousername" title="Enter SIMS username.">SIMS Username:</label><br />';
     	echo '<input class="form_textfield" style="width: 150px;" tabindex="1" type="text" id="ssousername" name="ssousername" value="" /><br /><br />';

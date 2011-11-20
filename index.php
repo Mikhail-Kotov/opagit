@@ -20,6 +20,7 @@ include_once("_model/da/memberDA.php");
 include_once("_view/loginGUI.php");
 include_once("_model/project.php");
 include_once("_model/da/projectDA.php");
+include_once("_view/projectGUI.php");
 include_once("_model/status.php");
 include_once("_model/da/statusDA.php");
 include_once("_model/risk.php");
