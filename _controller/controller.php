@@ -32,20 +32,20 @@ class Controller {
         } else {
             $ssousername = null;
         }
-        
+
         if (!empty($_POST['password'])) {
             $password = $_POST['password'];
         } else {
             $password = null;
         }
-        
-        if(isset($_POST["m"])) {
+
+        if (isset($_POST["m"])) {
             $sessionArr['intMemberID'] = $_POST["m"];
         } else {
             $sessionArr['intMemberID'] = null;
         }
-        
-        if(isset($_POST["p"])) {
+
+        if (isset($_POST["p"])) {
             $sessionArr['intProjectID'] = $_POST["p"];
         } else {
             $sessionArr['intProjectID'] = null;
@@ -69,7 +69,6 @@ class Controller {
             $sessionArr['intIssueID'] = null;
         }
 
-        // Session sync with DB
         $sessionObj->setDetails($sessionArr);
         unset($sessionArr);
         $sessionArr = $sessionObj->getDetails();
@@ -90,8 +89,7 @@ class Controller {
             $projectObj->setSession($sessionArr);
             $projectArr = $projectObj->getDetails();
         } else {
-            echo "0000";
-            if(empty($ssousername) || empty($password)) {
+            if (empty($ssousername) || empty($password)) {
                 $sessionArr['strPage'] = "login";
             }
         }
@@ -102,41 +100,43 @@ class Controller {
             $GUIObj->menu();
 
             if ($sessionArr['strPage'] == "welcome") {
-                $query = "SELECT intMemberID, strMemberPassword FROM tblMember WHERE strMemberName='" . $ssousername . "';";
-                $sqlArr = $_ENV['db']->query($query);
-
-                if (isset($sqlArr[0])) {
-                    $strMemberPassword = $sqlArr[0]['strMemberPassword'];
-                } else {
-                    // ALERT: Wrong ID or Password
-                    echo "aaa";
-                    $sessionArr['strPage'] = "login";
-                }
-
-                if (crypt($password, $strMemberPassword) == $strMemberPassword) {
-                    echo "Password verified!";
-                    $sessionArr['intMemberID'] = $sqlArr[0]['intMemberID'];
-                    
-                    // Session sync with DB
-                    $sessionObj->setDetails($sessionArr);
-                    unset($sessionArr);
-                    $sessionArr = $sessionObj->getDetails();
-
-                    $query = "SELECT intProjectMemberID FROM tblProjectMember WHERE intMemberID='" . $sessionArr['intMemberID'] .
-                            "' AND intProjectID='" . $sessionArr['intProjectID'] . "' LIMIT 1;";
+                if (empty($sessionArr['intMemberID'])) {
+                    $query = "SELECT intMemberID, strMemberPassword FROM tblMember WHERE strMemberName='" . $ssousername . "';";
                     $sqlArr = $_ENV['db']->query($query);
 
                     if (isset($sqlArr[0])) {
-                        $intProjectMemberID = $sqlArr[0]['intProjectMemberID'];
+                        $strMemberPassword = $sqlArr[0]['strMemberPassword'];
+
+                        if (crypt($password, $strMemberPassword) == $strMemberPassword) {
+                            echo "Password verified!<br />\n";
+                            $sessionArr['intMemberID'] = $sqlArr[0]['intMemberID'];
+
+                            // Session sync with DB
+                            $sessionObj->setDetails($sessionArr);
+
+                            $query = "SELECT intProjectMemberID FROM tblProjectMember WHERE intMemberID='" . $sessionArr['intMemberID'] .
+                                    "' AND intProjectID='" . $sessionArr['intProjectID'] . "' LIMIT 1;";
+                            $sqlArr = $_ENV['db']->query($query);
+
+                            if (isset($sqlArr[0])) {
+                                $intProjectMemberID = $sqlArr[0]['intProjectMemberID'];
+                            } else {
+                                // ALERT: incorrect project
+                                $sessionArr['strPage'] = "chooseproject";
+                            }
+                            $GUIObj->welcome();
+                        } else {
+                            // ALERT: Wrong ID or Password
+                            echo "password not correct";
+                            $sessionArr['strPage'] = "login";
+                        }
                     } else {
-                        // ALERT: incorrect project
-                        $sessionArr['strPage'] = "chooseproject";
+                        // ALERT: Wrong ID or Password
+                        echo "user not exist";
+                        $sessionArr['strPage'] = "login";
                     }
-                    $GUIObj->welcome();
                 } else {
-                    // ALERT: Wrong ID or Password
-                   echo "ALERT: Wrong ID or Password";
-                   $sessionArr['strPage'] = "login";
+                    $GUIObj->welcome();
                 }
             }
 

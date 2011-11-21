@@ -42,7 +42,14 @@ if(isset($_SERVER['REQUEST_URI'])) {
 // connect to db
 $_ENV['db'] = new DB();
 $_ENV['db']->connectDB();
- 
+
+// only for development
+if (isset($_GET['db'])) {
+    if ($_GET['db'] == 'restore') {
+        $_ENV['db']->restoreDB();
+    }
+}
+
 $_ENV['firephp'] = FirePHP::getInstance(True);
 $_ENV['currentDate'] = date("Y-m-d");
 $_ENV['engineering mode'] = 1;

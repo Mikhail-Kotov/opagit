@@ -48,7 +48,10 @@ class DB {
     }
     
     function restoreDB() {
-    
+    $sql = explode(";", file_get_contents('sql/sql.sql')); // 
+        for ($i = 0; $i < count($sql) - 1; $i++)
+            mysql_query($sql[$i]);
+
     }
 
 }
