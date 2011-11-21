@@ -2,7 +2,7 @@
 
 class StatusGUI {
 
-    private $sessionArr;
+    private $sessionArr, $memberArr, $projectArr;
 
     public function __construct() {
         
@@ -10,6 +10,13 @@ class StatusGUI {
 
     public function setSession($sessionArr) {
         $this->sessionArr = $sessionArr;
+        $memberObj = new Member();
+        $memberObj->setSession($sessionArr);
+        $this->memberArr = $memberObj->getDetails();
+
+        $projectObj = new Project();
+        $projectObj->setSession($sessionArr);
+        $this->projectArr = $projectObj->getDetails();
     }
 
     public function display($currentStatusMessage) {

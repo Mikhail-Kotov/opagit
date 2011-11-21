@@ -136,17 +136,19 @@ class Status {
     public function viewStatus() {
         
         // DRAFT (RAW CODE)
-//        $memberObj = new Member();
-//        $memberObj->getMemberID($this->intProjectMemberID);
-//        $memberObj->setID();
-//        $memberArr = $memberObj->getDetails();
+        $memberObj = new Member();
+        $intMemberID = $memberObj->getMemberID($this->intProjectMemberID);
+        $memberObj->setID($intMemberID);
+        $memberArr = $memberObj->getDetails();
         
-        $currentStatusMessage = "<b>Date:</b> " . date("jS F Y", strtotime($this->dmtStatusCurrentDate)) . "<br />" .
-                // "<b>Status created by:</b> " . $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'] . "<br />" .
-                "<b>Status created by:</b> __MEMBER_NAME_HERE__<br />" .
+        $currentStatusMessage = "<b>Date:</b> " . 
+                date("jS F Y", strtotime($this->dmtStatusCurrentDate)) . "<br />" .
+                "<b>Status created by: </b>";
+        $currentStatusMessage .= $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'];
+        $currentStatusMessage .= "<br />" .
                 "<b>Project:</b> " . $this->projectArr['strProjectName'] . "<br /><br />" .
-                "<b>Actual Baseline:</b><br />" . $this->strActualBaseline . "<br /><br />" .
-                "<b>Plan Baseline:</b><br />" . $this->strPlanBaseline . "<br /><br />" .
+                "<b>Actual Status:</b><br />" . $this->strActualBaseline . "<br /><br />" .
+                "<b>Planned Baseline:</b><br />" . $this->strPlanBaseline . "<br /><br />" .
                 "<b>Variation:</b><br />" .
                 $this->strStatusVariation . "<br /><br />" .
                 "<b>Notes/Reasons:</b><br />" .
@@ -180,7 +182,8 @@ class Status {
             foreach ($statusArr as $columnName => $value) {
                 switch ($columnName) {
                     case "intProjectMemberID":
-                        $tableArr[$intStatusID]["intMemberName"] = $memberObj->getMemberName($value);
+                        $retVal = $memberObj->getMemberName($value);
+                        $tableArr[$intStatusID]['strMemberFirstName'] = $retVal['strMemberFirstName'];
                         break;
                     case "dmtStatusCurrentDate":
                         $tableArr[$intStatusID][$columnName] = date("jS F Y", strtotime($value));

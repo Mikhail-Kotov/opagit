@@ -30,7 +30,9 @@ class GUI {
 //        echo "Your Project is <b>" . $this->projectObj->strProjectName . "</b><br /><br />";
         
         $memberObj = new Member();
-        echo 'Hello ' . $memberObj->getMemberName($this->sessionArr['intMemberID']) . "<br />";
+        $memberObj->setSession($this->sessionArr);
+        $memberArr = $memberObj->getDetails();
+        echo 'Hello ' . $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'] . "<br />";
         echo "<b>Please choose something from left menu</b>";
     }
 }

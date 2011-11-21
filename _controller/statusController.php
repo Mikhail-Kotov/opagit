@@ -15,24 +15,26 @@ class statusController {
     }
 
     public function main() {
-        switch($this->sessionArr['strPage']) {
-            case "status":
-                if ($this->sessionArr['strTodo'] != "") {
-                    switch ($this->sessionArr['strTodo']) {
-                        case "add":
-                            $this->todoAddStatus();
-                            break;
-                        case "edit":
-                            $this->todoEditStatus();
-                            break;
-                        case "delete":
-                            $this->todoDeleteStatus();
-                            break;
-                    }
+        if ($this->sessionArr['strPage'] == "status") {
+            if ($this->sessionArr['strTodo'] != "") {
+                switch ($this->sessionArr['strTodo']) {
+                    case "add":
+                        $this->todoAddStatus();
+                        $this->sessionArr['strPage'] = "statusview";
+                        break;
+                    case "edit":
+                        $this->todoEditStatus();
+                        break;
+                    case "delete":
+                        $this->todoDeleteStatus();
+                        break;
                 }
-                
+            } else {
                 $this->sessionArr['strPage'] = "statushistory"; // if user choose Status from Menu
-            
+            }
+        }
+        
+        switch($this->sessionArr['strPage']) {            
            case "statushistory":
                $this->displayHistoryStatus();
                break;

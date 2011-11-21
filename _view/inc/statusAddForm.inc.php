@@ -4,24 +4,11 @@
         <input type="hidden" name="page" value="status" />
         <input type="hidden" name="todo" value="add" />
         <input type="hidden" name="intSessionID" value="<?php echo $this->sessionArr['intSessionID']; ?>" />
-        <label for="strMemberName" title="Automatic name field.">Member Name:</label>
-        <div class="field"><input type="text" name="strMemberName" value="Your name" class="input-text"  size="35" maxlength="40" disabled="disabled" /></div><br />
+        <label for="intMemberID" title="Automatic Name field.">Member Name:</label>
+        <div class="field"><input type="text" name="MemberName_NOT_USED" value="<?php echo $this->memberArr['strMemberFirstName']. " ". $this->memberArr['strMemberLastName']; ?>" class="input-text"  size="35" maxlength="40" disabled="disabled" /></div><br />
 
-        <label for="intProjectID" title="Select a project that you want to report on.">Project Name:</label>
-        <div class="field">
-            <select name="intProjectID" value="1"><option value="1" selected="selected">OPA</option>
-                <?php
-//                $projectsArr = getProjects($this->memberArr['intMemberID']);
-//                foreach ($projectsArr as $columnName => $value) {
-//                    echo '<option value="' . $value['intProjectID'] . '"';
-//                    if ($value['intProjectID'] == $this->projectArr['intProjectID']) {
-//                        echo ' selected="selected"';
-//                    }
-//                    echo'>' . $value['strProjectName'] . "</option>\n";
-//                }
-                ?>
-            </select>
-        </div><br />
+        <label for="intProjectID" title="Automatic Project Name field.">Project Name:</label>
+        <div class="field"><input type="text" name="ProjectName_NOT_USED" value="<?php echo $this->projectArr['strProjectName']; ?>" class="input-text"  size="35" maxlength="40" disabled="disabled" /></div><br />
 
         <label for="dmtStatusCreationDate" title="The current date can be modified.">Status Creation Date:</label>
         <div class="field"><input type="text" name="dmtStatusCurrentDate" class="input-text" size="10" maxlength="10" value="<?php echo $_ENV['currentDate']; ?>" /></div><br />
@@ -30,7 +17,7 @@
         <div class="field">
             <textarea name="strActualBaseline" title="The actual baseline is based on your project management or Gantt. Enter your actual project status." rows="2" cols="43"></textarea></div><br />
 
-        <label for="strPlanBaseline" title="The Plan Baseline is where you expect to be in your project management.">Planned Baseline:</label>
+        <label for="strPlanBaseline" title="The Planned Baseline is where you expect to be in your project management.">Planned Baseline:</label>
         <div class="field"><textarea name="strPlanBaseline" title="The Plan Baseline is where you expect to be in your project management." rows="2" cols="43"></textarea></div><br />
 
         <label for="strStatusVariation" title="Variation is the difference between the actual baseline and the planned baseline.">Variation:</label>

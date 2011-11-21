@@ -74,7 +74,7 @@ class Controller {
         $sessionArr = $sessionObj->getDetails();
 
         //var_dump($sessionArr);
-        $_ENV['firephp']->log($sessionArr, 'sessionArr');
+        $_ENV['firephp']->log($sessionArr, 'sessionArr BEGIN');
 
 
         $GUIObj = new GUI();
@@ -108,7 +108,6 @@ class Controller {
                         $strMemberPassword = $sqlArr[0]['strMemberPassword'];
 
                         if (crypt($password, $strMemberPassword) == $strMemberPassword) {
-                            echo "Password verified!<br />\n";
                             $sessionArr['intMemberID'] = $sqlArr[0]['intMemberID'];
 
                             // Session sync with DB
@@ -120,11 +119,13 @@ class Controller {
 
                             if (isset($sqlArr[0])) {
                                 $intProjectMemberID = $sqlArr[0]['intProjectMemberID'];
+                                
+                                $GUIObj->setSession($sessionArr);
+                                $GUIObj->welcome();
                             } else {
                                 // ALERT: incorrect project
                                 $sessionArr['strPage'] = "chooseproject";
                             }
-                            $GUIObj->welcome();
                         } else {
                             // ALERT: Wrong ID or Password
                             echo "password not correct";
@@ -185,6 +186,8 @@ class Controller {
         if ($is_pdf === false) {
             $GUIObj->footer();
         }
+        
+        $_ENV['firephp']->log($sessionArr, 'sessionArr END');
     }
 
 }

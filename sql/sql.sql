@@ -1,5 +1,11 @@
+# Last edited: 21 Nov, 2.45 pm
+# By: Mikhail
+
 #DROP DATABASE IF EXISTS opadmin;
 #CREATE DATABASE opadmin character set utf8;
+
+#DROP DATABASE IF EXISTS opadmindev;
+#CREATE DATABASE opadmindev character set utf8;
 
 #USE opadmin;
 #USE opadmindev;
@@ -141,9 +147,9 @@ CREATE TABLE `tblRiskType` (
 
 CREATE TABLE `tblRisk` (
   intRiskID INT(11) NOT NULL AUTO_INCREMENT COMMENT 'PK, AI. Project Risk for OPA',
-  intProjectMemberID INT(11) NOT NULL COMMENT 'FK',
+  intProjectMemberID INT(11) NOT NULL COMMENT 'FK' COMMENT 'Raised by',
   intProjectID INT(11) NOT NULL COMMENT 'FK',
-  strRiskTypeID VARCHAR(255) NULL COMMENT 'FK',
+  strRiskTypeID VARCHAR(255) NULL COMMENT 'FK' COMMENT 'calls Risk Type description',
   strRiskDescription VARCHAR(1000) NULL,
   strRiskImpactDescription VARCHAR(5000) NULL,  
   enmRiskStatus ENUM('Opened','Closed','Assigned') DEFAULT NULL,
