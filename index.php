@@ -14,7 +14,6 @@ include_once("_controller/statusController.php");
 include_once("_view/GUI.php");
 include_once("_view/statusGUI.php");
 include_once("_view/statusHistoryGUI.php");
-include_once("inc/functions.php");
 include_once("_model/member.php");
 include_once("_model/da/memberDA.php");
 include_once("_view/loginGUI.php");
