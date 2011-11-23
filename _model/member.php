@@ -61,30 +61,7 @@ class Member {
 
         return $returnValue;
     }
-    
-    function getMemberName($intProjectMemberID) {
-        if (isset($intProjectMemberID)) {
-            if ($intProjectMemberID != "") {
-                $query = "SELECT m.strMemberFirstName,m.strMemberLastName FROM tblMember AS m, tblProjectMember AS pm ".
-                        "WHERE m.intMemberID = pm.intMemberID AND pm.intProjectMemberID = " . $intProjectMemberID . ";";
 
-                $sqlArr = $_ENV['db']->query($query);
-
-                if (isset($sqlArr[0])) {
-                    $returnValue = $sqlArr[0];
-                } else {
-                    $returnValue = null;
-                }
-            } else {
-                $returnValue = null;
-            }
-        } else {
-            $returnValue = null;
-        }
-
-        return $returnValue;
-    }
-    
     function getMemberID($intProjectMemberID) {
         if (isset($intProjectMemberID)) {
             if ($intProjectMemberID != "") {

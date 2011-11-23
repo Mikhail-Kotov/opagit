@@ -67,7 +67,7 @@ class Status {
         }
         
         $this->attachmentObj->setStatusID($this->intStatusID);
-        $this->attachmentObj->getDetailsFromDB();
+        $this->attachmentObj->getDetailsFromDB("status");
         
         return $statusArr;
     }
@@ -156,7 +156,7 @@ class Status {
 
         $this->attachmentObj->setStatusID($this->getID());
 
-        $this->attachmentObj->getDetailsFromDB();
+        $this->attachmentObj->getDetailsFromDB("status");
         $attachmentArr = $this->attachmentObj->getDetails();
         if ($attachmentArr != null) {
             foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {      // don't using this value here
@@ -182,8 +182,10 @@ class Status {
             foreach ($statusArr as $columnName => $value) {
                 switch ($columnName) {
                     case "intProjectMemberID":
-                        $retVal = $memberObj->getMemberName($value);
-                        $tableArr[$intStatusID]['strMemberFirstName'] = $retVal['strMemberFirstName'];
+                        $intMemberID = $memberObj->getMemberID($this->intProjectMemberID);
+                        $memberObj->setID($intMemberID);
+                        $memberArr = $memberObj->getDetails();
+                        $tableArr[$intStatusID]['strMemberFirstName'] = $memberArr['strMemberFirstName'];
                         break;
                     case "dmtStatusCurrentDate":
                         $tableArr[$intStatusID][$columnName] = date("jS F Y", strtotime($value));
@@ -194,7 +196,7 @@ class Status {
             }
 
             $this->attachmentObj->setStatusID($tableArr[$intStatusID]["intStatusID"]);
-            $this->attachmentObj->getDetailsFromDB();
+            $this->attachmentObj->getDetailsFromDB("status");
 
             $tableArr[$intStatusID]["strAttachmentLinkArr"] = "";
             $tableArr[$intStatusID]["strAttachmentCommentArr"] = "";

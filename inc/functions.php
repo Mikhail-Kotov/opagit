@@ -39,28 +39,6 @@ function displayMenuButton($name, $caption, $intSessionID, $isSelected = false) 
     echo '</form>';
 }
 
-function getMemberName($intMemberID) {
-    if (isset($intMemberID)) {
-        if ($intMemberID != "") {
-            $query = "SELECT strMemberName FROM tblMember WHERE intMemberID = " . $intMemberID . ";";
-
-            $sqlArr = $_ENV['db']->query($query);
-
-            if (isset($sqlArr[0])) {
-                $returnValue = $sqlArr[0]['strMemberName'];
-            } else {
-                $returnValue = null;
-            }
-        } else {
-            $returnValue = null;
-        }
-    } else {
-        $returnValue = null;
-    }
-
-    return $returnValue;
-}
-
 function getProjects($intMemberID) {
     $query = "SELECT p.intProjectID,p.strProjectName FROM tblProject as p, tblMember AS m, tblProjectMember AS pm " . "
             WHERE p.intProjectID = pm.intProjectID AND m.intMemberID = pm.intMemberID AND m.intMemberID=" . $intMemberID . ";";

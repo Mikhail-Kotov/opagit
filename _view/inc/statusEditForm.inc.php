@@ -6,21 +6,10 @@
     <input type="hidden" name="intSessionID" value="<?php echo $this->sessionArr['intSessionID']; ?>" />
     Status Creation Date:<br />
     <input type="text" name="dmtStatusCurrentDate" value="<?php echo $statusArr['dmtStatusCurrentDate']; ?>"/><br /><br />
-    Project Name:<br />
-    <select name ="intProjectID">
-        <option value="1" selected="selected">OPA</option>
-        <?php
-//        $projectsArr = getProjects($this->memberArr['intMemberID']);
-//        foreach ($projectsArr as $columnName => $value) {
-//            echo '<option value="' . $value['intProjectID'] . '"';
-//            if ($value['intProjectID'] == $this->projectArr['intProjectID']) {
-//                echo ' selected="selected"';
-//            }
-//            echo'>' . $value['strProjectName'] . "</option>\n";
-//        }
-//        $_ENV['firephp']->log($projectsArr, 'ProjectsArr');
-        ?>
-    </select>
+    Status created by:
+    <input type="text" name="strMemberFirstAndLastName_NOT_USED" value="<?php echo $this->memberArr['strMemberFirstName'] . " " . $this->memberArr['strMemberLastName']; ?>" disabled="disabled" /><br /><br />
+    Project Name:
+    <input type="text" name="strProjectName_NOT_USED" value="<?php echo $this->projectArr['strProjectName']; ?>" disabled="disabled" />
     <br /><br />
     Actual Status:<br />
     <textarea name="strActualBaseline"><?php echo $statusArr['strActualBaseline']; ?></textarea><br /><br />
@@ -32,15 +21,20 @@
     <textarea name="strStatusNotes"><?php echo $statusArr['strStatusNotes']; ?></textarea><br /><br />
     <?php
     foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {
-        echo '<input type="hidden" name="intAttachmentID' . $id .
+        echo '<hr /><input type="hidden" name="intAttachmentID' . $id .
         '" value="' . $attachmentArr['intAttachmentIDArr'][$id] . '" />' .
-        "Attachment:<br />" . '<input type="text" name="strAttachmentLink' . $id .
-        '" value="' . $attachmentArr['strAttachmentLinkArr'][$id] . '" /><br /><br />' .
+        "Attachment " . ($id + 1) . ":<br />" . '<a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] .
+                $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
+                $attachmentArr['strAttachmentLinkArr'][$id]. '</a><br /><br />' .
         "Attachment Comment:<br />" . '<input type="text" name="strAttachmentComment' . $id .
         '" value="' . $attachmentArr['strAttachmentCommentArr'][$id] . '" /><br /><br />';
+        echo '<input type="button" value="Delete this Attachment" name="deleteattachment" />';
     }
     ?>
 
-
+    <hr />
+    <br />
+    <input type="button" value="Add new Attachment" name="addattachment" />
+    <br /><br />
     <input type="image" src="images/submit.gif" value="Submit" />
 </form>

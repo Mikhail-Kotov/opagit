@@ -185,7 +185,7 @@ class statusController {
             $this->statusObj->setID($this->sessionArr['intStatusID']);
             $statusArr = $this->statusObj->getDetails();
             $this->attachmentObj->setStatusID($this->sessionArr['intStatusID']);
-            $this->attachmentObj->getDetailsFromDB();
+            $this->attachmentObj->getDetailsFromDB("status");
             $attachmentArr = $this->attachmentObj->getDetails();
             
             $statusGUIObj = new StatusGUI();

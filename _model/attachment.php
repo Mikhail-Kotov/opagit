@@ -31,12 +31,12 @@ class Attachment {
         $this->intStatusID = $intStatusID;
     }
     
-    public function getDetailsFromDB() {
+    public function getDetailsFromDB($typeOfID) {
         unset($this->intAttachmentIDArr);
         unset($this->strAttachmentLinkArr);
         unset($this->strAttachmentCommentArr);
 
-        $attachmentArr = $this->attachmentDAObj->getDetails($this->intStatusID);
+        $attachmentArr = $this->attachmentDAObj->getDetails($this->intStatusID, $typeOfID);
 
         if (isset($attachmentArr[0])) {
             foreach ($attachmentArr as $id => $value) {    
@@ -64,18 +64,9 @@ class Attachment {
     }
     
     public function addDetails($nextStatusID, $strAttachmentLinkArr, $strAttachmentCommentArr) {
-        $isNextAttachment = true;
         $i = 0;
         while (isset($strAttachmentLinkArr[$i])) {
-            $query = "INSERT INTO tblAttachment(intAttachmentID,intStatusID,strAttachmentLink,strAttachmentComment) " .
-                    "VALUES (NULL, '" . $nextStatusID .
-                    "', '" . mysql_real_escape_string($strAttachmentLinkArr[$i]) .
-                    "', '" . mysql_real_escape_string($strAttachmentCommentArr[$i]) . "');";
-            $sql = mysql_query($query);
-
-            if (!$sql)
-                die('Invalid query: ' . mysql_error());
-
+            $this->attachmentDAObj->addDetails($nextStatusID, "status", $strAttachmentLinkArr[$i], $strAttachmentCommentArr[$i]);
             $i++;
         }
     }
