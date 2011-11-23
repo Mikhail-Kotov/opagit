@@ -40,28 +40,6 @@ class Member {
         return $allMembersArr;
     }
     
-    function getName() {
-        if (isset($this->intMemberID)) {
-            if ($this->intMemberID != "") {
-                $query = "SELECT strMemberName FROM tblMember WHERE intMemberID = " . $this->intMemberID . ";";
-
-                $sqlArr = $_ENV['db']->query($query);
-
-                if (isset($sqlArr[0])) {
-                    $returnValue = $sqlArr[0]['strMemberName'];
-                } else {
-                    $returnValue = null;
-                }
-            } else {
-                $returnValue = null;
-            }
-        } else {
-            $returnValue = null;
-        }
-
-        return $returnValue;
-    }
-
     function getMemberID($intProjectMemberID) {
         if (isset($intProjectMemberID)) {
             if ($intProjectMemberID != "") {

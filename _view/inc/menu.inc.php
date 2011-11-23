@@ -17,21 +17,21 @@ foreach ($menuItemsArr as $menuItem) {
         echo "selected";
     } 
     echo '">'."\n";
-    displayMenuButton($menuItem, ucfirst($menuItem), $this->sessionArr['intSessionID']);
+    $this->displayMenuButton($menuItem, ucfirst($menuItem));
     if (($menuItem == $choosenItem) && isset($this->sessionArr['intMemberID']) && isset($this->sessionArr['intProjectID'])) {
         echo '<ul>'."\n";
 
         echo '<li class="">';
-        displayMenuButton($menuItem . 'history', "History", $this->sessionArr['intSessionID'], ($this->sessionArr['strPage'] == $menuItem . 'history') ||
+        $this->displayMenuButton($menuItem . 'history', "History", ($this->sessionArr['strPage'] == $menuItem . 'history') ||
                 ($this->sessionArr['strPage'] == $menuItem));
         echo '</li>'."\n";
 
         echo '<li class="">';
-        displayMenuButton($menuItem . 'add', "Add", $this->sessionArr['intSessionID'], ($this->sessionArr['strPage'] == $menuItem . 'add'));
+        $this->displayMenuButton($menuItem . 'add', "Add", ($this->sessionArr['strPage'] == $menuItem . 'add'));
         echo '</li>'."\n";
 
         echo '<li class="">';
-        displayMenuButton($menuItem . 'view', "View Last", $this->sessionArr['intSessionID'], ($this->sessionArr['strPage'] == $menuItem . 'view'));
+        $this->displayMenuButton($menuItem . 'view', "View Last", ($this->sessionArr['strPage'] == $menuItem . 'view'));
         echo '</li>'."\n";
         echo '</ul>'."\n";
     }

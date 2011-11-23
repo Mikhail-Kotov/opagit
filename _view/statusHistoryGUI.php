@@ -75,6 +75,10 @@ class StatusHistoryGUI {
     public function displayStatusBottomMenu() {
         include_once("inc/statusBottomMenu.inc.php");
     }
+    
+    private function displayStatusButtons($name, $caption) {
+        include("inc/statusButtons.inc.php");
+    }
 
 }
 

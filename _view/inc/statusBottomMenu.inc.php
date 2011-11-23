@@ -1,11 +1,11 @@
 <?php
 
 echo '<br /><table border="0" id="redLinks"><tr><td>';
-displayButton("statusadd", "Add Status", $this->sessionArr['intSessionID']);
+$this->displayStatusButtons("statusadd", "Add Status");
 echo "</td><td>";
-displayButton("statushistory", "Status History", $this->sessionArr['intSessionID']);
+$this->displayStatusButtons("statushistory", "Status History");
 echo "</td><td>";
-displayButton("statusview", "View Last Status", $this->sessionArr['intSessionID']);
+$this->displayStatusButtons("statusview", "View Last Status");
 echo '</td></tr></table><br /><a href="#top">Back to Top</a>';
 
 ?>
