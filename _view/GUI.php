@@ -47,5 +47,9 @@ class GUI {
         echo '" /></a>' . "\n</div>\n";
         echo '</form>';
     }
+    
+    public function alert($currentAlert) {
+        echo '<div class="msg" style="background-color: #f9f9f9; color:#E81c17; font:Arial; font-weight:bold; float:right">' . $currentAlert . '</div>';
+    }
 }
 ?>

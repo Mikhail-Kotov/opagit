@@ -7,14 +7,24 @@ class Controller {
         $sessionObj = new Session();
 
         $sessionArr = array();
-
-        $sessionArr['strSessionSID'] = 'SID'; // draft
+        
         if (!empty($_POST["intSessionID"])) {
             $sessionArr['intSessionID'] = $_POST["intSessionID"];
+            $sessionObj->setID($sessionArr['intSessionID']);
+            $sessionArr = $sessionObj->getDetails();
         } else {
             $sessionArr['intSessionID'] = null;
         }
 
+        $currentAlert = null;
+        if (!empty($sessionArr['strAlert'])) {
+            $currentAlert = $sessionArr['strAlert'];
+        }
+
+        $sessionArr['strAlert'] = null;
+
+        $sessionArr['strSessionSID'] = 'SID'; // draft
+        
         if (!empty($_POST["page"])) {
             $sessionArr['strPage'] = $_POST["page"];
         } else {
@@ -98,6 +108,9 @@ class Controller {
         if ($is_pdf === false) {
             $GUIObj->header();
             $GUIObj->menu();
+            if(!empty($currentAlert)) {
+                $GUIObj->alert($currentAlert);
+            }
 
             if ($sessionArr['strPage'] == "welcome") {
                 if (empty($sessionArr['intMemberID'])) {
@@ -124,11 +137,13 @@ class Controller {
                                 $GUIObj->welcome();
                             } else {
                                 // ALERT: incorrect project
+                                $sessionArr['strAlert'] = "incorrect project";
                                 $sessionArr['strPage'] = "chooseproject";
                             }
                         } else {
                             // ALERT: Wrong ID or Password
-                            echo "password not correct";
+                            echo "password not correct<br />";
+                            $sessionArr['strAlert'] = "password not correct";
                             $sessionArr['strPage'] = "login";
                         }
                     } else {
@@ -186,6 +201,9 @@ class Controller {
         if ($is_pdf === false) {
             $GUIObj->footer();
         }
+        
+        //$sessionArr['strAlert'] = null;
+        $sessionObj->setDetails($sessionArr);
         
         $_ENV['firephp']->log($sessionArr, 'sessionArr END');
     }

@@ -4,13 +4,15 @@ class statusController {
 
     private $statusObj, $attachmentObj;
     private $sessionArr, $sessionObj;
+    private $memberArr, $projectArr;
 
     public function __construct($memberArr, $projectArr, $sessionArr) {
         $this->sessionObj = new Session();
         $this->sessionArr = $sessionArr; // don't need to getDetails from Session Class, because we are already got SessionArr from Controller
-
+        $this->memberArr = $memberArr;
+        $this->projectArr = $projectArr;
         
-        $this->statusObj = new Status($memberArr, $projectArr, $sessionArr['intSessionID']);
+        $this->statusObj = new Status($this->memberArr, $this->projectArr, $this->sessionArr['intSessionID']);
         $this->attachmentObj = new Attachment();
     }
 
@@ -24,9 +26,15 @@ class statusController {
                         break;
                     case "edit":
                         $this->todoEditStatus();
+                        $this->sessionArr['strPage'] = "statusview";
                         break;
                     case "delete":
                         $this->todoDeleteStatus();
+                        $this->sessionArr['strPage'] = "statushistory";
+                        break;
+                    case "email":
+                        $this->todoEMailStatus();
+                        $this->sessionArr['strPage'] = "statusview";
                         break;
                 }
             } else {
@@ -55,6 +63,8 @@ class statusController {
                $this->displayEditStatusForm();
                break;
         }
+        
+        
     }
 
     private function todoAddStatus() {
@@ -67,9 +77,19 @@ class statusController {
         $strAttachmentLinkArr = array();
         $strAttachmentCommentArr = array();
         
+        if(!is_dir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'])) {
+            mkdir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'], 0777);
+        }
+        
+        if(!is_dir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'] . '/' . $dmtStatusCurrentDate)) {
+            mkdir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'] . '/' . $dmtStatusCurrentDate, 0777);
+        }
+        
+        
         $i = 0;
         while (isset($_FILES['strAttachmentLink' . ($i)])) {
-            $target = $_ENV['uploads_dir'] . basename($_FILES['strAttachmentLink' . $i]['name']);
+            $target = $_ENV['uploads_dir'] . $this->projectArr['strProjectName'] .
+                    '/' . $dmtStatusCurrentDate . '/' . basename($_FILES['strAttachmentLink' . $i]['name']);
             if (!move_uploaded_file($_FILES['strAttachmentLink' . $i]['tmp_name'], $target)) {
                 echo "Sorry, there was a problem uploading your file."; // <--/this is Alert/
             } else {
@@ -81,8 +101,6 @@ class statusController {
         
         $this->statusObj->addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusVariation, 
                 $strStatusNotes, $strAttachmentLinkArr, $strAttachmentCommentArr);
-
-        $this->sessionArr['strPage'] = "statusview";
     }
 
     private function todoDeleteStatus() {
@@ -91,8 +109,6 @@ class statusController {
 
         $this->sessionArr['intStatusID'] = null;
         $this->sessionObj->setDetails($this->sessionArr);
-
-        $this->sessionArr['strPage'] = "statushistory";
     }
 
     private function todoEditStatus() {
@@ -105,10 +121,10 @@ class statusController {
         $isNextAttachment = true;
         $i = 0;
         do {
-            $intAttachmentIDArr[$i] = $_POST["intAttachmentID" . $i];
-            $strAttachmentLinkArr[$i] = $_POST["strAttachmentLink" . $i];
-            $strAttachmentCommentArr[$i] = $_POST["strAttachmentComment" . $i];
-
+            $intAttachmentIDArr[$i] = $_POST['intAttachmentID' . $i];
+            if(isset($_POST['deleteattachment' . $i])) {
+                $deleteAttachmentArr[$i] = $_POST['deleteattachment' . $i];
+            }
             if (isset($_POST["intAttachmentID" . ($i + 1)])) {
                 $i++;
             } else {
@@ -116,10 +132,17 @@ class statusController {
             }
         } while ($isNextAttachment == true);
 
+        print_r($deleteAttachmentArr);
         $this->statusObj->setDetails($this->sessionArr['intStatusID'], $dmtStatusCurrentDate, $strActualBaseline, 
-                $strPlanBaseline, $strStatusVariation, $strStatusNotes, $intAttachmentIDArr, $strAttachmentLinkArr, $strAttachmentCommentArr);
-
-        $this->sessionArr['strPage'] = "statusview";
+                $strPlanBaseline, $strStatusVariation, $strStatusNotes, $intAttachmentIDArr, $deleteAttachmentArr);
+    }
+    
+    private function todoEMailStatus() {
+        echo "EMAIL";
+        $this->statusObj->setID($this->sessionArr['intStatusID']);
+        $this->statusObj->getDetails();
+        $currentStatusMessage = $this->statusObj->viewStatus();
+        $this->statusObj->emailStatus($currentStatusMessage);
     }
     
     private function displayHistoryStatus() {
@@ -184,7 +207,7 @@ class statusController {
         if ($this->sessionArr['intStatusID'] != "") {
             $this->statusObj->setID($this->sessionArr['intStatusID']);
             $statusArr = $this->statusObj->getDetails();
-            $this->attachmentObj->setStatusID($this->sessionArr['intStatusID']);
+            $this->attachmentObj->setID($this->sessionArr['intStatusID'], "status");
             $this->attachmentObj->getDetailsFromDB("status");
             $attachmentArr = $this->attachmentObj->getDetails();
             

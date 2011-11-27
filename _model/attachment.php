@@ -5,7 +5,7 @@ class Attachment {
     private $intAttachmentIDArr;
     private $strAttachmentLinkArr;
     private $strAttachmentCommentArr;
-    private $intStatusID, $intRiskID, $intIssueID;
+    private $intIRS_ID, $typeOfID; // Issue, Risk or Status ID
     
 
     public function __construct() {
@@ -27,16 +27,17 @@ class Attachment {
         return $attachmentArray;
     }
     
-    public function setStatusID($intStatusID) {
-        $this->intStatusID = $intStatusID;
+    public function setID($intIRS_ID, $typeOfID) {
+        $this->intIRS_ID = $intIRS_ID;
+        $this->typeOfID = $typeOfID;
     }
     
-    public function getDetailsFromDB($typeOfID) {
+    public function getDetailsFromDB() {
         unset($this->intAttachmentIDArr);
         unset($this->strAttachmentLinkArr);
         unset($this->strAttachmentCommentArr);
 
-        $attachmentArr = $this->attachmentDAObj->getDetails($this->intStatusID, $typeOfID);
+        $attachmentArr = $this->attachmentDAObj->getDetails($this->intIRS_ID, $this->typeOfID);
 
         if (isset($attachmentArr[0])) {
             foreach ($attachmentArr as $id => $value) {    
@@ -47,26 +48,20 @@ class Attachment {
         }
     }
     
-    public function delDetails($intStatusID) {
-        $this->attachmentDAObj->delDetails($intStatusID);
+    public function delDetails() {
+        $this->attachmentDAObj->delDetails($this->intIRS_ID, $this->typeOfID);
     }
     
-    public function setDetails($intAttachmentIDArr, $strAttachmentLinkArr, $strAttachmentCommentArr) {
+    public function delIndividualDetails($intAttachmentIDArr) {
         foreach ($intAttachmentIDArr as $id => $value) {
-            $query = "UPDATE tblAttachment SET strAttachmentLink='" . mysql_real_escape_string($strAttachmentLinkArr[$id]) .
-                    "',strAttachmentComment='" . mysql_real_escape_string($strAttachmentCommentArr[$id]) . "' WHERE intAttachmentID=" . $intAttachmentIDArr[$id] . ";";
-
-            $sql = mysql_query($query);
-
-            if (!$sql)
-                die('Invalid query: ' . mysql_error());
+            $this->attachmentDAObj->delIndividualDetails($intAttachmentIDArr[$id]);
         }
     }
     
-    public function addDetails($nextStatusID, $strAttachmentLinkArr, $strAttachmentCommentArr) {
+    public function addDetails($strAttachmentLinkArr, $strAttachmentCommentArr) {
         $i = 0;
         while (isset($strAttachmentLinkArr[$i])) {
-            $this->attachmentDAObj->addDetails($nextStatusID, "status", $strAttachmentLinkArr[$i], $strAttachmentCommentArr[$i]);
+            $this->attachmentDAObj->addDetails($this->intIRS_ID, $this->typeOfID, $strAttachmentLinkArr[$i], $strAttachmentCommentArr[$i]);
             $i++;
         }
     }

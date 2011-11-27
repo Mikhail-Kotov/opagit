@@ -27,14 +27,16 @@
                 $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
                 $attachmentArr['strAttachmentLinkArr'][$id]. '</a><br /><br />' .
         "Attachment Comment:<br />" . '<input type="text" name="strAttachmentComment' . $id .
-        '" value="' . $attachmentArr['strAttachmentCommentArr'][$id] . '" /><br /><br />';
-        echo '<input type="button" value="Delete this Attachment" name="deleteattachment" />';
+        '" value="' . $attachmentArr['strAttachmentCommentArr'][$id] . '" disabled="disabled" /><br /><br />';
+        echo '<input type="checkbox" name="deleteattachment' . $id . '" value="' . $attachmentArr['intAttachmentIDArr'][$id] . '" />Delete';
     }
     ?>
 
     <hr />
     <br />
+    <!-- add another attachment not implemented yet
     <input type="button" value="Add new Attachment" name="addattachment" />
+    -->
     <br /><br />
     <input type="image" src="images/submit.gif" value="Submit" />
 </form>

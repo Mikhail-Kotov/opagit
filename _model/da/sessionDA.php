@@ -2,9 +2,10 @@
 
 class SessionDA {
    
-    public function setDetails($intSessionID, $strSessionSID, $strPage, $strTodo, $intMemberID, $intProjectID, $intStatusID, $intRiskID, $intIssueID) {
+    public function setDetails($intSessionID, $strSessionSID, $strPage, $strTodo, $strAlert, $intMemberID, $intProjectID, $intStatusID, $intRiskID, $intIssueID) {
         $strPage = mysql_real_escape_string($strPage);
         $strTodo = mysql_real_escape_string($strTodo);
+        $strAlert = mysql_real_escape_string($strAlert);
         $intMemberID = mysql_real_escape_string($intMemberID);
         $intProjectID = mysql_real_escape_string($intProjectID);
         $intStatusID = mysql_real_escape_string($intStatusID);
@@ -17,6 +18,7 @@ class SessionDA {
             $query = "UPDATE tblSession SET ";
             if(!empty($strPage)) { $query .= "strPage='" . $strPage . "'"; }
             if(!empty($strTodo)) { $query .= ",strTodo='" . $strTodo . "'";  } else { $query .= ",strTodo=NULL"; }
+            if(!empty($strAlert)) { $query .= ",strAlert='" . $strAlert . "'";  } else { $query .= ",strAlert=NULL"; }
             if(!empty($intMemberID)) { $query .= ",intMemberID='" . $intMemberID . "'"; }
             if(!empty($intProjectID)) { $query .= ",intProjectID='" . $intProjectID . "'"; } 
             if(!empty($intStatusID)) { $query .= ",intStatusID='" . $intStatusID . "'"; } else { $query .= ",intStatusID=NULL"; }
@@ -38,6 +40,7 @@ class SessionDA {
             $query = "INSERT INTO tblSession (intSessionID,strSessionSID";
             if(!empty($strPage)) { $query .= ",strPage"; }
             if(!empty($strTodo)) { $query .= ",strTodo"; }
+            if(!empty($strAlert)) { $query .= ",strTodo"; }
             if(!empty($intMemberID)) { $query .= ",intMemberID"; }
             if(!empty($intProjectID)) { $query .= ",intProjectID"; }
             if(!empty($intStatusID)) { $query .= ",intStatusID"; }
@@ -66,7 +69,7 @@ class SessionDA {
     }
     
     public function getDetails($intSessionID, $strSessionSID) {
-        $query = "SELECT intSessionID, strSessionSID, strPage, strTodo, intMemberID, intProjectID, intStatusID FROM tblSession" . 
+        $query = "SELECT intSessionID, strSessionSID, strPage, strTodo, strAlert, intMemberID, intProjectID, intStatusID FROM tblSession" . 
                  " WHERE intSessionID = '" . $intSessionID . "';";
 
         $sqlArr = $_ENV['db']->query($query);

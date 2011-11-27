@@ -47,10 +47,23 @@ class StatusGUI {
         echo '<input type="hidden" name="s" value="' . $this->sessionArr['intStatusID'] . '" />' . "\n";
         echo '<input type="submit" value="Delete" class="button" />' . "\n";
         echo "</div>\n";
+        echo "</form></td><td>";
+        echo '<form method="post" action="">';
+        echo "<div>\n";
+        echo '<input type="hidden" name="page" value="status" />' . "\n";
+        echo '<input type="hidden" name="todo" value="email" />' . "\n";
+        echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
+        echo '<input type="hidden" name="s" value="' . $this->sessionArr['intStatusID'] . '" />' . "\n";
+        echo '<input type="submit" value="E-Mail" class="button" />' . "\n";
+        echo "</div>\n";
         echo "</form>\n";
         echo "</td></tr></table>";
 
         $this->displayStatusBottomMenu();
+    }
+    
+    public function displayEmailForm() {
+
     }
     
     public function displayPDFStatus($currentStatusMessage) {

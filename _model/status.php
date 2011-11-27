@@ -66,8 +66,8 @@ class Status {
             $statusArr['strStatusNotes'] = $this->strStatusNotes;
         }
         
-        $this->attachmentObj->setStatusID($this->intStatusID);
-        $this->attachmentObj->getDetailsFromDB("status");
+        $this->attachmentObj->setID($this->intStatusID, "status");
+        $this->attachmentObj->getDetailsFromDB();
         
         return $statusArr;
     }
@@ -106,14 +106,13 @@ class Status {
             $strStatusVariation,
             $strStatusNotes,
             $intAttachmentIDArr,
-            $strAttachmentLinkArr,
-            $strAttachmentCommentArr) {
+            $deleteAttachmentArr) {
         
         $this->statusDAObj->setDetails($intStatusID, $this->projectArr['intProjectID'], $this->intProjectMemberID, $dmtStatusCurrentDate, $strActualBaseline, 
                 $strPlanBaseline, $strStatusVariation, $strStatusNotes);
         
-        $this->attachmentObj->setStatusID($intStatusID);
-        $this->attachmentObj->setDetails($intAttachmentIDArr, $strAttachmentLinkArr, $strAttachmentCommentArr);
+        $this->attachmentObj->setID($intStatusID, "status");
+        $this->attachmentObj->delIndividualDetails($deleteAttachmentArr);
     }
 
     function addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusVariation, 
@@ -124,12 +123,15 @@ class Status {
         $this->statusDAObj->addDetails($nextStatusID, $this->projectArr['intProjectID'], $this->intProjectMemberID, $dmtStatusCurrentDate, $strActualBaseline, 
                 $strPlanBaseline, $strStatusVariation, $strStatusNotes);
 
-        $this->attachmentObj->addDetails($nextStatusID, $strAttachmentLinkArr, $strAttachmentCommentArr);
+        $this->attachmentObj->setID($nextStatusID, "status");
+        $this->attachmentObj->addDetails($strAttachmentLinkArr, $strAttachmentCommentArr);
     }
 
     function delDetails() {
         $this->statusDAObj->delDetails($this->intStatusID);
-        $this->attachmentObj->delDetails($this->intStatusID);
+        
+        $this->attachmentObj->setID($this->intStatusID, "status");
+        $this->attachmentObj->delDetails();
         unset($this->intStatusID);
     }
 
@@ -154,7 +156,7 @@ class Status {
                 "<b>Notes/Reasons:</b><br />" .
                 $this->strStatusNotes . "<br /><br />";
 
-        $this->attachmentObj->setStatusID($this->getID());
+        $this->attachmentObj->setID($this->getID(), "status");
 
         $this->attachmentObj->getDetailsFromDB("status");
         $attachmentArr = $this->attachmentObj->getDetails();
@@ -162,7 +164,8 @@ class Status {
             foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {      // don't using this value here
                 // so to change 'foreach' to something else???
                 // don't know better php construction (Mikhail)
-                $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] . $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
+                $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] . 
+                        $this->projectArr['strProjectName'] . '/' . $this->dmtStatusCurrentDate . '/' . $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
                         $attachmentArr['strAttachmentLinkArr'][$id] . "</a><br /><br />" .
                         "<b>Attachment Comment:</b><br />" . $attachmentArr['strAttachmentCommentArr'][$id] . "<br /><br />";
             }
@@ -173,6 +176,19 @@ class Status {
 
     }
 
+    public function emailStatus($currentStatusMessage) {
+        // get all members email
+        $to      = '2708337@swin.edu.au';
+        $subject = 'Status ' . $this->intStatusID. ' for ' . $this->projectArr['strProjectName'] . ' project';
+        $message = $currentStatusMessage;;
+        $headers = 'From: 2708337@student.swin.edu.au' . "\r\n" .
+        'Reply-To: 2708337@student.swin.edu.au' . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+
+        mail($to, $subject, $message, $headers);
+
+    }
+    
     public function historyStatus() {
         $sqlArr = $this->statusDAObj->getAll($this->projectArr['intProjectID']);
 
@@ -182,7 +198,7 @@ class Status {
             foreach ($statusArr as $columnName => $value) {
                 switch ($columnName) {
                     case "intProjectMemberID":
-                        $intMemberID = $memberObj->getMemberID($this->intProjectMemberID);
+                        $intMemberID = $memberObj->getMemberID($value);
                         $memberObj->setID($intMemberID);
                         $memberArr = $memberObj->getDetails();
                         $tableArr[$intStatusID]['strMemberFirstName'] = $memberArr['strMemberFirstName'];
@@ -195,8 +211,8 @@ class Status {
                 }
             }
 
-            $this->attachmentObj->setStatusID($tableArr[$intStatusID]["intStatusID"]);
-            $this->attachmentObj->getDetailsFromDB("status");
+            $this->attachmentObj->setID($tableArr[$intStatusID]["intStatusID"], "status");
+            $this->attachmentObj->getDetailsFromDB();
 
             $tableArr[$intStatusID]["strAttachmentLinkArr"] = "";
             $tableArr[$intStatusID]["strAttachmentCommentArr"] = "";
@@ -205,6 +221,7 @@ class Status {
             if ($attachmentArr != null) {
                 foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) { // not using $value2 anywhere
                     $tableArr[$intStatusID]["strAttachmentLinkArr"] .= '<a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] .
+                            $this->projectArr['strProjectName'] . '/' . $statusArr['dmtStatusCurrentDate'] . '/' .
                             $attachmentArr['strAttachmentLinkArr'][$id] . '">' . $attachmentArr['strAttachmentLinkArr'][$id] . '</a><br />';
                     $tableArr[$intStatusID]['strAttachmentCommentArr'] .= $attachmentArr['strAttachmentCommentArr'][$id] . "<br />";
                 }
