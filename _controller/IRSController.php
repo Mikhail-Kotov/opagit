@@ -1,6 +1,6 @@
 <?php
 
-class statusController {
+class IRSController {
 
     private $statusObj, $attachmentObj;
     private $sessionArr, $sessionObj;
@@ -17,7 +17,7 @@ class statusController {
     }
 
     public function main() {
-        if ($this->sessionArr['strPage'] == 'status') {
+        if ($this->sessionArr['strPage'] == "status") {
             if ($this->sessionArr['strTodo'] != "") {
                 switch ($this->sessionArr['strTodo']) {
                     case "add":
@@ -114,9 +114,6 @@ class statusController {
     }
 
     private function todoEditStatus() {
-        $intAttachmentIDArr = array();
-        $deleteAttachmentArr = array();
-        
         $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
         $strActualBaseline = $_POST['strActualBaseline'];
         $strPlanBaseline = $_POST['strPlanBaseline'];
@@ -126,12 +123,7 @@ class statusController {
         $isNextAttachment = true;
         $i = 0;
         do {
-            $intAttachmentIDArr[$i] = null;
-            if(isset($_POST['intAttachmentID' . $i])) {
-                $intAttachmentIDArr[$i] = $_POST['intAttachmentID' . $i];
-            }
-            
-            $deleteAttachmentArr[$i] = null;
+            $intAttachmentIDArr[$i] = $_POST['intAttachmentID' . $i];
             if(isset($_POST['deleteattachment' . $i])) {
                 $deleteAttachmentArr[$i] = $_POST['deleteattachment' . $i];
             }
@@ -142,7 +134,7 @@ class statusController {
             }
         } while ($isNextAttachment == true);
 
-        //print_r($deleteAttachmentArr);
+        print_r($deleteAttachmentArr);
         $this->statusObj->setDetails($this->sessionArr['intStatusID'], $dmtStatusCurrentDate, $strActualBaseline, 
                 $strPlanBaseline, $strStatusVariation, $strStatusNotes, $intAttachmentIDArr, $deleteAttachmentArr);
     }
@@ -167,12 +159,11 @@ class statusController {
     }
     
     private function displayHistoryStatus() {
-        $this->statusObj->getLastID();
+        $this->statusObj->getLastStatusID();
         $statusHistoryGUIObj = new StatusHistoryGUI();
         $statusHistoryGUIObj->setSession($this->sessionArr);
-        
-        $intID = $this->statusObj->getID();
-        if (!empty($intID)) {
+                
+        if (!empty($this->statusObj->intStatusID)) {
             $this->statusObj->getDetails();
             $historyTableArr = $this->statusObj->historyStatus();
             $statusHistoryGUIObj->display($historyTableArr);
@@ -186,7 +177,7 @@ class statusController {
         if (!empty($this->sessionArr['intStatusID'])) {
             $this->displayViewStatusPart();
         } else {
-            $this->sessionArr['intStatusID'] = $this->statusObj->getLastID();
+            $this->sessionArr['intStatusID'] = $this->statusObj->getLastStatusID();
             $this->sessionObj->setDetails($this->sessionArr);
             if (!empty($this->sessionArr['intStatusID'])) {
                 $this->displayViewStatusPart();

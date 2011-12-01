@@ -10,9 +10,12 @@ include_once("_model/session.php");
 include_once("_model/da/sessionDA.php");
 include_once("_model/pdf.php");
 include_once("_controller/controller.php");
+include_once("_controller/IRSController.php");
 include_once("_controller/statusController.php");
 include_once("_view/GUI.php");
+include_once("_view/IRSGUI.php");
 include_once("_view/statusGUI.php");
+include_once("_view/IRSHistoryGUI.php");
 include_once("_view/statusHistoryGUI.php");
 include_once("_model/member.php");
 include_once("_model/da/memberDA.php");
@@ -20,8 +23,10 @@ include_once("_view/loginGUI.php");
 include_once("_model/project.php");
 include_once("_model/da/projectDA.php");
 include_once("_view/projectGUI.php");
+include_once("_model/IRS.php");
 include_once("_model/status.php");
-include_once("_model/da/statusDA.php");
+include_once("_model/da/IRSDA.php");
+//include_once("_model/da/statusDA.php");
 include_once("_model/risk.php");
 include_once("_model/da/riskDA.php");
 include_once("_view/riskGUI.php");
@@ -34,6 +39,7 @@ include_once("_model/attachment.php");
 include_once("_model/da/attachmentDA.php");
 
 $_ENV['uploads_dir'] = "uploads/";
+$_ENV['temp_dir'] = "temp/";
 if(isset($_SERVER['REQUEST_URI'])) {
     $_ENV['http_dir'] = "http://" . $_SERVER['HTTP_HOST'] . str_replace("index.php", "", $_SERVER['REQUEST_URI']);
 }

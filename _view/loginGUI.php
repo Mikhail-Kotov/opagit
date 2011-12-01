@@ -9,7 +9,6 @@ class LoginGUI {
     }
     
     public function displayLoginForm($allMembersArr, $allProjectsArr) {
-        $_ENV['firephp']->log($allMembersArr, 'membersArr');
         echo '<div id="login_box">' . "\n";
     	echo '<div id="box">';
     	echo "<h1>Login Here</h1>\n";

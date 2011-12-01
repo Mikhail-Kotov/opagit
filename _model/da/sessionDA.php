@@ -40,7 +40,7 @@ class SessionDA {
             $query = "INSERT INTO tblSession (intSessionID,strSessionSID";
             if(!empty($strPage)) { $query .= ",strPage"; }
             if(!empty($strTodo)) { $query .= ",strTodo"; }
-            if(!empty($strAlert)) { $query .= ",strTodo"; }
+            if(!empty($strAlert)) { $query .= ",strAlert"; }
             if(!empty($intMemberID)) { $query .= ",intMemberID"; }
             if(!empty($intProjectID)) { $query .= ",intProjectID"; }
             if(!empty($intStatusID)) { $query .= ",intStatusID"; }
@@ -51,6 +51,7 @@ class SessionDA {
                     ",'" . $strSessionSID  . "'";
             if(!empty($strPage)) { $query .= ",'" . $strPage . "'"; }
             if(!empty($strTodo)) { $query .= ",'" . $strTodo . "'"; }
+            if(!empty($strAlert)) { $query .= ",'" . $strAlert . "'"; }
             if(!empty($intMemberID)) { $query .= "," . $intMemberID; }
             if(!empty($intProjectID)) { $query .= "," . $intProjectID; }
             if(!empty($intStatusID)) { $query .= "," . $intStatusID; }

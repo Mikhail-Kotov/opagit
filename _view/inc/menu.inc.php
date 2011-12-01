@@ -40,7 +40,7 @@ foreach ($menuItemsArr as $menuItem) {
 ?>
             <li><a href="#">Help</a></li>
             <li><a href="http://cit.wta.swin.edu.au/">CIT</a></li>
-            <?php if (!empty($this->sessionArr['intMemberID'])) { ?>
+            <?php if (!empty($this->sessionArr['intMemberID']) && !empty($this->sessionArr['intProjectID'])) { ?>
                 <li><a class="" href="">Logout</a></li>
             <?php } ?>
         </ul>

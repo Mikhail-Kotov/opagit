@@ -1,6 +1,6 @@
 <?php
 
-class StatusGUI {
+class IRSGUI {
 
     private $sessionArr, $memberArr, $projectArr;
 
