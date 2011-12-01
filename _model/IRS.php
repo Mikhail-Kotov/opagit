@@ -7,13 +7,11 @@ class IRS {
     protected $memberArr, $projectArr;
     protected $intID;
     protected $intProjectMemberID;
-//    public $dmtStatusCurrentDate;
-//    public $strActualBaseline;
-//    public $strPlanBaseline;
-//    public $strStatusVariation; // variation
-//    public $strStatusNotes; // Notes/Reasons
+    private $typeOfID;
+    protected $IRSArr;
 
-    function __construct($memberArr, $projectArr, $intSessionID) {
+    function __construct($typeOfID, $memberArr, $projectArr, $intSessionID) {
+        $this->typeOfID = $typeOfID;
         $this->memberArr = $memberArr;
         $this->projectArr = $projectArr;
         
@@ -47,30 +45,12 @@ class IRS {
     }
     
     function getDetails() {
-        $memberArr = $this->statusDAObj->getDetails($this->intStatusID);
-
-        if(isset($memberArr)) {
-            $this->intStatusID = $memberArr['intStatusID'];
-            $this->intProjectMemberID = $memberArr['intProjectMemberID'];
-            $this->dmtStatusCurrentDate = $memberArr['dmtStatusCurrentDate'];
-            $this->strActualBaseline = $memberArr['strActualBaseline'];
-            $this->strPlanBaseline = $memberArr['strPlanBaseline'];
-            $this->strStatusVariation = $memberArr['strStatusVariation'];
-            $this->strStatusNotes = $memberArr['strStatusNotes'];
-            
-            $statusArr['intStatusID'] = $this->intStatusID;
-            $statusArr['intProjectMemberID'] = $this->intProjectMemberID;
-            $statusArr['dmtStatusCurrentDate'] = $this->dmtStatusCurrentDate;
-            $statusArr['strActualBaseline'] = $this->strActualBaseline;
-            $statusArr['strPlanBaseline'] = $this->strPlanBaseline;
-            $statusArr['strStatusVariation'] = $this->strStatusVariation;
-            $statusArr['strStatusNotes'] = $this->strStatusNotes;
-        }
+        $this->IRSArr = $this->IRSDAObj->getDetails($this->intID);
         
-        $this->attachmentObj->setID($this->intStatusID, "status");
+        $this->attachmentObj->setID($this->intID, $this->typeOfID);
         $this->attachmentObj->getDetailsFromDB();
         
-        return $statusArr;
+        return $this->IRSArr;
     }
     
     function getLastID() {
@@ -85,7 +65,7 @@ class IRS {
         return $intID;
     }
     
-    function getGlobalLastIRSID() {
+    function getGlobalLastID() {
         $globalLastIRSID = 0;
         
         $query = "SELECT intStatusID FROM tblStatus" .

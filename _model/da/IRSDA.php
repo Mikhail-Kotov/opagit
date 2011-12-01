@@ -9,11 +9,8 @@ class IRSDA {
     }
     
     public function getDetails($intID) {
-        
         $sqlArr = array();
-        
-        $query = "SELECT * FROM tbl" . $this->ucTypeOfID . " WHERE int" . $this->ucTypeOfID . "ID = " . $intID;
-
+        $query = "SELECT * FROM tbl" . $this->ucTypeOfID . " WHERE int" . $this->ucTypeOfID . "ID=" . $intID;
         $sqlArr = $_ENV['db']->query($query);
 
         if(isset($sqlArr[0])) {
@@ -55,11 +52,7 @@ class IRSDA {
     }
     
     public function setDetails($IRSArr) {
-        foreach($IRSArr as $id => $value) {
-            $IRSArr[$id] = mysql_real_escape_string($value);
-        }
-        
-        print_r($IRSArr);
+        $IRSArr = $this->validate($IRSArr);
 
         $query = "UPDATE tbl" . $this->ucTypeOfID . " SET ";
         
@@ -77,41 +70,31 @@ class IRSDA {
 //            die('Invalid query: ' . mysql_error());
     }
     
-    public function addDetails($intStatusID, $intProjectID, $intProjectMemberID, $dmtStatusCurrentDate, $strActualBaseline, 
-                $strPlanBaseline, $strStatusVariation, $strStatusNotes) {
-        
-        $intStatusID = mysql_real_escape_string($intStatusID);
-        $intProjectID = mysql_real_escape_string($intProjectID);
-        $intProjectMemberID = mysql_real_escape_string($intProjectMemberID);
-        $dmtStatusCurrentDate = mysql_real_escape_string($dmtStatusCurrentDate);
-        $strActualBaseline = mysql_real_escape_string($strActualBaseline);
-        $strPlanBaseline = mysql_real_escape_string($strPlanBaseline );
-        $strStatusVariation = mysql_real_escape_string($strStatusVariation);
-        $strStatusNotes = mysql_real_escape_string($strStatusNotes);
+    public function addDetails($IRSArr) {
+        $IRSArr = $this->validate($IRSArr);
 
-        
-        $query = "INSERT INTO tblStatus(".
-                "intStatusID," .
-                "intProjectID," .
-                "intProjectMemberID," .
-                "dmtStatusCurrentDate," .
-                "strActualBaseline," .
-                "strPlanBaseline," .
-                "strStatusVariation," .
-                "strStatusNotes) " .
-                "values (" .
-                "'" . $intStatusID .
-                "', '" . mysql_real_escape_string($intProjectID) .
-                "', '" . mysql_real_escape_string($intProjectMemberID) .
-                "', '" . mysql_real_escape_string($dmtStatusCurrentDate) .
-                "', '" . mysql_real_escape_string($strActualBaseline) .
-                "', '" . mysql_real_escape_string($strPlanBaseline) .
-                "', '" . mysql_real_escape_string($strStatusVariation) .
-                "', '" . mysql_real_escape_string($strStatusNotes) . "');";
+        $query = "INSERT INTO tbl" . $this->ucTypeOfID . "(";
+        foreach($IRSArr as $id => $value) {
+            $query .= $id . ",";
+        }                
+        $query = substr($query, 0, strlen($query) - 1) . ") values (";
+        foreach($IRSArr as $id => $value) {
+            $query .= "'" . $value . "',";
+        }                
+        $query = substr($query, 0, strlen($query) - 1) . ");";                
+        echo $query;
         $sql = mysql_query($query);
 
         if (!$sql)
             die('Invalid query: ' . mysql_error());
+    }
+    
+    private function validate($IRSArr) {
+        foreach($IRSArr as $id => $value) {
+            $IRSArr[$id] = mysql_real_escape_string($value);
+        }
+        
+        return $IRSArr;
     }
 }
 

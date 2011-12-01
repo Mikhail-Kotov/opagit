@@ -1,21 +1,10 @@
 <?php
 
 class Status extends IRS {
-    //private $statusDAObj;
-    private $statusArr;
 
     function __construct($memberArr, $projectArr, $intSessionID) {
-        parent::__construct($memberArr, $projectArr, $intSessionID);
+        parent::__construct('status', $memberArr, $projectArr, $intSessionID);
         $this->IRSDAObj = new IRSDA('status');
-    }
-    
-    function getDetails() {
-        $this->statusArr = $this->IRSDAObj->getDetails($this->intID);
-        
-        $this->attachmentObj->setID($this->intID, 'status');
-        $this->attachmentObj->getDetailsFromDB();
-        
-        return $this->statusArr;
     }
     
     function setDetails($intStatusID, // <- refactor this!!!
@@ -43,43 +32,51 @@ class Status extends IRS {
     function addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusVariation, 
             $strStatusNotes, $strAttachmentLinkArr, $strAttachmentCommentArr) {
 
-        $nextStatusID = $this->getGlobalLastStatusID() + 1;
-        
-        $this->statusDAObj->addDetails($nextStatusID, $this->projectArr['intProjectID'], $this->intProjectMemberID, $dmtStatusCurrentDate, $strActualBaseline, 
-                $strPlanBaseline, $strStatusVariation, $strStatusNotes);
+        $nextStatusID = $this->getGlobalLastID() + 1;
 
-        $this->attachmentObj->setID($nextStatusID, "status");
+        $this->IRSArr['intStatusID'] = $nextStatusID;
+        $this->IRSArr['intProjectID'] = $this->projectArr['intProjectID'];
+        $this->IRSArr['intProjectMemberID'] = $this->intProjectMemberID;
+        $this->IRSArr['dmtStatusCurrentDate'] = $dmtStatusCurrentDate;
+        $this->IRSArr['strActualBaseline'] = $strActualBaseline;
+        $this->IRSArr['strPlanBaseline'] = $strPlanBaseline;
+        $this->IRSArr['strStatusVariation'] = $strStatusVariation;
+        $this->IRSArr['strStatusNotes'] = $strStatusNotes;
+
+        $this->IRSDAObj->addDetails($this->IRSArr);
+        
+        $this->attachmentObj->setID($nextStatusID, 'status');
         $this->attachmentObj->addDetails($strAttachmentLinkArr, $strAttachmentCommentArr);
     }
 
     function delDetails() {
-        $this->statusDAObj->delDetails($this->intStatusID);
+        $this->IRSDAObj->delDetails($this->intID);
         
-        $this->attachmentObj->setID($this->intStatusID, "status");
+        $this->attachmentObj->setID($this->intID, 'status');
         $this->attachmentObj->delDetails();
-        unset($this->intStatusID);
+        unset($this->intID);
     }
 
     public function viewStatus() {
         
         // DRAFT (RAW CODE)
         $memberObj = new Member();
-        $intMemberID = $memberObj->getMemberID($this->statusArr['intProjectMemberID']);
+        $intMemberID = $memberObj->getMemberID($this->IRSArr['intProjectMemberID']);
         $memberObj->setID($intMemberID);
         $memberArr = $memberObj->getDetails();
         
         $currentStatusMessage = "<b>Date:</b> " . 
-                date("jS F Y", strtotime($this->statusArr['dmtStatusCurrentDate'])) . "<br />" .
+                date("jS F Y", strtotime($this->IRSArr['dmtStatusCurrentDate'])) . "<br />" .
                 "<b>Status created by: </b>";
         $currentStatusMessage .= $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'];
         $currentStatusMessage .= "<br />" .
                 "<b>Project:</b> " . $this->projectArr['strProjectName'] . "<br /><br />" .
-                "<b>Actual Status:</b><br />" . $this->statusArr['strActualBaseline'] . "<br /><br />" .
-                "<b>Planned Baseline:</b><br />" . $this->statusArr['strPlanBaseline'] . "<br /><br />" .
+                "<b>Actual Status:</b><br />" . $this->IRSArr['strActualBaseline'] . "<br /><br />" .
+                "<b>Planned Baseline:</b><br />" . $this->IRSArr['strPlanBaseline'] . "<br /><br />" .
                 "<b>Variation:</b><br />" .
-                $this->statusArr['strStatusVariation'] . "<br /><br />" .
+                $this->IRSArr['strStatusVariation'] . "<br /><br />" .
                 "<b>Notes/Reasons:</b><br />" .
-                $this->statusArr['strStatusNotes'] . "<br /><br />";
+                $this->IRSArr['strStatusNotes'] . "<br /><br />";
 
         $this->attachmentObj->setID($this->getID(), "status");
 
@@ -90,7 +87,7 @@ class Status extends IRS {
                 // so to change 'foreach' to something else???
                 // don't know better php construction (Mikhail)
                 $currentStatusMessage .= '<b>Attachment:</b><br /><a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] . 
-                        $this->projectArr['strProjectName'] . '/' . $this->statusArr['dmtStatusCurrentDate'] . '/' . $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
+                        $this->projectArr['strProjectName'] . '/' . $this->IRSArr['dmtStatusCurrentDate'] . '/' . $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
                         $attachmentArr['strAttachmentLinkArr'][$id] . "</a><br /><br />" .
                         "<b>Attachment Comment:</b><br />" . $attachmentArr['strAttachmentCommentArr'][$id] . "<br /><br />";
             }
@@ -109,6 +106,8 @@ class Status extends IRS {
         foreach ($sqlArr as $intStatusID => $statusArr) {
             foreach ($statusArr as $columnName => $value) {
                 switch ($columnName) {
+                    case "intProjectID": // skip intProjectID
+                        break;
                     case "intProjectMemberID":
                         $intMemberID = $memberObj->getMemberID($value);
                         $memberObj->setID($intMemberID);

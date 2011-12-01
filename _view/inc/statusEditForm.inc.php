@@ -7,7 +7,8 @@
     Status Creation Date:<br />
     <input type="text" name="dmtStatusCurrentDate" value="<?php echo $statusArr['dmtStatusCurrentDate']; ?>"/><br /><br />
     Status created by:
-    <input type="text" name="strMemberFirstAndLastName_NOT_USED" value="<?php echo $this->memberArr['strMemberFirstName'] . " " . $this->memberArr['strMemberLastName']; ?>" disabled="disabled" /><br /><br />
+    <input type="text" name="strMemberFirstAndLastName_NOT_USED" value="<?php echo $this->memberArr['strMemberFirstName'] . " " . 
+            $this->memberArr['strMemberLastName']; ?>" disabled="disabled" /><br /><br />
     Project Name:
     <input type="text" name="strProjectName_NOT_USED" value="<?php echo $this->projectArr['strProjectName']; ?>" disabled="disabled" />
     <br /><br />
@@ -20,15 +21,17 @@
     Notes/Reasons:<br />
     <textarea name="strStatusNotes"><?php echo $statusArr['strStatusNotes']; ?></textarea><br /><br />
     <?php
-    foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {
-        echo '<hr /><input type="hidden" name="intAttachmentID' . $id .
-        '" value="' . $attachmentArr['intAttachmentIDArr'][$id] . '" />' .
-        "Attachment " . ($id + 1) . ":<br />" . '<a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] .
-                $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
-                $attachmentArr['strAttachmentLinkArr'][$id]. '</a><br /><br />' .
-        "Attachment Comment:<br />" . '<input type="text" name="strAttachmentComment' . $id .
-        '" value="' . $attachmentArr['strAttachmentCommentArr'][$id] . '" disabled="disabled" /><br /><br />';
-        echo '<input type="checkbox" name="deleteattachment' . $id . '" value="' . $attachmentArr['intAttachmentIDArr'][$id] . '" />Delete';
+    if (!empty($attachmentArr['intAttachmentIDArr'][0])) {
+        foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {
+            echo '<hr /><input type="hidden" name="intAttachmentID' . $id .
+            '" value="' . $attachmentArr['intAttachmentIDArr'][$id] . '" />' .
+            "Attachment " . ($id + 1) . ":<br />" . '<a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] .
+            $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
+            $attachmentArr['strAttachmentLinkArr'][$id] . '</a><br /><br />' .
+            "Attachment Comment:<br />" . '<input type="text" name="strAttachmentComment' . $id .
+            '" value="' . $attachmentArr['strAttachmentCommentArr'][$id] . '" disabled="disabled" /><br /><br />';
+            echo '<input type="checkbox" name="deleteattachment' . $id . '" value="' . $attachmentArr['intAttachmentIDArr'][$id] . '" />Delete';
+        }
     }
     ?>
 

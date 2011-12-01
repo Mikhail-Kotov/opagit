@@ -5,7 +5,7 @@ class MemberDA {
     public function getDetails($intMemberID) {
         $memberDAArr = array();
         
-        $query = "SELECT intMemberID,strMemberName,strMemberFirstName,strMemberLastName FROM tblMember WHERE intMemberID = " . $intMemberID;
+        $query = "SELECT intMemberID,strMemberName,strMemberFirstName,strMemberLastName FROM tblMember WHERE intMemberID=" . $intMemberID;
         
         $sqlArr = $_ENV['db']->query($query);
        
