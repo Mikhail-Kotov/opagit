@@ -32,7 +32,7 @@ include_once("_model/da/IRSDA.php");
 include_once("_model/risk.php");
 include_once("_model/da/riskDA.php");
 include_once("_view/riskGUI.php");
-include_once("_view/riskHistoryGUI.php");
+include_once("_view/IRSHistoryGUI.php");
 include_once("_model/issue.php");
 include_once("_model/da/issueDA.php");
 include_once("_view/issueGUI.php");
