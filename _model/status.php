@@ -85,57 +85,6 @@ class Status extends IRS {
 
     }
 
-    public function historyStatus() {
-        $sqlArr = $this->IRSDAObj->getAll($this->projectArr['intProjectID']);
-
-        $memberObj = new Member();
-
-        foreach ($sqlArr as $intStatusID => $statusArr) {
-            foreach ($statusArr as $columnName => $value) {
-                switch ($columnName) {
-                    case "intProjectID": // skip intProjectID
-                        break;
-                    case "intProjectMemberID":
-                        $intMemberID = $memberObj->getMemberID($value);
-                        $memberObj->setID($intMemberID);
-                        $memberArr = $memberObj->getDetails();
-                        $tableArr[$intStatusID]['strMemberFirstName'] = $memberArr['strMemberFirstName'];
-                        break;
-                    case "dmtStatusCurrentDate":
-                        $tableArr[$intStatusID][$columnName] = date("jS F Y", strtotime($value));
-                        break;
-                    default:
-                        $tableArr[$intStatusID][$columnName] = $value;
-                }
-            }
-
-            $this->attachmentObj->setID($tableArr[$intStatusID]["intStatusID"], "status");
-            $this->attachmentObj->getDetailsFromDB();
-
-            $tableArr[$intStatusID]["strAttachmentLinkArr"] = "";
-            $tableArr[$intStatusID]["strAttachmentCommentArr"] = "";
-
-            $attachmentArr = $this->attachmentObj->getDetails();
-            if ($attachmentArr != null) {
-                foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) { // not using $value2 anywhere
-                    $tableArr[$intStatusID]["strAttachmentLinkArr"] .= '<a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] .
-                            $this->projectArr['strProjectName'] . '/' . $statusArr['dmtStatusCurrentDate'] . '/' .
-                            $attachmentArr['strAttachmentLinkArr'][$id] . '">' . $attachmentArr['strAttachmentLinkArr'][$id] . '</a><br />';
-                    $tableArr[$intStatusID]['strAttachmentCommentArr'] .= $attachmentArr['strAttachmentCommentArr'][$id] . "<br />";
-                }
-            } else {
-                $tableArr[$intStatusID]['strAttachmentLinkArr'] = "&nbsp;";
-                $tableArr[$intStatusID]['strAttachmentCommentArr'] = "&nbsp;";
-            }
-        }
-        
-        $statusHistoryTableArr[0]['caption'] = "Status History for Project: " . $this->projectArr['strProjectName'];
-        $statusHistoryTableArr[1] = $tableArr;
-        
-        return $statusHistoryTableArr;
-    }
-
-    
     // email will be moved to another place
     public function emailStatus() {
         // get all members email

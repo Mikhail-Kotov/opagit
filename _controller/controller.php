@@ -206,7 +206,8 @@ class Controller {
             }
 
             if ($is_issue !== false) {
-                include_once("_controller/issueController.inc.php");
+                $issueControllerObj = new IssueController($memberArr, $projectArr, $sessionArr);
+                $issueControllerObj->main();
             }
         }
 

@@ -178,18 +178,18 @@ class IRSController {
         echo "eee";
         switch($this->typeOfID) {
             case 'status':
-                $this->IRSObj->getLastID();
+                //$this->IRSObj->getLastID();
                 $historyGUIObj = new StatusHistoryGUI();
                 $historyGUIObj->setSession($this->sessionArr);
 
                 $intID = $this->IRSObj->getID();
                 if (!empty($intID)) {
                     $this->IRSObj->getDetails();
-                    $historyTableArr = $this->IRSObj->historyStatus();
+                    $historyTableArr = $this->IRSObj->history();
                     $historyGUIObj->display($historyTableArr);
                     $historyGUIObj->displayStatusBottomMenu();
                 } else {
-                    $this->sessionArr['strPage'] = 'statusadd';
+                    $this->sessionArr['strPage'] = $this->ucTypeOfID . 'add';
                 }
                 break;
             case 'risk':
@@ -199,16 +199,32 @@ class IRSController {
                 $intID = $this->IRSObj->getID();
                 if (!empty($intID)) {
                     $this->IRSObj->getDetails();
-                    $historyTableArr = $this->IRSObj->historyRisk();
+                    $historyTableArr = $this->IRSObj->history();
 
                     $historyGUIObj->display($historyTableArr);
                     //$historyGUIObj->displayRiskBottomMenu();
                 } else {
                     //if no history items displays Add form
-                    $this->sessionArr['strPage'] = 'riskadd';
+                    $this->sessionArr['strPage'] = $this->ucTypeOfID . 'add';
                 }
                 break;
             case 'issue':
+                echo "ffdfa";
+                $historyGUIObj = new IssueHistoryGUI();
+                $historyGUIObj->setSession($this->sessionArr);
+
+                $intID = $this->IRSObj->getID();
+                if (!empty($intID)) {
+                    $this->IRSObj->getDetails();
+                    $historyTableArr = $this->IRSObj->history();
+                    print_r($historyTableArr);
+
+                    $historyGUIObj->display($historyTableArr);
+                    //$historyGUIObj->displayRiskBottomMenu();
+                } else {
+                    //if no history items displays Add form
+                    $this->sessionArr['strPage'] = $this->ucTypeOfID . 'add';
+                }
                 break;
         }
 

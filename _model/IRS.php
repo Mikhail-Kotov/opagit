@@ -102,6 +102,127 @@ class IRS {
         $this->attachmentObj->delDetails();
         unset($this->IRSArr['int' . $this->ucTypeOfID . 'ID']);
     }
+    
+    public function history() {
+        $sortBy = null;
+        $desc = false; // or true
+        $sqlArr = $this->IRSDAObj->getAll($this->projectArr['intProjectID'], $sortBy, $desc);
+
+        $memberObj = new Member();
+        $projectObj = new Project();
+        
+        foreach ($sqlArr as $intID => $statusArr) {
+            foreach ($statusArr as $columnName => $value) {
+                if($this->typeOfID == 'status') {
+                    switch ($columnName) {
+                        case "intProjectID": // skip intProjectID
+                            break;
+                        case "intProjectMemberID":
+                            $intMemberID = $memberObj->getMemberID($value);
+                            $memberObj->setID($intMemberID);
+                            $memberArr = $memberObj->getDetails();
+                            $tableArr[$intID]['strMemberFirstName'] = $memberArr['strMemberFirstName'];
+                            break;
+                        case "dmtStatusCurrentDate":
+                            $tableArr[$intID][$columnName] = date("jS F Y", strtotime($value));
+                            break;
+                        default:
+                            $tableArr[$intID][$columnName] = $value;
+                    }
+                }
+                if($this->typeOfID == 'risk') {
+                    switch ($columnName) {
+                        case "intProjectID":
+                            $projectObj->setID($value);
+                            $projectArr = $projectObj->getDetails();
+                            $tableArr[$intID]['strProjectName'] = $projectArr['strProjectName'];
+                            unset($projectArr);
+                            break;
+                        case "intProjectMemberID":
+                            $intMemberID = $memberObj->getMemberID($value);
+                            $memberObj->setID($intMemberID);
+                            $memberArr = $memberObj->getDetails();
+                            $tableArr[$intID]['strMemberFirstName'] = $memberArr['strMemberFirstName'];
+                            unset($memberArr);
+                            break;
+                        case "dmtRiskDateRaised":
+                            $tableArr[$intID][$columnName] = date("jS F Y", strtotime($value));
+                            break;
+                        case "intProjectMemberAssignedID":
+                            $intMemberID = $memberObj->getMemberID($value);
+                            $memberObj->setID($intMemberID);
+                            $memberArr = $memberObj->getDetails();
+                            $tableArr[$intID]['strMemberFullName'] = $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'];
+                            unset($memberArr);
+                            break;
+                        default:
+                            $tableArr[$intID][$columnName] = $value;
+                    }
+                }
+                if ($this->typeOfID == 'issue') {
+                    switch ($columnName) {
+                        case "intProjectID":
+                            $projectObj->setID($value);
+                            $projectArr = $projectObj->getDetails();
+                            $tableArr[$intID]['strProjectName'] = $projectArr['strProjectName'];
+                            unset($projectArr);
+                            break;
+                        case "intProjectMemberID":
+                            $intMemberID = $memberObj->getMemberID($value);
+                            $memberObj->setID($intMemberID);
+                            $memberArr = $memberObj->getDetails();
+                            $tableArr[$intID]['strMemberFirstName'] = $memberArr['strMemberFirstName'];
+                            unset($memberArr);
+                            break;
+                        case "dmtIssueDateRaised ":
+                            $tableArr[$intID][$columnName] = date("jS F Y", strtotime($value));
+                            break;
+                        case "intProjectMemberAssignedID":
+                            $intMemberID = $memberObj->getMemberID($value);
+                            $memberObj->setID($intMemberID);
+                            $memberArr = $memberObj->getDetails();
+                            $tableArr[$intID]['strMemberFullName'] = $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'];
+                            unset($memberArr);
+                            break;
+                        default:
+                            $tableArr[$intID][$columnName] = $value;
+                    }
+                }
+            }
+
+            $this->attachmentObj->setID($tableArr[$intID]['int' . $this->ucTypeOfID . 'ID'], $this->typeOfID);
+            $this->attachmentObj->getDetailsFromDB();
+
+            $tableArr[$intID]["strAttachmentLinkArr"] = "";
+            $tableArr[$intID]["strAttachmentCommentArr"] = "";
+
+            $attachmentArr = $this->attachmentObj->getDetails();
+            if ($attachmentArr != null) {
+                foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) { // not using $value2 anywhere
+                    $tableArr[$intID]["strAttachmentLinkArr"] .= '<a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] .
+                            $this->projectArr['strProjectName'] . '/' . $statusArr['dmtStatusCurrentDate'] . '/' .
+                            $attachmentArr['strAttachmentLinkArr'][$id] . '">' . $attachmentArr['strAttachmentLinkArr'][$id] . '</a><br />';
+                    $tableArr[$intID]['strAttachmentCommentArr'] .= $attachmentArr['strAttachmentCommentArr'][$id] . "<br />";
+                }
+            } else {
+                $tableArr[$intID]['strAttachmentLinkArr'] = "&nbsp;";
+                $tableArr[$intID]['strAttachmentCommentArr'] = "&nbsp;";
+            }
+        }
+        
+        $historyTableArr[0]['caption'] = "<h1>" . $this->ucTypeOfID . " History for Project: " . $this->projectArr['strProjectName'] . "</h1>";
+        $historyTableArr[1] = $tableArr;
+        
+        return $historyTableArr;
+        
+    }
+        
+
+    
+
+    
+
+
 
 }
 ?>
