@@ -54,13 +54,13 @@ class Controller {
             }
 
             if (isset($_POST["r"])) {
-                $sessionArr['intRiskID'] = $_POST["s"];
+                $sessionArr['intRiskID'] = $_POST["r"];
             } else {
                 $sessionArr['intRiskID'] = null;
             }
 
             if (isset($_POST["i"])) {
-                $sessionArr['intIssueID'] = $_POST["s"];
+                $sessionArr['intIssueID'] = $_POST["i"];
             } else {
                 $sessionArr['intIssueID'] = null;
             }
@@ -187,8 +187,10 @@ class Controller {
         }
 
         if (!empty($sessionArr['intMemberID']) && !empty($sessionArr['intProjectID'])) {
-            $GUIObj->menu();
-
+            if ($is_pdf === false) {
+                $GUIObj->menu();
+            }
+            
             $is_status = strpos($sessionArr['strPage'], "status");
             $is_risk = strpos($sessionArr['strPage'], "risk");
             $is_issue = strpos($sessionArr['strPage'], "issue");
@@ -199,7 +201,8 @@ class Controller {
             }
 
             if ($is_risk !== false) {
-                include_once("_controller/riskController.inc.php");
+                $riskControllerObj = new RiskController($memberArr, $projectArr, $sessionArr);
+                $riskControllerObj->main();
             }
 
             if ($is_issue !== false) {

@@ -1,73 +1,77 @@
 <?php
 
-class statusController {
+class statusController extends IRSController {
 
-    private $statusObj, $attachmentObj;
-    private $sessionArr, $sessionObj;
-    private $memberArr, $projectArr;
+//    private $statusObj, $attachmentObj;
+//    private $sessionArr, $sessionObj;
+//    private $memberArr, $projectArr;
+
+//    public function __construct($memberArr, $projectArr, $sessionArr) {
+//        $this->sessionObj = new Session();
+//        $this->sessionArr = $sessionArr; // don't need to getDetails from Session Class, because we are already got SessionArr from Controller
+//        $this->memberArr = $memberArr;
+//        $this->projectArr = $projectArr;
+//        
+//        $this->statusObj = new Status($this->memberArr, $this->projectArr, $this->sessionArr['intSessionID']);
+//        $this->attachmentObj = new Attachment();
+//    }
 
     public function __construct($memberArr, $projectArr, $sessionArr) {
-        $this->sessionObj = new Session();
-        $this->sessionArr = $sessionArr; // don't need to getDetails from Session Class, because we are already got SessionArr from Controller
-        $this->memberArr = $memberArr;
-        $this->projectArr = $projectArr;
-        
-        $this->statusObj = new Status($this->memberArr, $this->projectArr, $this->sessionArr['intSessionID']);
-        $this->attachmentObj = new Attachment();
+        parent::__construct('status', $memberArr, $projectArr, $sessionArr);
     }
-
-    public function main() {
-        if ($this->sessionArr['strPage'] == 'status') {
-            if ($this->sessionArr['strTodo'] != "") {
-                switch ($this->sessionArr['strTodo']) {
-                    case "add":
-                        $this->todoAddStatus();
-                        $this->sessionArr['strPage'] = "statusview";
-                        break;
-                    case "edit":
-                        $this->todoEditStatus();
-                        $this->sessionArr['strPage'] = "statusview";
-                        break;
-                    case "delete":
-                        $this->todoDeleteStatus();
-                        $this->sessionArr['strPage'] = "statushistory";
-                        break;
-                    case "email":
-                        $this->todoEMailStatus();
-                        $this->sessionArr['strPage'] = "statusview";
-                        break;
-                }
-            } else {
-                $this->sessionArr['strPage'] = "statushistory"; // if user choose Status from Menu
-            }
-        }
-        
-        switch($this->sessionArr['strPage']) {               
-           case "statushistory":
-               $this->displayHistoryStatus();
-               break;
-           
-           case "statusview":
-               $this->displayViewStatus();
-               break;
-        }
-        
-        switch($this->sessionArr['strPage']) {               
-           case "statuspdf":
-               $this->displayPDFStatus();
-               break;
-           
-           case "statusadd":
-               $this->displayAddStatusForm();
-               break;
-           
-           case "statusedit":
-               $this->displayEditStatusForm();
-               break;
-        }
-        
-        
-    }
+    
+//    public function main() {
+//        if ($this->sessionArr['strPage'] == 'status') {
+//            if ($this->sessionArr['strTodo'] != "") {
+//                switch ($this->sessionArr['strTodo']) {
+//                    case "add":
+//                        $this->todoAddStatus();
+//                        $this->sessionArr['strPage'] = "statusview";
+//                        break;
+//                    case "edit":
+//                        $this->todoEditStatus();
+//                        $this->sessionArr['strPage'] = "statusview";
+//                        break;
+//                    case "delete":
+//                        $this->todoDeleteStatus();
+//                        $this->sessionArr['strPage'] = "statushistory";
+//                        break;
+//                    case "email":
+//                        $this->todoEMailStatus();
+//                        $this->sessionArr['strPage'] = "statusview";
+//                        break;
+//                }
+//            } else {
+//                $this->sessionArr['strPage'] = "statushistory"; // if user choose Status from Menu
+//            }
+//        }
+//        
+//        switch($this->sessionArr['strPage']) {               
+//           case "statushistory":
+//               $this->displayHistory();
+//               break;
+//           
+//           case "statusview":
+//               $this->displayViewStatus();
+//               break;
+//        }
+//        
+//        switch($this->sessionArr['strPage']) {               
+//           case "statuspdf":
+//               $this->displayPDFStatus();
+//               break;
+//           
+//           case "statusadd":
+//               $this->displayAddStatusForm();
+//               break;
+//           
+//           case "statusedit":
+//               $this->displayEditStatusForm();
+//               break;
+//        }
+//        
+//        
+//    }
 
     private function todoAddStatus() {
         $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
@@ -166,21 +170,21 @@ class statusController {
         $this->statusObj->emailStatus();
     }
     
-    private function displayHistoryStatus() {
-        $this->statusObj->getLastID();
-        $statusHistoryGUIObj = new StatusHistoryGUI();
-        $statusHistoryGUIObj->setSession($this->sessionArr);
-        
-        $intID = $this->statusObj->getID();
-        if (!empty($intID)) {
-            $this->statusObj->getDetails();
-            $historyTableArr = $this->statusObj->historyStatus();
-            $statusHistoryGUIObj->display($historyTableArr);
-            $statusHistoryGUIObj->displayStatusBottomMenu();
-        } else {
-            $this->sessionArr['strPage'] = "statusadd";
-        }
-    }
+//    private function displayHistoryStatus() {
+//        $this->statusObj->getLastID();
+//        $statusHistoryGUIObj = new StatusHistoryGUI();
+//        $statusHistoryGUIObj->setSession($this->sessionArr);
+//        
+//        $intID = $this->statusObj->getID();
+//        if (!empty($intID)) {
+//            $this->statusObj->getDetails();
+//            $historyTableArr = $this->statusObj->historyStatus();
+//            $statusHistoryGUIObj->display($historyTableArr);
+//            $statusHistoryGUIObj->displayStatusBottomMenu();
+//        } else {
+//            $this->sessionArr['strPage'] = "statusadd";
+//        }
+//    }
 
     private function displayViewStatus() {
         if (!empty($this->sessionArr['intStatusID'])) {

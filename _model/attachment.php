@@ -53,8 +53,10 @@ class Attachment {
     }
     
     public function delIndividualDetails($intAttachmentIDArr) {
-        foreach ($intAttachmentIDArr as $id => $value) {
-            $this->attachmentDAObj->delIndividualDetails($intAttachmentIDArr[$id]);
+        if(!empty($intAttachmentIDArr[0])) {
+            foreach ($intAttachmentIDArr as $id => $value) {
+                $this->attachmentDAObj->delIndividualDetails($intAttachmentIDArr[$id]);
+            }
         }
     }
     

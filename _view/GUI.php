@@ -32,8 +32,11 @@ class GUI {
         $memberObj = new Member();
         $memberObj->setSession($this->sessionArr);
         $memberArr = $memberObj->getDetails();
-        echo 'Hello ' . $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'] . "<br />";
-        echo "<b>Please choose something from left menu</b>";
+//        echo 'Hello ' . $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'] . "<br />";
+//        echo "<b>Please choose something from left menu</b>";
+        
+        echo '<h1>Welcome '. $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'] . ' </h1>' ."<br />";
+        echo 'You can now choose to create Timesheets, Status, Risks or Issue items for your project.' . "<br />" . 'Alternatively you can go to CIT for further tools or get HELP  to use Status, Risk or Issue.'. "\n";
     }
     
     public function displayMenuButton($name, $caption, $isSelected = false) {

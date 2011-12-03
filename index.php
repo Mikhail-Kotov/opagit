@@ -12,6 +12,7 @@ include_once("_model/pdf.php");
 include_once("_controller/controller.php");
 include_once("_controller/IRSController.php");
 include_once("_controller/statusController.php");
+include_once("_controller/riskController.php");
 include_once("_view/GUI.php");
 include_once("_view/IRSGUI.php");
 include_once("_view/statusGUI.php");

@@ -1,7 +1,5 @@
-# Last edited: 21 Nov, 2.45 pm
+# Last edited: 2 Dec, 1.50 pm
 # By: Mikhail
-#edited Risk Fileds: 24 Nov, 11.33am
-#By Robyn 
 
 #DROP DATABASE IF EXISTS opadmin;
 #CREATE DATABASE opadmin character set utf8;
@@ -143,61 +141,62 @@ CREATE TABLE `tblMemberCourse` (
 
 CREATE TABLE `tblRiskType` (
   strRiskTypeID VARCHAR(255) NOT NULL COMMENT 'PK. Lookup type of Risk',
-  strRiskTypeDescription VARCHAR(255) NULL,
   PRIMARY KEY (strRiskTypeID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tblRisk` (
   intRiskID INT(11) NOT NULL AUTO_INCREMENT COMMENT 'PK, AI. Project Risk for OPA',
-  intProjectMemberID INT(11) NOT NULL COMMENT 'FK' COMMENT 'Raised by',
   intProjectID INT(11) NOT NULL COMMENT 'FK',
+  intProjectMemberID INT(11) NOT NULL COMMENT 'FK' COMMENT 'Raised by',
   strRiskTypeID VARCHAR(255) NULL COMMENT 'FK' COMMENT 'calls Risk Type description',
   strRiskDescription VARCHAR(1000) NULL,
-  strRiskImpactDescription VARCHAR(5000) NULL,  
   enmRiskStatus ENUM('Open','Closed') DEFAULT NULL,
+  dmtRiskDateRaised DATE NULL,
+  dmtRiskDateClosed DATE NULL,
   enmRiskLikelihoodOfImpact ENUM('High','Medium','Low') DEFAULT NULL,
+  strRiskImpactDescription VARCHAR(5000) NULL,  
   enmRiskProjectImpactRating ENUM('High','Medium','Low') DEFAULT NULL,
   strRiskMitigationStrategy VARCHAR(5000) NULL,
   strRiskContingencyStrategy VARCHAR(5000) NULL,
-  dmtRiskDateRaised DATE NULL,
-  dmtRiskDateClosed DATE NULL,
+  intProjectMemberAssignedID INT(11) NOT NULL COMMENT 'FK' COMMENT 'Assigned to',
   PRIMARY KEY (intRiskID),
   KEY `FK_tblRisk_tblProjectMember` (intProjectMemberID),
+  KEY `FK_tblRisk_tblProjectMemberAssigned` (intProjectMemberAssignedID),
   KEY `FK_tblRisk_tblProject` (intProjectID),
   KEY `FK_tblRisk_tblRiskType` (strRiskTypeID),
   CONSTRAINT `FK_tblRisk_tblProjectMember` FOREIGN KEY (intProjectMemberID) REFERENCES tblProjectMember (intProjectMemberID) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_tblRiskItem_tblProject` FOREIGN KEY (intProjectID) REFERENCES tblProject (intProjectID) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblRisk_tblProjectMemberAssigned` FOREIGN KEY (intProjectMemberAssignedID) REFERENCES tblProjectMember (intProjectMemberID) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblRisk_tblProject` FOREIGN KEY (intProjectID) REFERENCES tblProject (intProjectID) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_tblRisk_tblRiskType` FOREIGN KEY (strRiskTypeID) REFERENCES `tblRiskType` (strRiskTypeID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tblIssueType` (
   strIssueTypeID VARCHAR(255) NOT NULL COMMENT 'PK. Lookup type of Issue',
-  strIssueTypeDescription VARCHAR(255) NULL,  
   PRIMARY KEY (strIssueTypeID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tblIssue` (
   intIssueID INT(11) NOT NULL AUTO_INCREMENT COMMENT 'PK, AI. Project issue for OPA',
-  intProjectMemberID INT(11) NOT NULL COMMENT 'FK',
   intProjectID INT(11) NOT NULL COMMENT 'FK',
-  intRiskID INT(11) NULL COMMENT 'FK', # link to risk
-  strIssueTypeID VARCHAR(255) NULL COMMENT 'FK',
+  intProjectMemberID INT(11) NOT NULL COMMENT 'FK',
+  enmIssueStatus ENUM('Opened','Closed') DEFAULT NULL,
+  dmtIssueDateRaised DATE NULL,
+  dmtIssueDeadline DATE NULL,
   strIssueDescription VARCHAR(1000) NULL,
-  dmtIssueDateRaised DATE NULL,  
-  dmtIssueRequirementFinishDate DATE NULL,
-  enmIssueStatus ENUM('Opened','Closed','Assigned') DEFAULT NULL,
+  strIssueTypeID VARCHAR(255) NULL COMMENT 'FK',
+  enmIssuePriority ENUM('High','Medium','Low') DEFAULT NULL,
+  intProjectMemberAssignedID INT(11) NOT NULL COMMENT 'FK' COMMENT 'Assigned to',
   dmtIssueDateClosed DATE NULL,  
   strIssueOutcome VARCHAR(5000) NULL,
-  intIssueRating INT(11) NULL,
   PRIMARY KEY (intIssueID),
-  KEY `FK_tblIssue_tblProjectMember` (intProjectMemberID),
   KEY `FK_tblIssue_tblProject` (intProjectID),
-  KEY `FK_tblIssue_tblRisk` (intRiskID),
+  KEY `FK_tblIssue_tblProjectMember1` (intProjectMemberID),
   KEY `FK_tblIssue_tblIssueType` (strIssueTypeID),
-  CONSTRAINT `FK_tblIssue_tblProjectMember` FOREIGN KEY (intProjectMemberID) REFERENCES tblProjectMember (intProjectMemberID) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_tblIssueItem_tblProject` FOREIGN KEY (intProjectID) REFERENCES tblProject (intProjectID) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_tblIssueItem_tblRisk` FOREIGN KEY (intRiskID) REFERENCES tblRisk (intRiskID) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_tblIssue_tblIssueType` FOREIGN KEY (strIssueTypeID) REFERENCES `tblIssueType` (strIssueTypeID) ON DELETE CASCADE ON UPDATE CASCADE  
+  KEY `FK_tblIssue_tblProjectMember2` (intProjectMemberAssignedID),
+  CONSTRAINT `FK_tblIssue_tblProject` FOREIGN KEY (intProjectID) REFERENCES tblProject (intProjectID) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblIssue_tblProjectMember1` FOREIGN KEY (intProjectMemberID) REFERENCES tblProjectMember (intProjectMemberID) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblIssue_tblIssueType` FOREIGN KEY (strIssueTypeID) REFERENCES `tblIssueType` (strIssueTypeID) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_tblIssue_tblProjectMember2` FOREIGN KEY (intProjectMemberAssignedID) REFERENCES tblProjectMember (intProjectMemberID) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tblAttachment` (
@@ -238,8 +237,6 @@ INSERT INTO `tblProjectMember`(`intProjectMemberID`,`intMemberID`,`intProjectID`
 INSERT INTO `tblStatus`(`intStatusID`,`intProjectID`,`intProjectMemberID`,`dmtStatusCurrentDate`,`strActualBaseline`,`strPlanBaseline`,`strStatusVariation`,`strStatusNotes`) VALUES (NULL,8,43,'2011-09-12','2011-09-15','2011-09-19','Everything is ok','All team works very quickly');
 INSERT INTO `tblIssueType`(`strIssueTypeID`) VALUES ('Bug'),('Environment'),('Financial'),('Management'),('Quality'),('Schedule'),('Technical');
 INSERT INTO `tblRiskType`(`strRiskTypeID`) VALUES ('Financial'),('Management'),('Quality'),('Schedule'),('Technical');
-#INSERT INTO `tblRisk`(`intRiskID`,`intProjectMemberID`,`intProjectID`,`strRiskTypeID`,`strRiskDescription`,`strRiskImpactDescription`,`enmRiskStatus`,`strRiskLevelOfImpact`,`strLikelihoodOfImpact`,`strRiskConsequenceOfImpact`,`strRiskMitigationStrategy`,`strRiskContingencyStrategy`,`dmtRiskDateRaised`,`dmtRiskDateClosed`) VALUES (1,43,8,'Financial','desc',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#INSERT INTO `tblIssue`(`intIssueID`,`intProjectMemberID`,`intProjectID`,`intRiskID`,`strIssueTypeID`,`strIssueDescription`,`dmtIssueDateRaised`,`dmtIssueRequirementFinishDate`,`enmIssueStatus`,`dmtIssueDateClosed`,`strIssueOutcome`,`intIssueRating`) VALUES (1,43,8,1,'Environment','desc',NULL,NULL,NULL,NULL,NULL,NULL);
 INSERT INTO `tblAttachment`(`intAttachmentID`,`intStatusID`,`intRiskID`,`intIssueID`,`strAttachmentLink`,`strAttachmentComment`) VALUES ( NULL,'1',NULL,NULL,'cit3','attachment comment');
 
 # Test users & Test Projects
@@ -248,3 +245,23 @@ INSERT INTO `tblMember`(`intMemberID`,`strMemberName`,`strMemberPassword`,`strMe
 INSERT INTO `tblProjectMember`(`intProjectMemberID`,`intMemberID`,`intProjectID`,`intPermissionID`) VALUES ( NULL,'56','1',NULL),( NULL,'56','2',NULL),( NULL,'56','3',NULL),( NULL,'56','4',NULL),( NULL,'56','5',NULL),( NULL,'56','6',NULL),( NULL,'56','7',NULL),( NULL,'56','8',NULL),( NULL,'56','9',NULL),( NULL,'56','10',NULL),( NULL,'56','11',NULL),( NULL,'56','12',NULL),( NULL,'56','13',NULL);
 INSERT INTO `tblProjectMember`(`intProjectMemberID`,`intMemberID`,`intProjectID`,`intPermissionID`) VALUES ( NULL,'57','11',NULL),( NULL,'57','12',NULL);
 INSERT INTO `tblProjectMember`(`intProjectMemberID`,`intMemberID`,`intProjectID`,`intPermissionID`) VALUES ( NULL,'58','12',NULL),( NULL,'58','13',NULL);
+
+# Test Data for Risk Table
+INSERT INTO `tblRisk` (`intRiskID`, `intProjectID`, `intProjectMemberID`, `strRiskTypeID`, `strRiskDescription`, 
+`enmRiskStatus`, `dmtRiskDateRaised`, `dmtRiskDateClosed`, `enmRiskLikelihoodOfImpact`, `strRiskImpactDescription`, 
+`enmRiskProjectImpactRating`, `strRiskMitigationStrategy`, `strRiskContingencyStrategy`, `intProjectMemberAssignedID`) 
+VALUES(NULL,'8','43','Financial','desc','Open','2011-09-09','2011-09-10','Low','impactdesc','High','mitstrat','contstrat','42');
+
+INSERT INTO `tblRisk` (`intRiskID`, `intProjectID`, `intProjectMemberID`, `strRiskTypeID`, `strRiskDescription`, 
+`enmRiskStatus`, `dmtRiskDateRaised`, `dmtRiskDateClosed`, `enmRiskLikelihoodOfImpact`, `strRiskImpactDescription`, 
+`enmRiskProjectImpactRating`, `strRiskMitigationStrategy`, `strRiskContingencyStrategy`, `intProjectMemberAssignedID`) 
+VALUES(NULL,'8','42','Financial','desc','Open','2011-09-09','2011-09-10','Low','impactdesc','High','mitstrat','contstrat','43');
+
+INSERT INTO `tblIssue`(`intIssueID`,`intProjectID`,`intProjectMemberID`,
+`enmIssueStatus`,`dmtIssueDateRaised`,`dmtIssueDeadline`,`strIssueDescription`,
+`strIssueTypeID`,`enmIssuePriority`,`intProjectMemberAssignedID`,
+`dmtIssueDateClosed`,`strIssueOutcome`) VALUES 
+(NULL,8,42,
+'Opened','2011-09-09','2011-12-16',' issue description',
+'Financial','High',44,
+NULL,NULL);

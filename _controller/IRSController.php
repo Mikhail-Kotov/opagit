@@ -2,79 +2,93 @@
 
 class IRSController {
 
-    private $statusObj, $attachmentObj;
-    private $sessionArr, $sessionObj;
-    private $memberArr, $projectArr;
+    protected $IRSObj, $attachmentObj;
+    protected $sessionArr, $sessionObj;
+    protected $memberArr, $projectArr;
+    private $typeOfID, $ucTypeOfID;
 
-    public function __construct($memberArr, $projectArr, $sessionArr) {
+    public function __construct($typeOfID, $memberArr, $projectArr, $sessionArr) {
+        $this->typeOfID = $typeOfID;
+        $this->ucTypeOfID = ucfirst($this->typeOfID);
+        
         $this->sessionObj = new Session();
         $this->sessionArr = $sessionArr; // don't need to getDetails from Session Class, because we are already got SessionArr from Controller
         $this->memberArr = $memberArr;
         $this->projectArr = $projectArr;
         
-        $this->statusObj = new Status($this->memberArr, $this->projectArr, $this->sessionArr['intSessionID']);
+        switch($this->typeOfID) {
+            case 'status':
+                $this->IRSObj = new Status($this->memberArr, $this->projectArr, $this->sessionArr['intSessionID']);
+                break;
+            case 'risk':
+                $this->IRSObj = new Risk($this->memberArr, $this->projectArr, $this->sessionArr['intSessionID']);
+                break;
+            case 'issue':
+                $this->IRSObj = new Issue($this->memberArr, $this->projectArr, $this->sessionArr['intSessionID']);
+                break;
+        }
         $this->attachmentObj = new Attachment();
     }
 
     public function main() {
-        if ($this->sessionArr['strPage'] == "status") {
+        if ($this->sessionArr['strPage'] == $this->typeOfID) {
             if ($this->sessionArr['strTodo'] != "") {
                 switch ($this->sessionArr['strTodo']) {
-                    case "add":
-                        $this->todoAddStatus();
-                        $this->sessionArr['strPage'] = "statusview";
+                    case 'add':
+                        $this->todoAdd();
+                        $this->sessionArr['strPage'] = $this->typeOfID . 'view';
                         break;
-                    case "edit":
-                        $this->todoEditStatus();
-                        $this->sessionArr['strPage'] = "statusview";
+                    case 'edit':
+                        $this->todoEdit();
+                        $this->sessionArr['strPage'] = $this->typeOfID . 'view';
                         break;
-                    case "delete":
-                        $this->todoDeleteStatus();
-                        $this->sessionArr['strPage'] = "statushistory";
+                    case 'delete':
+                        $this->todoDelete();
+                        $this->sessionArr['strPage'] = $this->typeOfID . 'history';
                         break;
-                    case "email":
-                        $this->todoEMailStatus();
-                        $this->sessionArr['strPage'] = "statusview";
+                    case 'email':
+                        $this->todoEMail();
+                        $this->sessionArr['strPage'] = $this->typeOfID . 'view';
                         break;
                 }
             } else {
-                $this->sessionArr['strPage'] = "statushistory"; // if user choose Status from Menu
+                $this->sessionArr['strPage'] = $this->typeOfID . 'history'; // if user choose Status from Menu
             }
         }
         
         switch($this->sessionArr['strPage']) {               
-           case "statushistory":
-               $this->displayHistoryStatus();
+           case $this->typeOfID . 'history':
+               $this->displayHistory();
                break;
            
-           case "statusview":
-               $this->displayViewStatus();
+           case $this->typeOfID . 'view':
+               $this->displayView();
                break;
         }
         
         switch($this->sessionArr['strPage']) {               
-           case "statuspdf":
-               $this->displayPDFStatus();
+           case $this->typeOfID . 'pdf':
+               $this->displayPDF();
                break;
            
-           case "statusadd":
-               $this->displayAddStatusForm();
+           case $this->typeOfID . 'add':
+               $this->displayAddForm();
                break;
            
-           case "statusedit":
-               $this->displayEditStatusForm();
+           case $this->typeOfID . 'edit':
+               $this->displayEditForm();
                break;
         }
         
         
     }
 
-    private function todoAddStatus() {
-        $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
-        $strActualBaseline = $_POST["strActualBaseline"];
-        $strPlanBaseline = $_POST["strPlanBaseline"];
-        $strStatusVariation = $_POST["strStatusVariation"];
-        $strStatusNotes = $_POST["strStatusNotes"];
+    private function todoAdd() {
+        $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
+        $strActualBaseline = $_POST['strActualBaseline'];
+        $strPlanBaseline = $_POST['strPlanBaseline'];
+        $strStatusVariation = $_POST['strStatusVariation'];
+        $strStatusNotes = $_POST['strStatusNotes'];
         
         $strAttachmentLinkArr = array();
         $strAttachmentCommentArr = array();
@@ -105,7 +119,7 @@ class IRSController {
                 $strStatusNotes, $strAttachmentLinkArr, $strAttachmentCommentArr);
     }
 
-    private function todoDeleteStatus() {
+    private function todoDelete() {
         $this->statusObj->setID($this->sessionArr['intStatusID']);
         $this->statusObj->delDetails();
 
@@ -113,7 +127,7 @@ class IRSController {
         $this->sessionObj->setDetails($this->sessionArr);
     }
 
-    private function todoEditStatus() {
+    private function todoEdit() {
         $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
         $strActualBaseline = $_POST['strActualBaseline'];
         $strPlanBaseline = $_POST['strPlanBaseline'];
@@ -139,7 +153,7 @@ class IRSController {
                 $strPlanBaseline, $strStatusVariation, $strStatusNotes, $intAttachmentIDArr, $deleteAttachmentArr);
     }
     
-    private function todoEMailStatus() {
+    private function todoEMail() {
         $this->statusObj->setID($this->sessionArr['intStatusID']);
         $this->statusObj->getDetails();
         $currentStatusMessage = $this->statusObj->viewStatus();
@@ -157,47 +171,75 @@ class IRSController {
         //$this->statusObj->emailStatus($currentStatusMessage);
         $this->statusObj->emailStatus();
     }
-    
-    private function displayHistoryStatus() {
-        $this->statusObj->getLastStatusID();
-        $statusHistoryGUIObj = new StatusHistoryGUI();
-        $statusHistoryGUIObj->setSession($this->sessionArr);
-                
-        if (!empty($this->statusObj->intStatusID)) {
-            $this->statusObj->getDetails();
-            $historyTableArr = $this->statusObj->historyStatus();
-            $statusHistoryGUIObj->display($historyTableArr);
-            $statusHistoryGUIObj->displayStatusBottomMenu();
-        } else {
-            $this->sessionArr['strPage'] = "statusadd";
-        }
-    }
 
-    private function displayViewStatus() {
-        if (!empty($this->sessionArr['intStatusID'])) {
+    protected function displayHistory() {
+        $this->IRSObj->getLastID();
+        
+        echo "eee";
+        switch($this->typeOfID) {
+            case 'status':
+                $this->IRSObj->getLastID();
+                $historyGUIObj = new StatusHistoryGUI();
+                $historyGUIObj->setSession($this->sessionArr);
+
+                $intID = $this->IRSObj->getID();
+                if (!empty($intID)) {
+                    $this->IRSObj->getDetails();
+                    $historyTableArr = $this->IRSObj->historyStatus();
+                    $historyGUIObj->display($historyTableArr);
+                    $historyGUIObj->displayStatusBottomMenu();
+                } else {
+                    $this->sessionArr['strPage'] = 'statusadd';
+                }
+                break;
+            case 'risk':
+                $historyGUIObj = new RiskHistoryGUI();
+                $historyGUIObj->setSession($this->sessionArr);
+
+                $intID = $this->IRSObj->getID();
+                if (!empty($intID)) {
+                    $this->IRSObj->getDetails();
+                    $historyTableArr = $this->IRSObj->historyRisk();
+
+                    $historyGUIObj->display($historyTableArr);
+                    //$historyGUIObj->displayRiskBottomMenu();
+                } else {
+                    //if no history items displays Add form
+                    $this->sessionArr['strPage'] = 'riskadd';
+                }
+                break;
+            case 'issue':
+                break;
+        }
+
+    }
+ 
+
+    private function displayView() {
+        if (!empty($this->sessionArr['int' . $this->ucTypeOfID . 'ID'])) {
             $this->displayViewStatusPart();
         } else {
-            $this->sessionArr['intStatusID'] = $this->statusObj->getLastStatusID();
+            $this->sessionArr['int' . $this->ucTypeOfID . 'ID'] = $this->IRSObj->getLastID();
             $this->sessionObj->setDetails($this->sessionArr);
-            if (!empty($this->sessionArr['intStatusID'])) {
-                $this->displayViewStatusPart();
+            if (!empty($this->sessionArr['int' . $this->ucTypeOfID . 'ID'])) {
+                $this->displayViewPart();
             } else {
-                $this->sessionArr['strPage'] = "statusadd";
+                $this->sessionArr['strPage'] = $this->typeOfID . 'add';
             }
         }
     }
     
-    private function displayViewStatusPart() {
-        $this->statusObj->setID($this->sessionArr['intStatusID']);
-        $this->statusObj->getDetails();
-        $currentStatusMessage = $this->statusObj->viewStatus();
+    private function displayViewPart() {
+        $this->IRSObj->setID($this->sessionArr['intStatusID']);
+        $this->IRSObj->getDetails();
+        $currentMessage = $this->IRSObj->viewStatus();
         
         $statusGUIObj = new StatusGUI();
         $statusGUIObj->setSession($this->sessionArr);
-        $statusGUIObj->display($currentStatusMessage);
+        $statusGUIObj->display($currentMessage);
     }
     
-    private function displayPDFStatus() {
+    private function displayPDF() {
         $this->statusObj->setID($this->sessionArr['intStatusID']);
         $this->statusObj->getDetails();
         $currentStatusMessage = $this->statusObj->viewStatus();
@@ -207,7 +249,7 @@ class IRSController {
         $statusGUIObj->displayPDFStatus($currentStatusMessage);
     }
     
-    private function displayAddStatusForm() {
+    private function displayAddForm() {
         $this->sessionArr['intStatusID'] = null;
         $this->sessionObj->setDetails($this->sessionArr);
         
@@ -216,12 +258,12 @@ class IRSController {
         $statusGUIObj->displayAddForm();
     }
     
-    private function displayEditStatusForm() {
+    private function displayEditForm() {
         if ($this->sessionArr['intStatusID'] != "") {
             $this->statusObj->setID($this->sessionArr['intStatusID']);
             $statusArr = $this->statusObj->getDetails();
-            $this->attachmentObj->setID($this->sessionArr['intStatusID'], "status");
-            $this->attachmentObj->getDetailsFromDB("status");
+            $this->attachmentObj->setID($this->sessionArr['intStatusID'], 'status');
+            $this->attachmentObj->getDetailsFromDB('status');
             $attachmentArr = $this->attachmentObj->getDetails();
             
             $statusGUIObj = new StatusGUI();
@@ -232,7 +274,7 @@ class IRSController {
         }
     }
     
-    private function displayEmailStatusForm() {
+    private function displayEmailForm() {
         
     }
 

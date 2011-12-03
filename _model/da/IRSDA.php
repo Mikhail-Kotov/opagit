@@ -5,6 +5,8 @@ class IRSDA {
             
     public function __construct($typeOfID) {
         $this->typeOfID = $typeOfID;
+        
+        // upper case type of ID like Status, Risk or Issue
         $this->ucTypeOfID = ucfirst($this->typeOfID);
     }
     
@@ -44,8 +46,15 @@ class IRSDA {
             die('Invalid query: ' . mysql_error());
     }
 
-    public function getAll($intProjectID) {
-        $query = "SELECT * FROM tbl" . $this->ucTypeOfID . " WHERE intProjectID = '" . $intProjectID . "';";
+    public function getAll($intProjectID, $sortBy = null, $desc = null) {
+        $query = "SELECT * FROM tbl" . $this->ucTypeOfID . " WHERE intProjectID = '" . $intProjectID . "'";
+        if(!empty($sortBy)) {
+            $query .= " ORDER BY ". $sortBy;
+        }
+        if($desc == true) {
+            $query .= " DESC";
+        }
+        $query .= ";";
         $sqlArr = $_ENV['db']->query($query);
         
         return $sqlArr;
@@ -57,17 +66,17 @@ class IRSDA {
         $query = "UPDATE tbl" . $this->ucTypeOfID . " SET ";
         
         foreach($IRSArr as $id => $value) {
-            $query .= $id . "='" . $value . "', ";
+            $query .= $id . "='" . $value . "',";
         }
         // remove last comma
         $query = substr($query, 0, strlen($query) - 1);
         
         $query .= "WHERE int" . $this->ucTypeOfID . "ID = '" . $IRSArr['int' . $this->ucTypeOfID . 'ID'] . "';";
         
-//        $sql = mysql_query($query);
-//
-//        if (!$sql)
-//            die('Invalid query: ' . mysql_error());
+        $sql = mysql_query($query);
+
+        if (!$sql)
+            die('Invalid query: ' . mysql_error());
     }
     
     public function addDetails($IRSArr) {
@@ -82,7 +91,7 @@ class IRSDA {
             $query .= "'" . $value . "',";
         }                
         $query = substr($query, 0, strlen($query) - 1) . ");";                
-        echo $query;
+
         $sql = mysql_query($query);
 
         if (!$sql)
