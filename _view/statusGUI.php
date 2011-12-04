@@ -66,28 +66,28 @@ class StatusGUI {
 
     }
     
-    public function displayPDFStatus($currentStatusMessage, $filename = null) {
-        //$pdf = new FPDF();
-        //$pdf->AddPage();
-        //$pdf->SetFont('Arial','',10);
-        //$pdf->Cell(40,10,$currentStatusMessage);
-        //$pdf->Output();
-
-        $pdf = new PDF();
-        $pdf->SetDisplayMode('real', 'default');
-        $title = 'Status #' . $this->sessionArr['intStatusID'];
-        $pdf->SetTitle($title);
-        $pdf->SetAuthor('OPA');
-        $pdf->PrintChapter(1, 'Status #' . $this->sessionArr['intStatusID'], "");
-        $pdf->WriteHTML($currentStatusMessage);
-        
-        if(!empty($filename)) {
-            $pdf->Output($_ENV['temp_dir'] . $filename, 'F');
-        } else {
-            $pdf->Output();
-        }
-        
-    }
+//    public function displayPDFStatus($currentStatusMessage, $filename = null) {
+//        //$pdf = new FPDF();
+//        //$pdf->AddPage();
+//        //$pdf->SetFont('Arial','',10);
+//        //$pdf->Cell(40,10,$currentStatusMessage);
+//        //$pdf->Output();
+//
+//        $pdf = new PDF();
+//        $pdf->SetDisplayMode('real', 'default');
+//        $title = 'Status #' . $this->sessionArr['intStatusID'];
+//        $pdf->SetTitle($title);
+//        $pdf->SetAuthor('OPA');
+//        $pdf->PrintChapter(1, 'Status #' . $this->sessionArr['intStatusID'], "");
+//        $pdf->WriteHTML($currentStatusMessage);
+//        
+//        if(!empty($filename)) {
+//            $pdf->Output($_ENV['temp_dir'] . $filename, 'F');
+//        } else {
+//            $pdf->Output();
+//        }
+//        
+//    }
     
     public function displayAddForm() {
         include_once("inc/statusAddForm.inc.php");

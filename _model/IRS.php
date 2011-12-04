@@ -238,10 +238,7 @@ class IRS {
                         $this->IRSArr['strStatusNotes'] . "<br /><br />";
                 break;
             case 'risk':
-                $memberAssignedObj = new Member();
-                $intMemberAssignedID = $memberAssignedObj->getMemberID($this->IRSArr['intProjectMemberAssignedID']);
-                $memberAssignedObj->setID($intMemberAssignedID);
-                $memberAssignedArr = $memberAssignedObj->getDetails();
+                $memberAssignedArr = $this->getMemberAssignedArr(($this->IRSArr['intProjectMemberAssignedID']));
 
                 $currentMessage = '<div class="viewgroup"><div class="labelView"><b>ID: </b></div><div class="fieldstatus"> ' .
                         $this->IRSArr['int' . $this->ucTypeOfID . 'ID'] . "</div></div>\n" .
@@ -276,11 +273,8 @@ class IRS {
 
                 break;
             case 'issue':
-                $memberAssignedObj = new Member();
-                $intMemberAssignedID = $memberAssignedObj->getMemberID($this->IRSArr['intProjectMemberAssignedID']);
-                $memberAssignedObj->setID($intMemberAssignedID);
-                $memberAssignedArr = $memberAssignedObj->getDetails();
-                
+                $memberAssignedArr = $this->getMemberAssignedArr(($this->IRSArr['intProjectMemberAssignedID']));
+
                 $currentMessage = '<div class="labelView">ID:</div><div class="fieldstatus"> ' . $this->IRSArr['int' . $this->ucTypeOfID . 'ID'] . "</div><br />\n" .
                         '<div class="labelView">Project:</div><div class="fieldstatus"> ' . $this->IRSArr['intProjectID'] . "</div><br />\n" .
                         '<div class="labelView">Issue Raised By:</div>' .
@@ -322,6 +316,15 @@ class IRS {
 
         //$_ENV['firephp']->log($attachmentArr, 'attachmentArray');
         return $currentMessage;
+    }
+
+    private function getMemberAssignedArr($intProjectMemberAssignedID) {
+        $memberAssignedObj = new Member();
+        $intMemberAssignedID = $memberAssignedObj->getMemberID($intProjectMemberAssignedID);
+        $memberAssignedObj->setID($intMemberAssignedID);
+        $memberAssignedArr = $memberAssignedObj->getDetails();
+        
+        return $memberAssignedArr;
     }
 
 }

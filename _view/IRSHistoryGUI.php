@@ -9,6 +9,7 @@ class IRSHistoryGUI {
         $this->typeOfID = $typeOfID;
         $this->ucTypeOfID = ucfirst($this->typeOfID);
         $this->shortTypeOfID = substr($this->typeOfID, 0, 1);
+        $this->intID = 'int' . $this->ucTypeOfID . 'ID';
     }
 
     public function setSession($sessionArr) {
@@ -101,7 +102,7 @@ class IRSHistoryGUI {
                 echo '<form method="post" action="">';
                 echo '<input type="hidden" name="page" value="' . $this->typeOfID . 'pdf" />' . "\n";
                 echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
-                echo '<input type="hidden" name="s" value="' . $IRSArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
+                echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $IRSArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
                 echo '<input type="submit" value="PDF" title="PDF current ' . $this->ucTypeOfID . '" class="button" />' . "\n";
                 echo "</form>\n";
                 echo "</td>\n";

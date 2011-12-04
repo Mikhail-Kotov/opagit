@@ -214,13 +214,13 @@ class IRSController {
     }
     
     private function displayPDF() {
-        $this->statusObj->setID($this->sessionArr['intStatusID']);
-        $this->statusObj->getDetails();
-        $currentStatusMessage = $this->statusObj->viewStatus();
+        $this->IRSObj->setID($this->sessionArr['int' . $this->ucTypeOfID . 'ID']);
+        $this->IRSObj->getDetails();
+        $currentStatusMessage = $this->IRSObj->view();
         
-        $statusGUIObj = new StatusGUI();
-        $statusGUIObj->setSession($this->sessionArr);
-        $statusGUIObj->displayPDFStatus($currentStatusMessage);
+        $GUIObj = new IRSGUI($this->typeOfID);
+        $GUIObj->setSession($this->sessionArr);
+        $GUIObj->displayPDF($currentStatusMessage);
     }
     
     private function displayAddForm() {

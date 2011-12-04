@@ -1,4 +1,13 @@
 <?php
+ /****************************************************************************************
+ * Team Name:  OPA                                                                       *
+ * Date:       24 Nov 2011                                                               *
+ * Version No: 2                                                                         *
+ *                                                                                       *
+ * File Name:  pdf.php                                                                   *
+ * Desc:       This file creates a PDF (extends FPDF by Olivier PLATHEY)                 * 
+ *                                                                                       * 
+ ****************************************************************************************/
 
 class PDF extends FPDF {
 
@@ -47,7 +56,7 @@ class PDF extends FPDF {
         // Output justified text
         $this->MultiCell(0, 5, $txt);
         // Mention in italics
-        $this->SetFont('', 'I');
+        //$this->SetFont('', 'I');
     }
 
     function PrintChapter($num, $title, $file) {
@@ -94,6 +103,8 @@ class PDF extends FPDF {
         if ($tag == 'A')
             $this->HREF = $attr['HREF'];
         if ($tag == 'BR')
+            $this->Ln(5);
+        if ($tag == 'DIV')
             $this->Ln(5);
     }
 
