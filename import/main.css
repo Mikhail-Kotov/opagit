@@ -5,8 +5,9 @@
  *  MODIFIED:
  *  version 1.0, 26 April 2007
  *  version 2.0, 27 February 2007
- */
-
+ ************************************************************************/
+ /*MODIFIED: R Ius  Dec 2011
+************************************************************************/
 /*
 	main class used to define the major container for the main content
  	usually is implemented in the "td" tag of an outer table
@@ -192,7 +193,7 @@ hr {
 /* -------------------------------------------------
  * Standard table format
 ------------------------------------------------- */
-table.standard { border:0; width:98%; }
+table.standard { border:0; width:1024px; }
 table.standard th { background:#fafafa; border:1px solid #e1e1e1; border-width:1px 0; text-align:left; padding:5px; }
 table.standard td { padding:3px 5px; vertical-align:top; }
 table.standard tr.alt { background:#f9f9f9; }
@@ -363,21 +364,81 @@ form { margin:0; }
 form fieldset { margin: 0 0 8px; padding:0; border: 0; }
 form fieldset.group {clear: both; }
 form fieldset label { float: left; width: 11em; margin: 0 1em 0 0; font-weight: bold; line-height: 1.5em; }
-form fieldset div.field { float: left; margin: 0 1em 0 0; }
-form fieldset div.field div { margin:2px 0 0; }
-form fieldset div.field label { float: none; width: auto; font-weight: normal; }
-form fieldset div.field input.input-text { padding: 2px; font-family: Arial, sans-serif; font-size: 1em; color: #646870; border:1px solid #ccc; }
+form fieldset div.field { width: 11em; float: left; margin: 0 1em 0 0; }
+/*form fieldset div.field div { margin:2px 0 0; }*/
+/*form fieldset div.field label { float: left; width: auto; font-weight: normal; }*/
+form fieldset div.field input.input-text { float: right; padding: 2px; font-family: Arial, sans-serif; font-size: 1em; color: #646870; border:1px solid #ccc; }
 form fieldset div.field input[type=radio] { vertical-align:top; }
-form div.submit { clear: both; padding: 5px 0 15px 13em; }
+form div.field textarea { min-width: 80px; min-height: 15px; max-width: 80px; max-height: 15px; padding: 2px; font-family: Arial, sans-serif; font-size: 1em; color: #646870; border:1px solid #ccc; }*/
+form div.submit { clear: both; padding: 15px 0 15px 0px; }/*this places the submit button under other buttons -Robyn Ius*/
 form div.submit img,
 form div.submit input { margin-right:10px; }
 
 form .sml { width:4em; }
 form .med { width:8em; }
 form .lge { width:14em; }
-form#event-submission { background:#f1f1f1; margin:0 0 2em; }/*changed from fafafa 3Nov robynIus*/
+
+/*add status, risk view, add risk are styled by this id*/
+form#event-submission {
+    position: relative;  background:#f1f1f1; margin:0 0 2em; padding: 20px 20px 10px 20px; width: 1024px; 
+}/*changed from fafafa 3Nov robynIus*/
+form#event-submission label {
+    font-weight: bold;/*this styles the label bold for add and view forms*/
+}
 form#event-submission h4 { background:#dedadb; font-weight:normal; margin:0 0 10px; padding:5px; }
 form#event-submission fieldset { margin-left:15px; margin-right:15px; }
+
+.input-label{   
+}
+
+.hiddencolor {
+    background-color: #fff;
+}
+/*this styles a label on the add risk page*/
+.labelopa {
+  float: left;
+  position: relative;
+  width: 11em;
+  margin: 2px 2px 12px 2px;
+}
+
+/*this styles a field on the add risk page*/
+.fieldopa {
+  float: left;
+  position: relative;
+  width: 22em;   
+}
+
+/*this styles a date label on the view risk page*/
+.labelopadate {
+  float: left;
+  position: relative;
+  width: 7em;
+  margin: 2px 2px 6px 2px;  
+    
+}
+
+/*this styles a date field on the view risk page*/
+.fieldopadate {
+   float: left;
+  position: relative;
+  width: 18em;   
+    
+}
+
+/*this styles a group of label and field on the add risk page*/
+.groupopa {
+  float: left;
+  position: relative;
+  clear: both;   
+  width: 100%;
+}
+
+#dateclosed {
+float: left;    
+position: relative;
+clear: both;     
+}
 
 div.top {
 	background: url(../images/icons/top.gif) no-repeat left 3px;

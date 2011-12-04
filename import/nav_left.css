@@ -10,13 +10,11 @@
  * @version 1.4, 17 March 2005. deeper red for links, change in border color
  * @version 1.5, 29 June 2005. font size changed from 0.70em to 0.75em
  * @author David Jimenez david@swin.edu.au
- */
+ *************************************************************************
+ *Modified Mikhail Kotov Nov 2011
+ *************************************************************************/
 
-/**
- * nav_left class used to define the major container for the left navigation
- * usually is implemented in the "td" tag of an outer table
- * example: &lt;td class="nav_left">----content-------&lt;/td>
- */
+
  input.button { /* this style was updated to change the nav buttons Robyn 2Nov */
     color: #000;
     border: none;
@@ -37,6 +35,11 @@
 	text-decoration: none;
 }
 
+/**
+ * nav_left class used to define the major container for the left navigation
+ * usually is implemented in the "td" tag of an outer table
+ * example: &lt;td class="nav_left">----content-------&lt;/td>
+ */
 .nav_left {
 	background: #f1f1f1;
 	vertical-align: top; 

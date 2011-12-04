@@ -76,19 +76,21 @@ class IRSHistoryGUI {
             }
             echo "</tr>\n";
 
+            //add alternate background colors
             $oddOrEven = "historyodd";
             foreach ($historyTableArr[1] as $IRSArr) {
                 echo "<tr>\n";
                 echo '<td class="' . $oddOrEven . '">' . "\n";
-                echo '<form method="post" action="" id="event-submission">';
+                echo '<form method="post" action="">';
                 echo '<input type="hidden" name="page" value="' . $this->typeOfID . 'view" />' . "\n";
                 echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
                 echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $IRSArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
                 echo '<input type="submit" value="View" title="View current ' . $this->ucTypeOfID . '" class="button" />' . "\n";
                 echo "</form>\n";
                 echo "</td>\n";
-
-                foreach ($IRSArr as $columnName => $value) {
+            
+            //echo different grey on each line
+            foreach ($IRSArr as $columnName => $value) {
                     echo '<td class="' . $oddOrEven . '">' . "\n";
                     if (isset($value)) {
                         echo $value;

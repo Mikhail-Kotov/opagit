@@ -4,276 +4,422 @@
  *
  *  MODIFIED:
  *  version 1.0, 26 April 2007
- */
-
+ *********************************************************************/
+ /*MODIFIED:
+ * 10 November 2011
+ * Robyn Ius 
+ *
+ * MODIFIED: Change the header banner and right coloured column
+ * 28 November 2011
+ * Reece Dixon  
+*********************************************************************/
 
 /* 
-removes default margins from all tags  (caused issues with <p> tags)
- - have moved to <body> style as this appeared to be the only area it was needed in
-* { padding: 0; margin: 0; }
+*	removes default margins from all tags  (caused issues with <p> tags)
+* 	- have moved to <body> style as this appeared to be the only area it was needed in
+* 	{ padding: 0; margin: 0; }
 */
 
-/* 	Default styles implemented on the webstie */
+/* 	Default styles implemented on the website */
 body {
-	margin:0;
-	font-size: 0.75em;
-	font-family: Arial,Geneva,Helvetica;
-	color: #666;
+    color: #666666;
+    font-family: Arial,Geneva,Helvetica;
+    font-size: 0.75em;
+    margin: 0;
+    
 }
 
-/*
-	Quirks mode problem - 
-	Table cells don't inherit the body font size, is there a better way of getting around this?
-*/
-
 table {
-	font-size: 1em;
+    font-size: 1em;
 }
 
 #main {
-	background:#efefef;
-	
-	
+    background: none repeat scroll 0 0 #EFEFEF; /*edited Reece Dixon*/
 }
+
 #container {
-	width: 987px;
-	background: #fff;
+    background: none repeat scroll 0 0 #FFFFFF;/*edited Reece Dixon*/
+
+}
+
+#historytable {
+    background-color: #FFFFFF; /*edited for OPA*/
+    width: 1024px;
 }
 
 #wrapper {
-	width: 987px;
-	background: #fff url(../images/wrapper-background.gif) scroll repeat-y;
-	
+    background: url("../images/wrapper-background.gif") repeat-y scroll 0 0 #FFFFFF;/*edited Reece Dixon*/
 }
 
 #wrapper-sidebar {
-	width: 987px;
-	background: #fff url(../images/wrapper-sidebar-background.gif) scroll repeat-y;
+    background: url("../images/wrapper-sidebar-background.gif") repeat-y scroll 0 0 #FFFFFF;
+    width: 987px;
 }
-
-
-/*
- 	Heading Style classes used to define the appearance of
- 	the headings, note that is a cascade of the main_table class,
- 	this is provided as an option to the Content Styles
-	example: <h1>Heading 1</h1>
-*/
 
 h1 {
-    /*font-size:23px;*/
-	font-size: 1.7em;
-	 
+    font-size: 1.7em;/*font-size:23px;*/
+    margin-left: 20px; /*Edited Stephen Blatancic*/
 }
 
-/*#logo h1, #banner h1 { 	position: absolute; left: -1000px; }*/
-
 h2 {
-	font-size:14px;
-	line-height:17px;
-	color:#000;
-	font-weight: bold; 
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 17px;
 }
 
 h3 {
-    font-size:12px;
-	line-height:15px;
-	color:#000;
-	font-weight: bold; 
+    color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 15px;
 }
 
 h4 {
-    font-size:12px;
-	color:#666;
-	line-height:15px;
-	font-weight: bold; 
+    color: #666666;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 15px;
 }
 
-p{
-
-	line-height:1.2em;
+p {
+    line-height: 1.2em;
 }
-
 /*
-  	Link Style classes used to define the Default 
-	appearance of links
-*/
+#redLinks a, a:link, a:visited,  {  /*Edited Robyn Ius*/
+/*    color: #F21C00;
+    text-decoration: underline;
+}
 
-a, a:link, a:visited, a:hover {
-	color: #f21c00;
-	text-decoration: underline;
+/*#redLinks, a:hover {  /*Edited Robyn Ius*/
+ /*   color: #F21C00;
+    text-decoration: none;
+}
+*/
+a, a:link, a:visited { /*this controls the back to top link*/
+    color: #F21C00;
+    text-decoration: underline;
 }
 
 a:hover {
-	text-decoration: none;
+    text-decoration: none;
+}
+#toTop{
+    margin: 0 0 0 13px;
+}
+.footer, .footer2 {
+    font-size: 0.95em;
+    padding: 6px 6px 1px;
+    text-decoration: none;
 }
 
-/* Table version - Footer - to be removed */
-.footer, .footer2 
-{
-	font-size: 0.95em;
-	text-decoration: none;
-	padding: 6px 6px 1px 6px;
+.footer2 {
+    padding: 0 6px 6px;
 }
 
-.footer2 
-{
-	padding: 0px 6px 6px 6px;
+.footertable {
+    border-top: 1px solid #FFFFFF;
 }
 
-.footertable 
-{
-	border-top: 1px solid #fff;
-}
-
-.footertable2
-{
-	border-top: none;
+.footertable2 {
+    border-top: medium none;
 }
 
 #footer {
-	color: #7d7d7d;
- 	padding: 0px;
- 	margin: 40px 0px 0px 0px;
-	padding: 0px;
-	height: 52px;
-	background-color: #eee;
-	min-width: 987px
+    background-color: #EEEEEE;
+    color: #7D7D7D;
+    height: 52px;
+    margin: 40px 0 0 0; /*Edited 0 left 28Nov Robyn Ius*/
+    min-width: 987px;
+    padding: 0;
 }
 
 #foot {
-	padding: 10px 5px 6px 5px;
-	background: #eee;
-	width: 971px;
-}
-* html #foot {
-	margin-left: 5px
-}
-#foot ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	width: 100%;
-}
-#foot ul li {
-	float: left;
-	margin: 0;
-	color: #7d7d7d;
-	padding: 2px 3px 2px 4px;
-	height: 1em;
-	line-height: 1em;
-	border-right: 1px solid #b0b0b0;
-	font-size: .9em;
+    background: none repeat scroll 0 0 #EEEEEE;
+    padding: 10px 5px 6px 5px;  /*Edited 5px left 28Nov Robyn Ius*/
+    width: 971px;
 }
 
-#foot ul li a{
-	color: #737373;
-	text-decoration:underline;
+* html #foot {
+    margin-left: 5px;
+}
+
+#foot ul {
+    list-style: none outside none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+}
+
+#foot ul li {
+    border-right: 1px solid #B0B0B0;
+    color: #7D7D7D;
+    float: left;
+    font-size: 0.9em;
+    height: 1em;
+    line-height: 1em;
+    margin: 0;
+    padding: 2px 3px 2px 4px;
+}
+
+#foot ul li a {
+    color: #737373;
+    text-decoration: underline;
 }
 
 #foot ul li.last {
-	border: none;
+    border: medium none;
 }
 
-/* Old Page Banners */
 #header {
-	overflow: hidden;
-	border-bottom: 1px solid #FFF;
-	border-right: 1px solid #FFF;
-	height: 113px;
+    border-bottom: 1px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
+    height: 113px;
+    overflow: hidden;
 }
-#header.small { height: 73px }
-#header .left { float: left; width: 385px; margin-right: -385px; position: relative }
-#header .right { float: right; }
 
-/* -------------------------------------------------
- * Three column layout (table-free)
- *
- * The code automatically adjusts for both full-width 
- * banner & nested banner pages.
-------------------------------------------------- */
-div#column { background: url('../images/leftnav_background.gif') no-repeat bottom left; border-right: 1px solid #fff;}
-div#column1 { margin: 0; padding: 0; float: left; width: 731px; }
-div#column2 { margin: 0; padding: 0; float:left; width: 255px; }
-div#navcol { padding: 0; width: 184px; float: left; }
-div#content-col { margin-left: 15px; padding:12px 0 40px; float:left; width: 720px; }
-div#content-col-sidebar { margin-left: 15px; padding:12px 0 40px; float:left; width: 520px; }
-div#sidecol { width: 255px; float: right; padding-bottom:30px; border-top:1px solid #fff;}
-div#column2 div#sidecol { border-top: none; }
-.clear { clear: both; display: block; height: 1px; overflow: hidden; margin: 0; padding: 0; }
+#header.small {
+    height: 73px;
+}
+
+#header .left {
+    float: left;
+    margin-right: -385px;
+    position: relative;
+    width: 385px;
+}
+
+#header .right {
+    float: right;
+}
+
+div#column {
+    background: url("../images/leftnav_background.gif") no-repeat scroll left bottom transparent;/*Edited transparent Reece Dixon*/
+    border-right: 1px solid #FFFFFF;
+}
+
+div#column1 {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 731px;
+}
+
+div#column2 {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 255px;
+}
+
+div#navcol {
+    float: left;
+    padding: 0;
+    width: 184px;
+}
+
+div#content-col {
+    
+    float: left;
+    margin-left: 15px;
+    padding: 12px 0 40px;
+    width:68%;
+}
+/* OPA style for View Risk and View Status 
+div#content-col#viewRisk {
+    background-color: #F1F1F1;
+}*/
+
+/*.statusgrp{
+    width:100%;
+    float:left;
+    
+}*/
+
+.labeladd{
+    float: left;
+    padding:2px;
+    margin:2px;
+    font-weight: bold;
+    width:200px;   
+}
+
+#viewRisk
+ { 
+    background-color: #F1F1F1;
+    padding:2px;
+    margin:2px;
+    width:97%;
+}
+
+#viewthestatus{
+
+    padding:2px;
+    margin:2px;
+    width:97%;
+}
+
+/*this styles a label on the view risk page*/
+.labelView {
+    
+    float: left;
+    padding:2px;
+    margin:2px;
+    font-weight: bold;
+    width:200px;
+}
+
+/*this styles a group of label and field on the view risk page*/
+.viewgroup{
+    width:100%;
+    float:left;
+}
+
+/*this styles a field on the view risk page*/
+.fieldstatus {
+    
+    float: left;
+    padding:2px;
+    margin:2px;
+    width:350px;
+}
+
+.fieldthestatus {
+    
+    float: left;
+    padding:2px;
+    margin:2px;
+    width:350px;
+}
+
+div#content-col-sidebar {
+    float: left;
+    margin-left: 15px;
+    padding: 12px 0 40px;
+    width: 520px;
+}
+
+div#sidecol {
+    border-top: 1px solid #FFFFFF;
+    float: right;
+    padding-bottom: 30px;
+    width: 255px;
+}
+
+div#column2 div#sidecol {
+    border-top: medium none;
+}
+
 /* ie hack required to ensure <table width="100%"> does not break floats */
 /*hide from IE mac\*/
-* html #content-col { height:1%; }
+.clear {  
+    clear: both;
+    display: block;
+    height: 1px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+* html #content-col {
+    height: 1%;
+}
 /*end hide*/ 
 
-
-/* -------------------------------------------------
- * New Banner
-------------------------------------------------- */
-#banners { background:#D8CDBB url('../images/banners/banner_level2_left.gif') no-repeat;}
-#banners p { margin:0; }
-#banners p span { display:none; }
-#banners p { width:500px; height:48px; margin:6px 0 0 194px; }
-#banners p#banner-logo { background:transparent url('../images/banners/swinburne_logo.gif') no-repeat; width:179px; height:91px; margin:0 0 0 94px; }
-#banners div { background:transparent url('../images/banners/banner_corporate_right.gif') scroll no-repeat right top; }
-#column2 #banners div { background:transparent url('../images/banners/research/banner_research_right.gif') scroll no-repeat right top;margin-right:255px; }
-#column1 #banners div { border-right: 1px solid #fff; }
-
-
-/* New Page Banners */
-#banner{
-	clear: left;
-	overflow: hidden;
-	margin-bottom: 1px;
-	color: #FFF;
-	border-right: 1px solid #fff;
+#banners {
+    background: url("../images/banners/banner_level2_left.gif") no-repeat scroll 0 0 #D8CDBB;/*edited Reece Dixon 28 Nov 2011*/
 }
 
-#banner_left { 
-	float: left;
-	width: 184px; 
-	position: relative;
+#banners p {
+    margin: 0;
 }
 
-#banner_right { 
-	margin-left: 184px; 
-	padding: 0px 0px 0px 0px;
-	text-indent: -999px;
+#banners p span {
+    display: none;
+}
+
+#banners p {
+    height: 48px;
+    margin: 6px 0 0 194px;
+    width: 500px;
+}
+
+#banners p#banner-logo {
+    background: url("../images/banners/swinburne_logo.gif") no-repeat scroll 0 0 transparent; /*edited Reece Dixon 28 Nov 2011*/
+    height: 91px;
+    margin: 0 0 0 94px;
+    width: 179px;
+}
+
+#banners div {
+    background: none no-repeat scroll right top transparent;/*Removed Image -edited Reece Dixon 28 Nov 2011*/
+}
+
+#column2 #banners div {
+    background: url("../images/banners/research/banner_research_right.gif") no-repeat scroll right top transparent;
+    margin-right: 255px;
+}
+
+#column1 #banners div {
+    border-right: 1px solid #FFFFFF;
+}
+
+#banner {
+    border-right: 1px solid #FFFFFF;
+    clear: left;
+    color: #FFFFFF;
+    margin-bottom: 1px;
+    overflow: hidden;
+}
+
+#banner_left {
+    float: left;
+    position: relative;
+    width: 184px;
+}
+
+#banner_right {
+    margin-left: 184px;
+    padding: 0;
+    text-indent: -999px;
 }
 
 .large {
-	height: 193px;
+    height: 193px;
 }
 
 .small {
-	height: 145px;
+    height: 145px;
 }
 
 #logo {
-	position: absolute;
-	top: 66px;
-	left: 94px;
-	z-index: 1;
-	height: 91px;
-	width: 179px;
-	text-indent: -999px;
-	background: url('../images/banners/swinburne_logo.gif') no-repeat left top;
+    background: url("../images/banners/swinburne_logo.gif") no-repeat scroll left top transparent;/*edited Reece Dixon 28 Nov 2011*/
+    height: 91px;
+    left: 94px;
+    position: absolute;
+    text-indent: -999px;
+    top: 66px;
+    width: 179px;
+    z-index: 1;
 }
 
 /* google results page */
 .j {
-font-size:16px;
+    font-size: 16px;
 }
 
+/* Edited Mikhail Kotov */
 td.historyodd {
-    background-color: #eee;
+    background-color: #EEEEEE;
 }
 
+/* Edited Mikhail Kotov */
 td.historyeven {
-    background-color: #f8f8f8;
+    background-color: #F8F8F8;
+}
+/*Edited Robyn Ius*/
+div#welcome_screen {
+    background-color: #F1F1F1;
 }
 
-div#welcome_screen{
-    background-color: #f1f1f1;
-    
-}

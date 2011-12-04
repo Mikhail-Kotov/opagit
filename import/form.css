@@ -4,7 +4,11 @@
  *
  *  MODIFIED:
  *  version 1.0, 26 April 2007
-*/
+ **************************************************************
+ *MODIFIED Mikhail Kotov and Robyn Ius Nov 2011
+**************************************************************************/
+
+/*class qtip can be styled to change the look of the javaScript Tool tips*/
 .qtip-title{
        
 }
@@ -15,6 +19,43 @@
 .qtip-borderTop{
     
 }
+/* this is the view button on the history table*/
+table input.button{
+   text-decoration: underline;
+   color:#f21c00;  
+}
+/* this is makes the view button on the history table hover underline*/
+table input.button:hover{
+   text-decoration: none;
+   color:#f21c00;  
+}
+
+
+/*table input.button #add{
+   text-decoration: underline;
+   color:#f21c00;
+
+  
+}*/
+/* this is the risk bottom menu hover underline for add*/
+table tr td#add :hover{
+   text-decoration: none;
+   color:#f21c00;
+  
+}
+/* this is the risk bottom menu hover underline for history*/
+table tr td#history :hover{
+   text-decoration: none;
+   color:#f21c00;
+  
+}
+/* this is the risk bottom menu hover underline for viewlast risk*/
+table tr td#view :hover{
+   text-decoration: none;
+   color:#f21c00; 
+   
+}
+
 #bottom-menu ul{
     list-style-type:none;
     margin:0;
@@ -27,7 +68,7 @@
     #bottom-menu li{
     float:left;
     list-style-type:none;
-    background-color:#dddddd;
+    /*background-color:#dddddd;*/
 }
   #bottom-menu a{
     display:block;
@@ -35,7 +76,9 @@
     
     color:#999;
 }
+
 form {
+    
 	vertical-align: top;
 	margin: 0;
 }
@@ -56,13 +99,14 @@ form {
 	border-bottom-style: inset;
 	border-bottom-color: #666;
 	border-right-color: #666;
+        
 }
 .form_dropdown {
 	font-family: Arial, Geneva, Helvetica;
 	font-size:1em;
 	color: #3A3939;
 	border: 1px solid #666;
-	width: 195px;
+	width: 210px;
 }
 .form_textfield {
 	font-family: Arial, Geneva, Helvetica;
@@ -85,8 +129,37 @@ form {
 	font-size:1em;
 	color: #3A3939;
 	border: 1px solid #666;
+        overflow: auto; /*adds the scroll  Robyn Ius*/
+        resize:none; /* This removes the resize in textarea crn -edited by Stephen Blatancic 28 Nov*/
+        margin-bottom: 12px;
 }
 
+#statusEditForm{
+	padding:2px;
+    margin:2px;
+    width:97%;
+	}
+
+.statusgrp{
+	width:100%;
+    float:left;
+	}
+	
+.statuslabel{
+	float: left;
+    padding:2px;
+    margin:2px;
+    font-weight: bold;
+    width:200px; 
+	}
+
+.stEditfield{
+	float: left;
+    padding:2px;
+    margin:2px;
+    width:350px;
+	}
+		
 img { border: none; }
 
 /* Lists */
@@ -192,6 +265,8 @@ img { border: none; }
 	background: url(../images/main_div_gray_bg.gif) repeat-x bottom;
 	height:13px;
 }
+
+/*OPA using this for validation messages*/
 .msg {
 	background: #F9F9F9;
 	border: 1px solid #DDD;
