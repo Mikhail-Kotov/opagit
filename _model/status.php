@@ -27,22 +27,6 @@ class Status extends IRS {
 
     }
 
-    function addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusVariation, 
-            $strStatusNotes, $strAttachmentLinkArr, $strAttachmentCommentArr) {
-
-        $this->IRSArr['intStatusID'] = $this->getGlobalLastID() + 1;
-        $this->IRSArr['intProjectID'] = $this->projectArr['intProjectID'];
-        $this->IRSArr['intProjectMemberID'] = $this->intProjectMemberID;
-        $this->IRSArr['dmtStatusCurrentDate'] = $dmtStatusCurrentDate;
-        $this->IRSArr['strActualBaseline'] = $strActualBaseline;
-        $this->IRSArr['strPlanBaseline'] = $strPlanBaseline;
-        $this->IRSArr['strStatusVariation'] = $strStatusVariation;
-        $this->IRSArr['strStatusNotes'] = $strStatusNotes;
-
-        parent::addDetails($strAttachmentLinkArr, $strAttachmentCommentArr);
-    }
-
-
     public function viewStatus() {
         
         // DRAFT (RAW CODE)

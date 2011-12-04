@@ -66,7 +66,11 @@ class IRSDA {
         $query = "UPDATE tbl" . $this->ucTypeOfID . " SET ";
         
         foreach($IRSArr as $id => $value) {
-            $query .= $id . "='" . $value . "',";
+            if(!empty($value)) {
+                $query .= $id . "='" . $value . "',";
+            } else {
+                $query .= $id . "=NULL,";
+            }
         }
         // remove last comma
         $query = substr($query, 0, strlen($query) - 1);
@@ -88,7 +92,11 @@ class IRSDA {
         }                
         $query = substr($query, 0, strlen($query) - 1) . ") values (";
         foreach($IRSArr as $id => $value) {
-            $query .= "'" . $value . "',";
+            if(!empty($value)) {
+                $query .= "'" . $value . "',";
+            } else {
+                $query .= 'NULL,';
+            }
         }                
         $query = substr($query, 0, strlen($query) - 1) . ");";                
 
@@ -109,6 +117,20 @@ class IRSDA {
     // get all risk types for Add Risk Dropdown
     public function getAllRiskTypes() {
         $query = "SELECT strRiskTypeID FROM tblRiskType";
+        $sqlArr = $_ENV['db']->query($query);
+
+        if (isset($sqlArr[0])) {
+            $returnValue = $sqlArr;
+        } else {
+            $returnValue = null;
+        }
+
+        return $returnValue;
+    }
+    
+    // get all issue types for Add Issue Dropdown
+    public function getAllIssueTypes() {
+        $query = "SELECT strIssueTypeID FROM tblIssueType";
         $sqlArr = $_ENV['db']->query($query);
 
         if (isset($sqlArr[0])) {

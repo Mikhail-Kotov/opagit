@@ -37,21 +37,21 @@ class IRS {
 
     public function getID() {
         $intID = null;
-        if (!empty($this->IRSArr['int' . $this->ucTypeOfID . 'ID'])) {
-            $intID = $this->IRSArr['int' . $this->ucTypeOfID . 'ID'];
+        if (!empty($this->IRSArr[$this->intTypeOfID])) {
+            $intID = $this->IRSArr[$this->intTypeOfID];
         }
 
         return $intID;
     }
 
     function setID($intID) {
-        $this->IRSArr['int' . $this->ucTypeOfID . 'ID'] = $intID;
+        $this->IRSArr[$this->intTypeOfID] = $intID;
     }
 
     function getDetails() {
-        $this->IRSArr = $this->IRSDAObj->getDetails($this->IRSArr['int' . $this->ucTypeOfID . 'ID']);
+        $this->IRSArr = $this->IRSDAObj->getDetails($this->IRSArr[$this->intTypeOfID]);
 
-        $this->attachmentObj->setID($this->IRSArr['int' . $this->ucTypeOfID . 'ID'], $this->typeOfID);
+        $this->attachmentObj->setID($this->IRSArr[$this->intTypeOfID], $this->typeOfID);
         $this->attachmentObj->getDetailsFromDB();
 
         return $this->IRSArr;
@@ -61,9 +61,9 @@ class IRS {
         $intID = $this->IRSDAObj->getLastID($this->projectArr['intProjectID']);
 
         if (!empty($intID)) {
-            $this->IRSArr['int' . $this->ucTypeOfID . 'ID'] = $intID;
+            $this->IRSArr[$this->intTypeOfID] = $intID;
         } else {
-            unset($this->IRSArr['int' . $this->ucTypeOfID . 'ID']);
+            unset($this->IRSArr[$this->intTypeOfID]);
         }
 
         return $intID;
@@ -72,13 +72,13 @@ class IRS {
     function getGlobalLastID() {
         $globalLastIRSID = 0;
 
-        $query = "SELECT intStatusID FROM tblStatus" .
-                " ORDER BY intStatusID DESC LIMIT 1;";
+        $query = "SELECT " . $this->intTypeOfID . " FROM tbl" . $this->ucTypeOfID .
+                " ORDER BY " . $this->intTypeOfID . " DESC LIMIT 1;";
 
         $sqlArr = $_ENV['db']->query($query);
 
         if (isset($sqlArr[0])) {
-            $globalLastIRSID = $sqlArr[0]['intStatusID'];
+            $globalLastIRSID = $sqlArr[0][$this->intTypeOfID];
         }
 
         return $globalLastIRSID;
@@ -87,23 +87,31 @@ class IRS {
     protected function setDetails($intAttachmentIDArr, $deleteAttachmentArr) {
         $this->IRSDAObj->setDetails($this->IRSArr);
 
-        $this->attachmentObj->setID($this->IRSArr['int' . $this->ucTypeOfID . 'ID'], $this->typeOfID);
+        $this->attachmentObj->setID($this->IRSArr[$this->intTypeOfID], $this->typeOfID);
         $this->attachmentObj->delIndividualDetails($deleteAttachmentArr);
     }
 
-    protected function addDetails($strAttachmentLinkArr, $strAttachmentCommentArr) {
+    public function addDetails($IRSArr, $strAttachmentLinkArr, $strAttachmentCommentArr) {
+        $this->IRSArr[$this->intTypeOfID] = $this->getGlobalLastID() + 1;
+        $this->IRSArr['intProjectID'] = $this->projectArr['intProjectID'];
+        $this->IRSArr['intProjectMemberID'] = $this->intProjectMemberID;
+        
+        foreach($IRSArr as $id => $value) {
+            $this->IRSArr[$id] = $IRSArr[$id];
+        }
+        
         $this->IRSDAObj->addDetails($this->IRSArr);
 
-        $this->attachmentObj->setID($this->IRSArr['int' . $this->ucTypeOfID . 'ID'], $this->typeOfID);
+        $this->attachmentObj->setID($this->IRSArr[$this->intTypeOfID], $this->typeOfID);
         $this->attachmentObj->addDetails($strAttachmentLinkArr, $strAttachmentCommentArr);
     }
 
     function delDetails() {
-        $this->IRSDAObj->delDetails($this->IRSArr['int' . $this->ucTypeOfID . 'ID']);
+        $this->IRSDAObj->delDetails($this->IRSArr[$this->intTypeOfID]);
 
-        $this->attachmentObj->setID($this->IRSArr['int' . $this->ucTypeOfID . 'ID'], $this->typeOfID);
+        $this->attachmentObj->setID($this->IRSArr[$this->intTypeOfID], $this->typeOfID);
         $this->attachmentObj->delDetails();
-        unset($this->IRSArr['int' . $this->ucTypeOfID . 'ID']);
+        unset($this->IRSArr[$this->intTypeOfID]);
     }
 
     public function history() {
@@ -128,6 +136,7 @@ class IRS {
                             break;
                         case "dmtStatusCurrentDate":
                             $tableArr[$intID][$columnName] = date("jS F Y", strtotime($value));
+                            $uploadDate = $tableArr[$intID][$columnName];
                             break;
                         default:
                             $tableArr[$intID][$columnName] = $value;
@@ -150,6 +159,7 @@ class IRS {
                             break;
                         case "dmtRiskDateRaised":
                             $tableArr[$intID][$columnName] = date("jS F Y", strtotime($value));
+                            $uploadDate = $tableArr[$intID][$columnName];
                             break;
                         case "intProjectMemberAssignedID":
                             $intMemberID = $memberObj->getMemberID($value);
@@ -179,6 +189,7 @@ class IRS {
                             break;
                         case "dmtIssueDateRaised ":
                             $tableArr[$intID][$columnName] = date("jS F Y", strtotime($value));
+                            $uploadDate = $tableArr[$intID][$columnName];
                             break;
                         case "intProjectMemberAssignedID":
                             $intMemberID = $memberObj->getMemberID($value);
@@ -193,7 +204,7 @@ class IRS {
                 }
             }
 
-            $this->attachmentObj->setID($tableArr[$intID]['int' . $this->ucTypeOfID . 'ID'], $this->typeOfID);
+            $this->attachmentObj->setID($tableArr[$intID][$this->intTypeOfID], $this->typeOfID);
             $this->attachmentObj->getDetailsFromDB();
 
             $tableArr[$intID]["strAttachmentLinkArr"] = "";
@@ -203,7 +214,7 @@ class IRS {
             if ($attachmentArr != null) {
                 foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) { // not using $value2 anywhere
                     $tableArr[$intID]["strAttachmentLinkArr"] .= '<a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] .
-                            $this->projectArr['strProjectName'] . '/' . $statusArr['dmtStatusCurrentDate'] . '/' .
+                            $this->projectArr['strProjectName'] . '/' . $uploadDate . '/' .
                             $attachmentArr['strAttachmentLinkArr'][$id] . '">' . $attachmentArr['strAttachmentLinkArr'][$id] . '</a><br />';
                     $tableArr[$intID]['strAttachmentCommentArr'] .= $attachmentArr['strAttachmentCommentArr'][$id] . "<br />";
                 }
@@ -238,12 +249,13 @@ class IRS {
                         $this->IRSArr['strStatusVariation'] . "<br /><br />" .
                         "<b>Notes/Reasons:</b><br />" .
                         $this->IRSArr['strStatusNotes'] . "<br /><br />";
+                $uploadDate = $this->IRSArr['dmtStatusCurrentDate'];
                 break;
             case 'risk':
                 $memberAssignedArr = $this->getMemberAssignedArr(($this->IRSArr['intProjectMemberAssignedID']));
 
                 $currentMessage = '<div class="viewgroup"><div class="labelView"><b>ID: </b></div><div class="fieldstatus"> ' .
-                        $this->IRSArr['int' . $this->ucTypeOfID . 'ID'] . "</div></div>\n" .
+                        $this->IRSArr[$this->intTypeOfID] . "</div></div>\n" .
                         '<div class="viewgroup"><div class="labelView"><b>Project: </b></div><div class="fieldstatus"> ' .
                         $this->projectArr['strProjectName'] . "</div></div>\n" .
                         '<div class="viewgroup"><div class="labelView"><b>Risk Raised By: </b></div>' . "\n" .
@@ -272,12 +284,12 @@ class IRS {
                         '<div class="viewgroup"><div class="labelView"><b>Assigned To: </b></div>' . "\n" .
                         '<div class="fieldstatus">' . $memberAssignedArr['strMemberFirstName'] . " " .
                         $memberAssignedArr['strMemberLastName'] . '</div></div>' . "\n";
-
+                $uploadDate = $this->IRSArr['dmtRiskDateRaised'];
                 break;
             case 'issue':
                 $memberAssignedArr = $this->getMemberAssignedArr(($this->IRSArr['intProjectMemberAssignedID']));
 
-                $currentMessage = '<div class="labelView">ID:</div><div class="fieldstatus"> ' . $this->IRSArr['int' . $this->ucTypeOfID . 'ID'] . "</div><br />\n" .
+                $currentMessage = '<div class="labelView">ID:</div><div class="fieldstatus"> ' . $this->IRSArr[$this->intTypeOfID] . "</div><br />\n" .
                         '<div class="labelView">Project:</div><div class="fieldstatus"> ' . $this->IRSArr['intProjectID'] . "</div><br />\n" .
                         '<div class="labelView">Issue Raised By:</div>' .
                         '<div class="fieldstatus">' . $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'] .
@@ -297,6 +309,7 @@ class IRS {
                         '<div class="labelView">Date Closed:</div>' . "\n" . '<div class="fieldstatus"> ' .
                         date("jS F Y", strtotime($this->IRSArr['dmtIssueDateClosed'])) . '</div>' . "\n" .
                         '<div class="labelView">Issue Outcome:</div>' . "\n";
+                $uploadDate = $this->IRSArr['dmtIssueDateRaised'];
                 break;
         }
 
@@ -309,7 +322,7 @@ class IRS {
                 // so to change 'foreach' to something else???
                 // don't know better php construction (Mikhail)
                 $currentMessage .= '<b>Attachment:</b><br /><a href="' . $_ENV['http_dir'] . $_ENV['uploads_dir'] .
-                        $this->projectArr['strProjectName'] . '/' . $this->IRSArr['dmt' . $this->ucTypeOfID . 'CurrentDate'] . '/'
+                        $this->projectArr['strProjectName'] . '/' . $uploadDate . '/'
                         . $attachmentArr['strAttachmentLinkArr'][$id] . '">' .
                         $attachmentArr['strAttachmentLinkArr'][$id] . "</a><br /><br />" .
                         "<b>Attachment Comment:</b><br />" . $attachmentArr['strAttachmentCommentArr'][$id] . "<br /><br />";

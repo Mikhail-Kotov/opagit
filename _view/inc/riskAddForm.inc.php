@@ -1,12 +1,13 @@
 <h1>Add Risk</h1>
 <div id="viewthestatus">
-    <form name="riskadd" method="post" action="" id="event-submission">
+    <form name="riskadd" method="post" action="" enctype="multipart/form-data" id="event-submission">
 
         <!--<fieldset class="event-submission">-->
 
         <div class="field">
-            <input type="hidden" class="input-text" id="page" value="risk" />
-            <input type="hidden"  class="input-text" id="todo" value="add" />
+            <input type="hidden" name="page" value="risk" />
+            <input type="hidden" name="todo" value="add" />
+            <input type="hidden" name="intSessionID" value="<?php echo $this->sessionArr['intSessionID']; ?>" />
         </div>
 
         <div style="font-weight:normal;color:#E81C17">* All fields are required except the attachment and comment.</div><br />
@@ -73,14 +74,14 @@
                 <label for="dmtRiskDateRaised" title="The day the risk was raised.">Date Created:</label>
             </div>
             <div class="fieldopadate">
-                <input type="text" class="inputDate" title="The day the risk was raised." id="inputDate" id="dmtRiskDateRaised" class="input-text" size="28" maxlength="10" value="<?php echo $_ENV['currentDate']; ?>" />
+                <input type="text" class="inputDate" title="The day the risk was raised." id="inputDate" name="dmtRiskDateRaised" class="input-text" size="28" maxlength="10" value="<?php echo $_ENV['currentDate']; ?>" />
             </div>
 
             <div class="labelopadate">
-                <label for="dmtRiskDateClosed "   title="The day the risk was closed. This is only available when a risk status is closed">Date Closed:</label>
+                <label for="dmtRiskDateClosed"   title="The day the risk was closed. This is only available when a risk status is closed">Date Closed:</label>
             </div>
             <div class="fieldopadate">
-                <input type="text" id="dmtRiskDateClosed" title="The day the risk was closed. This is only available when a risk status is closed" disabled="disabled" class="inputDate2" id="inputDate" class="input-text" size="28" maxlength="10" value="<?php echo $_ENV['currentDate']; ?>" />
+                <input type="text" id="dmtRiskDateClosed" name="dmtRiskDateClosed" title="The day the risk was closed. This is only available when a risk status is closed" disabled="disabled" class="input-date" size="28" maxlength="10" value="<?php echo $_ENV['currentDate']; ?>" />
             </div>
         </div><!--end of group-->
         <div class="groupopa">
@@ -170,30 +171,9 @@
                 </select>
             </div>
         </div><!--end of group-->
-
-        <div class="groupopa"> 
-            <div class="labelopa">
-                <label for="strAttachmentLink0" title="Browse for a file to substantiate your risk e.g.Gantt image. You can upload the following file types: PDF, jpg, tiff, png, docx, xls.">Attachment 1:</label>
-            </div>
-            <div class="fieldopa">
-                <input type="text" class="input-text" title="Browse for a file to substantiate your risk e.g.Gantt image. You can upload the following file types: PDF, jpg, tiff, png, docx, xls." size="28" id="strAttachmentLink0" value="http://" />
-            </div>
-        </div><!--end of group-->
-        <div class="groupopa"> 
-            <div class="labelopa">
-                <label for="strAttachmentComment0" title="Describe your attachment or add a comment.">Attachment Comment:</label>
-            </div>
-            <div class="fieldopa">
-                <input type="text" class="input-text" title="Describe your attachment or add a comment." size="28" id="strAttachmentComment0" />
-            </div>
-        </div><!--end of group-->
-
-        <div class="statusgrp">
-            <div>&nbsp;</div> 
-
-            <input type="image"  onclick="addAttachmentLink()" id="add-more-attachments" src="images/add-more-attachments.gif" title="Add more attachments button will enable 3 more attachments to be attached."  alt="add attachments button" name="add" value="Add more attachments" />
-
-        </div>
+        <?php
+        include_once("attachmentAddForm.inc.php");
+        ?>
         <div>&nbsp;</div>
         <input type="image" src="images/submit.gif" alt="submit button"    value="Submit" class="submit" />
 

@@ -73,102 +73,102 @@ class statusController extends IRSController {
 //        
 //    }
 
-    private function todoAddStatus() {
-        $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
-        $strActualBaseline = $_POST["strActualBaseline"];
-        $strPlanBaseline = $_POST["strPlanBaseline"];
-        $strStatusVariation = $_POST["strStatusVariation"];
-        $strStatusNotes = $_POST["strStatusNotes"];
-        
-        $strAttachmentLinkArr = array();
-        $strAttachmentCommentArr = array();
-        
-        if(!is_dir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'])) {
-            mkdir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'], 0777);
-        }
-        
-        if(!is_dir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'] . '/' . $dmtStatusCurrentDate)) {
-            mkdir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'] . '/' . $dmtStatusCurrentDate, 0777);
-        }
-        
-        
-        $i = 0;
-        while (isset($_FILES['strAttachmentLink' . ($i)])) {
-            $target = $_ENV['uploads_dir'] . $this->projectArr['strProjectName'] .
-                    '/' . $dmtStatusCurrentDate . '/' . basename($_FILES['strAttachmentLink' . $i]['name']);
-            if (!move_uploaded_file($_FILES['strAttachmentLink' . $i]['tmp_name'], $target)) {
-                echo "Sorry, there was a problem uploading your file."; // <--/this is Alert/
-            } else {
-                $strAttachmentLinkArr[$i] = basename($_FILES['strAttachmentLink' . $i]['name']);
-                $strAttachmentCommentArr[$i] = $_POST["strAttachmentComment" . $i];
-            }
-            $i++;
-        }
-        
-        $this->statusObj->addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusVariation, 
-                $strStatusNotes, $strAttachmentLinkArr, $strAttachmentCommentArr);
-    }
+//    private function todoAddStatus_old() {
+//        $dmtStatusCurrentDate = $_POST["dmtStatusCurrentDate"];
+//        $strActualBaseline = $_POST["strActualBaseline"];
+//        $strPlanBaseline = $_POST["strPlanBaseline"];
+//        $strStatusVariation = $_POST["strStatusVariation"];
+//        $strStatusNotes = $_POST["strStatusNotes"];
+//        
+//        $strAttachmentLinkArr = array();
+//        $strAttachmentCommentArr = array();
+//        
+//        if(!is_dir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'])) {
+//            mkdir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'], 0777);
+//        }
+//        
+//        if(!is_dir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'] . '/' . $dmtStatusCurrentDate)) {
+//            mkdir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'] . '/' . $dmtStatusCurrentDate, 0777);
+//        }
+//        
+//        
+//        $i = 0;
+//        while (isset($_FILES['strAttachmentLink' . ($i)])) {
+//            $target = $_ENV['uploads_dir'] . $this->projectArr['strProjectName'] .
+//                    '/' . $dmtStatusCurrentDate . '/' . basename($_FILES['strAttachmentLink' . $i]['name']);
+//            if (!move_uploaded_file($_FILES['strAttachmentLink' . $i]['tmp_name'], $target)) {
+//                echo "Sorry, there was a problem uploading your file."; // <--/this is Alert/
+//            } else {
+//                $strAttachmentLinkArr[$i] = basename($_FILES['strAttachmentLink' . $i]['name']);
+//                $strAttachmentCommentArr[$i] = $_POST["strAttachmentComment" . $i];
+//            }
+//            $i++;
+//        }
+//        
+//        $this->statusObj->addDetails($dmtStatusCurrentDate, $strActualBaseline, $strPlanBaseline, $strStatusVariation, 
+//                $strStatusNotes, $strAttachmentLinkArr, $strAttachmentCommentArr);
+//    }
+//
+//    private function todoDeleteStatus() {
+//        $this->statusObj->setID($this->sessionArr['intStatusID']);
+//        $this->statusObj->delDetails();
+//
+//        $this->sessionArr['intStatusID'] = null;
+//        $this->sessionObj->setDetails($this->sessionArr);
+//    }
 
-    private function todoDeleteStatus() {
-        $this->statusObj->setID($this->sessionArr['intStatusID']);
-        $this->statusObj->delDetails();
-
-        $this->sessionArr['intStatusID'] = null;
-        $this->sessionObj->setDetails($this->sessionArr);
-    }
-
-    private function todoEditStatus() {
-        $intAttachmentIDArr = array();
-        $deleteAttachmentArr = array();
-        
-        $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
-        $strActualBaseline = $_POST['strActualBaseline'];
-        $strPlanBaseline = $_POST['strPlanBaseline'];
-        $strStatusVariation = $_POST['strStatusVariation'];
-        $strStatusNotes = $_POST['strStatusNotes'];
-
-        $isNextAttachment = true;
-        $i = 0;
-        do {
-            $intAttachmentIDArr[$i] = null;
-            if(isset($_POST['intAttachmentID' . $i])) {
-                $intAttachmentIDArr[$i] = $_POST['intAttachmentID' . $i];
-            }
-            
-            $deleteAttachmentArr[$i] = null;
-            if(isset($_POST['deleteattachment' . $i])) {
-                $deleteAttachmentArr[$i] = $_POST['deleteattachment' . $i];
-            }
-            if (isset($_POST["intAttachmentID" . ($i + 1)])) {
-                $i++;
-            } else {
-                $isNextAttachment = false;
-            }
-        } while ($isNextAttachment == true);
-
-        //print_r($deleteAttachmentArr);
-        $this->statusObj->setDetails($this->sessionArr['intStatusID'], $dmtStatusCurrentDate, $strActualBaseline, 
-                $strPlanBaseline, $strStatusVariation, $strStatusNotes, $intAttachmentIDArr, $deleteAttachmentArr);
-    }
-    
-    private function todoEMailStatus() {
-        $this->statusObj->setID($this->sessionArr['intStatusID']);
-        $this->statusObj->getDetails();
-        $currentStatusMessage = $this->statusObj->viewStatus();
-        
-        
-        $statusGUIObj = new StatusGUI();
-        $statusGUIObj->setSession($this->sessionArr);
-        
-        
-        $filename = 'status.pdf';
-        if(is_file($_ENV['temp_dir'] . $filename) == TRUE) {
-            unlink($_ENV['temp_dir'] . $filename);
-        }
-        $statusGUIObj->displayPDFStatus($currentStatusMessage, $filename);
-        //$this->statusObj->emailStatus($currentStatusMessage);
-        $this->statusObj->emailStatus();
-    }
+//    private function todoEditStatus() {
+//        $intAttachmentIDArr = array();
+//        $deleteAttachmentArr = array();
+//        
+//        $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
+//        $strActualBaseline = $_POST['strActualBaseline'];
+//        $strPlanBaseline = $_POST['strPlanBaseline'];
+//        $strStatusVariation = $_POST['strStatusVariation'];
+//        $strStatusNotes = $_POST['strStatusNotes'];
+//
+//        $isNextAttachment = true;
+//        $i = 0;
+//        do {
+//            $intAttachmentIDArr[$i] = null;
+//            if(isset($_POST['intAttachmentID' . $i])) {
+//                $intAttachmentIDArr[$i] = $_POST['intAttachmentID' . $i];
+//            }
+//            
+//            $deleteAttachmentArr[$i] = null;
+//            if(isset($_POST['deleteattachment' . $i])) {
+//                $deleteAttachmentArr[$i] = $_POST['deleteattachment' . $i];
+//            }
+//            if (isset($_POST["intAttachmentID" . ($i + 1)])) {
+//                $i++;
+//            } else {
+//                $isNextAttachment = false;
+//            }
+//        } while ($isNextAttachment == true);
+//
+//        //print_r($deleteAttachmentArr);
+//        $this->statusObj->setDetails($this->sessionArr['intStatusID'], $dmtStatusCurrentDate, $strActualBaseline, 
+//                $strPlanBaseline, $strStatusVariation, $strStatusNotes, $intAttachmentIDArr, $deleteAttachmentArr);
+//    }
+//    
+//    private function todoEMailStatus() {
+//        $this->statusObj->setID($this->sessionArr['intStatusID']);
+//        $this->statusObj->getDetails();
+//        $currentStatusMessage = $this->statusObj->viewStatus();
+//        
+//        
+//        $statusGUIObj = new StatusGUI();
+//        $statusGUIObj->setSession($this->sessionArr);
+//        
+//        
+//        $filename = 'status.pdf';
+//        if(is_file($_ENV['temp_dir'] . $filename) == TRUE) {
+//            unlink($_ENV['temp_dir'] . $filename);
+//        }
+//        $statusGUIObj->displayPDFStatus($currentStatusMessage, $filename);
+//        //$this->statusObj->emailStatus($currentStatusMessage);
+//        $this->statusObj->emailStatus();
+//    }
     
 //    private function displayHistoryStatus() {
 //        $this->statusObj->getLastID();
@@ -210,44 +210,44 @@ class statusController extends IRSController {
 //        $statusGUIObj->display($currentStatusMessage);
 //    }
     
-    private function displayPDFStatus() {
-        $this->statusObj->setID($this->sessionArr['intStatusID']);
-        $this->statusObj->getDetails();
-        $currentStatusMessage = $this->statusObj->viewStatus();
-        
-        $statusGUIObj = new StatusGUI();
-        $statusGUIObj->setSession($this->sessionArr);
-        $statusGUIObj->displayPDFStatus($currentStatusMessage);
-    }
-    
-    private function displayAddStatusForm() {
-        $this->sessionArr['intStatusID'] = null;
-        $this->sessionObj->setDetails($this->sessionArr);
-        
-        $statusGUIObj = new StatusGUI();
-        $statusGUIObj->setSession($this->sessionArr);
-        $statusGUIObj->displayAddForm();
-    }
-    
-    private function displayEditStatusForm() {
-        if ($this->sessionArr['intStatusID'] != "") {
-            $this->statusObj->setID($this->sessionArr['intStatusID']);
-            $statusArr = $this->statusObj->getDetails();
-            $this->attachmentObj->setID($this->sessionArr['intStatusID'], "status");
-            $this->attachmentObj->getDetailsFromDB("status");
-            $attachmentArr = $this->attachmentObj->getDetails();
-            
-            $statusGUIObj = new StatusGUI();
-            $statusGUIObj->setSession($this->sessionArr);
-            $statusGUIObj->displayEditForm($statusArr, $attachmentArr);
-        } else {
-            die("wrong data in edit form");
-        }
-    }
-    
-    private function displayEmailStatusForm() {
-        
-    }
+//    private function displayPDFStatus() {
+//        $this->statusObj->setID($this->sessionArr['intStatusID']);
+//        $this->statusObj->getDetails();
+//        $currentStatusMessage = $this->statusObj->viewStatus();
+//        
+//        $statusGUIObj = new StatusGUI();
+//        $statusGUIObj->setSession($this->sessionArr);
+//        $statusGUIObj->displayPDFStatus($currentStatusMessage);
+//    }
+//    
+//    private function displayAddStatusForm() {
+//        $this->sessionArr['intStatusID'] = null;
+//        $this->sessionObj->setDetails($this->sessionArr);
+//        
+//        $statusGUIObj = new StatusGUI();
+//        $statusGUIObj->setSession($this->sessionArr);
+//        $statusGUIObj->displayAddForm();
+//    }
+//    
+//    private function displayEditStatusForm() {
+//        if ($this->sessionArr['intStatusID'] != "") {
+//            $this->statusObj->setID($this->sessionArr['intStatusID']);
+//            $statusArr = $this->statusObj->getDetails();
+//            $this->attachmentObj->setID($this->sessionArr['intStatusID'], "status");
+//            $this->attachmentObj->getDetailsFromDB("status");
+//            $attachmentArr = $this->attachmentObj->getDetails();
+//            
+//            $statusGUIObj = new StatusGUI();
+//            $statusGUIObj->setSession($this->sessionArr);
+//            $statusGUIObj->displayEditForm($statusArr, $attachmentArr);
+//        } else {
+//            die("wrong data in edit form");
+//        }
+//    }
+//    
+//    private function displayEmailStatusForm() {
+//        
+//    }
 
 }
 

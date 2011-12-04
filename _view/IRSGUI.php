@@ -86,6 +86,10 @@ class IRSGUI {
                 include_once("inc/riskAddForm.inc.php");
                 break;
             case 'issue':
+                $allIssueTypeArr = $this->IRSDAObj->getAllIssueTypes();
+                $allIssueStatusArr = $_ENV['db']->enumSelect('tblIssue', 'enmIssueStatus');
+                $allIssuePriorityArr = $_ENV['db']->enumSelect('tblIssue', 'enmIssuePriority');
+
                 include_once("inc/issueAddForm.inc.php");
                 break;
         }
