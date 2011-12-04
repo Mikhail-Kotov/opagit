@@ -1,18 +1,18 @@
 <?php
 
 class IRSDA {
-    private $typeOfID, $ucTypeOfID;
+    private $typeOfID, $ucTypeOfID, $shortTypeOfID, $intTypeOfID;
             
     public function __construct($typeOfID) {
         $this->typeOfID = $typeOfID;
-        
-        // upper case type of ID like Status, Risk or Issue
         $this->ucTypeOfID = ucfirst($this->typeOfID);
+        $this->shortTypeOfID = substr($this->typeOfID, 0, 1);
+        $this->intTypeOfID = 'int' . $this->ucTypeOfID . 'ID';
     }
     
     public function getDetails($intID) {
         $sqlArr = array();
-        $query = "SELECT * FROM tbl" . $this->ucTypeOfID . " WHERE int" . $this->ucTypeOfID . "ID=" . $intID;
+        $query = "SELECT * FROM tbl" . $this->ucTypeOfID . " WHERE " . $this->intTypeOfID . "=" . $intID;
         $sqlArr = $_ENV['db']->query($query);
 
         if(isset($sqlArr[0])) {
@@ -25,9 +25,9 @@ class IRSDA {
     public function getLastID($intProjectID) {
         $intID = null;
         
-        $query = "SELECT int" . $this->ucTypeOfID . "ID FROM tbl" . $this->ucTypeOfID .
+        $query = "SELECT " . $this->intTypeOfID . " FROM tbl" . $this->ucTypeOfID .
                 " WHERE intProjectID = " . $intProjectID .
-                " ORDER BY int" . $this->ucTypeOfID . "ID DESC LIMIT 1;";
+                " ORDER BY " . $this->intTypeOfID . " DESC LIMIT 1;";
 
         $sqlArr = $_ENV['db']->query($query);
         
@@ -40,7 +40,7 @@ class IRSDA {
     
     public function delDetails($intID) {
         
-        $query = "DELETE FROM tbl" . $this->ucTypeOfID . " WHERE int" . $this->ucTypeOfID . "ID='" . $intID . "';";
+        $query = "DELETE FROM tbl" . $this->ucTypeOfID . " WHERE " . $this->intTypeOfID . "='" . $intID . "';";
         $sql = mysql_query($query);
         if (!$sql)
             die('Invalid query: ' . mysql_error());
@@ -71,7 +71,7 @@ class IRSDA {
         // remove last comma
         $query = substr($query, 0, strlen($query) - 1);
         
-        $query .= "WHERE int" . $this->ucTypeOfID . "ID = '" . $IRSArr['int' . $this->ucTypeOfID . 'ID'] . "';";
+        $query .= "WHERE " . $this->intTypeOfID . " = '" . $IRSArr[$this->intTypeOfID] . "';";
         
         $sql = mysql_query($query);
 
@@ -104,6 +104,20 @@ class IRSDA {
         }
         
         return $IRSArr;
+    }
+    
+    // get all risk types for Add Risk Dropdown
+    public function getAllRiskTypes() {
+        $query = "SELECT strRiskTypeID FROM tblRiskType";
+        $sqlArr = $_ENV['db']->query($query);
+
+        if (isset($sqlArr[0])) {
+            $returnValue = $sqlArr;
+        } else {
+            $returnValue = null;
+        }
+
+        return $returnValue;
     }
 }
 

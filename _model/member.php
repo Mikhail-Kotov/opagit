@@ -1,4 +1,15 @@
 <?php
+ /****************************************************************************************
+ * Team Name: OPA                                                                        *
+ * Date: 18 Nov 2011                                                                     *
+ * Version No: 3                                                                         *
+ *                                                                                       *
+ * File Name: member.php                                                                 *
+ * Desc:This file gets and sets the member ID, gets a member details and gets all members* 
+ * details.                                                                              * 
+ ****************************************************************************************/
+?>
+<?php
 
 class Member {
 
@@ -23,7 +34,7 @@ class Member {
             $this->setID($this->sessionArr['intMemberID']);
         }
     }
-    
+    //get this member details
     public function getDetails() {
         $memberArr = $this->memberDAObj->getDetails($this->intMemberID);
         
@@ -33,13 +44,34 @@ class Member {
         
         return $memberArr;
     }
-    
+    //function get all member details
     public function getAll() {
         $allMembersArr = $this->memberDAObj->getAll();
         
         return $allMembersArr;
     }
     
+    public function getAllProjectMembers($intProjectID) {
+
+        if (!empty($intProjectID)) {
+            $query = "SELECT m.* from tblProjectMember AS pm, tblMember as m WHERE m.intMemberID = pm.intMemberID AND intProjectID =" . $intProjectID;
+
+            $sqlArr = $_ENV['db']->query($query);
+
+            if (isset($sqlArr[0])) {
+                $returnValue = $sqlArr;
+            } else {
+                $returnValue = null;
+            }
+        } else {
+            $returnValue = null;
+        }
+
+        $projectMembersArr = $returnValue;
+        return $projectMembersArr;
+    }
+    
+    //get memberID and return projectmemberID
     function getMemberID($intProjectMemberID) {
         if (isset($intProjectMemberID)) {
             if ($intProjectMemberID != "") {

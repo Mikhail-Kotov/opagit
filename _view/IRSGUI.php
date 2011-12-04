@@ -4,12 +4,15 @@ class IRSGUI {
 
     private $sessionArr, $memberArr, $projectArr;
     private $typeOfID, $ucTypeOfID, $shortTypeOfID, $intTypeOfID;
-
+    private $IRSDAObj;
+    
     public function __construct($typeOfID) {
         $this->typeOfID = $typeOfID;
         $this->ucTypeOfID = ucfirst($this->typeOfID);
         $this->shortTypeOfID = substr($this->typeOfID, 0, 1);
         $this->intTypeOfID = 'int' . $this->ucTypeOfID . 'ID';
+        
+        $this->IRSDAObj = new IRSDA($this->typeOfID);
     }
 
     public function setSession($sessionArr) {
@@ -76,6 +79,10 @@ class IRSGUI {
                 include_once("inc/statusAddForm.inc.php");
                 break;
             case 'risk':
+                $allRiskTypeArr = $this->IRSDAObj->getAllRiskTypes();
+                $allRiskStatusArr = $_ENV['db']->enumSelect('tblRisk', 'enmRiskStatus');
+                $allRiskLikelihoodArr = $_ENV['db']->enumSelect('tblRisk', 'enmRiskLikelihoodOfImpact');
+                $allRiskImpactRatingArr = $_ENV['db']->enumSelect('tblRisk', 'enmRiskProjectImpactRating');
                 include_once("inc/riskAddForm.inc.php");
                 break;
             case 'issue':

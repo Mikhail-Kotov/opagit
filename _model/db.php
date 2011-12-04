@@ -47,6 +47,17 @@ class DB {
         return $arr;
     }
 
+    // allows enum to be used in all arrays (add form)
+    function enumSelect($table, $field) {
+        $result = mysql_query("SHOW COLUMNS FROM `$table` LIKE '$field'");
+        if (mysql_num_rows($result) > 0) {
+            $row = mysql_fetch_row($result);
+            $enumArr = explode("','", preg_replace("/(enum|set)\('(.+?)'\)/", "\\2", $row[1]));
+        }
+
+        return $enumArr;
+    }
+    
     function restoreDB() {
         $sql = explode(";", file_get_contents('sql/sql.sql')); // 
         for ($i = 0; $i < count($sql) - 1; $i++) {
