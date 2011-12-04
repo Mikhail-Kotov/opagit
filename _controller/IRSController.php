@@ -189,9 +189,9 @@ class IRSController {
     }
  
 
-    private function displayView() {
+    protected function displayView() {
         if (!empty($this->sessionArr['int' . $this->ucTypeOfID . 'ID'])) {
-            $this->displayViewStatusPart();
+            $this->displayViewPart();
         } else {
             $this->sessionArr['int' . $this->ucTypeOfID . 'ID'] = $this->IRSObj->getLastID();
             $this->sessionObj->setDetails($this->sessionArr);
@@ -204,13 +204,13 @@ class IRSController {
     }
     
     private function displayViewPart() {
-        $this->IRSObj->setID($this->sessionArr['intStatusID']);
+        $this->IRSObj->setID($this->sessionArr['int' . $this->ucTypeOfID . 'ID']);
         $this->IRSObj->getDetails();
-        $currentMessage = $this->IRSObj->viewStatus();
+        $currentMessage = $this->IRSObj->view();
         
-        $statusGUIObj = new StatusGUI();
-        $statusGUIObj->setSession($this->sessionArr);
-        $statusGUIObj->display($currentMessage);
+        $GUIObj = new IRSGUI($this->typeOfID);
+        $GUIObj->setSession($this->sessionArr);
+        $GUIObj->display($currentMessage);
     }
     
     private function displayPDF() {

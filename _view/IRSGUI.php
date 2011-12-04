@@ -3,9 +3,12 @@
 class IRSGUI {
 
     private $sessionArr, $memberArr, $projectArr;
-
-    public function __construct() {
-        
+    private $typeOfID, $ucTypeOfID, $shortTypeOfID;
+    
+    public function __construct($typeOfID) {
+        $this->typeOfID = $typeOfID;
+        $this->ucTypeOfID = ucfirst($this->typeOfID);
+        $this->shortTypeOfID = substr($this->typeOfID, 0, 1);
     }
 
     public function setSession($sessionArr) {
@@ -19,47 +22,47 @@ class IRSGUI {
         $this->projectArr = $projectObj->getDetails();
     }
 
-    public function display($currentStatusMessage) {
-        echo $currentStatusMessage;
+    public function display($currentMessage) {
+        echo $currentMessage;
 
         echo '<table border="0">';
         echo '<tr><td><form method="post" action="">';
         echo "<div>\n";
-        echo '<input type="hidden" name="page" value="statusedit" />' . "\n";
+        echo '<input type="hidden" name="page" value="' . $this->typeOfID . 'edit" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
-        echo '<input type="hidden" name="s" value="' . $this->sessionArr['intStatusID'] . '" />' . "\n";
-        echo '<input type="submit" value="Edit Status" class="button" />' . "\n";
+        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
+        echo '<input type="submit" value="Edit ' . $this->ucTypeOfID . '" class="button" />' . "\n";
         echo "</div>\n";
         echo '</form></td>';
         echo '<td><form method="post" action="">';
         echo "<div>\n";
-        echo '<input type="hidden" name="page" value="statuspdf" />' . "\n";
+        echo '<input type="hidden" name="page" value="' . $this->typeOfID . 'pdf" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
-        echo '<input type="hidden" name="s" value="' . $this->sessionArr['intStatusID'] . '" />' . "\n";
+        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
         echo '<input type="submit" value="PDF" class="button" />' . "\n";
         echo "</div>\n";
         echo "</form></td><td>";
         echo '<form method="post" action="">';
         echo "<div>\n";
-        echo '<input type="hidden" name="page" value="status" />' . "\n";
+        echo '<input type="hidden" name="page" value="' . $this->typeOfID . '" />' . "\n";
         echo '<input type="hidden" name="todo" value="delete" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
-        echo '<input type="hidden" name="s" value="' . $this->sessionArr['intStatusID'] . '" />' . "\n";
+        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
         echo '<input type="submit" value="Delete" class="button" />' . "\n";
         echo "</div>\n";
         echo "</form></td><td>";
         echo '<form method="post" action="">';
         echo "<div>\n";
-        echo '<input type="hidden" name="page" value="status" />' . "\n";
+        echo '<input type="hidden" name="page" value="' . $this->typeOfID . '" />' . "\n";
         echo '<input type="hidden" name="todo" value="email" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
-        echo '<input type="hidden" name="s" value="' . $this->sessionArr['intStatusID'] . '" />' . "\n";
+        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
         echo '<input type="submit" value="E-Mail" class="button" />' . "\n";
         echo "</div>\n";
         echo "</form>\n";
         echo "</td></tr></table>";
 
-        $this->displayStatusBottomMenu();
+        $this->displayBottomMenu();
     }
     
     public function displayEmailForm() {
@@ -90,20 +93,20 @@ class IRSGUI {
     }
     
     public function displayAddForm() {
-        include_once("inc/statusAddForm.inc.php");
-        $this->displayStatusBottomMenu();
+        include_once("inc/addForm.inc.php");
+        $this->displayBottomMenu();
     }
     
-    public function displayEditForm($statusArr, $attachmentArr) {
-        include_once("inc/statusEditForm.inc.php");
+    public function displayEditForm($IRSArr, $attachmentArr) {
+        include_once("inc/editForm.inc.php");
     }
     
-    public function displayStatusBottomMenu() {
-        include_once("inc/statusBottomMenu.inc.php");
+    public function displayBottomMenu() {
+        include_once("inc/bottomMenu.inc.php");
     }
     
     private function displayButtons($name, $caption) {
-        include("inc/statusButtons.inc.php");
+        include("inc/buttons.inc.php");
     }
 }
 

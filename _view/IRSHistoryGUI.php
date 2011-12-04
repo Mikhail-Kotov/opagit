@@ -3,11 +3,12 @@
 class IRSHistoryGUI {
 
     private $sessionArr;
-    private $typeOfID, $ucTypeOfID;
+    private $typeOfID, $ucTypeOfID, $shortTypeOfID;
 
     public function __construct($typeOfID) {
         $this->typeOfID = $typeOfID;
         $this->ucTypeOfID = ucfirst($this->typeOfID);
+        $this->shortTypeOfID = substr($this->typeOfID, 0, 1);
     }
 
     public function setSession($sessionArr) {
@@ -79,21 +80,9 @@ class IRSHistoryGUI {
                 echo "<tr>\n";
                 echo '<td class="' . $oddOrEven . '">' . "\n";
                 echo '<form method="post" action="" id="event-submission">';
-                echo '<input type="hidden" name="page" value="' . $this->ucTypeOfID . 'view" />' . "\n";
+                echo '<input type="hidden" name="page" value="' . $this->typeOfID . 'view" />' . "\n";
                 echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
-                echo '<input type="hidden" name="';
-                switch ($this->typeOfID) {
-                    case 'status':
-                        echo 's';
-                        break;
-                    case 'risk':
-                        echo 'r';
-                        break;
-                    case 'issue':
-                        echo 'i';
-                        break;
-                }
-                echo '" value="' . $IRSArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
+                echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $IRSArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
                 echo '<input type="submit" value="View" title="View current ' . $this->ucTypeOfID . '" class="button" />' . "\n";
                 echo "</form>\n";
                 echo "</td>\n";
