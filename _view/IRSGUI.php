@@ -3,13 +3,13 @@
 class IRSGUI {
 
     private $sessionArr, $memberArr, $projectArr;
-    private $typeOfID, $ucTypeOfID, $shortTypeOfID, $intID;
+    private $typeOfID, $ucTypeOfID, $shortTypeOfID, $intTypeOfID;
 
     public function __construct($typeOfID) {
         $this->typeOfID = $typeOfID;
         $this->ucTypeOfID = ucfirst($this->typeOfID);
         $this->shortTypeOfID = substr($this->typeOfID, 0, 1);
-        $this->intID = 'int' . $this->ucTypeOfID . 'ID';
+        $this->intTypeOfID = 'int' . $this->ucTypeOfID . 'ID';
     }
 
     public function setSession($sessionArr) {
@@ -31,7 +31,7 @@ class IRSGUI {
         echo "<div>\n";
         echo '<input type="hidden" name="page" value="' . $this->typeOfID . 'edit" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
-        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
+        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr[$this->intTypeOfID] . '" />' . "\n";
         echo '<input type="submit" value="Edit ' . $this->ucTypeOfID . '" class="button" />' . "\n";
         echo "</div>\n";
         echo '</form></td>';
@@ -39,7 +39,7 @@ class IRSGUI {
         echo "<div>\n";
         echo '<input type="hidden" name="page" value="' . $this->typeOfID . 'pdf" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
-        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
+        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr[$this->intTypeOfID] . '" />' . "\n";
         echo '<input type="submit" value="PDF" class="button" />' . "\n";
         echo "</div>\n";
         echo "</form></td><td>";
@@ -48,7 +48,7 @@ class IRSGUI {
         echo '<input type="hidden" name="page" value="' . $this->typeOfID . '" />' . "\n";
         echo '<input type="hidden" name="todo" value="delete" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
-        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
+        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr[$this->intTypeOfID] . '" />' . "\n";
         echo '<input type="submit" value="Delete" class="button" />' . "\n";
         echo "</div>\n";
         echo "</form></td><td>";
@@ -57,7 +57,7 @@ class IRSGUI {
         echo '<input type="hidden" name="page" value="' . $this->typeOfID . '" />' . "\n";
         echo '<input type="hidden" name="todo" value="email" />' . "\n";
         echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
-        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr['int' . $this->ucTypeOfID . 'ID'] . '" />' . "\n";
+        echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $this->sessionArr[$this->intTypeOfID] . '" />' . "\n";
         echo '<input type="submit" value="E-Mail" class="button" />' . "\n";
         echo "</div>\n";
         echo "</form>\n";
@@ -71,12 +71,33 @@ class IRSGUI {
     }
 
     public function displayAddForm() {
-        include_once("inc/addForm.inc.php");
+        switch ($this->typeOfID) {
+            case 'status':
+                include_once("inc/statusAddForm.inc.php");
+                break;
+            case 'risk':
+                include_once("inc/riskAddForm.inc.php");
+                break;
+            case 'issue':
+                include_once("inc/issueAddForm.inc.php");
+                break;
+        }
+        
         $this->displayBottomMenu();
     }
 
     public function displayEditForm($IRSArr, $attachmentArr) {
-        include_once("inc/editForm.inc.php");
+        switch ($this->typeOfID) {
+            case 'status':
+                include_once("inc/statusEditForm.inc.php");
+                break;
+            case 'risk':
+                include_once("inc/riskEditForm.inc.php");
+                break;
+            case 'issue':
+                include_once("inc/issueEditForm.inc.php");
+                break;
+        }
     }
 
     public function displayBottomMenu() {
@@ -96,10 +117,10 @@ class IRSGUI {
 
         $pdf = new PDF();
         $pdf->SetDisplayMode('real', 'default');
-        $title = 'Status #' . $this->sessionArr[$this->intID];
+        $title = $this->ucTypeOfID . ' #' . $this->sessionArr[$this->intTypeOfID];
         $pdf->SetTitle($title);
         $pdf->SetAuthor('OPA');
-        $pdf->PrintChapter(1, 'Status #' . $this->sessionArr[$this->intID], "");
+        $pdf->PrintChapter(1, $this->ucTypeOfID . ' #' . $this->sessionArr[$this->intTypeOfID], "");
         $currentMessage = str_replace('</div></div>', '<br /><br />', $currentMessage);
         $pdf->WriteHTML($currentMessage);
 

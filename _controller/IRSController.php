@@ -5,11 +5,14 @@ class IRSController {
     protected $IRSObj, $attachmentObj;
     protected $sessionArr, $sessionObj;
     protected $memberArr, $projectArr;
-    private $typeOfID, $ucTypeOfID;
+    private $typeOfID, $ucTypeOfID, $shortTypeOfID, $intTypeOfID;
 
     public function __construct($typeOfID, $memberArr, $projectArr, $sessionArr) {
         $this->typeOfID = $typeOfID;
         $this->ucTypeOfID = ucfirst($this->typeOfID);
+        $this->shortTypeOfID = substr($this->typeOfID, 0, 1);
+        $this->intTypeOfID = 'int' . $this->ucTypeOfID . 'ID'; // intStatusID, intRiskID or intIssueID
+
         
         $this->sessionObj = new Session();
         $this->sessionArr = $sessionArr; // don't need to getDetails from Session Class, because we are already got SessionArr from Controller
@@ -190,12 +193,12 @@ class IRSController {
  
 
     protected function displayView() {
-        if (!empty($this->sessionArr['int' . $this->ucTypeOfID . 'ID'])) {
+        if (!empty($this->sessionArr[$this->intTypeOfID])) {
             $this->displayViewPart();
         } else {
-            $this->sessionArr['int' . $this->ucTypeOfID . 'ID'] = $this->IRSObj->getLastID();
+            $this->sessionArr[$this->intTypeOfID] = $this->IRSObj->getLastID();
             $this->sessionObj->setDetails($this->sessionArr);
-            if (!empty($this->sessionArr['int' . $this->ucTypeOfID . 'ID'])) {
+            if (!empty($this->sessionArr[$this->intTypeOfID])) {
                 $this->displayViewPart();
             } else {
                 $this->sessionArr['strPage'] = $this->typeOfID . 'add';
@@ -204,7 +207,7 @@ class IRSController {
     }
     
     private function displayViewPart() {
-        $this->IRSObj->setID($this->sessionArr['int' . $this->ucTypeOfID . 'ID']);
+        $this->IRSObj->setID($this->sessionArr[$this->intTypeOfID]);
         $this->IRSObj->getDetails();
         $currentMessage = $this->IRSObj->view();
         
@@ -214,7 +217,7 @@ class IRSController {
     }
     
     private function displayPDF() {
-        $this->IRSObj->setID($this->sessionArr['int' . $this->ucTypeOfID . 'ID']);
+        $this->IRSObj->setID($this->sessionArr[$this->intTypeOfID]);
         $this->IRSObj->getDetails();
         $currentStatusMessage = $this->IRSObj->view();
         
@@ -224,25 +227,25 @@ class IRSController {
     }
     
     private function displayAddForm() {
-        $this->sessionArr['intStatusID'] = null;
+        $this->sessionArr[$this->intTypeOfID] = null;
         $this->sessionObj->setDetails($this->sessionArr);
         
-        $statusGUIObj = new StatusGUI();
-        $statusGUIObj->setSession($this->sessionArr);
-        $statusGUIObj->displayAddForm();
+        $GUIObj = new IRSGUI($this->typeOfID);
+        $GUIObj->setSession($this->sessionArr);
+        $GUIObj->displayAddForm();
     }
     
     private function displayEditForm() {
-        if ($this->sessionArr['intStatusID'] != "") {
-            $this->statusObj->setID($this->sessionArr['intStatusID']);
-            $statusArr = $this->statusObj->getDetails();
-            $this->attachmentObj->setID($this->sessionArr['intStatusID'], 'status');
-            $this->attachmentObj->getDetailsFromDB('status');
+        if ($this->sessionArr[$this->intTypeOfID] != "") {
+            $this->IRSObj->setID($this->sessionArr[$this->intTypeOfID]);
+            $IRSArr = $this->IRSObj->getDetails();
+            $this->attachmentObj->setID($this->sessionArr[$this->intTypeOfID], $this->typeOfID);
+            $this->attachmentObj->getDetailsFromDB($this->typeOfID);
             $attachmentArr = $this->attachmentObj->getDetails();
             
-            $statusGUIObj = new StatusGUI();
-            $statusGUIObj->setSession($this->sessionArr);
-            $statusGUIObj->displayEditForm($statusArr, $attachmentArr);
+            $GUIObj = new IRSGUI($this->typeOfID);
+            $GUIObj->setSession($this->sessionArr);
+            $GUIObj->displayEditForm($IRSArr, $attachmentArr);
         } else {
             die("wrong data in edit form");
         }

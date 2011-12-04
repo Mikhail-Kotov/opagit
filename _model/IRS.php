@@ -7,12 +7,14 @@ class IRS {
     protected $intSessionID;
     protected $memberArr, $projectArr;
     protected $intProjectMemberID;
-    private $typeOfID;
-    protected $IRSArr;
+    private $typeOfID, $ucTypeOfID, $shortTypeOfID, $intTypeOfID;
 
     function __construct($typeOfID, $memberArr, $projectArr, $intSessionID) {
         $this->typeOfID = $typeOfID;
         $this->ucTypeOfID = ucfirst($this->typeOfID);
+        $this->shortTypeOfID = substr($this->typeOfID, 0, 1);
+        $this->intTypeOfID = 'int' . $this->ucTypeOfID . 'ID';
+        
 
         $this->memberArr = $memberArr;
         $this->projectArr = $projectArr;

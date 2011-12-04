@@ -2,10 +2,10 @@
 <form method="post" action="" id="event-submission">
     <input type="hidden" name="page" value="status" />
     <input type="hidden" name="todo" value="edit" />
-    <input type="hidden" name="s" value="<?php echo $statusArr['intStatusID']; ?>" />
+    <input type="hidden" name="s" value="<?php echo $IRSArr['intStatusID']; ?>" />
     <input type="hidden" name="intSessionID" value="<?php echo $this->sessionArr['intSessionID']; ?>" />
     Status Creation Date:<br />
-    <input type="text" name="dmtStatusCurrentDate" value="<?php echo $statusArr['dmtStatusCurrentDate']; ?>"/><br /><br />
+    <input type="text" name="dmtStatusCurrentDate" value="<?php echo $IRSArr['dmtStatusCurrentDate']; ?>"/><br /><br />
     Status created by:
     <input type="text" name="strMemberFirstAndLastName_NOT_USED" value="<?php echo $this->memberArr['strMemberFirstName'] . " " . 
             $this->memberArr['strMemberLastName']; ?>" disabled="disabled" /><br /><br />
@@ -13,13 +13,13 @@
     <input type="text" name="strProjectName_NOT_USED" value="<?php echo $this->projectArr['strProjectName']; ?>" disabled="disabled" />
     <br /><br />
     Actual Status:<br />
-    <textarea name="strActualBaseline"><?php echo $statusArr['strActualBaseline']; ?></textarea><br /><br />
+    <textarea name="strActualBaseline"><?php echo $IRSArr['strActualBaseline']; ?></textarea><br /><br />
     Planned Baseline:<br />
-    <textarea name="strPlanBaseline"><?php echo $statusArr['strPlanBaseline']; ?></textarea><br /><br />
+    <textarea name="strPlanBaseline"><?php echo $IRSArr['strPlanBaseline']; ?></textarea><br /><br />
     Variation:<br />
-    <textarea name="strStatusVariation"><?php echo $statusArr['strStatusVariation']; ?></textarea><br /><br />
+    <textarea name="strStatusVariation"><?php echo $IRSArr['strStatusVariation']; ?></textarea><br /><br />
     Notes/Reasons:<br />
-    <textarea name="strStatusNotes"><?php echo $statusArr['strStatusNotes']; ?></textarea><br /><br />
+    <textarea name="strStatusNotes"><?php echo $IRSArr['strStatusNotes']; ?></textarea><br /><br />
     <?php
     if (!empty($attachmentArr['intAttachmentIDArr'][0])) {
         foreach ($attachmentArr['intAttachmentIDArr'] as $id => $value_not_using) {
