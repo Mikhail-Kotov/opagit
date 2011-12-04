@@ -174,19 +174,7 @@ class IRSController {
 
     protected function displayHistory() {
         $this->IRSObj->getLastID();
-
-        switch($this->typeOfID) {
-            case 'status':
-                $historyGUIObj = new StatusHistoryGUI();
-                break;
-            case 'risk':
-                $historyGUIObj = new IRSHistoryGUI($this->typeOfID);
-                break;
-            case 'issue':
-                $historyGUIObj = new IssueHistoryGUI();
-                break;
-        }
-
+        $historyGUIObj = new IRSHistoryGUI($this->typeOfID);
         $historyGUIObj->setSession($this->sessionArr);
 
         $intID = $this->IRSObj->getID();
@@ -194,7 +182,7 @@ class IRSController {
             $this->IRSObj->getDetails();
             $historyTableArr = $this->IRSObj->history();
             $historyGUIObj->display($historyTableArr);
-            //$historyGUIObj->displayStatusBottomMenu();
+            $historyGUIObj->displayBottomMenu();
         } else {
             $this->sessionArr['strPage'] = $this->ucTypeOfID . 'add';
         }

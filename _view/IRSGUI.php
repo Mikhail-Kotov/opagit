@@ -102,7 +102,7 @@ class IRSGUI {
         include_once("inc/statusBottomMenu.inc.php");
     }
     
-    private function displayStatusButtons($name, $caption) {
+    private function displayButtons($name, $caption) {
         include("inc/statusButtons.inc.php");
     }
 }
