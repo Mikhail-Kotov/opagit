@@ -84,10 +84,10 @@ class IRS {
         return $globalLastIRSID;
     }
 
-    protected function setDetails($intAttachmentIDArr, $deleteAttachmentArr) {
-        $this->IRSDAObj->setDetails($this->IRSArr);
+    public function setDetails($IRSArr, $intAttachmentIDArr, $deleteAttachmentArr) {
+        $this->IRSDAObj->setDetails($IRSArr);
 
-        $this->attachmentObj->setID($this->IRSArr[$this->intTypeOfID], $this->typeOfID);
+        $this->attachmentObj->setID($IRSArr[$this->intTypeOfID], $this->typeOfID);
         $this->attachmentObj->delIndividualDetails($deleteAttachmentArr);
     }
 
@@ -136,7 +136,7 @@ class IRS {
                             break;
                         case "dmtStatusCurrentDate":
                             $tableArr[$intID][$columnName] = date("jS F Y", strtotime($value));
-                            $uploadDate = $tableArr[$intID][$columnName];
+                            $uploadDate = $value;
                             break;
                         default:
                             $tableArr[$intID][$columnName] = $value;
@@ -159,7 +159,7 @@ class IRS {
                             break;
                         case "dmtRiskDateRaised":
                             $tableArr[$intID][$columnName] = date("jS F Y", strtotime($value));
-                            $uploadDate = $tableArr[$intID][$columnName];
+                            $uploadDate = $value;
                             break;
                         case "intProjectMemberAssignedID":
                             $intMemberID = $memberObj->getMemberID($value);
@@ -189,7 +189,7 @@ class IRS {
                             break;
                         case "dmtIssueDateRaised ":
                             $tableArr[$intID][$columnName] = date("jS F Y", strtotime($value));
-                            $uploadDate = $tableArr[$intID][$columnName];
+                            $uploadDate = $value;
                             break;
                         case "intProjectMemberAssignedID":
                             $intMemberID = $memberObj->getMemberID($value);
@@ -224,7 +224,7 @@ class IRS {
             }
         }
 
-        $historyTableArr[0]['caption'] = "<h1>" . $this->ucTypeOfID . " History for Project: " . $this->projectArr['strProjectName'] . "</h1>";
+        $historyTableArr[0]['caption'] = $this->ucTypeOfID . " History: " . $this->projectArr['strProjectName'];
         $historyTableArr[1] = $tableArr;
 
         return $historyTableArr;
@@ -238,17 +238,21 @@ class IRS {
 
         switch ($this->typeOfID) {
             case 'status':
-                $currentMessage = "<b>Date:</b> " .
-                        date("jS F Y", strtotime($this->IRSArr['dmtStatusCurrentDate'])) . "<br />" .
-                        "<b>Status created by: </b>" .
-                        $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'] . "<br />" .
-                        "<b>Project:</b> " . $this->projectArr['strProjectName'] . "<br /><br />" .
-                        "<b>Actual Status:</b><br />" . $this->IRSArr['strActualBaseline'] . "<br /><br />" .
-                        "<b>Planned Baseline:</b><br />" . $this->IRSArr['strPlanBaseline'] . "<br /><br />" .
-                        "<b>Variation:</b><br />" .
-                        $this->IRSArr['strStatusVariation'] . "<br /><br />" .
-                        "<b>Notes/Reasons:</b><br />" .
-                        $this->IRSArr['strStatusNotes'] . "<br /><br />";
+                $currentMessage = '<div class="viewgroup"><div class="labelView"><b>DATE: </b></div><div class="fieldstatus"> ' .
+                        date("jS F Y", strtotime($this->IRSArr['dmtStatusCurrentDate'])) . "</div></div>\n" .
+                        '<div class="viewgroup"><div class="labelView"><b>Status Created By: </b></div>' . "\n" .
+                        '<div class="fieldstatus">' . $memberArr['strMemberFirstName'] . " " . $memberArr['strMemberLastName'] .
+                        '</div></div>' . "\n" .
+                        '<div class="viewgroup"><div class="labelView"><b>Project: </b></div>' . "\n" .
+                        '<div class="fieldstatus"> ' . $this->projectArr['strProjectName'] . "</div></div>" . "\n" .
+                        '<div class="viewgroup"><div class="labelView"><b>Actual Status: </b></div><div class="fieldstatus"> ' . 
+                        $this->IRSArr['strActualBaseline'] . "</div></div>" . "\n" .
+                        '<div class="viewgroup"><div class="labelView"><b>Planned Baseline: </b></div><div class="fieldstatus"> ' . 
+                        $this->IRSArr['strPlanBaseline'] . "</div></div>" . "\n" .
+                        '<div class="viewgroup"><div class="labelView"><b>Variation: </b></div><div class="fieldstatus"> ' . 
+                        $this->IRSArr['strStatusVariation'] . "</div></div>" . "\n" .
+                        '<div class="viewgroup"><div class="labelView"><b>Notes/Reasons: </b></div><div class="fieldstatus"> ' . 
+                        $this->IRSArr['strStatusNotes'] . '</div></div>' . "\n";
                 $uploadDate = $this->IRSArr['dmtStatusCurrentDate'];
                 break;
             case 'risk':

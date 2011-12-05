@@ -3,13 +3,13 @@
 class IRSHistoryGUI {
 
     private $sessionArr;
-    private $typeOfID, $ucTypeOfID, $shortTypeOfID;
+    private $typeOfID, $ucTypeOfID, $shortTypeOfID, $intTypeOfID;
 
     public function __construct($typeOfID) {
         $this->typeOfID = $typeOfID;
         $this->ucTypeOfID = ucfirst($this->typeOfID);
         $this->shortTypeOfID = substr($this->typeOfID, 0, 1);
-        $this->intID = 'int' . $this->ucTypeOfID . 'ID';
+        $this->intTypeOfID = 'int' . $this->ucTypeOfID . 'ID';
     }
 
     public function setSession($sessionArr) {
@@ -18,8 +18,9 @@ class IRSHistoryGUI {
 
     public function display($historyTableArr) {
         if (isset($historyTableArr[1])) {
+            echo '<div id="historytable">'."\n";
             echo '<table class="standard" cellspacing="0">';
-            echo "<caption>" . $historyTableArr[0]['caption'] . "</caption>\n";
+            echo "<h1>" . $historyTableArr[0]['caption'] . "</h1>\n";
             echo "<tr>\n";
             switch ($this->typeOfID) {
                 case 'status':
@@ -39,7 +40,12 @@ class IRSHistoryGUI {
                     echo "<th>View</th>\n";
                     echo "<th>ID</th>\n";
                     echo "<th>Project</th>\n";
-                    echo "<th>Raised By</th>\n";
+                    echo '<th><form method="post" action="">';
+                    echo '<input type="hidden" name="page" value="' . $this->typeOfID . 'Raised By" />' . "\n";
+                    echo '<input type="hidden" name="intSessionID" value="' . $this->sessionArr['intSessionID'] . '" />' . "\n";
+                    echo '<input type="hidden" name="' . $this->shortTypeOfID . '" value="' . $historyTableArr[1][0][$this->intTypeOfID] . '" />' . "\n";//should this array be index [1]
+                    echo '<input type="submit" value="Raised By" title="Raised By ' . $this->ucTypeOfID . '" class="button" />' . "\n";
+                    echo '</form></th>' . "\n";
                     echo "<th>Type</th>\n";
                     echo "<th>Description</th>\n";
                     echo "<th>Risk Status</th>\n";
@@ -108,17 +114,20 @@ class IRSHistoryGUI {
                 echo '<input type="submit" value="PDF" title="PDF current ' . $this->ucTypeOfID . '" class="button" />' . "\n";
                 echo "</form>\n";
                 echo "</td>\n";
+                
+                if ($oddOrEven == "historyodd") {
+                    $oddOrEven = "historyeven";
+                } else {
+                    $oddOrEven = "historyodd";
+                }
             }
 
             echo "</tr>\n\n";
 
-            if ($oddOrEven == "historyodd") {
-                $oddOrEven = "historyeven";
-            } else {
-                $oddOrEven = "historyodd";
-            }
+
         }
         echo '</table>';
+        echo '</div>';
     }
 
     public function displayBottomMenu() {

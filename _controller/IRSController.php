@@ -87,6 +87,7 @@ class IRSController {
     }
 
     private function todoAdd() {
+        $reloadAddForm = true;
         $IRSArr = array();
         switch ($this->typeOfID) {
             case 'status':
@@ -95,6 +96,9 @@ class IRSController {
                 $IRSArr['strPlanBaseline'] = $_POST['strPlanBaseline'];
                 $IRSArr['strStatusVariation'] = $_POST['strStatusVariation'];
                 $IRSArr['strStatusNotes'] = $_POST['strStatusNotes'];
+                if(empty($IRSArr['strActualBaseline'])) {
+                    $reloadAddForm = true;
+                }
                 
                 $uploadDate = $IRSArr['dmtStatusCurrentDate'];
                 break;
@@ -131,33 +135,37 @@ class IRSController {
                 break;
         }
        
-        
-        $strAttachmentLinkArr = array();
-        $strAttachmentCommentArr = array();
-        
-        if(!is_dir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'])) {
-            mkdir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'], 0777);
-        }
-        
-        if(!is_dir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'] . '/' . $uploadDate)) {
-            mkdir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'] . '/' . $uploadDate, 0777);
-        }
-        
-        
-        $i = 0;
-        while (isset($_FILES['strAttachmentLink' . ($i)])) {
-            $target = $_ENV['uploads_dir'] . $this->projectArr['strProjectName'] .
-                    '/' . $uploadDate . '/' . basename($_FILES['strAttachmentLink' . $i]['name']);
-            if (!move_uploaded_file($_FILES['strAttachmentLink' . $i]['tmp_name'], $target)) {
-                echo "Sorry, there was a problem uploading your file."; // <--/this is Alert/
-            } else {
-                $strAttachmentLinkArr[$i] = basename($_FILES['strAttachmentLink' . $i]['name']);
-                $strAttachmentCommentArr[$i] = $_POST["strAttachmentComment" . $i];
+        if($reloadAddForm != true) {
+            
+            $strAttachmentLinkArr = array();
+            $strAttachmentCommentArr = array();
+
+            if (!is_dir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'])) {
+                mkdir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'], 0777);
             }
-            $i++;
+
+            if (!is_dir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'] . '/' . $uploadDate)) {
+                mkdir($_ENV['uploads_dir'] . $this->projectArr['strProjectName'] . '/' . $uploadDate, 0777);
+            }
+
+
+            $i = 0;
+            while (isset($_FILES['strAttachmentLink' . ($i)])) {
+                $target = $_ENV['uploads_dir'] . $this->projectArr['strProjectName'] .
+                        '/' . $uploadDate . '/' . basename($_FILES['strAttachmentLink' . $i]['name']);
+                if (!move_uploaded_file($_FILES['strAttachmentLink' . $i]['tmp_name'], $target)) {
+                    echo "Sorry, there was a problem uploading your file."; // <--/this is Alert/
+                } else {
+                    $strAttachmentLinkArr[$i] = basename($_FILES['strAttachmentLink' . $i]['name']);
+                    $strAttachmentCommentArr[$i] = $_POST["strAttachmentComment" . $i];
+                }
+                $i++;
+            }
+
+            $this->IRSObj->addDetails($IRSArr, $strAttachmentLinkArr, $strAttachmentCommentArr);
+        } else {
+            $this->sessionArr['strPage'] = $this->typeOfID . 'add'; 
         }
-        
-        $this->IRSObj->addDetails($IRSArr, $strAttachmentLinkArr, $strAttachmentCommentArr);
     }
 
     private function todoDelete() {
@@ -169,16 +177,65 @@ class IRSController {
     }
 
     private function todoEdit() {
-        $dmtStatusCurrentDate = $_POST['dmtStatusCurrentDate'];
-        $strActualBaseline = $_POST['strActualBaseline'];
-        $strPlanBaseline = $_POST['strPlanBaseline'];
-        $strStatusVariation = $_POST['strStatusVariation'];
-        $strStatusNotes = $_POST['strStatusNotes'];
-
+        $intAttachmentIDArr = array();
+        $deleteAttachmentArr = array();
+        
+        $IRSArr = array();
+        $IRSArr[$this->intTypeOfID] = $this->sessionArr[$this->intTypeOfID];
+        
+        switch ($this->typeOfID) {
+            case 'status':
+                $IRSArr['dmtStatusCurrentDate'] = $_POST['dmtStatusCurrentDate'];
+                $IRSArr['strActualBaseline'] = $_POST['strActualBaseline'];
+                $IRSArr['strPlanBaseline'] = $_POST['strPlanBaseline'];
+                $IRSArr['strStatusVariation'] = $_POST['strStatusVariation'];
+                $IRSArr['strStatusNotes'] = $_POST['strStatusNotes'];
+                
+                $uploadDate = $IRSArr['dmtStatusCurrentDate'];
+                break;
+            case 'risk':
+                echo "editeditedit";
+                $IRSArr['strRiskTypeID'] = $_POST['strRiskTypeID'];
+                $IRSArr['strRiskDescription'] = $_POST['strRiskDescription'];
+                $IRSArr['enmRiskStatus'] = $_POST['enmRiskStatus'];
+                $IRSArr['dmtRiskDateRaised'] = $_POST['dmtRiskDateRaised'];
+                $IRSArr['dmtRiskDateClosed'] = null;
+                if(!empty($_POST['dmtRiskDateClosed'])) {
+                    $IRSArr['dmtRiskDateClosed'] = $_POST['dmtRiskDateClosed'];
+                }
+                $IRSArr['enmRiskLikelihoodOfImpact'] = $_POST['enmRiskLikelihoodOfImpact'];
+                $IRSArr['strRiskImpactDescription'] = $_POST['strRiskImpactDescription'];
+                $IRSArr['enmRiskProjectImpactRating'] = $_POST['enmRiskProjectImpactRating'];
+                $IRSArr['strRiskMitigationStrategy'] = $_POST['strRiskMitigationStrategy'];
+                $IRSArr['strRiskContingencyStrategy'] = $_POST['strRiskContingencyStrategy'];
+                $IRSArr['intProjectMemberAssignedID'] = $_POST['intProjectMemberAssignedID'];
+                
+                $uploadDate = $IRSArr['dmtRiskDateRaised'];
+                break;
+            case 'issue':
+                $IRSArr['enmIssueStatus'] = $_POST['enmIssueStatus'];
+                $IRSArr['dmtIssueDateRaised'] = $_POST['dmtIssueDateRaised'];
+                $IRSArr['dmtIssueDeadline'] = $_POST['dmtIssueDeadline'];
+                $IRSArr['strIssueDescription'] = $_POST['strIssueDescription'];
+                $IRSArr['strIssueTypeID'] = $_POST['strIssueTypeID'];
+                $IRSArr['enmIssuePriority'] = $_POST['enmIssuePriority'];
+                $IRSArr['intProjectMemberAssignedID'] = $_POST['intProjectMemberAssignedID'];
+                $IRSArr['dmtIssueDateClosed'] = $_POST['dmtIssueDateClosed'];
+                $IRSArr['strIssueOutcome'] = $_POST['strIssueOutcome'];
+                
+                $uploadDate = $IRSArr['dmtIssueDateRaised'];
+                break;
+        }
+        
         $isNextAttachment = true;
         $i = 0;
         do {
-            $intAttachmentIDArr[$i] = $_POST['intAttachmentID' . $i];
+            $intAttachmentIDArr[$i] = null;
+            if(isset($_POST['intAttachmentID' . $i])) {
+                $intAttachmentIDArr[$i] = $_POST['intAttachmentID' . $i];
+            }
+            
+            $deleteAttachmentArr[$i] = null;
             if(isset($_POST['deleteattachment' . $i])) {
                 $deleteAttachmentArr[$i] = $_POST['deleteattachment' . $i];
             }
@@ -189,9 +246,8 @@ class IRSController {
             }
         } while ($isNextAttachment == true);
 
-        print_r($deleteAttachmentArr);
-        $this->statusObj->setDetails($this->sessionArr['intStatusID'], $dmtStatusCurrentDate, $strActualBaseline, 
-                $strPlanBaseline, $strStatusVariation, $strStatusNotes, $intAttachmentIDArr, $deleteAttachmentArr);
+        //print_r($deleteAttachmentArr);
+        $this->IRSObj->setDetails($IRSArr, $intAttachmentIDArr, $deleteAttachmentArr);
     }
     
     private function todoEMail() {

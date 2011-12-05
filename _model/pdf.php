@@ -104,8 +104,8 @@ class PDF extends FPDF {
             $this->HREF = $attr['HREF'];
         if ($tag == 'BR')
             $this->Ln(5);
-        if ($tag == 'DIV')
-            $this->Ln(5);
+//        if ($tag == 'DIV')
+//            $this->Ln(5);
     }
 
     function CloseTag($tag) {

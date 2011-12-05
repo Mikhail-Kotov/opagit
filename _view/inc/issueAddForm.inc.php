@@ -21,7 +21,7 @@
                 <label for="strProjectName" title="Automatic name field.">Project Name:</label>
             </div>
             <div class="fieldopa">
-                <input type="text" id="strProjectName" value="<?php echo $this->projectArr['strProjectName']; ?>" class="input-text"  size="28" maxlength="43" disabled="disabled" />
+                <input type="text" id="strProjectName" class="input-text"  size="35" maxlength="40" value="<?php echo $this->projectArr['strProjectName']; ?>" class="input-text"  size="28" maxlength="43" disabled="disabled" />
             </div> 
         </div>
         <div class="groupopa">    
@@ -29,9 +29,15 @@
                 <label for="enmIssueStatus "  title="Choose whether Status is open or closed.">Issue Status:</label>
             </div>
             <div class="fieldopa"> 
-
-
-
+                <select name="enmIssueStatus" class="form_dropdown">
+                    <?php
+                    //print_r($allIssueStatusArr);
+                    foreach ($allIssueStatusArr as $id => $value_not_used) {
+                        echo '<option value="' . $allIssueStatusArr[$id] . '"';
+                        echo '>' . $allIssueStatusArr[$id] . "</option>\n";
+                    }
+                    ?>
+            </select>
             </div> 
         </div>
         <div class="groupopa"> 

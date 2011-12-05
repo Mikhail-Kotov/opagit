@@ -369,7 +369,7 @@ form fieldset div.field { width: 11em; float: left; margin: 0 1em 0 0; }
 /*form fieldset div.field label { float: left; width: auto; font-weight: normal; }*/
 form fieldset div.field input.input-text { float: right; padding: 2px; font-family: Arial, sans-serif; font-size: 1em; color: #646870; border:1px solid #ccc; }
 form fieldset div.field input[type=radio] { vertical-align:top; }
-form div.field textarea { min-width: 80px; min-height: 15px; max-width: 80px; max-height: 15px; padding: 2px; font-family: Arial, sans-serif; font-size: 1em; color: #646870; border:1px solid #ccc; }*/
+form div.field textarea { min-width: 80px; min-height: 15px; max-width: 80px; max-height: 15px; padding: 2px; font-family: Arial, sans-serif; font-size: 1em; color: #646870; border:1px solid #ccc; }
 form div.submit { clear: both; padding: 15px 0 15px 0px; }/*this places the submit button under other buttons -Robyn Ius*/
 form div.submit img,
 form div.submit input { margin-right:10px; }
@@ -378,9 +378,15 @@ form .sml { width:4em; }
 form .med { width:8em; }
 form .lge { width:14em; }
 
+.inputDate{
+   font-family: Arial, sans-serif; font-size: 1em; color: #646870; border:1px solid #ccc; 
+}
+
+
+
 /*add status, risk view, add risk are styled by this id*/
 form#event-submission {
-    position: relative;  background:#f1f1f1; margin:0 0 2em; padding: 20px 20px 10px 20px; width: 1024px; 
+    position: relative;  background:#f1f1f1; margin:0 0 2em; padding: 20px 20px 10px 20px; width: 1010px; 
 }/*changed from fafafa 3Nov robynIus*/
 form#event-submission label {
     font-weight: bold;/*this styles the label bold for add and view forms*/

@@ -7,39 +7,39 @@ class Risk extends IRS {
         $this->IRSDAObj = new IRSDA('risk');
     }
     
-    function setDetails(
-            $intRiskID,
-            $intProjectID,
-            $intProjectMemberID,
-            $strRiskTypeID,
-            $strRiskDescription,
-            $enmRiskStatus,
-            $dmtRiskDateRaised,
-            $dmtRiskDateClosed,
-            $enmRiskLikelihoodOfImpact,
-            $strRiskImpactDescription,
-            $enmRiskProjectImpactRating,
-            $strRiskMitigationStrategy,
-            $strRiskContingencyStrategy,
-            $intProjectMemberAssignedID) {
-
-            $this->IRSArr['intRiskID'] = $intRiskID;
-            $this->IRSArr['intProjectID'] = $intProjectID;
-            $this->IRSArr['intProjectMemberID'] = $intProjectMemberID;
-            $this->IRSArr['strRiskTypeID'] = $strRiskTypeID;
-            $this->IRSArr['strRiskDescription'] = $strRiskDescription;
-            $this->IRSArr['enmRiskStatus'] = $enmRiskStatus;
-            $this->IRSArr['dmtRiskDateRaised'] = $dmtRiskDateRaised;
-            $this->IRSArr['dmtRiskDateClosed'] = $dmtRiskDateClosed;
-            $this->IRSArr['enmRiskLikelihoodOfImpact'] = $enmRiskLikelihoodOfImpact;
-            $this->IRSArr['strRiskImpactDescription'] = $strRiskImpactDescription;
-            $this->IRSArr['enmRiskProjectImpactRating'] = $enmRiskProjectImpactRating;
-            $this->IRSArr['strRiskMitigationStrategy'] = $strRiskMitigationStrategy;
-            $this->IRSArr['strRiskContingencyStrategy'] = $strRiskContingencyStrategy;
-            $this->IRSArr['intProjectMemberAssignedID'] = $intProjectMemberAssignedID;
-
-        parent::setDetails($intAttachmentIDArr, $deleteAttachmentArr);
-    }
+//    function setDetails(
+//            $intRiskID,
+//            $intProjectID,
+//            $intProjectMemberID,
+//            $strRiskTypeID,
+//            $strRiskDescription,
+//            $enmRiskStatus,
+//            $dmtRiskDateRaised,
+//            $dmtRiskDateClosed,
+//            $enmRiskLikelihoodOfImpact,
+//            $strRiskImpactDescription,
+//            $enmRiskProjectImpactRating,
+//            $strRiskMitigationStrategy,
+//            $strRiskContingencyStrategy,
+//            $intProjectMemberAssignedID) {
+//
+//            $this->IRSArr['intRiskID'] = $intRiskID;
+//            $this->IRSArr['intProjectID'] = $intProjectID;
+//            $this->IRSArr['intProjectMemberID'] = $intProjectMemberID;
+//            $this->IRSArr['strRiskTypeID'] = $strRiskTypeID;
+//            $this->IRSArr['strRiskDescription'] = $strRiskDescription;
+//            $this->IRSArr['enmRiskStatus'] = $enmRiskStatus;
+//            $this->IRSArr['dmtRiskDateRaised'] = $dmtRiskDateRaised;
+//            $this->IRSArr['dmtRiskDateClosed'] = $dmtRiskDateClosed;
+//            $this->IRSArr['enmRiskLikelihoodOfImpact'] = $enmRiskLikelihoodOfImpact;
+//            $this->IRSArr['strRiskImpactDescription'] = $strRiskImpactDescription;
+//            $this->IRSArr['enmRiskProjectImpactRating'] = $enmRiskProjectImpactRating;
+//            $this->IRSArr['strRiskMitigationStrategy'] = $strRiskMitigationStrategy;
+//            $this->IRSArr['strRiskContingencyStrategy'] = $strRiskContingencyStrategy;
+//            $this->IRSArr['intProjectMemberAssignedID'] = $intProjectMemberAssignedID;
+//
+//        parent::setDetails($intAttachmentIDArr, $deleteAttachmentArr);
+//    }
 //
 //    public function viewRisk() {
 //        

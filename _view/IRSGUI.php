@@ -74,6 +74,8 @@ class IRSGUI {
     }
 
     public function displayAddForm() {
+        echo "<h1>Add" . $this->ucTypeOfID . "</h1>";
+        
         switch ($this->typeOfID) {
             case 'status':
                 include_once("inc/statusAddForm.inc.php");
@@ -103,9 +105,18 @@ class IRSGUI {
                 include_once("inc/statusEditForm.inc.php");
                 break;
             case 'risk':
+                $allRiskTypeArr = $this->IRSDAObj->getAllRiskTypes();
+                $allRiskStatusArr = $_ENV['db']->enumSelect('tblRisk', 'enmRiskStatus');
+                $allRiskLikelihoodArr = $_ENV['db']->enumSelect('tblRisk', 'enmRiskLikelihoodOfImpact');
+                $allRiskImpactRatingArr = $_ENV['db']->enumSelect('tblRisk', 'enmRiskProjectImpactRating');
+                
                 include_once("inc/riskEditForm.inc.php");
                 break;
             case 'issue':
+                $allIssueTypeArr = $this->IRSDAObj->getAllIssueTypes();
+                $allIssueStatusArr = $_ENV['db']->enumSelect('tblIssue', 'enmIssueStatus');
+                $allIssuePriorityArr = $_ENV['db']->enumSelect('tblIssue', 'enmIssuePriority');
+                
                 include_once("inc/issueEditForm.inc.php");
                 break;
         }

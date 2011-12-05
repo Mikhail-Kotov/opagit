@@ -1,8 +1,18 @@
+<?php 
+ /****************************************************************************************
+ * Team Name:  OPA                                                                       *
+ * Date:       24 Nov 2011                                                               *
+ * Version No: 3                                                                         *
+ *                                                                                       *
+ * File Name:  footer.inc.php                                                            *
+ * Desc:       This file is the HTML footer included on each page                        * 
+ ****************************************************************************************/
+?>
 <!-- Start OPA footer -->
           </div><!-- END content-col -->
         </div><!-- END content -->
+        <div class="clear">&nbsp;</div><!--this div is important to be in this order to keep the image on menu-->
       </div><!-- END column -->
-    <div class="clear">&nbsp;</div>    
     </div><!-- END wrapper -->
   </div><!-- END container -->
 </div><!-- END main -->
@@ -44,12 +54,36 @@
 // Create the tooltips only on document load
 $(document).ready(function() 
 {
-   // Match all link elements with href attributes within the content div
-   $('input').qtip({ style: { name: 'cream', tip: true } })
+   // tooltips for title elements, textareas and labels
+   $('.input-text').qtip({ style: { name: 'cream', tip: true } })
+   $('title').qtip({ style: { name: 'cream', tip: true } })
    $('textarea').qtip({ style: { name: 'cream', tip: true } })
    $('label').qtip({ style: { name: 'cream', tip: true } })
-   
+   $('.form_dropdown').qtip({ style: { name: 'cream', tip: true } })
+   $('#add-more-attachments ').qtip({ style: { name: 'cream', tip: true } })
+   $('.inputDate"').qtip({ style: { name: 'cream', tip: true } })
+     
 });
 </script>
+
+
+<script type="text/javascript">
+    
+    //checks to see what the status has been changed to
+    //if the status is set to closed the dmtRiskDateClosed input will be enabled
+    function statusCheck(){
+        
+        //checks to see if closed is selected, else set the dmtRiskDateClosed input to true
+        if(document.riskadd.enmRiskStatus.value == "Closed"){
+            document.getElementById("inputDate2").disabled = false;
+        }else{
+            document.getElementById("inputDate2").disabled = true;   
+        }
+
+    }
+    
+</script>
+
+
 </body>
 </html>

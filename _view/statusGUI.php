@@ -1,4 +1,14 @@
 <?php
+ /***************************************************************************************
+ * Team Name: OPA                                                                       *
+ * Date: 18 Nov 2011                                                                    *
+ * Version No: 3                                                                        *
+ *                                                                                      *
+ * File Name: statusGUI.php                                                             *
+ * Desc:This file displays the status view status edit and menus.  						* 
+ ***************************************************************************************/
+?>
+<?php
 
 class StatusGUI {
 

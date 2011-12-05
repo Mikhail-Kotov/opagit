@@ -1,4 +1,14 @@
 <?php
+ /***************************************************************************************
+ * Team Name: OPA                                                                       *
+ * Date: 18 Nov 2011                                                                    *
+ * Version No: 1                                                                        *
+ *                                                                                      *
+ * File Name: LoginGUI.php                                                              *
+ * Desc:This file displays the login.                                                   *                        
+ ***************************************************************************************/
+?>
+<?php
 
 class LoginGUI {
 
@@ -16,13 +26,13 @@ class LoginGUI {
         echo '<form method="post" action="" id="event-submission">' . "<div>\n";
         //Username is not implemented yet
         echo '<label for="ssousername" title="Enter SIMS username.">SIMS Username:</label><br />';
-    	echo '<input class="form_textfield" style="width: 150px;" tabindex="1" type="text" id="ssousername" name="ssousername" value="" /><br /><br />';
+    	echo '<input class="input-text" title="Enter SIMS username."  style="width: 150px;" tabindex="1" type="text" id="ssousername" name="ssousername" value="" /><br /><br />';
     	//Password is not implemented yet
-        echo '<label for="password">SIMS Password:</label><br />';
-        echo '<input name="password" id="password" class="form_textfield" style="width: 150px;" tabindex="2" type="password" /><br /><br />';
+        echo '<label for="password"  title="Enter your password.">SIMS Password:</label><br />';
+        echo '<input name="password" id="password" title="Enter your password." class="input-text" style="width: 150px;" tabindex="2" type="password" /><br /><br />';
 
-        echo '<label for="p">Choose a Project:</label><br />';
-        echo '<select name="p" id="p" class="form_dropdown">' . "\n";
+        echo '<label for="p"  title="Choose the project in which you will report.">Choose a Project:</label><br />';
+        echo '<select name="p" title="Choose the project in which you will report." id="p" class="form_dropdown">' . "\n";
         foreach ($allProjectsArr as $id => $value) {
             echo '<option value="' . $allProjectsArr[$id]['intProjectID'] . '">' . $allProjectsArr[$id]['strProjectName'] . "</option>\n";
         }

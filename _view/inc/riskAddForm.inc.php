@@ -1,5 +1,5 @@
 <h1>Add Risk</h1>
-<div id="viewthestatus">
+<div id="viewRisk">
     <form name="riskadd" method="post" action="" enctype="multipart/form-data" id="event-submission">
 
         <!--<fieldset class="event-submission">-->
@@ -58,7 +58,7 @@
                 <label for="enmRiskStatus" title="Select the current status of the risk.">Risk Status:</label>
             </div>
             <div class="fieldopa">
-                <select name="enmRiskStatus" title="Select the current status of the risk." class="form_dropdown">
+                <select name="enmRiskStatus" onchange="statusCheck()" title="Select the current status of the risk." class="form_dropdown">
 
                     <?php
                     //print_r($allRiskStatusArr);
@@ -74,14 +74,14 @@
                 <label for="dmtRiskDateRaised" title="The day the risk was raised.">Date Created:</label>
             </div>
             <div class="fieldopadate">
-                <input type="text" class="inputDate" title="The day the risk was raised." id="inputDate" name="dmtRiskDateRaised" class="input-text" size="28" maxlength="10" value="<?php echo $_ENV['currentDate']; ?>" />
+                <input type="text" class="inputDate" id="inputDate"  name="dmtRiskDateRaised" class="input-text" size="28" maxlength="10" value="<?php echo $_ENV['currentDate']; ?>" />
             </div>
 
             <div class="labelopadate">
                 <label for="dmtRiskDateClosed"   title="The day the risk was closed. This is only available when a risk status is closed">Date Closed:</label>
             </div>
             <div class="fieldopadate">
-                <input type="text" id="dmtRiskDateClosed" name="dmtRiskDateClosed" title="The day the risk was closed. This is only available when a risk status is closed" disabled="disabled" class="input-date" size="28" maxlength="10" value="<?php echo $_ENV['currentDate']; ?>" />
+                <input type="text" id="inputDate2" class="inputDate2" id="dmtRiskDateClosed" name="dmtRiskDateClosed" title="The day the risk was closed. This is only available when a risk status is closed" disabled="disabled" class="input-date" size="28" maxlength="10" value="<?php echo $_ENV['currentDate']; ?>" />
             </div>
         </div><!--end of group-->
         <div class="groupopa">

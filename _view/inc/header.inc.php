@@ -4,11 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Swinburne ICT Online Project Administration</title>
 <link rel="stylesheet" type="text/css" href="import/import.css" />
-<script type="text/javascript" src="import/js/javascript_functions.js"></script>
+<link rel="stylesheet" href="import/datepicker.css" type="text/css" />
 
+<script type="text/javascript" src="import/js/javascript_functions.js"></script>
 <script type="text/javascript" src="import/js/opa/functions.js"></script> 
 <script type="text/javascript" src="import/js/opa/jquery.js"></script>
 <script type="text/javascript" src="import/js/opa/jquery.qtip.js"></script> 
+<script type="text/javascript" src="import/js/datepicker.js"></script>
+<script type="text/javascript" src="import/js/eye.js"></script>
+<script type="text/javascript" src="import/js/utils.js"></script>
+<script type="text/javascript" src="import/js/layout.js?ver=1.0.2"></script>
 
 <link rel="icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="http://www.swinburne.edu.au/favicon.ico" type="image/x-icon" />

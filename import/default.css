@@ -43,8 +43,8 @@ table {
 }
 
 #historytable {
-    background-color: #FFFFFF; /*edited for OPA*/
-    width: 1024px;
+    /*background-color: #FFFFFF;*/ /*edited for OPA*/
+    width: 820px;
 }
 
 #wrapper {
